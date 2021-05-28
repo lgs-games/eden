@@ -2,16 +2,14 @@ package com.lgs.eden;
 
 import com.goxr3plus.fxborderlessscene.borderless.BorderlessScene;
 import com.lgs.eden.application.WindowController;
+import com.lgs.eden.utils.Config;
 import com.lgs.eden.views.login.Login;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
-import java.io.IOException;
-import java.net.URL;
 import java.util.Objects;
 
 /**
@@ -19,7 +17,10 @@ import java.util.Objects;
  */
 public class Main extends Application {
 
-    public static void main(String[] args) { launch(args); }
+    public static void main(String[] args) {
+        System.out.println(Config.checkClientVersion() ? "Client needs an update" : "Client is up to date");
+        launch(args);
+    }
 
     @Override // load fxml frame
     public void start(Stage primaryStage) { //todo: load values from config
