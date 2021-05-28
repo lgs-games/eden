@@ -23,5 +23,5 @@ And finally, we have a [Trello](https://trello.com/b/mc5OKuQH/eden) to stay orga
 
 
 ### Licence
-
+This project is licensed under the Apache-2.0 License.
 
