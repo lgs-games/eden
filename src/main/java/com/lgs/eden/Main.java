@@ -2,12 +2,16 @@ package com.lgs.eden;
 
 import com.goxr3plus.fxborderlessscene.borderless.BorderlessScene;
 import com.lgs.eden.application.WindowController;
+import com.lgs.eden.views.login.Login;
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
+import java.io.IOException;
+import java.net.URL;
 import java.util.Objects;
 
 /**
@@ -24,7 +28,7 @@ public class Main extends Application {
         // make a borderless frame
         BorderlessScene scene = new BorderlessScene(primaryStage, StageStyle.UNDECORATED, root, 0, 0);
         // init frame
-        WindowController.init(scene, 800, 550);
+        WindowController.init(scene, 700, 500);
         // then set scene
         primaryStage.setScene(scene);
         // window title
@@ -33,5 +37,7 @@ public class Main extends Application {
         primaryStage.getIcons().add(new Image(Objects.requireNonNull(Main.class.getResourceAsStream("/icon64.png"))));
         // and show
         primaryStage.show();
+        // show login screen
+        WindowController.setScreen(Login.getScreen());
     }
 }
