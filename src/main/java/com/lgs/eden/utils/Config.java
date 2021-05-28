@@ -37,7 +37,7 @@ public class Config {
      * Is used to call the app icon
      * @return an image containing the default app icon
      */
-    public static Image appIcon() {return new Image(Objects.requireNonNull(Main.class.getResourceAsStream("/icon64.png")));}
+    public static Image appIcon() {return Utility.loadImage("/icon64.png");}
 
 
 }
