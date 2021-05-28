@@ -10,13 +10,12 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="470.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="470.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lgs.eden.views.login.Login">
    <bottom>
       <Pane prefHeight="83.0" prefWidth="700.0" BorderPane.alignment="CENTER">
          <children>
             <Button layoutX="55.0" layoutY="20.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="125.0" text="Sign up" />
-            <Button layoutX="520.0" layoutY="20.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="125.0" text="Log in" />
+            <Button layoutX="520.0" layoutY="20.0" mnemonicParsing="false" onAction="#onSubmitWithButton" prefHeight="34.0" prefWidth="125.0" text="Log in" />
          </children>
       </Pane>
    </bottom>
@@ -25,14 +24,14 @@
          <children>
             <ImageView fitHeight="64.0" fitWidth="64.0" layoutX="209.0" layoutY="42.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../../../../../resources/img/logo80x80.png" />
+                  <Image url="@img/logo80x80.png" />
                </image>
             </ImageView>
             <Button contentDisplay="GRAPHIC_ONLY" layoutX="629.0" layoutY="27.0" mnemonicParsing="false" prefHeight="66.0" prefWidth="38.0" text="Settings">
                <graphic>
                   <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../../../../resources/icons/gear32x32.png" />
+                        <Image url="@icons/gear32x32.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -53,15 +52,15 @@
                   <Font name="System Bold" size="14.0" />
                </font>
             </Label>
-            <TextField layoutX="160.0" layoutY="49.0" prefHeight="38.0" prefWidth="386.0" />
+            <TextField fx:id="login" layoutX="160.0" layoutY="49.0" prefHeight="38.0" prefWidth="386.0" />
             <Label layoutX="154.0" layoutY="112.0" text="Password">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Label>
-            <TextField layoutX="160.0" layoutY="140.0" prefHeight="38.0" prefWidth="386.0" />
-            <Label layoutX="421.0" layoutY="187.0" text="Forgot your password ?" />
-            <CheckBox layoutX="154.0" layoutY="213.0" mnemonicParsing="false" text="Remember me" />
+            <TextField fx:id="password" layoutX="160.0" layoutY="140.0" onKeyPressed="#onSubmitWithEnter" prefHeight="38.0" prefWidth="386.0" />
+            <Label fx:id="forgotPwd" layoutX="421.0" layoutY="187.0" text="Forgot your password ?" />
+            <CheckBox fx:id="rememberMe" layoutX="154.0" layoutY="213.0" mnemonicParsing="false" text="Remember me" />
             <Label layoutX="179.0" layoutY="230.0" text="Your connexion data will be stored on this computer." textFill="#868080" />
          </children>
       </Pane>
