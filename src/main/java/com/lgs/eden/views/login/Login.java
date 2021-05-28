@@ -3,6 +3,7 @@ package com.lgs.eden.views.login;
 
 import com.lgs.eden.Main;
 import com.lgs.eden.api.Constants;
+import com.lgs.eden.utils.Utility;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -36,11 +37,10 @@ public class Login {
     public static Parent getScreen() {
         if (screen == null) {
             // todo: clean
-            URL resource = Main.class.getResource("/fxml/login.fxml");
             try {
-                loader = new FXMLLoader(resource);
+                loader = Utility.loadView("/fxml/login.fxml");
                 screen = loader.load();
-            } catch (IOException e) {
+            } catch (IOException | IllegalStateException e) {
                 e.printStackTrace();
             }
         }
