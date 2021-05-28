@@ -3,8 +3,6 @@ package com.lgs.eden.views.login;
 
 import com.lgs.eden.Main;
 import com.lgs.eden.api.Constants;
-import com.lgs.eden.application.WindowController;
-import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -22,6 +20,9 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 
+/**
+ * Controller for Login.
+ */
 public class Login {
 
     // ------------------------------ STATIC ----------------------------- \\
@@ -29,9 +30,11 @@ public class Login {
     private static Parent screen = null;
     private static FXMLLoader loader;
 
-    /** returns Login screen **/
+    /**
+     * returns Login screen
+     **/
     public static Parent getScreen() {
-        if (screen == null){
+        if (screen == null) {
             // todo: clean
             URL resource = Main.class.getResource("/fxml/login.fxml");
             try {
@@ -67,17 +70,19 @@ public class Login {
     /**
      * Action to submit a form by typing ENTER in a TextField
      * Calls the method {@link #onSubmitWithButton(Event)} if the right key is pressed
+     *
      * @param event event associated with this action
      */
     @FXML
-    public void onSubmitWithEnter(KeyEvent event){
-        if(event.getCode().equals(KeyCode.ENTER))
+    public void onSubmitWithEnter(KeyEvent event) {
+        if (event.getCode().equals(KeyCode.ENTER))
             onSubmitWithButton(event);
     }
 
 
     /**
      * Action to submit the login data to the API
+     *
      * @param ignore never used
      */
     @FXML
@@ -89,19 +94,19 @@ public class Login {
 
         // TODO: add popups related to logins errors
         // testing username compatibility with the API
-        if(username < Constants.LOGIN_MIN_LENGTH || username > Constants.TEXT_MAX_LENGTH) {
+        if (username < Constants.LOGIN_MIN_LENGTH || username > Constants.TEXT_MAX_LENGTH) {
             System.out.println("wrong username");
             test = false;
         }
         // testing password compatibility with the API
-        if(wordpass < Constants.PASSWORD_MIN_LENGTH || wordpass > Constants.TEXT_MAX_LENGTH) {
+        if (wordpass < Constants.PASSWORD_MIN_LENGTH || wordpass > Constants.TEXT_MAX_LENGTH) {
             System.out.println("wrong password");
             test = false;
         }
 
         // TODO: Add a real submit method & real stock data methods
-        if(test) {
-            if(rememberMe.isSelected())
+        if (test) {
+            if (rememberMe.isSelected())
                 System.out.println("Stocking username: " + login.getText());
             else
                 System.out.println("Removing username :" + login.getText());
@@ -113,6 +118,7 @@ public class Login {
 
     /**
      * Action to redirect the user to the link to recover his password
+     *
      * @param ignore nothing to do with it
      */
     @FXML
