@@ -104,7 +104,11 @@
                         </Label>
                      </left>
                      <right>
-                        <Button mnemonicParsing="false" text="add" BorderPane.alignment="CENTER" />
+                        <Button mnemonicParsing="false" text="add" BorderPane.alignment="CENTER">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Button>
                      </right>
                      <BorderPane.margin>
                         <Insets />

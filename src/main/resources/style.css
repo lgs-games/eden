@@ -8,6 +8,13 @@
     -fx-text-fill: white;
 }
 
+.button {
+    -fx-background-color:  #FFCC33;
+    -fx-background-radius: 5px;
+    -fx-border-color:  #1e262c;
+    -fx-border-radius: 5px;
+}
+
 /**
 REPUTATION
 **/
