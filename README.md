@@ -1,5 +1,4 @@
 # Eden
-***
 
 ### A short presentation
 Eden is the 2nd version of the **Legendary Games Studios** game launcher.
