@@ -1,10 +1,14 @@
 package com.lgs.eden.views.login;
 
 
+import com.lgs.eden.Main;
 import com.lgs.eden.api.Constants;
+import com.lgs.eden.application.WindowController;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -16,8 +20,40 @@ import java.awt.*;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URL;
 
 public class Login {
+
+    // ------------------------------ STATIC ----------------------------- \\
+
+    private static Parent screen = null;
+    private static FXMLLoader loader;
+
+    /** returns Login screen **/
+    public static Parent getScreen() {
+        if (screen == null){
+            // todo: clean
+            URL resource = Main.class.getResource("/fxml/login.fxml");
+            try {
+                loader = new FXMLLoader(resource);
+                screen = loader.load();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        // todo: we should set/reset the form properly
+        //  like reload username if remember me was selected, and set it back to selected
+        // reset
+        Login controller = loader.getController();
+        controller.login.setText("");
+        controller.rememberMe.setSelected(false);
+        controller.password.setText("");
+
+        return screen;
+    }
+
+    // ------------------------------ INSTANCE ----------------------------- \\
 
     @FXML
     protected TextField login;
