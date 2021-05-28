@@ -10,11 +10,16 @@ import java.util.Objects;
 
 public class Utility {
 
+
     /**
-     * Is used to call the app icon
-     * @return an image containing the default app icon
+     * Loads images from the path given
+     * @param path path of the needed image
+     * @return the Image asked
+     * @throws NullPointerException if the path is not reachable
      */
-    public Image appIcon() {return new Image(Objects.requireNonNull(Main.class.getResourceAsStream("/icon64.png")));}
+    public Image loadImage(String path) throws NullPointerException {
+        return new Image(Objects.requireNonNull(Main.class.getResourceAsStream(path)));
+    }
 
 
     /**
@@ -31,5 +36,6 @@ public class Utility {
 
         return new FXMLLoader(resource);
     }
+
 
 }

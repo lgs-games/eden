@@ -1,6 +1,10 @@
 package com.lgs.eden.utils;
 
+import com.lgs.eden.Main;
 import com.lgs.eden.api.Api;
+import javafx.scene.image.Image;
+
+import java.util.Objects;
 
 public class Config {
 
@@ -27,6 +31,13 @@ public class Config {
         System.out.println(test ? "Client needs an update" : "Client is up to date");
         return test;
     }
+
+
+    /**
+     * Is used to call the app icon
+     * @return an image containing the default app icon
+     */
+    public Image appIcon() {return new Image(Objects.requireNonNull(Main.class.getResourceAsStream("/icon64.png")));}
 
 
 }
