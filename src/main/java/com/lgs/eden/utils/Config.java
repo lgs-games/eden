@@ -12,13 +12,20 @@ public class Config {
         version = "1.0";
         username = "Raphik";
         language = "en";
-        checkVersion(version);
+        checkClientVersion(version);
     }
 
-
-    public void checkVersion(String current) {
-        boolean test = current.equals(Api.getApiVersion());
-        System.out.println(test ? "Client up to date" : "Client needs an update");
+    /**
+     * Checks if there is a new version of the application
+     * @param current the current version of the app
+     *
+     * @return true if the client needs an update, false instead
+     */
+    public boolean checkClientVersion(String current) {
+        System.out.println("Checking client version...");
+        boolean test = !current.equals(Api.getApiVersion());
+        System.out.println(test ? "Client needs an update" : "Client is up to date");
+        return test;
     }
 
 
