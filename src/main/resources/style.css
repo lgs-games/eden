@@ -1,0 +1,16 @@
+.app-background {
+    -fx-background-color: #1e262c;
+    -fx-text-fill: white;
+}
+
+.white-box {
+    -fx-background-color: rgb(244, 248, 249);
+    -fx-text-fill: white;
+}
+
+/**
+REPUTATION
+**/
+
+.add-rep { -fx-text-fill: #00ac41; }
+.remove-rep { -fx-text-fill: #dd4441; }
