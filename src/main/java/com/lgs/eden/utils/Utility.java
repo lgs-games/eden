@@ -18,7 +18,7 @@ public class Utility {
      * @throws NullPointerException if the path is not reachable
      */
     public static Image loadImage(String path) throws NullPointerException {
-        return new Image(Objects.requireNonNull(Main.class.getResourceAsStream(path)));
+        return new Image(Objects.requireNonNull(Utility.class.getResourceAsStream(path)));
     }
 
 
@@ -30,7 +30,7 @@ public class Utility {
      */
     public static FXMLLoader loadView(String path) throws IllegalStateException {
 
-        URL resource = Main.class.getResource(path);
+        URL resource = Utility.class.getResource(path);
         if(resource == null)
             throw new IllegalStateException();
 
