@@ -23,14 +23,14 @@
             <children>
                 <ImageView fitHeight="64.0" fitWidth="64.0" layoutX="209.0" layoutY="42.0" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@../../../../../../resources/img/logo80x80.png" />
+                        <Image url="@img/logo80x80.png" />
                     </image>
                 </ImageView>
                 <Button contentDisplay="GRAPHIC_ONLY" layoutX="629.0" layoutY="27.0" mnemonicParsing="false" prefHeight="66.0" prefWidth="38.0" text="Settings">
                     <graphic>
                         <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@../../../../../../resources/icons/gear32x32.png" />
+                                <Image url="@icons/gear32x32.png" />
                             </image>
                         </ImageView>
                     </graphic>
