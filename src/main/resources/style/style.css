@@ -1,11 +1,8 @@
-* {
-    -fx-font-family: Calibri;
-    -fx-font-size: 12;
-}
-
 .title-bar {
     -fx-border-width: 0 0 1px 0;
     -fx-border-color: #dd4411;
+    -fx-font-family: Calibri;
+    -fx-font-size: 12;
 }
 
 .no-button { -fx-background-color: inherit; }
