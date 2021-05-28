@@ -12,7 +12,10 @@ import java.util.Objects;
  */
 public class Config {
 
-    private static final String VERSION = "1.0"; // TODO: change version type to EdenVersion
+    // TODO: change version type to EdenVersion
+    private static final String VERSION = "1.0";
+    public static final String APP_NAME = "Eden";
+
     private static String USERNAME = "Raphik";
     private static Locale locale = setLocale(Language.EN);
 

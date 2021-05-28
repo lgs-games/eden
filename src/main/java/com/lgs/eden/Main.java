@@ -33,9 +33,9 @@ public class Main extends Application {
         // then set scene
         primaryStage.setScene(scene);
         // window title
-        primaryStage.setTitle("Eden");
+        primaryStage.setTitle(Config.APP_NAME);
         // window icon
-        primaryStage.getIcons().add(new Image(Objects.requireNonNull(Main.class.getResourceAsStream("/icon64.png"))));
+        primaryStage.getIcons().add(Config.appIcon());
         // and show
         primaryStage.show();
         // show login screen
