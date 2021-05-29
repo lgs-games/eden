@@ -59,7 +59,7 @@
                   <Font name="System Bold" size="14.0" />
                </font>
             </Label>
-            <Label fx:id="forgotPwd" layoutX="421.0" layoutY="187.0" onMouseClicked="#onForgotPassword" text="%forgot_password" />
+            <Label fx:id="forgotPwd" layoutX="421.0" layoutY="187.0" onMouseClicked="#onForgotPassword" styleClass="link" text="%forgot_password" />
             <CheckBox fx:id="rememberMe" layoutX="154.0" layoutY="213.0" mnemonicParsing="false" text="%remember_me" />
             <Label layoutX="179.0" layoutY="230.0" text="%connection_data_stored_on_computer" textFill="#868080" />
             <PasswordField fx:id="password" layoutX="160.0" layoutY="140.0" onKeyPressed="#onSubmitWithEnter" prefHeight="38.0" prefWidth="386.0" />
