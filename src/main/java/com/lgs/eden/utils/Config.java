@@ -4,34 +4,36 @@ import com.lgs.eden.Main;
 import com.lgs.eden.api.Api;
 import javafx.scene.image.Image;
 
+import java.util.Locale;
 import java.util.Objects;
 
+/**
+ *
+ */
 public class Config {
 
-    private static String version; // TODO: change version type to EdenVersion
-    private static String username;
-    private static String language;
+    // ------------------------------ CONSTANTS ----------------------------- \\
 
-    public Config() {
-        version = "1.0";
-        username = "Raphik";
-        language = "en";
-        checkClientVersion(version);
-    }
+    private static final String VERSION = "1.0";
+    public static final String APP_NAME = "Eden";
+    public static final int SCREEN_WIDTH = 500;
+    public static final int SCREEN_HEIGHT = 700;
+
+    // ------------------------------ CLASS VARIABLES ----------------------------- \\
+
+    private static String username = "Raphik";
+    private static Locale locale = setLocale(Language.EN);
+
+    // ------------------------------ GENERAL METHODS ----------------------------- \\
 
     /**
      * Checks if there is a new version of the application
-     * @param current the current version of the app
-     *
      * @return true if the client needs an update, false instead
      */
-    public boolean checkClientVersion(String current) {
+    public static boolean checkClientVersion() {
         System.out.println("Checking client version...");
-        boolean test = !current.equals(Api.getApiVersion());
-        System.out.println(test ? "Client needs an update" : "Client is up to date");
-        return test;
+        return !VERSION.equals(Api.getApiVersion());
     }
-
 
     /**
      * Is used to call the app icon
@@ -39,5 +41,12 @@ public class Config {
      */
     public static Image appIcon() {return Utility.loadImage("/icon64.png");}
 
+    // ------------------------------ LANGUAGE RELATED ----------------------------- \\
+
+    // return locale
+    public static Locale getLocale() { return locale; }
+
+    // set language
+    public static Locale setLocale(Language lang) { return locale = new Locale(lang.text); }
 
 }
