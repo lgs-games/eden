@@ -18,7 +18,7 @@ repositories { mavenCentral() }
 dependencies {
     implementation 'uk.co.bithatch:FX-BorderlessScene:5.0.3'
     implementation 'org.jetbrains:annotations:20.1.0'
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.2'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
 }
 
