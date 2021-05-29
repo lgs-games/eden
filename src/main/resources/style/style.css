@@ -13,3 +13,28 @@
     -fx-cursor: HAND;
 }
 
+/** profile css **/
+
+.app-background {
+    -fx-background-color: #1e262c;
+    -fx-text-fill: white;
+}
+
+.white-box {
+    -fx-background-color: rgb(244, 248, 249);
+    -fx-text-fill: white;
+}
+
+.button {
+    -fx-background-color:  #FFCC33;
+    -fx-background-radius: 5px;
+    -fx-border-color:  #1e262c;
+    -fx-border-radius: 5px;
+}
+
+/**
+REPUTATION
+**/
+
+.add-rep { -fx-text-fill: #00ac41; }
+.remove-rep { -fx-text-fill: #dd4441; }
