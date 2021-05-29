@@ -14,3 +14,6 @@ will write ``%key``.
 When loading a view, ``Utility.loadView`` method check for current locale, then
 load property file and translate everything ! Locale must be registered
 in ``Language`` class trough.
+
+**NOTE** : When using SceneBuilder, ``%`` are **escaped** so go to
+the fxml and **remove the slash before the percent**.

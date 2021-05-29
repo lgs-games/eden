@@ -19,7 +19,6 @@ import java.awt.*;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.net.URL;
 
 /**
  * Controller for Login.
@@ -35,15 +34,8 @@ public class Login {
      * @return Login screen
      **/
     public static Parent getScreen() {
-        if (screen == null) {
-            // todo: clean
-            try {
-                loader = Utility.loadView("/fxml/login.fxml");
-                screen = loader.load();
-            } catch (IOException | IllegalStateException e) {
-                e.printStackTrace();
-            }
-        }
+        loader = Utility.loadView("/fxml/settings.fxml");
+        screen = Utility.loadViewPane(loader);
 
         // todo: we should set/reset the form properly
         //  like reload username if remember me was selected, and set it back to selected
