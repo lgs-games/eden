@@ -77,6 +77,7 @@ public class Settings implements ChangeListener<Language> {
     public void changed(ObservableValue<? extends Language> observable, Language oldValue, Language newValue) {
         // set selected
         Config.setLocale(newValue);
+        WindowController.setScreen(Settings.getScreen());
         // redraw
         // todo: redraw
     }
