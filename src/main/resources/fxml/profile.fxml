@@ -69,12 +69,12 @@
                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
-                              <Label styleClass="add-rep" text="+ 1" GridPane.halignment="CENTER">
+                              <Label onMouseClicked="#onPlusOneRep" styleClass="add-rep" text="+ 1" GridPane.halignment="CENTER">
                                  <font>
                                     <Font name="System Bold" size="24.0" />
                                  </font>
                               </Label>
-                              <Label styleClass="remove-rep" text="- 1" GridPane.columnIndex="1" GridPane.halignment="CENTER">
+                              <Label onMouseClicked="#onMinusOneRep" styleClass="remove-rep" text="- 1" GridPane.columnIndex="1" GridPane.halignment="CENTER">
                                  <font>
                                     <Font name="System Bold" size="24.0" />
                                  </font>
@@ -104,7 +104,7 @@
                         </Label>
                      </left>
                      <right>
-                        <Button mnemonicParsing="false" text="%add_friends" BorderPane.alignment="CENTER">
+                        <Button mnemonicParsing="false" onAction="#onAddFriend" text="%add_friends" BorderPane.alignment="CENTER">
                            <font>
                               <Font size="14.0" />
                            </font>
@@ -124,7 +124,7 @@
                <bottom>
                   <Pane nodeOrientation="RIGHT_TO_LEFT" prefHeight="30.0" prefWidth="300.0" BorderPane.alignment="CENTER">
                      <children>
-                        <Label layoutX="30.0" layoutY="4.0" text="%see_all_friends">
+                        <Label layoutX="30.0" layoutY="4.0" onMouseClicked="#onSeeAllFriends" text="%see_all_friends">
                            <font>
                               <Font name="System Bold" size="14.0" />
                            </font>

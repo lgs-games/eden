@@ -36,4 +36,28 @@ public class Profile {
     private Date lastSeen;
     private Date memberSinceDate;
 
+    /** Listener of the see all friends label **/
+    @FXML
+    private void onSeeAllFriends(){
+        System.out.println("So you want to see all your friends...");
+    }
+
+    /** Listener of the add friend button **/
+    @FXML
+    private void onAddFriend() {
+        System.out.println("Wanna have some new friends ?");
+    }
+
+    /** Listener of the +1 rep label **/
+    @FXML 
+    private void onPlusOneRep() {
+        System.out.println("+1 rep for him");
+    }
+
+    /** Listener of the -1 rep label **/
+    @FXML
+    private void onMinusOneRep() {
+        System.out.println("-1 rep for him");
+    }
+
 }
