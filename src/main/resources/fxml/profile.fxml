@@ -15,9 +15,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane minHeight="650.0" minWidth="1000.0" styleClass="app-background" stylesheets="@../style.css"
-            xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.lgs.eden.views.profile.Profile">
+<BorderPane minHeight="650.0" minWidth="1000.0" styleClass="app-background" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lgs.eden.views.profile.Profile">
    <right>
       <BorderPane minWidth="300.0" prefHeight="200.0" prefWidth="300.0" BorderPane.alignment="CENTER">
          <top>
@@ -123,6 +121,17 @@
                <center>
                   <ListView focusTraversable="false" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: inherit;" BorderPane.alignment="CENTER" />
                </center>
+               <bottom>
+                  <Pane nodeOrientation="RIGHT_TO_LEFT" prefHeight="30.0" prefWidth="300.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <Label layoutX="30.0" layoutY="4.0" text="%see_all_friends">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </Pane>
+               </bottom>
             </BorderPane>
          </center>
          <BorderPane.margin>
