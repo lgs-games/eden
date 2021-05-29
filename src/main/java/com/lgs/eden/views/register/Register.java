@@ -44,6 +44,7 @@ public class Register extends LoginRegisterForm {
      * Action to submit the login data to the API
      */
     @FXML
+    @Override
     public void onSubmitWithButton() {
         String username = this.login.getText();
         String pwd = this.password.getText();

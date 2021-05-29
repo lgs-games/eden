@@ -53,6 +53,7 @@ public class Login extends LoginRegisterForm {
     // ------------------------------ METHODS ----------------------------- \\
 
     @FXML
+    @Override
     public void onSubmitWithButton() { // TODO: translate
         String username = this.login.getText();
         String pwd = this.password.getText();

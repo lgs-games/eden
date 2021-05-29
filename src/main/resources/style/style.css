@@ -7,7 +7,10 @@
 
 .no-button { -fx-background-color: inherit; }
 
-.link { -fx-text-fill: #2aa198; }
+.link {
+    -fx-text-fill: #2aa198;
+    -fx-cursor: HAND;
+}
 
 .button {
     -fx-cursor: HAND;
