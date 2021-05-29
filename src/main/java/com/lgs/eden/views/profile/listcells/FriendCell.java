@@ -7,29 +7,42 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.ListCell;
 
+/**
+ * View for a cell
+ */
 public class FriendCell extends ListCell<FriendData> {
+
+    // ------------------------------ ATTRIBUTES ----------------------------- \\
 
     private final Node graphic;
     private final FriendCellController controller;
 
+    // ------------------------------ CONTROLLER ----------------------------- \\
+
     public FriendCell() {
         FXMLLoader loader = Utility.loadView(ViewsPath.FRIEND_CELL.path);
-        graphic = Utility.loadViewPane(loader);
-        controller = loader.getController();
+        this.graphic = Utility.loadViewPane(loader);
+        this.controller = loader.getController();
+        // add listener
+        this.setOnMouseClicked((e)->this.controller.onWantProfile());
     }
+
+    // ------------------------------ METHODS ----------------------------- \\
 
     @Override
     protected void updateItem(FriendData item, boolean empty) {
-        super.updateItem(item, empty);
+        boolean isEmpty = empty || item == null;
 
-        if (empty || item == null) {
-            setText(null);
-            setGraphic(null);
-        } else {
-            controller.setName(item.getName());
-            controller.setAvatar(item.getAvatar());
-            setText(null);
-            setGraphic(graphic);
+        // no background
+        setBackground(null);
+        setText(null);
+        // we will only show the view if we got something
+        setGraphic(isEmpty ? null : this.graphic);
+
+        // show item
+        if (!isEmpty) {
+            this.controller.setName(item.getName());
+            this.controller.setAvatar(item.getAvatar());
         }
     }
 

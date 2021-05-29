@@ -5,26 +5,34 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
+/**
+ * Controller for friendcell.fxml
+ */
 public class FriendCellController {
 
-    @FXML
-    private Label friend_name;
+    // ------------------------------ INSTANCE ----------------------------- \\
 
     @FXML
-    private ImageView friend_avatar;
+    private Label friendName;
 
-    public void setName(String entry) {this.friend_name.setText(entry);}
-    public Label getName() {return friend_name;}
+    @FXML
+    private ImageView friendAvatar;
 
-    public void setAvatar(Image pic) {this.friend_avatar.setImage(pic);}
-    public Image getAvatar() {return friend_avatar.getImage();}
+    // ------------------------------ METHODS ----------------------------- \\
+
+    public void setName(String entry) { this.friendName.setText(entry); }
+
+    public void setAvatar(Image pic) { this.friendAvatar.setImage(pic); }
+
+    // ------------------------------ LISTENERS ----------------------------- \\
 
     /**
      * Triggered when the user clicks on a cell, redirects to this friends profile
      */
     @FXML
-    private void onWantProfile() {
+    public void onWantProfile() {
         System.out.println("So you want to see his profile :eyes:");
+        System.out.println("/see "+friendName.getText());
     }
 
 }

@@ -4,6 +4,7 @@ import com.goxr3plus.fxborderlessscene.borderless.BorderlessScene;
 import com.lgs.eden.application.WindowController;
 import com.lgs.eden.utils.Config;
 import com.lgs.eden.views.login.Login;
+import com.lgs.eden.views.profile.Profile;
 import javafx.application.Application;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
@@ -32,7 +33,7 @@ public class Main extends Application {
         BorderlessScene scene = new BorderlessScene(primaryStage, StageStyle.UNDECORATED, root,
                 0, 0);
         // init frame
-        WindowController.init(scene, Config.SCREEN_WIDTH, Config.SCREEN_HEIGHT);
+        WindowController.init(scene, 1100, 700);
         // then set scene
         primaryStage.setScene(scene);
         // window title
@@ -42,6 +43,6 @@ public class Main extends Application {
         // and show
         primaryStage.show();
         // show login screen
-        WindowController.setScreen(Login.getScreen());
+        WindowController.setScreen(Profile.getScreen());
     }
 }

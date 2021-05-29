@@ -7,6 +7,7 @@ import com.lgs.eden.utils.Translate;
 import com.lgs.eden.utils.Utility;
 import com.lgs.eden.views.profile.listcells.FriendCell;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import com.lgs.eden.utils.ViewsPath;
