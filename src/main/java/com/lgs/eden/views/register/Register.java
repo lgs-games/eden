@@ -84,9 +84,14 @@ public class Register extends Login {
         WindowController.setScreen(Login.getScreen());
     }
 
+
+    /**
+     * Action called when the user want to go to setting screen
+     * @param ignore just ignore it
+     */
     @FXML
     public void onSettingsPressed(ActionEvent ignore) {
-        SettingsController.setBackScreen(Register.getScreen());
+        SettingsController.setBackScreen(Register.getScreen()); // so that the settings controller knows where to return
         WindowController.setScreen(SettingsController.getScreen());
     }
 

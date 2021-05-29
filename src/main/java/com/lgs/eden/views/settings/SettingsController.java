@@ -23,7 +23,17 @@ public class SettingsController implements ChangeListener<Language> {
     // ------------------------------ STATIC ----------------------------- \\
 
     private static Parent backScreen = Login.getScreen();
+
+    /**
+     * Setter for the Parent of the screen that called settings
+     * @param entry the Parent that called the settings screen
+     */
     public static void setBackScreen(Parent entry) {backScreen = entry;}
+
+    /**
+     * Getter for the parent that called the settings screen
+     * @return the Parent stocked in backScreen
+     */
     public static Parent getBackScreen() {return backScreen;}
 
     /**
@@ -70,6 +80,11 @@ public class SettingsController implements ChangeListener<Language> {
         // todo: redraw
     }
 
+
+    /**
+     * Goes back to the screen that called the settings screen
+     * @param ignore just ignore it
+     */
     @FXML
     public void onBackIsPressed(Event ignore) {
         WindowController.setScreen(backScreen);

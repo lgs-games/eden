@@ -131,14 +131,23 @@ public class Login {
     }
 
 
+    /**
+     * Goes from login screen to register screen
+     * @param ignore just ignore it
+     */
     @FXML
     public void onSigninIsPressed(ActionEvent ignore) {
         WindowController.setScreen(Register.getScreen());
     }
 
+
+    /**
+     * Goes to the settings screen
+     * @param ignore just ignore it
+     */
     @FXML
     public void onSettingsPressed(ActionEvent ignore) {
-        SettingsController.setBackScreen(Login.getScreen());
+        SettingsController.setBackScreen(Login.getScreen()); // so that the settings controller knows where to go back
         WindowController.setScreen(SettingsController.getScreen());
     }
 
