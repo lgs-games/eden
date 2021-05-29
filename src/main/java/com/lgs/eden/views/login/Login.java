@@ -94,12 +94,12 @@ public class Login {
 
         // TODO: add popups related to logins errors
         // testing username compatibility with the API
-        if (username < Constants.LOGIN_MIN_LENGTH || username > Constants.TEXT_MAX_LENGTH) {
+        if (username < Constants.LOGIN_MIN_LENGTH || username > Constants.LOGIN_MAX_LENGTH) {
             System.out.println("wrong username");
             test = false;
         }
         // testing password compatibility with the API
-        if (wordpass < Constants.PASSWORD_MIN_LENGTH || wordpass > Constants.TEXT_MAX_LENGTH) {
+        if (wordpass < Constants.PASSWORD_MIN_LENGTH || wordpass > Constants.PASSWORD_MAX_LENGTH) {
             System.out.println("wrong password");
             test = false;
         }
