@@ -19,7 +19,6 @@ import java.awt.*;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.net.URL;
 
 /**
  * Controller for Login.
@@ -35,13 +34,12 @@ public class Login {
      * returns Login screen
      **/
     public static Parent getScreen() {
-        if (screen == null) {
-            // todo: clean
+        if (Login.screen == null) {
             try {
-                loader = Utility.loadView("/fxml/login.fxml");
-                screen = loader.load();
+                Login.loader = Utility.loadView("/fxml/login.fxml");
+                Login.screen = Login.loader.load();
             } catch (IOException | IllegalStateException e) {
-                e.printStackTrace();
+                throw new IllegalStateException(e);
             }
         }
 
