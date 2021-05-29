@@ -19,5 +19,19 @@ public class FriendCell extends ListCell<FriendData> {
         controller = loader.getController();
     }
 
+    @Override
+    protected void updateItem(FriendData item, boolean empty) {
+        super.updateItem(item, empty);
+
+        if (empty || item == null) {
+            setText(null);
+            setGraphic(null);
+        } else {
+            controller.setName(item.getName());
+            controller.setAvatar(item.getAvatar());
+            setText(null);
+            setGraphic(graphic);
+        }
+    }
 
 }

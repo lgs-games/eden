@@ -1,5 +1,11 @@
 package com.lgs.eden.api;
 
+import com.lgs.eden.api.wrapper.FriendData;
+import com.lgs.eden.utils.Utility;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class Api {
 
     public static String getApiVersion() { return "1.0"; }
@@ -37,4 +43,19 @@ public class Api {
         }
         return 0;
     }
+
+    public static ArrayList<FriendData> getFriendList() {
+        ArrayList<FriendData> friendList = new ArrayList<>();
+        FriendData fr1 = new FriendData(Utility.loadImage("/icon64.png"), "Raphik");
+        FriendData fr2 = new FriendData(Utility.loadImage("/icon64.png"), "Calistral");
+        FriendData fr3 = new FriendData(Utility.loadImage("/icon64.png"), "Caliki");
+        FriendData fr4 = new FriendData(Utility.loadImage("/icon64.png"), "Raphistro");
+
+        friendList.add(fr1);
+        friendList.add(fr2);
+        friendList.add(fr3);
+        friendList.add(fr4);
+        return friendList;
+    }
+
 }

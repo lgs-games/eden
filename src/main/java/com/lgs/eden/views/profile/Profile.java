@@ -1,15 +1,22 @@
 package com.lgs.eden.views.profile;
 
+import com.lgs.eden.api.Api;
+import com.lgs.eden.api.wrapper.FriendData;
 import com.lgs.eden.api.wrapper.RecentGameData;
+import com.lgs.eden.utils.ModifiableObservableList;
 import com.lgs.eden.utils.Translate;
 import com.lgs.eden.utils.Utility;
+import com.lgs.eden.views.profile.listcells.FriendCell;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import com.lgs.eden.utils.ViewsPath;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.layout.GridPane;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -34,17 +41,21 @@ public class Profile {
 
     private final RecentGameData[] recentGamesData;
     private int usernameID;
-    private int friendsNumber;
+    private int friendNumber = 4;
     private int reputation;
     private short status;
 
     private String biography;
+    private ObservableList<FriendData> friendDataObservableList = new ModifiableObservableList<>();
 
     private Date lastSeen;
     private Date memberSinceDate;
 
     @FXML
     private GridPane recentGames;
+
+    @FXML
+    private ListView<FriendData> friendDataListView;
 
     public Profile() {
         // todo: that's a fake of API data
@@ -77,6 +88,13 @@ public class Profile {
 
         // ------------------------------ FILL FRIEND LIST ----------------------------- \\
         // ...
+
+        if (friendNumber > 0) {
+            ArrayList<FriendData> tmp = Api.getFriendList();
+            this.friendDataObservableList.addAll(tmp);
+            this.friendDataListView.setItems(friendDataObservableList);
+            this.friendDataListView.setCellFactory(friendDataListView -> new FriendCell());
+        }
 
     }
 
