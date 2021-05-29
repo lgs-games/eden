@@ -122,3 +122,4 @@ build/*
 .gradle/*
 
 !lib/*.jar
+!gradle/wrapper/gradle-wrapper.jar

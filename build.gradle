@@ -1,5 +1,5 @@
 plugins {
-    id 'maven'
+    id 'maven-publish'
     id 'java'
     id 'application'
     id 'org.openjfx.javafxplugin' version '0.0.10'
@@ -32,6 +32,7 @@ application { mainClassName = "com.lgs.eden.Main" }
 
 //noinspection GroovyAssignabilityCheck
 tasks.withType(JavaCompile) {
+    options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
     options.encoding = "UTF-8"
     // sourceCompatibility = 11
     // targetCompatibility = 11
