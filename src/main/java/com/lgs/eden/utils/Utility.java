@@ -1,8 +1,11 @@
 package com.lgs.eden.utils;
 
+import com.lgs.eden.application.WindowController;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.image.Image;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.Locale;
 import java.util.Objects;
@@ -42,6 +45,19 @@ public final class Utility {
         FXMLLoader loader = new FXMLLoader(resource);
         loader.setResources(ResourceBundle.getBundle("i18n", locale));
         return loader;
+    }
+
+    /**
+     * Same as load view but return the FXML component
+     * @see #loadView
+     */
+    public static Parent loadViewPane(String path) throws IllegalStateException {
+        try {
+            FXMLLoader l = Utility.loadView(path);
+            return l.load();
+        } catch (IOException | IllegalStateException e) {
+            throw new IllegalStateException(e);
+        }
     }
 
 }
