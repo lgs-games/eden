@@ -47,6 +47,6 @@ public class Config {
     public static Locale getLocale() { return locale; }
 
     // set language
-    public static Locale setLocale(Language lang) { return locale = new Locale(lang.text); }
+    public static Locale setLocale(Language lang) { return locale = new Locale(lang.code); }
 
 }
