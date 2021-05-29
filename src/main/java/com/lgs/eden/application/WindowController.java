@@ -2,6 +2,7 @@ package com.lgs.eden.application;
 
 import com.goxr3plus.fxborderlessscene.borderless.BorderlessScene;
 import com.lgs.eden.Main;
+import com.lgs.eden.utils.Utility;
 import com.lgs.eden.utils.ViewsPath;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -30,21 +31,13 @@ public class WindowController {
 
     /** load window **/
     public static BorderPane loadWindow(Stage primaryStage){
-        try {
-            // todo: load
-            URL resource = Main.class.getResource(ViewsPath.FRAME.path);
-            if (resource == null) throw new IOException();
-            FXMLLoader loader = new FXMLLoader(resource);
-
-            // init
-            window = loader.load();
-            instance = loader.getController();
-            instance.stage = primaryStage;
-
-            return window;
-        } catch (IOException e) {
-            throw new IllegalStateException("Can't load FXML: frame.fxml");
-        }
+        FXMLLoader loader = Utility.loadView(ViewsPath.FRAME.path);
+        // init
+        window = (BorderPane) Utility.loadViewPane(loader);
+        instance = loader.getController();
+        instance.stage = primaryStage;
+        // return
+        return window;
     }
 
     /** Init frame using scene. */

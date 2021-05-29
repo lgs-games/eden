@@ -5,6 +5,7 @@ package com.lgs.eden.utils;
  */
 public enum ViewsPath {
     FRAME("/fxml/frame.fxml"),
+    FRAME_MAIN("/fxml/frame_main.fxml"),
     LOGIN("/fxml/login.fxml"),
     PROFILE("/fxml/profile.fxml"),
     REGISTER("/fxml/register.fxml"),

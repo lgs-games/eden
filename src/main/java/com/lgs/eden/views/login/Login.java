@@ -1,6 +1,7 @@
 package com.lgs.eden.views.login;
 
 import com.lgs.eden.api.Api;
+import com.lgs.eden.application.AppWindowHandler;
 import com.lgs.eden.application.PopupUtils;
 import com.lgs.eden.utils.Config;
 import com.lgs.eden.utils.ViewsPath;
@@ -14,8 +15,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.control.CheckBox;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 
 import java.awt.*;
 import java.io.IOException;
@@ -50,7 +49,7 @@ public class Login extends LoginRegisterForm {
         String stored_username = Config.getStored_username();
         this.login.setText(stored_username);
         this.rememberMe.setSelected(!stored_username.isEmpty());
-        this.password.setText("");
+        this.password.setText("tester");
     }
 
     // ------------------------------ METHODS ----------------------------- \\
@@ -70,11 +69,7 @@ public class Login extends LoginRegisterForm {
             // add user
             int response = Api.login(username, pwd);
             if (response == 0){
-                // todo: move to app
-                System.out.println("submitted, go to app");
-                // todo: temporary go to profile
-                WindowController.setSize(1100, 700);
-                WindowController.setScreen(Profile.getScreen());
+                AppWindowHandler.changeToAppWindow();
             } else {
                 error.append("Invalid credentials\n");
             }
