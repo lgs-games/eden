@@ -3,6 +3,11 @@ package com.lgs.eden.views.login;
 import com.lgs.eden.api.Api;
 import com.lgs.eden.utils.Config;
 import com.lgs.eden.utils.helper.LoginRegisterForm;
+
+import com.lgs.eden.application.WindowController;
+import com.lgs.eden.views.register.Register;
+import com.lgs.eden.views.settings.Settings;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.control.CheckBox;
@@ -47,21 +52,6 @@ public class Login extends LoginRegisterForm {
 
     // ------------------------------ METHODS ----------------------------- \\
 
-    /**
-     * Action to submit a form by typing ENTER in a TextField
-     * Calls the method {@link #onSubmitWithButton()} if the right key is pressed
-     *
-     * @param event event associated with this action
-     */
-    @FXML
-    public void onSubmitWithEnter(KeyEvent event) {
-        if (event.getCode().equals(KeyCode.ENTER))
-            onSubmitWithButton();
-    }
-
-    /**
-     * Action to submit the login data to the API
-     */
     @FXML
     public void onSubmitWithButton() { // TODO: translate
         String username = this.login.getText();
@@ -103,6 +93,17 @@ public class Login extends LoginRegisterForm {
                 System.out.println("exception has occurred");
             }
         }
+    }
+
+    @FXML
+    public void onSigninIsPressed(ActionEvent ignore) {
+        WindowController.setScreen(Register.getScreen());
+    }
+
+    @FXML
+    public void onSettingsPressed(ActionEvent ignore) {
+        Settings.setBackScreen(Login.getScreen());
+        WindowController.setScreen(Settings.getScreen());
     }
 
 }
