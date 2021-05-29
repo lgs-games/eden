@@ -19,15 +19,8 @@ public class Register extends Login {
     private static FXMLLoader loader;
 
     public static Parent getScreen() {
-        if (screen == null) {
-            // todo: clean
-            try {
-                loader = Utility.loadView("/fxml/register.fxml");
-                screen = loader.load();
-            } catch (IOException | IllegalStateException e) {
-                e.printStackTrace();
-            }
-        }
+        loader = Utility.loadView("/fxml/register.fxml");
+        screen = Utility.loadViewPane(loader);
 
         Register controller = loader.getController();
         controller.login.setText("");
