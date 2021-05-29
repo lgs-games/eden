@@ -60,4 +60,13 @@ public class Config {
 
     /** return stored username **/
     public static String getStored_username() { return stored_username; }
+
+    /**
+     * todo:
+     * Load language by default from Config file
+     * and load stored_username if we got one.
+     */
+    public static void init() {
+
+    }
 }
