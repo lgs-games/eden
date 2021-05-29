@@ -7,9 +7,51 @@
 
 .no-button { -fx-background-color: inherit; }
 
-.link { -fx-text-fill: #2aa198; }
+.link {
+    -fx-text-fill: #2aa198;
+    -fx-cursor: HAND;
+}
 
 .button {
     -fx-cursor: HAND;
 }
 
+/** profile css **/
+
+.app-background {
+    -fx-background-color: #1e262c;
+    -fx-text-fill: white;
+}
+
+.white-box {
+    -fx-background-color: rgb(244, 248, 249);
+    -fx-text-fill: white;
+}
+
+.eden-button {
+    -fx-background-color:  #FFCC33;
+    -fx-background-radius: 5px;
+    -fx-border-color:  #1e262c;
+    -fx-border-radius: 5px;
+}
+
+.profile-game {
+    -fx-border-width: 1px;
+    -fx-border-color: #00ac41;
+}
+
+.profile-game-playing {
+    -fx-text-fill: #00ac41;
+}
+
+.profile-game-label {
+    -fx-font-size: 15px;
+    -fx-text-fill: #dd4411;
+}
+
+/**
+REPUTATION
+**/
+
+.add-rep { -fx-text-fill: #00ac41; }
+.remove-rep { -fx-text-fill: #dd4441; }

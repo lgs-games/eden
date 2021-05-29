@@ -2,11 +2,11 @@ package com.lgs.eden.views.register;
 
 import com.lgs.eden.api.Api;
 import com.lgs.eden.utils.ViewsPath;
+import com.lgs.eden.application.PopupUtils;
 import com.lgs.eden.utils.helper.LoginRegisterForm;
 import com.lgs.eden.application.WindowController;
 import com.lgs.eden.views.login.Login;
 import com.lgs.eden.views.settings.Settings;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.control.TextField;
@@ -44,12 +44,12 @@ public class Register extends LoginRegisterForm {
      * Action to submit the login data to the API
      */
     @FXML
+    @Override
     public void onSubmitWithButton() {
         String username = this.login.getText();
         String pwd = this.password.getText();
         String email = this.email.getText();
         StringBuilder error = new StringBuilder(); // for error message
-
 
         // testing username, password compatibility with the API
         if (checkUsername(username)) error.append("wrong username\n");
@@ -70,25 +70,26 @@ public class Register extends LoginRegisterForm {
                 error.append("Register failed\n");
             }
         }
-    }
 
+        if (!error.toString().isBlank()){
+            PopupUtils.showPopup(error.toString());
+        }
+    }
 
     /**
      * Goes from register screen to log in screen
-     * @param ignore just ignore it
      */
     @FXML
-    public void onPressBack(ActionEvent ignore) {
+    public void onPressBack() {
         WindowController.setScreen(Login.getScreen());
     }
 
 
     /**
      * Action called when the user want to go to setting screen
-     * @param ignore just ignore it
      */
     @FXML
-    public void onSettingsPressed(ActionEvent ignore) {
+    public void onSettingsPressed() {
         Settings.setBackScreen(ViewsPath.REGISTER);
         WindowController.setScreen(Settings.getScreen());
     }
