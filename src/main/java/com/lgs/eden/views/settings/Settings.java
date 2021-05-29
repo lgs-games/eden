@@ -4,6 +4,7 @@ import com.lgs.eden.application.WindowController;
 import com.lgs.eden.utils.Config;
 import com.lgs.eden.utils.Language;
 import com.lgs.eden.utils.Utility;
+import com.lgs.eden.utils.ViewsPath;
 import com.lgs.eden.views.login.Login;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -22,25 +23,25 @@ public class Settings implements ChangeListener<Language> {
 
     // ------------------------------ STATIC ----------------------------- \\
 
-    private static Parent backScreen = Login.getScreen();
+    private static ViewsPath backScreen = ViewsPath.LOGIN;
 
     /**
      * Setter for the Parent of the screen that called settings
      * @param entry the Parent that called the settings screen
      */
-    public static void setBackScreen(Parent entry) {backScreen = entry;}
+    public static void setBackScreen(ViewsPath entry) {backScreen = entry;}
 
     /**
      * Getter for the parent that called the settings screen
      * @return the Parent stocked in backScreen
      */
-    public static Parent getBackScreen() {return backScreen;}
+    public static ViewsPath getBackScreen() {return backScreen;}
 
     /**
      * @return settings screen
      */
     public static Parent getScreen() {
-        FXMLLoader loader = Utility.loadView("/fxml/settings.fxml");
+        FXMLLoader loader = Utility.loadView(ViewsPath.SETTINGS.path);
         Parent screen = Utility.loadViewPane(loader);
         Settings controller = loader.getController();
         controller.initScreen();
@@ -76,6 +77,7 @@ public class Settings implements ChangeListener<Language> {
     public void changed(ObservableValue<? extends Language> observable, Language oldValue, Language newValue) {
         // set selected
         Config.setLocale(newValue);
+        WindowController.setScreen(Settings.getScreen());
         // redraw
         // todo: redraw
     }
@@ -83,11 +85,14 @@ public class Settings implements ChangeListener<Language> {
 
     /**
      * Goes back to the screen that called the settings screen
-     * @param ignore just ignore it
      */
     @FXML
-    public void onBackIsPressed(Event ignore) {
-        WindowController.setScreen(backScreen);
+    public void onBackIsPressed() {
+        try {
+            WindowController.setScreen(Utility.loadViewPane(backScreen.path));
+        } catch (IllegalStateException e) {
+            e.printStackTrace();
+        }
     }
 
 }

@@ -1,12 +1,12 @@
 package com.lgs.eden.views.register;
 
 import com.lgs.eden.api.Api;
+import com.lgs.eden.utils.ViewsPath;
 import com.lgs.eden.utils.helper.LoginRegisterForm;
 import com.lgs.eden.application.WindowController;
 import com.lgs.eden.views.login.Login;
 import com.lgs.eden.views.settings.Settings;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.control.TextField;
@@ -20,7 +20,7 @@ public class Register extends LoginRegisterForm {
 
     // register screen
     public static Parent getScreen() {
-        return LoginRegisterForm.getScreen("/fxml/register.fxml");
+        return LoginRegisterForm.getScreen(ViewsPath.REGISTER.path);
     }
 
     // ------------------------------ INSTANCE ----------------------------- \\
@@ -89,7 +89,7 @@ public class Register extends LoginRegisterForm {
      */
     @FXML
     public void onSettingsPressed(ActionEvent ignore) {
-        Settings.setBackScreen(Register.getScreen());
+        Settings.setBackScreen(ViewsPath.REGISTER);
         WindowController.setScreen(Settings.getScreen());
     }
 

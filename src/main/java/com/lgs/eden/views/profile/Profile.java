@@ -6,6 +6,7 @@ import com.lgs.eden.utils.Config;
 import com.lgs.eden.utils.Translate;
 import com.lgs.eden.utils.Utility;
 import javafx.fxml.FXML;
+import com.lgs.eden.utils.ViewsPath;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
@@ -25,7 +26,7 @@ public class Profile {
      * @return profile screen
      */
     public static Parent getScreen() {
-        FXMLLoader loader = Utility.loadView("/fxml/profile.fxml");
+        FXMLLoader loader = Utility.loadView(ViewsPath.PROFILE.path);
         Parent parent = Utility.loadViewPane(loader);
         Profile controller = loader.getController();
         controller.init();
@@ -77,6 +78,30 @@ public class Profile {
             this.recentGames.add(l, 0,0, 3, 1);
         }
 
+    }
+
+    /** Listener of the see all friends label **/
+    @FXML
+    private void onSeeAllFriends(){
+        System.out.println("So you want to see all your friends...");
+    }
+
+    /** Listener of the add friend button **/
+    @FXML
+    private void onAddFriend() {
+        System.out.println("Wanna have some new friends ?");
+    }
+
+    /** Listener of the +1 rep label **/
+    @FXML
+    private void onPlusOneRep() {
+        System.out.println("+1 rep for him");
+    }
+
+    /** Listener of the -1 rep label **/
+    @FXML
+    private void onMinusOneRep() {
+        System.out.println("-1 rep for him");
     }
 
 }
