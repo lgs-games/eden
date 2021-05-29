@@ -1,12 +1,15 @@
 package com.lgs.eden.views.settings;
 
+import com.lgs.eden.application.WindowController;
 import com.lgs.eden.utils.Config;
 import com.lgs.eden.utils.Language;
 import com.lgs.eden.utils.Utility;
+import com.lgs.eden.views.login.Login;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -19,8 +22,22 @@ public class Settings implements ChangeListener<Language> {
 
     // ------------------------------ STATIC ----------------------------- \\
 
+    private static Parent backScreen = Login.getScreen();
+
     /**
-     * Return settings screen
+     * Setter for the Parent of the screen that called settings
+     * @param entry the Parent that called the settings screen
+     */
+    public static void setBackScreen(Parent entry) {backScreen = entry;}
+
+    /**
+     * Getter for the parent that called the settings screen
+     * @return the Parent stocked in backScreen
+     */
+    public static Parent getBackScreen() {return backScreen;}
+
+    /**
+     * @return settings screen
      */
     public static Parent getScreen() {
         FXMLLoader loader = Utility.loadView("/fxml/settings.fxml");
@@ -62,4 +79,15 @@ public class Settings implements ChangeListener<Language> {
         // redraw
         // todo: redraw
     }
+
+
+    /**
+     * Goes back to the screen that called the settings screen
+     * @param ignore just ignore it
+     */
+    @FXML
+    public void onBackIsPressed(Event ignore) {
+        WindowController.setScreen(backScreen);
+    }
+
 }

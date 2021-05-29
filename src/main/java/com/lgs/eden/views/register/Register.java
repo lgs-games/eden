@@ -2,6 +2,12 @@ package com.lgs.eden.views.register;
 
 import com.lgs.eden.api.Api;
 import com.lgs.eden.utils.helper.LoginRegisterForm;
+import com.lgs.eden.api.Constants;
+import com.lgs.eden.application.WindowController;
+import com.lgs.eden.utils.Utility;
+import com.lgs.eden.views.login.Login;
+import com.lgs.eden.views.settings.SettingsController;
+import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
@@ -69,4 +75,26 @@ public class Register extends LoginRegisterForm {
             }
         }
     }
+
+
+    /**
+     * Goes from register screen to log in screen
+     * @param ignore just ignore it
+     */
+    @FXML
+    public void onPressBack(ActionEvent ignore) {
+        WindowController.setScreen(Login.getScreen());
+    }
+
+
+    /**
+     * Action called when the user want to go to setting screen
+     * @param ignore just ignore it
+     */
+    @FXML
+    public void onSettingsPressed(ActionEvent ignore) {
+        SettingsController.setBackScreen(Register.getScreen()); // so that the settings controller knows where to return
+        WindowController.setScreen(SettingsController.getScreen());
+    }
+
 }
