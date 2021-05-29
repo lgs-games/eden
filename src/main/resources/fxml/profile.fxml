@@ -30,7 +30,7 @@
                      <top>
                         <Pane BorderPane.alignment="CENTER">
                            <children>
-                              <Label alignment="BASELINE_LEFT" text="Reputation">
+                              <Label alignment="BASELINE_LEFT" text="%reputation_level">
                                  <font>
                                     <Font name="System Bold" size="24.0" />
                                  </font>
@@ -99,14 +99,14 @@
                <top>
                   <BorderPane BorderPane.alignment="CENTER">
                      <left>
-                        <Label prefHeight="43.0" prefWidth="132.0" text="Friends" BorderPane.alignment="CENTER">
+                        <Label prefHeight="43.0" prefWidth="132.0" text="%friends_list" BorderPane.alignment="CENTER">
                            <font>
                               <Font name="System Bold" size="24.0" />
                            </font>
                         </Label>
                      </left>
                      <right>
-                        <Button mnemonicParsing="false" text="add" BorderPane.alignment="CENTER">
+                        <Button mnemonicParsing="false" text="%add_friends" BorderPane.alignment="CENTER">
                            <font>
                               <Font size="14.0" />
                            </font>
@@ -139,7 +139,7 @@
                      <bottom>
                         <VBox alignment="CENTER" BorderPane.alignment="CENTER">
                            <children>
-                              <Label text="Last login">
+                              <Label text="%last_login">
                                  <font>
                                     <Font name="System Bold" size="12.0" />
                                  </font>
@@ -191,7 +191,7 @@
                      <center>
                         <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
                            <children>
-                              <Label text="Description">
+                              <Label text="%biography">
                                  <VBox.margin>
                                     <Insets />
                                  </VBox.margin>
@@ -242,7 +242,7 @@
                <top>
                   <Pane BorderPane.alignment="CENTER">
                      <children>
-                        <Label text="Recent games">
+                        <Label text="%recent_games">
                            <padding>
                               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                            </padding>
