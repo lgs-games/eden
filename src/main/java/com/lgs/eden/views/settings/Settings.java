@@ -15,7 +15,7 @@ import javafx.scene.control.ChoiceBox;
 /**
  * Controller for settings.fxml
  */
-public class SettingsController implements ChangeListener<Language> {
+public class Settings implements ChangeListener<Language> {
 
     // ------------------------------ STATIC ----------------------------- \\
 
@@ -25,7 +25,7 @@ public class SettingsController implements ChangeListener<Language> {
     public static Parent getScreen() {
         FXMLLoader loader = Utility.loadView("/fxml/settings.fxml");
         Parent screen = Utility.loadViewPane(loader);
-        SettingsController controller = loader.getController();
+        Settings controller = loader.getController();
         controller.initScreen();
         return screen;
     }
@@ -38,7 +38,7 @@ public class SettingsController implements ChangeListener<Language> {
     @FXML // select list for language
     private ChoiceBox<Language> selectLanguage;
 
-    public SettingsController() {
+    public Settings() {
         // create list of languages
         this.languageList = FXCollections.observableArrayList();
         this.languageList.addAll(Language.values());
