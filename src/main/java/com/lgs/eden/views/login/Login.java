@@ -75,7 +75,7 @@ public class Login extends LoginRegisterForm {
         if (error.toString().isEmpty()){ // no error
             // add user
             int response = Api.login(username, pwd);
-            if (response == 0){ //todo: create class
+            if (response == 0){
                 // todo: move to app
                 System.out.println("submitted, go to app");
             } else {

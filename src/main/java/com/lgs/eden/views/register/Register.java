@@ -1,7 +1,6 @@
 package com.lgs.eden.views.register;
 
 import com.lgs.eden.api.Api;
-import com.lgs.eden.api.Constants;
 import com.lgs.eden.utils.helper.LoginRegisterForm;
 import javafx.event.Event;
 import javafx.fxml.FXML;
