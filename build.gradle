@@ -13,6 +13,12 @@ application {
     mainClassName = "com.lgs.eden.Main"
 }
 
+tasks.withType(JavaCompile) {
+    options.encoding = "UTF-8"
+    // sourceCompatibility = 11
+    // targetCompatibility = 11
+}
+
 group 'org.example'
 version '1.0-SNAPSHOT'
 

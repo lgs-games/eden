@@ -1,11 +1,9 @@
 package com.lgs.eden.utils;
 
-import com.lgs.eden.Main;
 import com.lgs.eden.api.Api;
 import javafx.scene.image.Image;
 
 import java.util.Locale;
-import java.util.Objects;
 
 /**
  *
@@ -45,6 +43,9 @@ public class Config {
 
     // return locale
     public static Locale getLocale() { return locale; }
+
+    // get Language
+    public static Language getLanguage() { return Language.valueOf(locale.getLanguage().toUpperCase()); }
 
     // set language
     public static Locale setLocale(Language lang) { return locale = new Locale(lang.code); }
