@@ -8,3 +8,8 @@
 .no-button { -fx-background-color: inherit; }
 
 .link { -fx-text-fill: #2aa198; }
+
+.button {
+    -fx-cursor: HAND;
+}
+
