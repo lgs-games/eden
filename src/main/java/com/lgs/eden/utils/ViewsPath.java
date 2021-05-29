@@ -9,7 +9,7 @@ public enum ViewsPath {
     PROFILE("/fxml/profile.fxml", "Profile"),
     REGISTER("/fxml/register.fxml", "Register"),
     SETTINGS("/fxml/settings.fxml", "Settings"),
-    FRIEND_CELL("/fxml/friendcell.fxml", "Friend Cell");
+    FRIEND_CELL("/fxml/profile/friendcell.fxml", "Friend Cell");
 
     // view path
     public final String path;
