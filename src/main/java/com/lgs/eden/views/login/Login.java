@@ -34,7 +34,7 @@ public class Login {
      * @return Login screen
      **/
     public static Parent getScreen() {
-        loader = Utility.loadView("/fxml/settings.fxml");
+        loader = Utility.loadView("/fxml/login.fxml");
         screen = Utility.loadViewPane(loader);
 
         // todo: we should set/reset the form properly
