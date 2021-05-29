@@ -7,5 +7,4 @@ public interface Constants {
     int PASSWORD_MAX_LENGTH = 64;
     int PASSWORD_MIN_LENGTH = 6;
 
-
 }
