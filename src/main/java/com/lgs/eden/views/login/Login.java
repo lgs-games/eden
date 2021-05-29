@@ -2,6 +2,7 @@ package com.lgs.eden.views.login;
 
 import com.lgs.eden.api.Api;
 import com.lgs.eden.utils.Config;
+import com.lgs.eden.utils.ViewsPath;
 import com.lgs.eden.utils.helper.LoginRegisterForm;
 
 import com.lgs.eden.application.WindowController;
@@ -30,7 +31,7 @@ public class Login extends LoginRegisterForm {
      * @return Login screen
      **/
     public static Parent getScreen() {
-        return LoginRegisterForm.getScreen("/fxml/login.fxml");
+        return LoginRegisterForm.getScreen(ViewsPath.LOGIN.path);
     }
 
     // ------------------------------ INSTANCE ----------------------------- \\
@@ -102,7 +103,7 @@ public class Login extends LoginRegisterForm {
 
     @FXML
     public void onSettingsPressed(ActionEvent ignore) {
-        Settings.setBackScreen(Login.getScreen());
+        Settings.setBackScreen(ViewsPath.LOGIN);
         WindowController.setScreen(Settings.getScreen());
     }
 

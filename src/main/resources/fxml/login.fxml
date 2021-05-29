@@ -15,8 +15,8 @@
    <bottom>
       <Pane prefHeight="83.0" prefWidth="700.0" BorderPane.alignment="CENTER">
          <children>
-            <Button layoutX="55.0" layoutY="20.0" mnemonicParsing="false" onAction="#onSigninIsPressed" prefHeight="34.0" prefWidth="125.0" text="Sign up" />
-            <Button layoutX="520.0" layoutY="20.0" mnemonicParsing="false" onAction="#onSubmitWithButton" prefHeight="34.0" prefWidth="125.0" text="Log in" />
+            <Button layoutX="55.0" layoutY="20.0" mnemonicParsing="false" onAction="#onSigninIsPressed" prefHeight="34.0" prefWidth="125.0" text="%register_button" />
+            <Button layoutX="520.0" layoutY="20.0" mnemonicParsing="false" onAction="#onSubmitWithButton" prefHeight="34.0" prefWidth="125.0" text="%connect" />
          </children>
       </Pane>
    </bottom>
@@ -48,20 +48,20 @@
    <center>
       <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <Label layoutX="154.0" layoutY="22.0" text="Username">
+            <Label layoutX="154.0" layoutY="22.0" text="%username">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Label>
             <TextField fx:id="login" layoutX="160.0" layoutY="49.0" prefHeight="38.0" prefWidth="386.0" />
-            <Label layoutX="154.0" layoutY="112.0" text="Password">
+            <Label layoutX="154.0" layoutY="112.0" text="%password">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Label>
-            <Label fx:id="forgotPwd" layoutX="421.0" layoutY="187.0" onMouseClicked="#onForgotPassword" text="Forgot your password ?" />
-            <CheckBox fx:id="rememberMe" layoutX="154.0" layoutY="213.0" mnemonicParsing="false" text="Remember me" />
-            <Label layoutX="179.0" layoutY="230.0" text="Your connexion data will be stored on this computer." textFill="#868080" />
+            <Label fx:id="forgotPwd" layoutX="421.0" layoutY="187.0" onMouseClicked="#onForgotPassword" text="%forgot_password" />
+            <CheckBox fx:id="rememberMe" layoutX="154.0" layoutY="213.0" mnemonicParsing="false" text="%remember_me" />
+            <Label layoutX="179.0" layoutY="230.0" text="%connection_data_stored_on_computer" textFill="#868080" />
             <PasswordField fx:id="password" layoutX="160.0" layoutY="140.0" onKeyPressed="#onSubmitWithEnter" prefHeight="38.0" prefWidth="386.0" />
          </children>
       </Pane>

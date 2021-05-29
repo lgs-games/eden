@@ -2,6 +2,7 @@ package com.lgs.eden.application;
 
 import com.goxr3plus.fxborderlessscene.borderless.BorderlessScene;
 import com.lgs.eden.Main;
+import com.lgs.eden.utils.ViewsPath;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -31,7 +32,7 @@ public class WindowController {
     public static BorderPane loadWindow(Stage primaryStage){
         try {
             // todo: load
-            URL resource = Main.class.getResource("/fxml/frame.fxml");
+            URL resource = Main.class.getResource(ViewsPath.FRAME.path);
             if (resource == null) throw new IOException();
             FXMLLoader loader = new FXMLLoader(resource);
 
