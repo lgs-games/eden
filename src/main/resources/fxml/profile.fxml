@@ -104,7 +104,7 @@
                         </Label>
                      </left>
                      <right>
-                        <Button mnemonicParsing="false" text="add" BorderPane.alignment="CENTER">
+                        <Button mnemonicParsing="false" styleClass="eden-button" text="add" BorderPane.alignment="CENTER">
                            <font>
                               <Font size="14.0" />
                            </font>
@@ -213,12 +213,12 @@
                   </BorderPane>
                </center>
             </BorderPane>
-            <BorderPane layoutX="10.0" layoutY="10.0" maxHeight="250.0" minHeight="250.0" styleClass="white-box" VBox.vgrow="ALWAYS">
+            <BorderPane layoutX="10.0" layoutY="10.0" maxHeight="200.0" minHeight="200.0" styleClass="white-box" VBox.vgrow="ALWAYS">
                <VBox.margin>
                   <Insets top="10.0" />
                </VBox.margin>
                <center>
-                  <GridPane hgap="10.0" vgap="10.0" BorderPane.alignment="CENTER">
+                  <GridPane fx:id="recentGames" hgap="10.0" vgap="10.0" BorderPane.alignment="CENTER">
                     <columnConstraints>
                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -230,11 +230,6 @@
                      <BorderPane.margin>
                         <Insets bottom="10.0" left="10.0" right="10.0" />
                      </BorderPane.margin>
-                     <children>
-                        <Pane prefHeight="200.0" prefWidth="200.0" styleClass="app-background" />
-                        <Pane prefHeight="200.0" prefWidth="200.0" styleClass="app-background" GridPane.columnIndex="1" />
-                        <Pane prefHeight="200.0" prefWidth="200.0" styleClass="app-background" GridPane.columnIndex="2" />
-                     </children>
                   </GridPane>
                </center>
                <top>
