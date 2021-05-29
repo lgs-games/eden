@@ -37,6 +37,15 @@
     -fx-border-color: #00ac41;
 }
 
+.profile-game-playing {
+    -fx-text-fill: #00ac41;
+}
+
+.profile-game-label {
+    -fx-font-size: 15px;
+    -fx-text-fill: #dd4411;
+}
+
 /**
 REPUTATION
 **/
