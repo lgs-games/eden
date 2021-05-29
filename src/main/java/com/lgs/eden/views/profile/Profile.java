@@ -1,8 +1,11 @@
 package com.lgs.eden.views.profile;
 
 import com.lgs.eden.utils.Utility;
+import com.lgs.eden.utils.ViewsPath;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.control.Label;
 
 import java.util.Date;
 
@@ -17,7 +20,7 @@ public class Profile {
      * @return profile screen
      */
     public static Parent getScreen() {
-        FXMLLoader loader = Utility.loadView("/fxml/profile.fxml");
+        FXMLLoader loader = Utility.loadView(ViewsPath.PROFILE.path);
         return Utility.loadViewPane(loader);
     }
 
