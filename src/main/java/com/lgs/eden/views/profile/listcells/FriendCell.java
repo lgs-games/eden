@@ -9,27 +9,27 @@ import javafx.scene.control.ListCell;
 
 public class FriendCell extends ListCell<FriendData> {
 
-    private Node graphic;
+    private final Node graphic;
 
-    private FriendCellController controller;
+    private final FriendCellController controller;
 
     public FriendCell() {
         FXMLLoader loader = Utility.loadView(ViewsPath.FRIEND_CELL.path);
-        graphic = Utility.loadViewPane(loader);
-        controller = loader.getController();
+        this.graphic = Utility.loadViewPane(loader);
+        this.controller = loader.getController();
     }
 
     @Override
     protected void updateItem(FriendData item, boolean empty) {
         super.updateItem(item, empty);
 
+        setText(null);
+
         if (empty || item == null) {
-            setText(null);
             setGraphic(null);
         } else {
             controller.setName(item.getName());
             controller.setAvatar(item.getAvatar());
-            setText(null);
             setGraphic(graphic);
         }
     }

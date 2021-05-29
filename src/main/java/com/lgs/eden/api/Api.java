@@ -1,5 +1,6 @@
 package com.lgs.eden.api;
 
+import com.lgs.eden.api.wrapper.AchievementData;
 import com.lgs.eden.api.wrapper.FriendData;
 import com.lgs.eden.utils.Utility;
 
@@ -58,4 +59,15 @@ public class Api {
         return friendList;
     }
 
+    public static AchievementData[] getGameAchievements(int game) {
+        return new AchievementData[]{
+                new AchievementData(Utility.loadImage("/games/prim-icon.png"), "First Timer LH", "You created your first library.", false, true),
+                new AchievementData(Utility.loadImage("/games/prim-icon.png"), "First Timer UH", "You created your first library.", true, true),
+                new AchievementData(Utility.loadImage("/games/prim-icon.png"), "First Timer UN", "You created your first library.", true, false)
+        };
+    }
+
+    public static int getGameAchievementsNumber(int game) {
+        return 3;
+    }
 }

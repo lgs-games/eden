@@ -3,10 +3,13 @@ package com.lgs.eden.views.profile;
 import com.lgs.eden.api.Api;
 import com.lgs.eden.api.wrapper.FriendData;
 import com.lgs.eden.api.wrapper.RecentGameData;
-import com.lgs.eden.utils.ModifiableObservableList;
+import com.lgs.eden.application.WindowController;
 import com.lgs.eden.utils.Translate;
 import com.lgs.eden.utils.Utility;
+import com.lgs.eden.views.achievements.Achievements;
 import com.lgs.eden.views.profile.listcells.FriendCell;
+import com.lgs.eden.views.settings.Settings;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import com.lgs.eden.utils.ViewsPath;
@@ -46,7 +49,7 @@ public class Profile {
     private short status;
 
     private String biography;
-    private ObservableList<FriendData> friendDataObservableList = new ModifiableObservableList<>();
+    private final ObservableList<FriendData> friendDataObservableList = FXCollections.observableArrayList();
 
     private Date lastSeen;
     private Date memberSinceDate;
@@ -102,6 +105,7 @@ public class Profile {
     @FXML
     private void onSeeAllFriends(){
         System.out.println("So you want to see all your friends...");
+        WindowController.setScreen(Achievements.getScreen());
     }
 
     /** Listener of the add friend button **/
