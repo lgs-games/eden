@@ -1,39 +1,41 @@
 package com.lgs.eden.views.register;
 
+import com.lgs.eden.api.Api;
 import com.lgs.eden.api.Constants;
-import com.lgs.eden.utils.Utility;
-import com.lgs.eden.views.login.Login;
+import com.lgs.eden.utils.helper.LoginRegisterForm;
 import javafx.event.Event;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.TextField;
 
-import java.io.IOException;
-
-public class Register extends Login {
+/**
+ * Controller for register.fxml
+ */
+public class Register extends LoginRegisterForm {
 
     // ------------------------------ STATIC ----------------------------- \\
 
-    private static Parent screen = null;
-    private static FXMLLoader loader;
-
+    // register screen
     public static Parent getScreen() {
-        loader = Utility.loadView("/fxml/register.fxml");
-        screen = Utility.loadViewPane(loader);
-
-        Register controller = loader.getController();
-        controller.login.setText("");
-        controller.password.setText("");
-        controller.email.setText("");
-
-        return screen;
+        return LoginRegisterForm.getScreen("/fxml/register.fxml");
     }
 
     // ------------------------------ INSTANCE ----------------------------- \\
 
     @FXML
     protected TextField email;
+
+    public Register() {
+    }
+
+    @Override
+    public void resetForm() {
+        this.login.setText("");
+        this.password.setText("");
+        this.email.setText("");
+    }
+
+    // ------------------------------ METHODS ----------------------------- \\
 
     /**
      * Action to submit the login data to the API
@@ -42,33 +44,30 @@ public class Register extends Login {
      */
     @FXML
     public void onSubmitWithButton(Event ignore) {
-        boolean test = true;
-        int username = login.getText().length();
-        int wordpass = password.getText().length();
+        String username = this.login.getText();
+        String pwd = this.password.getText();
+        String email = this.email.getText();
+        StringBuilder error = new StringBuilder(); // for error message
 
 
-        // TODO: add popups related to logins errors
-        // testing username compatibility with the API
-        if (username < Constants.LOGIN_MIN_LENGTH || username > Constants.LOGIN_MAX_LENGTH) {
-            System.out.println("wrong username");
-            test = false;
-        }
-        // testing password compatibility with the API
-        if (wordpass < Constants.PASSWORD_MIN_LENGTH || wordpass > Constants.PASSWORD_MAX_LENGTH) {
-            System.out.println("wrong password");
-            test = false;
-        }
+        // testing username, password compatibility with the API
+        if (checkUsername(username)) error.append("wrong username\n");
+        if (checkPassword(pwd)) error.append("wrong password\n");
+
         // testing email compatibility with the API
-        if (!email.getText().contains("@") || !email.getText().contains(".")) {
-            System.out.println("wrong email");
-            test = false;
+        if (!email.contains("@") || !email.contains(".")) {
+            error.append("wrong email");
         }
 
         // TODO: Add a real submit method & real stock data methods
-        if (test)
-            System.out.println("submitted");
-
-
+        if (error.toString().isEmpty()) { // no error
+            int response = Api.register(username, pwd, email);
+            if (response == 0){ //todo: create class
+                // todo: move to app
+                System.out.println("submitted, show message");
+            } else {
+                error.append("Register failed\n");
+            }
+        }
     }
-
 }
