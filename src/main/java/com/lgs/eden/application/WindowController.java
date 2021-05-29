@@ -65,6 +65,9 @@ public class WindowController {
     /** set content as the content of the screen **/
     public static void setScreen(Parent content){ window.setCenter(content); }
 
+    /** returns primary stage **/
+    public static Stage getStage() { return instance.stage; }
+
     // ------------------------------ INSTANCE ----------------------------- \\
 
     @FXML // title + minimize + close
@@ -75,7 +78,8 @@ public class WindowController {
     // current stage
     private Stage stage;
 
-    public WindowController() {}
+    public WindowController() {
+    }
 
     // ------------------------------ LISTENERS ----------------------------- \\
 

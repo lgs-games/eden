@@ -1,12 +1,12 @@
 package com.lgs.eden.views.register;
 
 import com.lgs.eden.api.Api;
+import com.lgs.eden.application.PopupUtils;
 import com.lgs.eden.utils.helper.LoginRegisterForm;
 import com.lgs.eden.application.WindowController;
 import com.lgs.eden.views.login.Login;
 import com.lgs.eden.views.settings.Settings;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.control.TextField;
@@ -51,7 +51,6 @@ public class Register extends LoginRegisterForm {
         String email = this.email.getText();
         StringBuilder error = new StringBuilder(); // for error message
 
-
         // testing username, password compatibility with the API
         if (checkUsername(username)) error.append("wrong username\n");
         if (checkPassword(pwd)) error.append("wrong password\n");
@@ -70,6 +69,10 @@ public class Register extends LoginRegisterForm {
             } else {
                 error.append("Register failed\n");
             }
+        }
+
+        if (!error.toString().isBlank()){
+            PopupUtils.showPopup(error.toString());
         }
     }
 

@@ -1,6 +1,7 @@
 package com.lgs.eden.views.login;
 
 import com.lgs.eden.api.Api;
+import com.lgs.eden.application.PopupUtils;
 import com.lgs.eden.utils.Config;
 import com.lgs.eden.utils.helper.LoginRegisterForm;
 
@@ -77,8 +78,9 @@ public class Login extends LoginRegisterForm {
             Config.lastUsername(username, rememberMe.isSelected());
         }
 
-        // todo: show popup related to logins errors
-        System.out.println(error);
+        if (!error.toString().isBlank()){
+            PopupUtils.showPopup(error.toString());
+        }
     }
 
     /**
