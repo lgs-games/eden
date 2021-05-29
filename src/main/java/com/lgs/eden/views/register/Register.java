@@ -2,6 +2,7 @@ package com.lgs.eden.views.register;
 
 import com.lgs.eden.api.Api;
 import com.lgs.eden.utils.ViewsPath;
+import com.lgs.eden.application.PopupUtils;
 import com.lgs.eden.utils.helper.LoginRegisterForm;
 import com.lgs.eden.application.WindowController;
 import com.lgs.eden.views.login.Login;
@@ -44,12 +45,12 @@ public class Register extends LoginRegisterForm {
      * Action to submit the login data to the API
      */
     @FXML
+    @Override
     public void onSubmitWithButton() {
         String username = this.login.getText();
         String pwd = this.password.getText();
         String email = this.email.getText();
         StringBuilder error = new StringBuilder(); // for error message
-
 
         // testing username, password compatibility with the API
         if (checkUsername(username)) error.append("wrong username\n");
@@ -69,6 +70,10 @@ public class Register extends LoginRegisterForm {
             } else {
                 error.append("Register failed\n");
             }
+        }
+
+        if (!error.toString().isBlank()){
+            PopupUtils.showPopup(error.toString());
         }
     }
 

@@ -32,7 +32,7 @@ public class Api {
      * Return code, see ApiCodes
      */
     public static int register(String username, String pwd, String email) {
-        if (!username.equals("root") || !pwd.equals("aza") || !email.equals("a@b.c")) {
+        if (!username.equals("admin") || !pwd.equals("azerty") || !email.equals("a@b.c")) {
             return -1;
         }
         return 0;
