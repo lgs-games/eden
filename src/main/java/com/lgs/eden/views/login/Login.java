@@ -32,7 +32,7 @@ public class Login {
     private static FXMLLoader loader;
 
     /**
-     * returns Login screen
+     * @return Login screen
      **/
     public static Parent getScreen() {
         if (screen == null) {
