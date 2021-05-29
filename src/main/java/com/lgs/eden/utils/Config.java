@@ -19,7 +19,7 @@ public class Config {
 
     // ------------------------------ CLASS VARIABLES ----------------------------- \\
 
-    private static String username = "Raphik";
+    private static String stored_username = "Raphik";
     private static Locale locale = setLocale(Language.EN);
 
     // ------------------------------ GENERAL METHODS ----------------------------- \\
@@ -50,4 +50,14 @@ public class Config {
     // set language
     public static Locale setLocale(Language lang) { return locale = new Locale(lang.code); }
 
+    // ------------------------------ USERNAME ----------------------------- \\
+
+    /** may store username or removed stored username **/
+    public static void lastUsername(String username, boolean store) {
+        stored_username = store ? username : "";
+        System.out.println((store?"Storing username: ":"Removing username :") + stored_username);
+    }
+
+    /** return stored username **/
+    public static String getStored_username() { return stored_username; }
 }
