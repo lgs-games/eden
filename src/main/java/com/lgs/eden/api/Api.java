@@ -21,7 +21,7 @@ public class Api {
      * Return code, see ApiCodes
      */
     public static int login(String username, String pwd) {
-        if (!username.equals("test") || !pwd.equals("test")) {
+        if (!username.equals("Raphik") || !pwd.equals("tester")) {
             return -1;
         }
         return 0;

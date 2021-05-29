@@ -5,6 +5,7 @@ import com.lgs.eden.utils.Config;
 import com.lgs.eden.utils.helper.LoginRegisterForm;
 
 import com.lgs.eden.application.WindowController;
+import com.lgs.eden.views.profile.Profile;
 import com.lgs.eden.views.register.Register;
 import com.lgs.eden.views.settings.Settings;
 import javafx.event.ActionEvent;
@@ -68,6 +69,9 @@ public class Login extends LoginRegisterForm {
             if (response == 0){
                 // todo: move to app
                 System.out.println("submitted, go to app");
+                // todo: temporary go to profile
+                WindowController.setSize(1100, 700);
+                WindowController.setScreen(Profile.getScreen());
             } else {
                 error.append("Invalid credentials\n");
             }

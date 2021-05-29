@@ -65,6 +65,14 @@ public class WindowController {
     /** set content as the content of the screen **/
     public static void setScreen(Parent content){ window.setCenter(content); }
 
+    /** change window size **/
+    public static void setSize(int width, int height){
+        window.setPrefSize(width, height);
+        instance.stage.setWidth(width);
+        instance.stage.setHeight(height);
+        instance.stage.centerOnScreen();
+    }
+
     // ------------------------------ INSTANCE ----------------------------- \\
 
     @FXML // title + minimize + close
