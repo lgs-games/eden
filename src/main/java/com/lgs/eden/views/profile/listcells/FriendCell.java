@@ -9,9 +9,8 @@ import javafx.scene.control.ListCell;
 
 public class FriendCell extends ListCell<FriendData> {
 
-    private Node graphic;
-
-    private FriendCellController controller;
+    private final Node graphic;
+    private final FriendCellController controller;
 
     public FriendCell() {
         FXMLLoader loader = Utility.loadView(ViewsPath.FRIEND_CELL.path);

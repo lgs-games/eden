@@ -3,10 +3,10 @@ package com.lgs.eden.views.profile;
 import com.lgs.eden.api.Api;
 import com.lgs.eden.api.wrapper.FriendData;
 import com.lgs.eden.api.wrapper.RecentGameData;
-import com.lgs.eden.utils.ModifiableObservableList;
 import com.lgs.eden.utils.Translate;
 import com.lgs.eden.utils.Utility;
 import com.lgs.eden.views.profile.listcells.FriendCell;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import com.lgs.eden.utils.ViewsPath;
@@ -16,7 +16,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.GridPane;
 
-import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -39,15 +38,14 @@ public class Profile {
 
     // ------------------------------ INSTANCE ----------------------------- \\
 
+    private final ObservableList<FriendData> friendDataObservableList;
     private final RecentGameData[] recentGamesData;
     private int usernameID;
-    private int friendNumber = 4;
+    private final int friendNumber;
     private int reputation;
     private short status;
 
     private String biography;
-    private ObservableList<FriendData> friendDataObservableList = new ModifiableObservableList<>();
-
     private Date lastSeen;
     private Date memberSinceDate;
 
@@ -63,19 +61,23 @@ public class Profile {
                 new RecentGameData(Utility.loadImage("/games/prim-icon.png"), "Prim", 0, RecentGameData.PLAYING),
                 new RecentGameData(Utility.loadImage("/games/enigma-icon.png"), "Enigma", 1020, 30)
         };
+
+        this.friendDataObservableList = FXCollections.observableArrayList();
+        this.friendDataObservableList.addAll(Api.getFriendList());
+        this.friendNumber = 4; // observable friend list may contains less user that friendNumber
     }
 
     private void init() {
         // ------------------------------ FILL RECENT GAMES ----------------------------- \\
 
         // show the last 3 games
-        if (recentGamesData.length > 0){
-            for (int column = 0; column < 3 && column < recentGamesData.length; column++) {
+        if (this.recentGamesData.length > 0){
+            for (int column = 0; column < 3 && column < this.recentGamesData.length; column++) {
                 // create
-                FXMLLoader loader = Utility.loadView("/fxml/profile/card.fxml");
+                FXMLLoader loader = Utility.loadView(ViewsPath.PROFILE_CARD.path);
                 Parent card = Utility.loadViewPane(loader);
                 // fill
-                ((RecentGameCard)loader.getController()).init(recentGamesData[column]);
+                ((RecentGameCard)loader.getController()).init(this.recentGamesData[column]);
                 // add
                 this.recentGames.add(card, column,0);
             }
@@ -87,12 +89,9 @@ public class Profile {
         }
 
         // ------------------------------ FILL FRIEND LIST ----------------------------- \\
-        // ...
 
-        if (friendNumber > 0) {
-            ArrayList<FriendData> tmp = Api.getFriendList();
-            this.friendDataObservableList.addAll(tmp);
-            this.friendDataListView.setItems(friendDataObservableList);
+        if (this.friendNumber > 0) {
+            this.friendDataListView.setItems(this.friendDataObservableList);
             this.friendDataListView.setCellFactory(friendDataListView -> new FriendCell());
         }
 
