@@ -1,18 +1,13 @@
 package com.lgs.eden.views.login;
 
-
-import com.lgs.eden.api.Constants;
-import com.lgs.eden.utils.Utility;
-import javafx.event.Event;
+import com.lgs.eden.api.Api;
+import com.lgs.eden.utils.Config;
+import com.lgs.eden.utils.helper.LoginRegisterForm;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.CheckBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 
 import java.awt.*;
 import java.io.IOException;
@@ -22,109 +17,92 @@ import java.net.URISyntaxException;
 /**
  * Controller for Login.
  */
-public class Login {
+public class Login extends LoginRegisterForm {
 
     // ------------------------------ STATIC ----------------------------- \\
-
-    private static Parent screen = null;
-    private static FXMLLoader loader;
 
     /**
      * @return Login screen
      **/
     public static Parent getScreen() {
-        loader = Utility.loadView("/fxml/login.fxml");
-        screen = Utility.loadViewPane(loader);
-
-        // todo: we should set/reset the form properly
-        //  like reload username if remember me was selected, and set it back to selected
-        // reset
-        Login controller = loader.getController();
-        controller.login.setText("");
-        controller.rememberMe.setSelected(false);
-        controller.password.setText("");
-
-        return screen;
+        return LoginRegisterForm.getScreen("/fxml/login.fxml");
     }
 
     // ------------------------------ INSTANCE ----------------------------- \\
 
     @FXML
-    protected TextField login;
-    @FXML
-    protected TextField password;
-    @FXML
     private CheckBox rememberMe;
-    @FXML
-    private Label forgotPwd;
+
+    public Login() {
+    }
+
+    @Override
+    public void resetForm() {
+        // get stored if we do have one
+        String stored_username = Config.getStored_username();
+        this.login.setText(stored_username);
+        this.rememberMe.setSelected(!stored_username.isEmpty());
+        this.password.setText("");
+    }
+
+    // ------------------------------ METHODS ----------------------------- \\
 
     /**
      * Action to submit a form by typing ENTER in a TextField
-     * Calls the method {@link #onSubmitWithButton(Event)} if the right key is pressed
+     * Calls the method {@link #onSubmitWithButton()} if the right key is pressed
      *
      * @param event event associated with this action
      */
     @FXML
     public void onSubmitWithEnter(KeyEvent event) {
         if (event.getCode().equals(KeyCode.ENTER))
-            onSubmitWithButton(event);
+            onSubmitWithButton();
     }
-
 
     /**
      * Action to submit the login data to the API
-     *
-     * @param ignore never used
      */
     @FXML
-    public void onSubmitWithButton(Event ignore) {
-        boolean test = true;
-        int username = login.getText().length();
-        int wordpass = password.getText().length();
+    public void onSubmitWithButton() { // TODO: translate
+        String username = this.login.getText();
+        String pwd = this.password.getText();
+        StringBuilder error = new StringBuilder(); // for error message
 
+        // testing username, password compatibility with the API
+        if (checkUsername(username)) error.append("wrong username\n");
+        if (checkPassword(pwd)) error.append("wrong password\n");
 
-        // TODO: add popups related to logins errors
-        // testing username compatibility with the API
-        if (username < Constants.LOGIN_MIN_LENGTH || username > Constants.LOGIN_MAX_LENGTH) {
-            System.out.println("wrong username");
-            test = false;
+        if (error.toString().isEmpty()){ // no error
+            // add user
+            try {
+                Api.register(username, pwd);
+                // todo: move to app
+                System.out.println("submitted, go to app");
+            } catch (Exception e){
+                error.append(e.getMessage());
+            }
+
+            // store or not username
+            Config.lastUsername(username, rememberMe.isSelected());
         }
-        // testing password compatibility with the API
-        if (wordpass < Constants.PASSWORD_MIN_LENGTH || wordpass > Constants.PASSWORD_MAX_LENGTH) {
-            System.out.println("wrong password");
-            test = false;
-        }
 
-        // TODO: Add a real submit method & real stock data methods
-        if (test) {
-            if (rememberMe.isSelected())
-                System.out.println("Stocking username: " + login.getText());
-            else
-                System.out.println("Removing username :" + login.getText());
-
-            System.out.println("submitted");
-        }
+        // todo: show popup related to logins errors
+        System.out.println(error);
     }
-
 
     /**
      * Action to redirect the user to the link to recover his password
-     *
-     * @param ignore nothing to do with it
      */
     @FXML
-    public void onForgotPassword(MouseEvent ignore) { // rename @ignore if you use it
-
+    public void onForgotPassword() { // rename @ignore if you use it
         if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
             try {
-                // TODO: check language
-                Desktop.getDesktop().browse(new URI("https://lgs-games.com/en/password_forgot"));
+                Desktop.getDesktop().browse(new URI(Api.passwordForgotPage(Config.getLanguage().code)));
             } catch (URISyntaxException | IOException ignoreMeTooBlink) {
                 // TODO: add popup related to these exceptions
-                System.out.println("exception has occured");
+                System.out.println("exception has occurred");
             }
         }
     }
-
 
 }
