@@ -7,6 +7,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 
 /**
  * Convenience class for login/register views
@@ -38,6 +40,23 @@ public abstract class LoginRegisterForm {
      * Reset form
      */
     public abstract void resetForm();
+
+    /**
+     * Action to submit the login data to the API
+     */
+    public abstract void onSubmitWithButton();
+
+    /**
+     * Action to submit a form by typing ENTER in a TextField
+     * Calls the method {@link #onSubmitWithButton()} if the right key is pressed
+     *
+     * @param event event associated with this action
+     */
+    @FXML
+    public void onSubmitWithEnter(KeyEvent event) {
+        if (event.getCode().equals(KeyCode.ENTER))
+            onSubmitWithButton();
+    }
 
     // ------------------------------ CHECK ----------------------------- \\
 

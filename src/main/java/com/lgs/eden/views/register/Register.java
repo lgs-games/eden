@@ -2,11 +2,9 @@ package com.lgs.eden.views.register;
 
 import com.lgs.eden.api.Api;
 import com.lgs.eden.utils.helper.LoginRegisterForm;
-import com.lgs.eden.api.Constants;
 import com.lgs.eden.application.WindowController;
-import com.lgs.eden.utils.Utility;
 import com.lgs.eden.views.login.Login;
-import com.lgs.eden.views.settings.SettingsController;
+import com.lgs.eden.views.settings.Settings;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -44,11 +42,9 @@ public class Register extends LoginRegisterForm {
 
     /**
      * Action to submit the login data to the API
-     *
-     * @param ignore never used
      */
     @FXML
-    public void onSubmitWithButton(Event ignore) {
+    public void onSubmitWithButton() {
         String username = this.login.getText();
         String pwd = this.password.getText();
         String email = this.email.getText();
@@ -88,8 +84,8 @@ public class Register extends LoginRegisterForm {
 
     @FXML
     public void onSettingsPressed(ActionEvent ignore) {
-        SettingsController.setBackScreen(Register.getScreen());
-        WindowController.setScreen(SettingsController.getScreen());
+        Settings.setBackScreen(Register.getScreen());
+        WindowController.setScreen(Settings.getScreen());
     }
 
 }
