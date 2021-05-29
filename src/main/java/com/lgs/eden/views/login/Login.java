@@ -1,7 +1,6 @@
 package com.lgs.eden.views.login;
 
 
-import com.lgs.eden.Main;
 import com.lgs.eden.api.Constants;
 import com.lgs.eden.utils.Utility;
 import javafx.event.Event;
@@ -19,7 +18,6 @@ import java.awt.*;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.net.URL;
 
 /**
  * Controller for Login.
@@ -63,9 +61,9 @@ public class Login {
     @FXML
     protected TextField password;
     @FXML
-    protected CheckBox rememberMe;
+    private CheckBox rememberMe;
     @FXML
-    protected Label forgotPwd;
+    private Label forgotPwd;
 
     /**
      * Action to submit a form by typing ENTER in a TextField

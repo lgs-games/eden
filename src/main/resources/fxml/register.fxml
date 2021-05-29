@@ -9,12 +9,12 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="470.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="470.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lgs.eden.views.register.Register">
     <bottom>
         <Pane prefHeight="83.0" prefWidth="700.0" BorderPane.alignment="CENTER">
             <children>
                 <Button layoutX="55.0" layoutY="20.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="125.0" text="Back" />
-                <Button layoutX="520.0" layoutY="20.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="125.0" text="Create account" />
+                <Button layoutX="520.0" layoutY="20.0" mnemonicParsing="false" onAction="#onSubmitWithButton" prefHeight="34.0" prefWidth="125.0" text="Create account" />
             </children>
         </Pane>
     </bottom>
@@ -23,14 +23,14 @@
             <children>
                 <ImageView fitHeight="64.0" fitWidth="64.0" layoutX="209.0" layoutY="42.0" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@img/logo80x80.png" />
+                        <Image url="@../img/logo80x80.png" />
                     </image>
                 </ImageView>
                 <Button contentDisplay="GRAPHIC_ONLY" layoutX="629.0" layoutY="27.0" mnemonicParsing="false" prefHeight="66.0" prefWidth="38.0" text="Settings">
                     <graphic>
                         <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@icons/gear32x32.png" />
+                                <Image url="@../icons/gear32x32.png" />
                             </image>
                         </ImageView>
                     </graphic>
@@ -51,19 +51,19 @@
                         <Font name="System Bold" size="14.0" />
                     </font>
                 </Label>
-                <TextField layoutX="160.0" layoutY="49.0" prefHeight="38.0" prefWidth="386.0" />
+                <TextField fx:id="login" layoutX="160.0" layoutY="49.0" onAction="#onSubmitWithEnter" prefHeight="38.0" prefWidth="386.0" />
                 <Label layoutX="154.0" layoutY="94.0" text="E-mail">
                     <font>
                         <Font name="System Bold" size="14.0" />
                     </font>
                 </Label>
-                <TextField layoutX="160.0" layoutY="122.0" prefHeight="38.0" prefWidth="386.0" />
+                <TextField fx:id="email" layoutX="160.0" layoutY="122.0" onAction="#onSubmitWithEnter" prefHeight="38.0" prefWidth="386.0" />
             <Label layoutX="154.0" layoutY="166.0" text="Password">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Label>
-            <TextField layoutX="160.0" layoutY="194.0" prefHeight="38.0" prefWidth="386.0" />
+            <TextField fx:id="password" layoutX="160.0" layoutY="194.0" onAction="#onSubmitWithEnter" prefHeight="38.0" prefWidth="386.0" />
             </children>
         </Pane>
     </center>
