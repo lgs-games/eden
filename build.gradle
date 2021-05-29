@@ -1,4 +1,5 @@
 plugins {
+    id 'maven'
     id 'java'
     id 'application'
     id 'org.openjfx.javafxplugin' version '0.0.9'
@@ -9,22 +10,10 @@ javafx {
     modules = [ 'javafx.controls', 'javafx.fxml' ]
 }
 
-application {
-    mainClassName = "com.lgs.eden.Main"
-}
+group = 'com.lgs'
+version = '1.0'
 
-tasks.withType(JavaCompile) {
-    options.encoding = "UTF-8"
-    // sourceCompatibility = 11
-    // targetCompatibility = 11
-}
-
-group 'org.example'
-version '1.0-SNAPSHOT'
-
-repositories {
-    mavenCentral()
-}
+repositories { mavenCentral() }
 
 dependencies {
     implementation 'uk.co.bithatch:FX-BorderlessScene:5.0.3'
@@ -33,6 +22,24 @@ dependencies {
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
 }
 
-test {
-    useJUnitPlatform()
+/////////////////////////////////
+///////////// TASKS /////////////
+/////////////////////////////////
+
+// compile java
+
+application { mainClassName = "com.lgs.eden.Main" }
+
+//noinspection GroovyAssignabilityCheck
+tasks.withType(JavaCompile) {
+    options.encoding = "UTF-8"
+    // sourceCompatibility = 11
+    // targetCompatibility = 11
 }
+
+// tests
+test { useJUnitPlatform() }
+
+// builder pom.xml
+
+// call "gradle install" then check build/poms
