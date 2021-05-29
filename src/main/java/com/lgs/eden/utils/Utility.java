@@ -52,12 +52,18 @@ public final class Utility {
      * @see #loadView
      */
     public static Parent loadViewPane(String path) throws IllegalStateException {
+        return Utility.loadViewPane(Utility.loadView(path));
+    }
+
+    /**
+     * Same as load view, but take a loader and return the FXML component
+     * @see #loadView
+     */
+    public static Parent loadViewPane(FXMLLoader loader) {
         try {
-            FXMLLoader l = Utility.loadView(path);
-            return l.load();
+            return loader.load();
         } catch (IOException | IllegalStateException e) {
             throw new IllegalStateException(e);
         }
     }
-
 }

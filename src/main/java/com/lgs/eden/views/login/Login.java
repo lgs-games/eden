@@ -34,14 +34,8 @@ public class Login {
      * returns Login screen
      **/
     public static Parent getScreen() {
-        if (Login.screen == null) {
-            try {
-                Login.loader = Utility.loadView("/fxml/login.fxml");
-                Login.screen = Login.loader.load();
-            } catch (IOException | IllegalStateException e) {
-                throw new IllegalStateException(e);
-            }
-        }
+        loader = Utility.loadView("/fxml/settings.fxml");
+        screen = Utility.loadViewPane(loader);
 
         // todo: we should set/reset the form properly
         //  like reload username if remember me was selected, and set it back to selected
