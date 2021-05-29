@@ -74,12 +74,12 @@ public class Login extends LoginRegisterForm {
 
         if (error.toString().isEmpty()){ // no error
             // add user
-            try {
-                Api.register(username, pwd);
+            int response = Api.login(username, pwd);
+            if (response == 0){ //todo: create class
                 // todo: move to app
                 System.out.println("submitted, go to app");
-            } catch (Exception e){
-                error.append(e.getMessage());
+            } else {
+                error.append("Invalid credentials\n");
             }
 
             // store or not username
