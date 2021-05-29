@@ -1,8 +1,6 @@
 package com.lgs.eden.views.profile;
 
-import com.lgs.eden.api.Api;
 import com.lgs.eden.api.wrapper.RecentGameData;
-import com.lgs.eden.utils.Config;
 import com.lgs.eden.utils.Translate;
 import com.lgs.eden.utils.Utility;
 import javafx.fxml.FXML;
@@ -13,7 +11,6 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 
 import java.util.Date;
-import java.util.ResourceBundle;
 
 /**
  * Controller for profile.fxml
@@ -58,11 +55,11 @@ public class Profile {
     }
 
     private void init() {
-        int gamePlayedCount = 2; // todo: fake
+        // ------------------------------ FILL RECENT GAMES ----------------------------- \\
 
         // show the last 3 games
         if (recentGamesData.length > 0){
-            for (int column = 0; column < 3 && column < gamePlayedCount; column++) {
+            for (int column = 0; column < 3 && column < recentGamesData.length; column++) {
                 // create
                 FXMLLoader loader = Utility.loadView("/fxml/profile/card.fxml");
                 Parent card = Utility.loadViewPane(loader);
@@ -77,6 +74,9 @@ public class Profile {
             l.getStyleClass().add("profile-game-label");
             this.recentGames.add(l, 0,0, 3, 1);
         }
+
+        // ------------------------------ FILL FRIEND LIST ----------------------------- \\
+        // ...
 
     }
 
