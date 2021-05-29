@@ -2,7 +2,11 @@ package com.lgs.eden.views.login;
 
 
 import com.lgs.eden.api.Constants;
+import com.lgs.eden.application.WindowController;
 import com.lgs.eden.utils.Utility;
+import com.lgs.eden.views.register.Register;
+import com.lgs.eden.views.settings.SettingsController;
+import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -126,5 +130,16 @@ public class Login {
         }
     }
 
+
+    @FXML
+    public void onSigninIsPressed(ActionEvent ignore) {
+        WindowController.setScreen(Register.getScreen());
+    }
+
+    @FXML
+    public void onSettingsPressed(ActionEvent ignore) {
+        SettingsController.setBackScreen(Login.getScreen());
+        WindowController.setScreen(SettingsController.getScreen());
+    }
 
 }
