@@ -1,6 +1,7 @@
 plugins {
     id 'maven-publish'
     id 'java'
+    id 'java-library'
     id 'application'
     id 'org.openjfx.javafxplugin' version '0.0.10'
 }
@@ -12,12 +13,18 @@ javafx {
 
 group = 'com.lgs'
 version = '1.0'
+description = 'Legendary Games Studio launcher'
 
 repositories { mavenCentral() }
+
+def platform = 'win'
 
 dependencies {
     implementation 'uk.co.bithatch:FX-BorderlessScene:5.0.3'
     implementation 'org.jetbrains:annotations:21.0.1'
+    compile "org.openjfx:javafx-controls:16:${platform}"
+    compile "org.openjfx:javafx-fxml:16:${platform}"
+
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.2'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.2'
 }
@@ -28,12 +35,15 @@ dependencies {
 
 // compile java
 
-application { mainClassName = "com.lgs.eden.Main" }
+application {
+    mainClassName = "com.lgs.eden.Main"
+}
 
 //noinspection GroovyAssignabilityCheck
 tasks.withType(JavaCompile) {
     options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
     options.encoding = "UTF-8"
+    // sourceCompatibility = 1.16
     // sourceCompatibility = 11
     // targetCompatibility = 11
 }
@@ -44,3 +54,21 @@ test { useJUnitPlatform() }
 // builder pom.xml
 
 // call "gradle install" then check build/poms
+
+task makeJar(type: Jar) {
+    manifest {
+        attributes(
+                'Main-Class': application.mainClassName,
+                'Implementation-Title': project.name,
+                'Implementation-Version': project.version
+        )
+    }
+    setArchivesBaseName(project.name)
+    from {
+        configurations.runtimeClasspath.collect {
+            it.isDirectory() ? it : zipTree(it)
+        }
+    }
+    destinationDirectory.set(file("$buildDir/../gen/"))
+    with jar
+}

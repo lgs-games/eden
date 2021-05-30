@@ -121,5 +121,6 @@ hs_err_pid*
 build/*
 .gradle/*
 
-!lib/*.jar
+!libs/*.jar
+!docs/gen/*.jar
 !gradle/wrapper/gradle-wrapper.jar
