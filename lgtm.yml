@@ -1,7 +1,0 @@
-extraction:
-  java:
-    after_prepare:
-      - export PATH=$LGTM_WORKSPACE/tools:$PATH
-    index:
-      # Specify the Java version required to build the project.
-      java_version: 11
