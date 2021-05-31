@@ -25,18 +25,33 @@
                   <Insets right="5.0" />
                </padding>
             </Label>
-            <Label alignment="CENTER" layoutX="10.0" layoutY="10.0" fx:id="version" styleClass="white-text" text="1.0.0" textAlignment="CENTER" />
+            <Label fx:id="version" alignment="CENTER" layoutX="10.0" layoutY="10.0" styleClass="white-text" text="1.0.0" textAlignment="CENTER" />
          </children>
       </TextFlow>
-      <Label alignment="CENTER" layoutX="93.0" layoutY="316.0" styleClass="yellow-text"
-             fx:id="message"
-             text="Recherche de mise à jour..." textAlignment="CENTER">
+      <TextFlow textAlignment="CENTER">
          <VBox.margin>
             <Insets top="10.0" />
          </VBox.margin>
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Label>
+         <children>
+            <Label fx:id="message" alignment="CENTER" styleClass="yellow-text" text="Recherche de mise à jour" textAlignment="CENTER">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="dots" alignment="CENTER" layoutX="78.0" layoutY="10.0" styleClass="yellow-text" text="..." textAlignment="CENTER">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="percent" alignment="CENTER" layoutX="214.0" layoutY="10.0" styleClass="yellow-text" text="50%" textAlignment="CENTER">
+               <font>
+                  <Font size="14.0" />
+               </font>
+               <padding>
+                  <Insets left="10.0" />
+               </padding>
+            </Label>
+         </children>
+      </TextFlow>
    </children>
 </VBox>

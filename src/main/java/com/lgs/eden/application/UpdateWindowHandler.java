@@ -9,13 +9,15 @@ import com.lgs.eden.views.login.Login;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Check for updates, if none then run
@@ -34,7 +36,7 @@ public class UpdateWindowHandler {
         public String toString() { return name().toLowerCase(); }
     }
 
-    private static Stage oldStage;
+    private static volatile Stage oldStage;
     private static UpdateWindowHandler controller;
 
     /** Show update window */
@@ -48,23 +50,19 @@ public class UpdateWindowHandler {
         controller = loader.getController();
         // make a borderless frame
         BorderlessScene scene = new BorderlessScene(primaryStage, StageStyle.UNDECORATED, parent,0, 0);
-        // remove the default css style
-        scene.removeDefaultCSS();
-        // not resizable
-        scene.setResizable(false);
-        scene.setDoubleClickMaximizeEnabled(false);
-        scene.setSnapEnabled(false);
 
         // set background and fill as transparent
         scene.setFill(Color.TRANSPARENT);
         primaryStage.initStyle(StageStyle.TRANSPARENT);
 
         // init
-        controller.setState(State.LOOKING_FOR_UPDATE);
-        controller.version.setText(Config.VERSION);
+        controller.init();
 
         // call basic functions
         formalizeStage(primaryStage, scene);
+
+        // we need that to close 3 dots thread
+        primaryStage.setOnCloseRequest(event -> oldStage = null);
 
         // call check for update runnable
         new Thread(new CheckForUpdateRunnable()).start();
@@ -76,8 +74,19 @@ public class UpdateWindowHandler {
     public Label version;
     @FXML // shown to the user
     public Label message;
+    @FXML // the . or .. or ...
+    public Label dots;
+    @FXML // we can show a percent if needed
+    public Label percent;
 
     public UpdateWindowHandler() {
+    }
+
+    private void init() {
+        setState(State.LOOKING_FOR_UPDATE);
+        this.version.setText(Config.VERSION);
+        this.percent.setVisible(false); // usually hidden
+        Platform.runLater(new DotUpdateRunnable());
     }
 
     // set label text
@@ -88,7 +97,14 @@ public class UpdateWindowHandler {
     // ------------------------------ UTILS ----------------------------- \\
 
     /** Init stage with our parameters */
-    private static void formalizeStage(Stage primaryStage, Scene scene) {
+    private static void formalizeStage(Stage primaryStage, BorderlessScene scene) {
+        // remove the default css style
+        scene.removeDefaultCSS();
+        // not resizable
+        scene.setResizable(false);
+        scene.setDoubleClickMaximizeEnabled(false);
+        scene.setSnapEnabled(false);
+
         // then set scene
         primaryStage.setScene(scene);
         // window title
@@ -107,27 +123,20 @@ public class UpdateWindowHandler {
             boolean needUpdate = Config.checkClientVersion();
             System.out.println(needUpdate ? "Client needs an update" : "Client is up to date");
 
-            if (needUpdate){ // todo: update code
-                Platform.runLater(new ChangeUpdaterMessageRunnable(State.DOWNLOAD_UPDATE));
+            if (needUpdate){
+                // todo: complete code
+                //  you can show current percent of download with percent label, but add a % at the end
+                //  the field is hidden by default
+                Platform.runLater(() -> controller.setState(State.DOWNLOAD_UPDATE));
                 // ...
 
-                // Platform.runLater(new ChangeUpdaterMessageRunnable(State.STARTING_INSTALLATION));
+                // Platform.runLater(() -> controller.setState(State.STARTING_INSTALLATION));
                 // ...
             } else {
-                controller.setState(State.CLIENT_STARTING);
+                Platform.runLater(() -> controller.setState(State.CLIENT_STARTING));
                 // start
                 Platform.runLater(new StartFrameRunnable());
             }
-        }
-
-        // Runnable for JavaFX platform in order to change JavaFX label value
-        private static class ChangeUpdaterMessageRunnable implements Runnable {
-            private final State state;
-
-            public ChangeUpdaterMessageRunnable(State state) { this.state = state; }
-
-            @Override
-            public void run() { controller.setState(state); }
         }
     }
 
@@ -142,6 +151,7 @@ public class UpdateWindowHandler {
         public void run() {
             // close old
             oldStage.close();
+            oldStage = null;
 
             // open a new one
             Stage primaryStage = new Stage();
@@ -157,6 +167,52 @@ public class UpdateWindowHandler {
             UpdateWindowHandler.formalizeStage(primaryStage, scene);
             // show login screen
             WindowController.setScreen(Login.getScreen());
+        }
+    }
+
+    // ------------------------------ JavaFX DOT ----------------------------- \\
+
+    /**
+     * Allow us to have something like that
+     *
+     * text.
+     * text..
+     * text...
+     * text.
+     * etc.
+     *
+     */
+    private static class DotUpdateRunnable implements Runnable {
+
+        private static final String ONE_DOT = ".";
+        private static final String TWO_DOT = "..";
+        private static final String THREE_DOT = "...";
+
+        @Override
+        public void run() {
+            final int[] dot = {0};
+
+            Timer t = new Timer();
+            t.scheduleAtFixedRate(new TimerTask() {
+                @Override
+                public void run() {
+                    // cancel if we are leaving to another window
+                    if (oldStage == null){
+                        t.cancel();
+                        return;
+                    }
+                    // next
+                    dot[0]++;
+                    int r = dot[0] % 3;
+                    // find answer
+                    String answer;
+                    if (r == 0)  answer = ONE_DOT;
+                    else if (r == 1)  answer = TWO_DOT;
+                    else answer = THREE_DOT;
+
+                    Platform.runLater(() -> controller.dots.setText(answer));
+                }
+            }, 0, 300);
         }
     }
 }
