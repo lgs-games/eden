@@ -120,6 +120,7 @@ hs_err_pid*
 
 build/*
 .gradle/*
+eden/*
 
 !libs/*.jar
 !docs/gen/*.jar
