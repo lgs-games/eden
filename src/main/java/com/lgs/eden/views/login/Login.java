@@ -1,6 +1,7 @@
 package com.lgs.eden.views.login;
 
 import com.lgs.eden.api.Api;
+import com.lgs.eden.api.wrapper.LoginResponseData;
 import com.lgs.eden.application.AppWindowHandler;
 import com.lgs.eden.application.PopupUtils;
 import com.lgs.eden.utils.Config;
@@ -67,8 +68,10 @@ public class Login extends LoginRegisterForm {
 
         if (error.toString().isEmpty()){ // no error
             // add user
-            int response = Api.login(username, pwd);
-            if (response == 0){
+            LoginResponseData response = Api.login(username, pwd);
+            if (response.code == 0){ // this is an user id
+                Profile.setUserID(response.userID);
+                // so we are good
                 AppWindowHandler.changeToAppWindow();
             } else {
                 error.append("Invalid credentials\n");

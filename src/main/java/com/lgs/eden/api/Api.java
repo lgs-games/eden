@@ -35,11 +35,11 @@ public class Api {
      * todo
      * Return code, see ApiCodes
      */
-    public static LoginResponse login(String username, String pwd) {
+    public static LoginResponseData login(String username, String pwd) {
         if (!username.equals("Raphik") || !pwd.equals("tester")) {
-            return new LoginResponse(-1, -1);
+            return new LoginResponseData(-1, -1);
         }
-        return new LoginResponse(0, 23);
+        return new LoginResponseData(0, 23);
     }
 
     /**
