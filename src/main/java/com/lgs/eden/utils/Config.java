@@ -30,7 +30,7 @@ public class Config {
      */
     public static boolean checkClientVersion() {
         System.out.println("Checking client version...");
-        return !VERSION.equals(Api.getEdenVersion());
+        return !VERSION.equals(Api.getEdenVersion().version);
     }
 
     /**

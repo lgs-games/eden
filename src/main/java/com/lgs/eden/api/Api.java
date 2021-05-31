@@ -1,5 +1,6 @@
 package com.lgs.eden.api;
 
+import com.lgs.eden.api.wrapper.EdenVersionData;
 import com.lgs.eden.api.wrapper.FriendData;
 import com.lgs.eden.utils.Utility;
 
@@ -7,14 +8,14 @@ import java.util.ArrayList;
 
 public class Api {
 
-    public static String getEdenVersion() {
+    public static EdenVersionData getEdenVersion() {
         // fake some delay
         try {
             Thread.sleep(3000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        return "1.0.1";
+        return new EdenVersionData("1.0.1");
     }
 
     public static String passwordForgotPage(String code) {
