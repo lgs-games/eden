@@ -19,6 +19,7 @@ module eden {
     opens com.lgs.eden.views.login;
     opens com.lgs.eden.views.settings;
     opens com.lgs.eden.views.register;
+    opens com.lgs.eden.views.inventory;
     opens com.lgs.eden.views.profile;
     opens com.lgs.eden.views.profile.listcells;
 }

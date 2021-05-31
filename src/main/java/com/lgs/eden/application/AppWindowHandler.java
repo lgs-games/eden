@@ -3,6 +3,7 @@ package com.lgs.eden.application;
 import com.lgs.eden.utils.Config;
 import com.lgs.eden.utils.Utility;
 import com.lgs.eden.utils.ViewsPath;
+import com.lgs.eden.views.inventory.Inventory;
 import com.lgs.eden.views.login.Login;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -33,5 +34,7 @@ public class AppWindowHandler {
         WindowController.setSize(Config.SCREEN_WIDTH_APP, Config.SCREEN_HEIGHT_APP);
         WindowController.setScreen(Login.getScreen());
     }
+
+    public void goToInventory() { setScreen(Inventory.getScreen()); }
 
 }
