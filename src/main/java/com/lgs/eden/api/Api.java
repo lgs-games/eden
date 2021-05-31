@@ -1,14 +1,22 @@
 package com.lgs.eden.api;
 
+import com.lgs.eden.api.wrapper.EdenVersionData;
 import com.lgs.eden.api.wrapper.FriendData;
 import com.lgs.eden.utils.Utility;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class Api {
 
-    public static String getApiVersion() { return "1.0"; }
+    public static EdenVersionData getEdenVersion() {
+        // fake some delay
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return new EdenVersionData("1.0.0");
+    }
 
     public static String passwordForgotPage(String code) {
         // website only supports en or fr

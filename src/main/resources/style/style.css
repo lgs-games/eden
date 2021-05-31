@@ -16,6 +16,15 @@
     -fx-cursor: HAND;
 }
 
+.white-text { -fx-text-fill: white; }
+.yellow-text { -fx-text-fill: #FFCC33; }
+
+.installer-bg {
+    -fx-background-radius: 5px;
+    -fx-border-radius: 5px;
+    -fx-background-color: #1e262c;
+}
+
 /** profile css **/
 
 .app-background {

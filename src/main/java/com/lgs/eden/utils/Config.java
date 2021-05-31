@@ -12,7 +12,7 @@ public class Config {
 
     // ------------------------------ CONSTANTS ----------------------------- \\
 
-    private static final String VERSION = "1.0";
+    public static final String VERSION = "1.0.0";
     public static final String APP_NAME = "Eden";
     public static final int SCREEN_WIDTH = 700, SCREEN_HEIGHT = 500;
     public static final int SCREEN_WIDTH_APP = 1100, SCREEN_HEIGHT_APP = 700;
@@ -30,7 +30,7 @@ public class Config {
      */
     public static boolean checkClientVersion() {
         System.out.println("Checking client version...");
-        return !VERSION.equals(Api.getApiVersion());
+        return !VERSION.equals(Api.getEdenVersion().version);
     }
 
     /**
