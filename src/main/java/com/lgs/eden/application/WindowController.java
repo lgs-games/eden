@@ -44,16 +44,10 @@ public class WindowController {
     public static void init(BorderlessScene scene, int width, int height) {
         // set move control, meaning place used to move the frame
         scene.setMoveControl(instance.topPane);
-        // remove the default css style
-        scene.removeDefaultCSS();
         // save attribute
         instance.scene = scene;
         // set size
         window.setPrefSize(width, height);
-        // not resizable
-        scene.setResizable(false);
-        scene.setDoubleClickMaximizeEnabled(false);
-        scene.setSnapEnabled(false);
     }
 
     /** set content as the content of the screen **/
