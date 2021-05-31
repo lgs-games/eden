@@ -97,4 +97,8 @@ public class Api {
 
         throw new IllegalStateException("Not supported");
     }
+
+    public static void logout() {
+
+    }
 }

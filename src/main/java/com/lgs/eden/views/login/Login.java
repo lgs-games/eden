@@ -70,9 +70,8 @@ public class Login extends LoginRegisterForm {
             // add user
             LoginResponseData response = Api.login(username, pwd);
             if (response.code == 0){ // this is an user id
-                Profile.setUserID(response.userID);
                 // so we are good
-                AppWindowHandler.changeToAppWindow();
+                AppWindowHandler.changeToAppWindow(response.userID);
             } else {
                 error.append("Invalid credentials\n");
             }

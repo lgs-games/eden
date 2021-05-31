@@ -73,7 +73,7 @@
                               </ImageView>
                            </graphic>
                         </MenuItem>
-                        <MenuItem mnemonicParsing="false" text="%settings">
+                        <MenuItem onAction="#openSettings" mnemonicParsing="false" text="%settings">
                            <graphic>
                               <ImageView>
                                  <image>
@@ -82,7 +82,7 @@
                               </ImageView>
                            </graphic>
                         </MenuItem>
-                        <MenuItem mnemonicParsing="false" text="%logout">
+                        <MenuItem onAction="#logout" mnemonicParsing="false" text="%logout">
                            <graphic>
                               <ImageView>
                                  <image>
