@@ -25,6 +25,9 @@ import java.util.TimerTask;
  */
 public class UpdateWindowHandler {
 
+    // todo: temporary bypass
+    private static final boolean CHECK_UPDATES = false;
+
     // state of our installer
     enum State {
         LOOKING_FOR_UPDATE,
@@ -44,25 +47,27 @@ public class UpdateWindowHandler {
         // save for later
         oldStage = primaryStage;
 
-        // init installer
-        FXMLLoader loader = Utility.loadView(ViewsPath.UPDATE.path);
-        VBox parent = (VBox) Utility.loadViewPane(loader);
-        controller = loader.getController();
-        // make a borderless frame
-        BorderlessScene scene = new BorderlessScene(primaryStage, StageStyle.UNDECORATED, parent,0, 0);
+        if (CHECK_UPDATES){
+            // init installer
+            FXMLLoader loader = Utility.loadView(ViewsPath.UPDATE.path);
+            VBox parent = (VBox) Utility.loadViewPane(loader);
+            controller = loader.getController();
+            // make a borderless frame
+            BorderlessScene scene = new BorderlessScene(primaryStage, StageStyle.UNDECORATED, parent,0, 0);
 
-        // set background and fill as transparent
-        scene.setFill(Color.TRANSPARENT);
-        primaryStage.initStyle(StageStyle.TRANSPARENT);
+            // set background and fill as transparent
+            scene.setFill(Color.TRANSPARENT);
+            primaryStage.initStyle(StageStyle.TRANSPARENT);
 
-        // init
-        controller.init();
+            // init
+            controller.init();
 
-        // call basic functions
-        formalizeStage(primaryStage, scene);
+            // call basic functions
+            formalizeStage(primaryStage, scene);
 
-        // we need that to close 3 dots thread
-        primaryStage.setOnCloseRequest(event -> oldStage = null);
+            // we need that to close 3 dots thread
+            primaryStage.setOnCloseRequest(event -> oldStage = null);
+        }
 
         // call check for update runnable
         new Thread(new CheckForUpdateRunnable()).start();
@@ -120,7 +125,8 @@ public class UpdateWindowHandler {
     private static class CheckForUpdateRunnable implements Runnable {
         @Override
         public void run() {
-            boolean needUpdate = Config.checkClientVersion();
+            // todo: temporary
+            boolean needUpdate = CHECK_UPDATES ? Config.checkClientVersion() : false;
             System.out.println(needUpdate ? "Client needs an update" : "Client is up to date");
 
             if (needUpdate){
@@ -133,7 +139,7 @@ public class UpdateWindowHandler {
                 // Platform.runLater(() -> controller.setState(State.STARTING_INSTALLATION));
                 // ...
             } else {
-                Platform.runLater(() -> controller.setState(State.CLIENT_STARTING));
+                Platform.runLater(() -> { if(controller != null) controller.setState(State.CLIENT_STARTING); });
                 // start
                 Platform.runLater(new StartFrameRunnable());
             }
@@ -212,7 +218,7 @@ public class UpdateWindowHandler {
 
                     Platform.runLater(() -> controller.dots.setText(answer));
                 }
-            }, 0, 300);
+            }, 0, 500);
         }
     }
 }
