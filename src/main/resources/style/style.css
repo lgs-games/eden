@@ -25,6 +25,21 @@
     -fx-background-color: #1e262c;
 }
 
+/** friend list css **/
+
+.friend-list-div {
+    -fx-end-margin: 5px;
+    -fx-start-margin: 5px;
+    -fx-border-color: #1e262c;
+    -fx-border-radius: 5px;
+    -fx-padding: 5px 15px;
+}
+
+.no-friends-label {
+    -fx-font-size: 17px;
+    -fx-text-fill: #2aa198;
+}
+
 /** profile css **/
 
 .app-background {

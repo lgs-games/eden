@@ -7,6 +7,10 @@ import javafx.collections.ObservableList;
 
 import java.util.ArrayList;
 
+/**
+ * Todo: fix this class, ...
+ */
+
 public class Api {
 
     public static EdenVersionData getEdenVersion() {
@@ -53,12 +57,15 @@ public class Api {
         return 0;
     }
 
-    private static ArrayList<FriendData> getFriendList() {
+    /**
+     * Returns complete friend list
+     */
+    public static ArrayList<FriendData> getFriendList() {
         ArrayList<FriendData> friendList = new ArrayList<>();
-        FriendData fr1 = new FriendData(Utility.loadImage("/icon64.png"), "Raphik");
-        FriendData fr2 = new FriendData(Utility.loadImage("/icon64.png"), "Calistral");
-        FriendData fr3 = new FriendData(Utility.loadImage("/icon64.png"), "Caliki");
-        FriendData fr4 = new FriendData(Utility.loadImage("/icon64.png"), "Raphistro");
+        FriendData fr1 = new FriendData(Utility.loadImage("/icon64.png"), "Raphik2", false, 24);
+        FriendData fr2 = new FriendData(Utility.loadImage("/icon64.png"), "Calistral", false, 25);
+        FriendData fr3 = new FriendData(Utility.loadImage("/icon64.png"), "Caliki", false, 26);
+        FriendData fr4 = new FriendData(Utility.loadImage("/icon64.png"), "Raphistro", false, 27);
 
         friendList.add(fr1);
         friendList.add(fr2);

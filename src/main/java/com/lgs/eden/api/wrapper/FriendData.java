@@ -4,18 +4,16 @@ import javafx.scene.image.Image;
 
 public class FriendData {
 
-    private Image avatar;
+    public final Image avatar;
+    public final String name;
+    public final boolean online;
+    public final int id;
 
-    private String name;
-
-    public String getName() {return name;}
-    public void setName(String name) {this.name = name;}
-    public Image getAvatar() {return avatar;}
-    public void setAvatar(Image avatar) {this.avatar = avatar;}
-
-    public FriendData(Image avatar, String name) {
+    public FriendData(Image avatar, String name, boolean online, int id) {
         this.avatar = avatar;
         this.name = name;
+        this.online = online;
+        this.id = id;
     }
 
 }
