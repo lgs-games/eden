@@ -20,3 +20,11 @@ To write a linux version of this command, you should
 * add quotes ?
 * add linux options
 * <https://openjdk.java.net/jeps/343>
+
+### Generate installer
+
+* Execute the jpackage installer and install eden.
+* Copy the exe files in ``/eden/exe`` (project root)
+* Install [InnoSetup](https://jrsoftware.org/isdl.php)
+* Open ``eden.iss`` and compile
+* done
