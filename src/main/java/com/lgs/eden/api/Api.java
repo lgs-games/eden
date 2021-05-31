@@ -1,8 +1,9 @@
 package com.lgs.eden.api;
 
-import com.lgs.eden.api.wrapper.EdenVersionData;
-import com.lgs.eden.api.wrapper.FriendData;
+import com.lgs.eden.api.wrapper.*;
 import com.lgs.eden.utils.Utility;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 import java.util.ArrayList;
 
@@ -34,11 +35,11 @@ public class Api {
      * todo
      * Return code, see ApiCodes
      */
-    public static int login(String username, String pwd) {
+    public static LoginResponse login(String username, String pwd) {
         if (!username.equals("Raphik") || !pwd.equals("tester")) {
-            return -1;
+            return new LoginResponse(-1, -1);
         }
-        return 0;
+        return new LoginResponse(0, 23);
     }
 
     /**
@@ -52,7 +53,7 @@ public class Api {
         return 0;
     }
 
-    public static ArrayList<FriendData> getFriendList() {
+    private static ArrayList<FriendData> getFriendList() {
         ArrayList<FriendData> friendList = new ArrayList<>();
         FriendData fr1 = new FriendData(Utility.loadImage("/icon64.png"), "Raphik");
         FriendData fr2 = new FriendData(Utility.loadImage("/icon64.png"), "Calistral");
@@ -66,4 +67,27 @@ public class Api {
         return friendList;
     }
 
+    /** Returns profile Data for an user. todo: Only 23 is supported for now. */
+    public static ProfileData getProfileData(int userID) {
+        if (userID == 23){
+            // todo: that's a fake of API data
+            RecentGameData[] recentGamesData = new RecentGameData[]{
+                    new RecentGameData(Utility.loadImage("/games/prim-icon.png"), "Prim", 0, RecentGameData.PLAYING),
+                    new RecentGameData(Utility.loadImage("/games/enigma-icon.png"), "Enigma", 1020, 30)
+            };
+
+            ObservableList<FriendData> friendDataObservableList = FXCollections.observableArrayList();
+            friendDataObservableList.addAll(Api.getFriendList());
+
+            int friendNumber = 4; // observable friend list may contains less user that friendNumber
+
+            return new ProfileData(
+              23, friendNumber, 9999,  (short) 0,
+              "No desc", null, null, friendDataObservableList,
+              recentGamesData
+            );
+        }
+
+        throw new IllegalStateException("Not supported");
+    }
 }
