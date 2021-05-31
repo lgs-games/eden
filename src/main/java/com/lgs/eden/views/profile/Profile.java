@@ -3,8 +3,10 @@ package com.lgs.eden.views.profile;
 import com.lgs.eden.api.Api;
 import com.lgs.eden.api.wrapper.FriendData;
 import com.lgs.eden.api.wrapper.ProfileData;
+import com.lgs.eden.application.AppWindowHandler;
 import com.lgs.eden.utils.Translate;
 import com.lgs.eden.utils.Utility;
+import com.lgs.eden.views.friends.AllFriends;
 import com.lgs.eden.views.profile.listcells.FriendCell;
 import javafx.fxml.FXML;
 import com.lgs.eden.utils.ViewsPath;
@@ -90,9 +92,7 @@ public class Profile {
 
     /** Listener of the see all friends label **/
     @FXML
-    private void onSeeAllFriends(){
-        System.out.println("So you want to see all your friends...");
-    }
+    private void onSeeAllFriends(){ AppWindowHandler.setScreen(AllFriends.getScreen(data.usernameID)); }
 
     /** Listener of the add friend button **/
     @FXML

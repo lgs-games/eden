@@ -17,6 +17,7 @@ public enum ViewsPath {
     FRIEND_CELL("/views/profile/friendcell.fxml"),
     PROFILE_CARD("/views/profile/card.fxml"),
 
+    FRIENDS_LIST("/views/friends_list.fxml"),
     INVENTORY("/views/inventory.fxml")
     ;
 
