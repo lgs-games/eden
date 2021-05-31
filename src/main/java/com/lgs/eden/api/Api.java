@@ -15,7 +15,7 @@ public class Api {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        return new EdenVersionData("1.0.1");
+        return new EdenVersionData("1.0.0");
     }
 
     public static String passwordForgotPage(String code) {
