@@ -5,7 +5,9 @@ import com.lgs.eden.utils.Utility;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Todo: fix this class, ...
@@ -88,9 +90,10 @@ public class Api {
 
             int friendNumber = 4; // observable friend list may contains less user that friendNumber
 
-            return new ProfileData(
-              23, friendNumber, 9999,  (short) 0,
-              "No desc", null, null, friendDataObservableList,
+            return new ProfileData("Raphik",
+              23, friendNumber, 9999,
+                    "Raphiki is a great programmer at ENSIIE engineering school.\nCheck HunterFruitti25 on Xbox (:",
+                    new Date(), Date.from(Instant.parse("2021-12-03T10:15:30.00Z")), friendDataObservableList,
               recentGamesData
             );
         }

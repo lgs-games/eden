@@ -46,7 +46,7 @@
                <right>
                   <MenuButton focusTraversable="false" mnemonicParsing="false" styleClass="bar-user-div" text="      username" BorderPane.alignment="CENTER">
                     <items>
-                      <MenuItem mnemonicParsing="false" text="%my_profil">
+                      <MenuItem onAction="#goToProfile" mnemonicParsing="false" text="%my_profil">
                            <graphic>
                               <ImageView>
                                  <image>

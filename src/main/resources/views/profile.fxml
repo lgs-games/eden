@@ -14,6 +14,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.TextFlow?>
 
 <BorderPane minHeight="550.0" minWidth="1000.0" styleClass="app-background" stylesheets="@../style/style.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lgs.eden.views.profile.Profile">
    <right>
@@ -48,7 +49,7 @@
                               <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                            </rowConstraints>
                            <children>
-                              <Label alignment="CENTER" text="reputation_value" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                              <Label alignment="CENTER" text="reputation_value" fx:id="reputation" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                                  <font>
                                     <Font size="24.0" />
                                  </font>
@@ -153,7 +154,7 @@
                                     <Font name="System Bold" size="12.0" />
                                  </font>
                               </Label>
-                              <Label text="last_login_value" />
+                              <Label text="last_login_value" fx:id="lastLogin" />
                            </children>
                            <BorderPane.margin>
                               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
@@ -177,7 +178,7 @@
                      <top>
                         <VBox prefHeight="170.0" prefWidth="100.0" BorderPane.alignment="CENTER">
                            <children>
-                              <Label text="username">
+                              <Label text="username" fx:id="username">
                                  <font>
                                     <Font name="System Bold" size="48.0" />
                                  </font>
@@ -185,16 +186,40 @@
                                     <Insets top="25.0" />
                                  </VBox.margin>
                               </Label>
-                              <Label text="id 000000">
-                                 <font>
-                                    <Font size="24.0" />
-                                 </font>
-                              </Label>
-                              <Label layoutX="10.0" layoutY="105.0" text="member_since">
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font>
-                              </Label>
+                              <TextFlow>
+                                 <children>
+                                    <Label text="id">
+                                       <font>
+                                          <Font size="24.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="10.0" layoutY="10.0" text="000000" fx:id="userID">
+                                       <font>
+                                          <Font size="24.0" />
+                                       </font>
+                                       <padding>
+                                          <Insets left="10.0" />
+                                       </padding>
+                                    </Label>
+                                 </children>
+                              </TextFlow>
+                              <TextFlow>
+                                 <children>
+                                    <Label text="%member_since">
+                                       <font>
+                                          <Font size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="10.0" layoutY="10.0" text="date" fx:id="since">
+                                       <font>
+                                          <Font size="14.0" />
+                                       </font>
+                                       <padding>
+                                          <Insets left="10.0" />
+                                       </padding>
+                                    </Label>
+                                 </children>
+                              </TextFlow>
                            </children></VBox>
                      </top>
                      <center>
@@ -208,7 +233,7 @@
                                     <Font size="24.0" />
                                  </font>
                               </Label>
-                              <Label text="This is a really long description where I This is a really long description where I This is a really long description where I'm going to..." wrapText="true">
+                              <Label fx:id="bio" text="This is a really long description where I This is a really long description where I This is a really long description where I'm going to..." wrapText="true">
                                  <font>
                                     <Font size="14.0" />
                                  </font>

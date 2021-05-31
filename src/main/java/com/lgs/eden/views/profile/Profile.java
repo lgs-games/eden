@@ -16,8 +16,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.GridPane;
 
-import java.util.Date;
-
 /**
  * Controller for profile.fxml
  */
@@ -43,23 +41,46 @@ public class Profile {
     // ------------------------------ INSTANCE ----------------------------- \\
 
     @FXML
+    public Label bio;
+    @FXML
+    public Label userID;
+    @FXML
+    public Label since;
+    @FXML
+    public Label username;
+    @FXML
+    public Label lastLogin;
+    @FXML
+    public Label reputation;
+    @FXML
     private GridPane recentGames;
-
     @FXML
     private ListView<FriendData> friendDataListView;
 
     // current profile data, can be used in listeners
     private ProfileData data;
 
-    public Profile() {
-    }
-
     private void init(int userID) {
         this.data = Api.getProfileData(userID);
 
         // ------------------------------ FILL ATTRIBUTES ----------------------------- \\
+        this.username.setText(this.data.username);
+        this.userID.setText(String.format("%06d", this.data.userID));
+        this.bio.setText(this.data.biography+"");
+        this.lastLogin.setText(Translate.getDate(this.data.lastSeen));
+        this.since.setText(Translate.getDate(this.data.memberSinceDate));
 
-        // ...
+        // reputation
+        // todo: disabled + and - if self-profile
+        if (this.data.reputation > 0){
+            this.reputation.setText("+"+this.data.reputation);
+            this.reputation.getStyleClass().add("green-text");
+        } else if (this.data.reputation < 0){
+            this.reputation.setText("-"+this.data.reputation);
+            this.reputation.getStyleClass().add("red-text");
+        } else {
+            this.reputation.setText(this.data.reputation+"");
+        }
 
         // ------------------------------ FILL RECENT GAMES ----------------------------- \\
 
@@ -92,7 +113,7 @@ public class Profile {
 
     /** Listener of the see all friends label **/
     @FXML
-    private void onSeeAllFriends(){ AppWindowHandler.setScreen(AllFriends.getScreen(data.usernameID)); }
+    private void onSeeAllFriends(){ AppWindowHandler.setScreen(AllFriends.getScreen(data.userID)); }
 
     /** Listener of the add friend button **/
     @FXML

@@ -1,5 +1,8 @@
 package com.lgs.eden.utils;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.ResourceBundle;
 
 /**
@@ -17,4 +20,9 @@ public final class Translate {
         }
     }
 
+    /** return the date as day (int) month (string) year (ex: 1 June 2021 in english) **/
+    public static String getDate(Date date) {
+        DateFormat f = new SimpleDateFormat("d LLLL yyy", Config.getLocale());
+        return f.format(date);
+    }
 }

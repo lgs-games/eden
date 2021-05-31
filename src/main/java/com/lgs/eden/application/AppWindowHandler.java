@@ -56,4 +56,6 @@ public class AppWindowHandler {
         Api.logout();
         Platform.runLater(AppWindowHandler::goBackToMainApp);
     }
+
+    public void goToProfile() { setScreen(Profile.getScreen()); }
 }
