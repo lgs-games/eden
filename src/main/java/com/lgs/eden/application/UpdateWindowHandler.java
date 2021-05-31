@@ -61,6 +61,7 @@ public class UpdateWindowHandler {
 
         // init
         controller.setState(State.LOOKING_FOR_UPDATE);
+        controller.version.setText(Config.VERSION);
 
         // call basic functions
         formalizeStage(primaryStage, scene);
