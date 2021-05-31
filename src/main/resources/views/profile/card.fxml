@@ -5,34 +5,37 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.TextFlow?>
 
 <VBox maxHeight="-Infinity" maxWidth="50.0" minHeight="-Infinity" minWidth="-Infinity" prefWidth="220.0" styleClass="profile-game" stylesheets="@../../style/style.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lgs.eden.views.profile.RecentGameCard">
    <children>
-      <BorderPane>
-         <left>
-            <ImageView BorderPane.alignment="CENTER" fx:id="game_icon">
+      <HBox>
+         <children>
+            <ImageView fx:id="game_icon">
                <image>
                   <Image url="@../../icon64.png" />
                </image>
-               <BorderPane.margin>
-                  <Insets right="10.0" />
-               </BorderPane.margin>
             </ImageView>
-         </left>
-         <center>
-            <Label fx:id="gameName" text="Game name" BorderPane.alignment="CENTER">
-               <font>
-                  <Font name="System Bold" size="14.0" />
-               </font>
-            </Label>
-         </center>
+            <BorderPane>
+               <center>
+                  <Label fx:id="gameName" text="Game  aa name vazaza aaa" BorderPane.alignment="CENTER">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                     <BorderPane.margin>
+                        <Insets left="5.0" />
+                     </BorderPane.margin>
+                  </Label>
+               </center>
+            </BorderPane>
+         </children>
          <VBox.margin>
-            <Insets bottom="10.0" />
+            <Insets bottom="5.0" />
          </VBox.margin>
-      </BorderPane>
+      </HBox>
       <VBox>
          <children>
             <TextFlow>
@@ -71,7 +74,7 @@
                      <padding>
                         <Insets right="5.0" />
                      </padding></Label>
-                  <Label layoutX="88.0" layoutY="10.0" text="%days" fx:id="lastPlayedUnit" />
+                  <Label fx:id="lastPlayedUnit" layoutX="88.0" layoutY="10.0" text="%days" />
                </children>
             </TextFlow>
          </children>

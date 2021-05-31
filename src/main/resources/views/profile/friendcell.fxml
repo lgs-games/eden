@@ -4,13 +4,17 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Font?>
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" styleClass="white-box" stylesheets="@../../style/style.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lgs.eden.views.profile.listcells.FriendCellController">
    <center>
-      <Label fx:id="friendName" text="friends_name" BorderPane.alignment="CENTER" />
+      <Label fx:id="friendName" text="friends_name" BorderPane.alignment="CENTER">
+         <font>
+            <Font size="14.0" />
+         </font></Label>
    </center>
    <left>
-      <ImageView fx:id="friendAvatar" fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+      <ImageView fx:id="friendAvatar" fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
          <BorderPane.margin>
             <Insets right="10.0" />
          </BorderPane.margin></ImageView>
