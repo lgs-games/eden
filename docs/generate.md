@@ -28,3 +28,6 @@ To write a linux version of this command, you should
 * Install [InnoSetup](https://jrsoftware.org/isdl.php)
 * Open ``eden.iss`` and compile
 * done
+* you may run ``.\eden.exe``
+* you may run ``.\eden.exe /SILENT``
+* you may run ``.\eden.exe /VERYSILENT``
