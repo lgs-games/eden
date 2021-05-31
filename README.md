@@ -1,8 +1,5 @@
 # Eden
 
-[![Total alerts](https://img.shields.io/lgtm/alerts/g/lgs-games/eden.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/lgs-games/eden/alerts/)
-[![Language grade: Java](https://img.shields.io/lgtm/grade/java/g/lgs-games/eden.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/lgs-games/eden/context:java)
-
 ### A short presentation
 Eden is the 2nd version of the **Legendary Games Studios** game launcher.
 It is supposed to launch games, to be a link between the players
