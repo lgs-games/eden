@@ -3,6 +3,7 @@ package com.lgs.eden.utils;
 import com.lgs.eden.api.Api;
 import javafx.scene.image.Image;
 
+import java.io.File;
 import java.util.Locale;
 
 /**
@@ -73,6 +74,8 @@ public class Config {
         //  move all games in the old folder to the new one
     }
 
+    public static String getDefaultGameFolder() { return Utility.getCurrentDirectory()+"/games/"; }
+
     // ------------------------------ LOAD CONFIG ----------------------------- \\
 
     /**
@@ -84,5 +87,19 @@ public class Config {
         storedUsername = "Raphik";
         setLocale(Language.EN);
         gameFolder = "C:\\Program Files\\eden";
+
+        // ensure that gameFolder is a valid folder
+        File f = new File(gameFolder);
+        // the game folder don't exists
+        if (!f.exists()){ // we use default one
+            gameFolder = Config.getDefaultGameFolder();
+            f = new File(gameFolder); // no default one
+            if (!f.exists() || !f.isDirectory()){
+                boolean mkdir = f.mkdir(); // we create it
+                if (!mkdir){ // can't create, use current directory
+                    gameFolder = Utility.getCurrentDirectory();
+                }
+            }
+        }
     }
 }

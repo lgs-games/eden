@@ -68,7 +68,9 @@
                         <Label text="%game_folder_desc" />
                      </children>
                   </VBox>
-                  <Button mnemonicParsing="false" text="a_folder" GridPane.columnIndex="1" GridPane.halignment="RIGHT" />
+                  <Button mnemonicParsing="false" text="a_folder"
+                          fx:id="folder"
+                          GridPane.columnIndex="1" GridPane.halignment="RIGHT" />
                </children>
                <VBox.margin>
                   <Insets top="30.0" />
