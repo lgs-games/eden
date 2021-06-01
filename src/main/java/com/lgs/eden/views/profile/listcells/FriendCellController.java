@@ -10,6 +10,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 
 /**
  * Controller for friendcell.fxml
@@ -44,6 +46,10 @@ public class FriendCellController {
     public void init(FriendData d){
         this.data = d;
         this.friendName.setText(d.name);
+
+        // avatar
+        Circle circle = new Circle(24, 24, 24, Color.BLACK);
+        this.friendAvatar.setClip(circle);
         this.friendAvatar.setImage(d.avatar);
     }
 

@@ -16,6 +16,11 @@
     -fx-cursor: HAND;
 }
 
+.user-icon {
+    -fx-fill-width: 32px;
+    -fx-fill-height: 32px;
+}
+
 .red-text { -fx-text-fill: #dd4411; }
 .red-text-i { -fx-text-fill: #dd4411; }
 .green-text { -fx-text-fill: #00ac41; }

@@ -3,6 +3,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
@@ -15,10 +16,18 @@
          </font></Label>
    </center>
    <left>
-      <ImageView fx:id="friendAvatar" fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+      <BorderPane prefHeight="48.0" prefWidth="48.0" BorderPane.alignment="CENTER">
          <BorderPane.margin>
             <Insets right="10.0" />
-         </BorderPane.margin></ImageView>
+         </BorderPane.margin>
+         <center>
+            <ImageView fx:id="friendAvatar" fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" styleClass="user-icon" BorderPane.alignment="CENTER">
+               <image>
+                  <Image url="@../../avatars/23.png" />
+               </image>
+            </ImageView>
+         </center>
+      </BorderPane>
    </left>
    <cursor>
       <Cursor fx:constant="HAND" />
