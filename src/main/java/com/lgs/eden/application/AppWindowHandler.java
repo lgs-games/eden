@@ -8,10 +8,10 @@ import com.lgs.eden.utils.ViewsPath;
 import com.lgs.eden.views.friends.AllFriends;
 import com.lgs.eden.views.inventory.Inventory;
 import com.lgs.eden.views.login.Login;
+import com.lgs.eden.views.marketplace.MarketPlace;
 import com.lgs.eden.views.profile.Profile;
 import com.lgs.eden.views.settings.Settings;
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -96,7 +96,7 @@ public class AppWindowHandler {
         if (menu.equals(ViewsPath.PROFILE)){
             s = username;
             o2 = games;
-        } if (menu.equals(ViewsPath.SHOP)){
+        } if (menu.equals(ViewsPath.MARKETPLACE)){
             s = library;
             o1 = games;
         }
@@ -125,4 +125,8 @@ public class AppWindowHandler {
     public void goToProfile() { setScreen(Profile.getScreen(), ViewsPath.PROFILE); }
 
     public void goToAllFriends() { setScreen(AllFriends.getScreen(loggedUser.userID), ViewsPath.PROFILE); }
+
+    public void goToMarketPlace() {
+        setScreen(MarketPlace.getScreen(), ViewsPath.MARKETPLACE);
+    }
 }
