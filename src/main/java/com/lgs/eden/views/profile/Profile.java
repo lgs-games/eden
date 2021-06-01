@@ -14,6 +14,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 
 /**
@@ -54,6 +55,7 @@ public class Profile {
     public Label since;
     public Label username;
     public Label lastLogin;
+    public ImageView avatar;
 
     @FXML // reputation
     public Label reputation;
@@ -68,6 +70,7 @@ public class Profile {
     // current profile data, can be used in listeners
     private ProfileData data;
 
+    /** set up profile view **/
     private void init(int userID) {
         this.data = Api.getProfileData(userID);
 
@@ -78,34 +81,30 @@ public class Profile {
         this.lastLogin.setText(Translate.getDate(this.data.lastSeen));
         this.since.setText(Translate.getDate(this.data.memberSinceDate));
 
-        // reputation
-        // todo: disabled + and - if self-profile
-        if (this.data.reputation > 0){
-            this.reputation.setText("+"+this.data.reputation);
-            this.reputation.getStyleClass().add("green-text");
-        } else if (this.data.reputation < 0){
-            this.reputation.setText("-"+this.data.reputation);
-            this.reputation.getStyleClass().add("red-text");
-        } else {
-            this.reputation.setText(this.data.reputation+"");
-        }
+        this.avatar.setImage(this.data.avatar);
 
+        // reputation
+        int rep = Integer.compare(this.data.reputation, 0);
+        String repSigne = rep == -1 ? "-": rep == 1 ? "+" : "";
+        String repStyle = rep == -1 ? "red-text": rep == 1 ? "green-text" : "";
+        this.reputation.setText(repSigne+this.data.reputation);
+        if(!repStyle.isEmpty()) this.reputation.getStyleClass().add(repStyle);
+        // disable +1 and -1 visually
         if (currentUserID == this.data.userID){
-            // disable +1 and -1 visually
-            this.addOne.setVisible(false);
-            this.removeOne.setVisible(false);
+            this.addOne.setDisable(true);
+            this.removeOne.setDisable(true);
         }
 
         // ------------------------------ FILL RECENT GAMES ----------------------------- \\
 
         // show the last 3 games
-        if (data.recentGames.length > 0){
-            for (int column = 0; column < 3 && column < data.recentGames.length; column++) {
+        if (this.data.recentGames.length > 0){
+            for (int column = 0; column < 3 && column < this.data.recentGames.length; column++) {
                 // create
                 FXMLLoader loader = Utility.loadView(ViewsPath.PROFILE_CARD.path);
                 Parent card = Utility.loadViewPane(loader);
                 // fill
-                ((RecentGameCard)loader.getController()).init(data.recentGames[column]);
+                ((RecentGameCard)loader.getController()).init(this.data.recentGames[column]);
                 // add
                 this.recentGames.add(card, column,0);
             }
@@ -118,17 +117,16 @@ public class Profile {
 
         // ------------------------------ FILL FRIEND LIST ----------------------------- \\
 
-        if (data.friendNumber > 0) {
-            this.friendDataListView.setItems(data.friends);
+        if (this.data.friendNumber > 0) {
+            this.friendDataListView.setItems(this.data.friends);
             this.friendDataListView.setCellFactory(friendDataListView -> new FriendCell());
         }
-
     }
 
     /** Listener of the see all friends label **/
     @FXML
     private void onSeeAllFriends(){
-        AppWindowHandler.setScreen(AllFriends.getScreen(data.userID));
+        AppWindowHandler.setScreen(AllFriends.getScreen(this.data.userID));
     }
 
     /** Listener of the add friend button **/

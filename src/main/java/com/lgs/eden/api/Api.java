@@ -65,11 +65,11 @@ public class Api {
     public static ArrayList<FriendData> getFriendList(int userID) {
         ArrayList<FriendData> friendList = new ArrayList<>();
 
-        FriendData fr0 = new FriendData(Utility.loadImage("/icon64.png"), "Raphik", false, 23);
-        FriendData fr1 = new FriendData(Utility.loadImage("/icon64.png"), "Raphik2", false, 24);
-        FriendData fr2 = new FriendData(Utility.loadImage("/icon64.png"), "Calistral", false, 25);
-        FriendData fr3 = new FriendData(Utility.loadImage("/icon64.png"), "Caliki", false, 26);
-        FriendData fr4 = new FriendData(Utility.loadImage("/icon64.png"), "Raphistro", false, 27);
+        FriendData fr0 = new FriendData("/avatars/23.png", "Raphik", false, 23);
+        FriendData fr1 = new FriendData("/avatars/24.png", "Raphik2", false, 24);
+        FriendData fr2 = new FriendData("/avatars/25.png", "Calistral", false, 25);
+        FriendData fr3 = new FriendData("/avatars/26.png", "Caliki", false, 26);
+        FriendData fr4 = new FriendData("/avatars/27.png", "Raphistro", false, 27);
 
         if (userID == 23){
             friendList.add(fr1);
@@ -82,7 +82,7 @@ public class Api {
         return friendList;
     }
 
-    /** Returns profile Data for an user. todo: Only 23 is supported for now. */
+    /** Returns profile Data for an user. fixme: Only 23 to 27 are supported for now, as test values. */
     public static ProfileData getProfileData(int userID) {
         ObservableList<FriendData> friendDataObservableList = FXCollections.observableArrayList();
         friendDataObservableList.addAll(Api.getFriendList(userID));
@@ -98,29 +98,26 @@ public class Api {
                     new RecentGameData(Utility.loadImage("/games/enigma-icon.png"), "Enigma", 1020, 30)
             };
 
-            return new ProfileData("Raphik",
-              23, friendNumber, 9999,
+            return new ProfileData("Raphik",23, "/avatars/23.png",
+                    friendNumber, 9999,
                     "Raphiki is a great programmer at ENSIIE engineering school.",
                     new Date(), Date.from(Instant.parse("2020-12-03T10:15:30.00Z")), friendDataObservableList,
               recentGamesData
             );
         } else if (userID == 24){
-            return new ProfileData("Raphik2",
-                    24, friendNumber, 0,
+            return new ProfileData("Raphik2",24, "/avatars/24.png", friendNumber, 0,
                     "No description yet.",
                     new Date(), Date.from(Instant.parse("2021-03-18T10:15:30.00Z")), friendDataObservableList,
                     recentGamesData
             );
         } else if (userID == 25){
-            return new ProfileData("Calistral",
-                    25, friendNumber, -1,
+            return new ProfileData("Calistral",25, "/avatars/25.png", friendNumber, -1,
                     "No description yet.",
                     new Date(), Date.from(Instant.parse("2020-12-03T10:15:30.00Z")), friendDataObservableList,
                     recentGamesData
             );
         } else if (userID == 26){
-            return new ProfileData("Caliki",
-                    26, friendNumber, 0,
+            return new ProfileData("Caliki", 26, "/avatars/26.png", friendNumber, 0,
                     "This is a really"+"This is a really"+"This is a really"+"This is a really"+"This is a really"
                             +"This is a really"+"This is a really"+"This is a really"+"This is a really"+"This is a really"
                             +"This is a really"+"This is a really"+"This is a really"+"This is a really"+"This is a really"
@@ -131,8 +128,7 @@ public class Api {
                     recentGamesData
             );
         } else if (userID == 27){
-            return new ProfileData("Raphistro",
-                    27, friendNumber, 17570,
+            return new ProfileData("Raphistro",27, "/avatars/27.png", friendNumber, 17570,
                     "No description yet.",
                     new Date(), Date.from(Instant.parse("2020-03-09T10:15:30.00Z")), friendDataObservableList,
                     recentGamesData

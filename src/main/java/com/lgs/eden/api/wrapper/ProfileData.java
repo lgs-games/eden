@@ -1,6 +1,8 @@
 package com.lgs.eden.api.wrapper;
 
+import com.lgs.eden.utils.Utility;
 import javafx.collections.ObservableList;
+import javafx.scene.image.Image;
 
 import java.util.Date;
 
@@ -26,12 +28,15 @@ public class ProfileData {
     public final Date lastSeen;
     // member since
     public final Date memberSinceDate;
+    // avatar path
+    public Image avatar;
 
-    public ProfileData(String username, int userID,
+    public ProfileData(String username, int userID, String avatar,
                        int friendNumber, int reputation, String biography, Date lastSeen,
                        Date memberSinceDate,
                        ObservableList<FriendData> friends, RecentGameData[] recentGames) {
         this.username = username;
+        this.avatar = Utility.loadImage(avatar);
         this.friends = friends;
         this.recentGames = recentGames;
         this.userID = userID;

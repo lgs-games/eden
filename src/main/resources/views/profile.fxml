@@ -163,9 +163,10 @@
                         </VBox>
                      </bottom>
                      <center>
-                        <ImageView fitHeight="200.0" fitWidth="197.0" BorderPane.alignment="CENTER">
+                        <ImageView fitHeight="200.0" fitWidth="197.0" BorderPane.alignment="CENTER"
+                        fx:id="avatar">
                            <image>
-                              <Image url="@../tests/avatar.png" />
+                              <Image url="@../avatars/avatar.png" />
                            </image>
                         </ImageView>
                      </center>

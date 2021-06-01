@@ -95,7 +95,7 @@
                      <graphic>
                         <ImageView fitHeight="32.0" fitWidth="32.0">
                            <image>
-                              <Image url="@../tests/avatar.png" />
+                              <Image url="@../avatars/avatar.png" />
                            </image>
                         </ImageView>
                      </graphic>
