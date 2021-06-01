@@ -10,10 +10,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <ScrollPane hbarPolicy="NEVER" pannable="true" styleClass="app-background" stylesheets="@../style/style.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lgs.eden.views.friends.AllFriends">
    <content>
-      <VBox prefWidth="1100.0" spacing="20.0" styleClass="app-background" stylesheets="@../style/style.css">
+      <VBox minHeight="600.0" prefWidth="1100.0" spacing="20.0" styleClass="app-background" stylesheets="@../style/style.css">
          <children>
             <BorderPane styleClass="white-box">
                <top>
