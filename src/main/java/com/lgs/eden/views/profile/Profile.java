@@ -27,10 +27,18 @@ public class Profile {
      * @return profile screen
      */
     public static Parent getScreen() {
+        return reloadWith(currentUserID);
+    }
+
+    /**
+     * @return reloaded profile screen with profile data for userID
+     * Should only be called if user is not currentUserID
+     */
+    public static Parent reloadWith(int userID) {
         FXMLLoader loader = Utility.loadView(ViewsPath.PROFILE.path);
         Parent parent = Utility.loadViewPane(loader);
         Profile controller = loader.getController();
-        controller.init(currentUserID);
+        controller.init(userID);
         return parent;
     }
 

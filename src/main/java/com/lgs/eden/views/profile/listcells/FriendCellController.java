@@ -1,13 +1,14 @@
 package com.lgs.eden.views.profile.listcells;
 
+import com.lgs.eden.api.wrapper.FriendData;
+import com.lgs.eden.application.AppWindowHandler;
 import com.lgs.eden.utils.Utility;
 import com.lgs.eden.utils.ViewsPath;
+import com.lgs.eden.views.profile.Profile;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 /**
@@ -35,12 +36,16 @@ public class FriendCellController {
 
     /** the view **/
     private Parent view;
+    /** friend date **/
+    private FriendData data;
 
     // ------------------------------ METHODS ----------------------------- \\
 
-    public void setName(String entry) { this.friendName.setText(entry); }
-
-    public void setAvatar(Image pic) { this.friendAvatar.setImage(pic); }
+    public void init(FriendData d){
+        this.data = d;
+        this.friendName.setText(d.name);
+        this.friendAvatar.setImage(d.avatar);
+    }
 
     public Parent getView() { return this.view; }
 
@@ -51,8 +56,7 @@ public class FriendCellController {
      */
     @FXML
     public void onWantProfile() {
-        System.out.println("So you want to see his profile :eyes:");
-        System.out.println("/see "+friendName.getText());
+        AppWindowHandler.setScreen(Profile.reloadWith(this.data.id));
     }
 
 }

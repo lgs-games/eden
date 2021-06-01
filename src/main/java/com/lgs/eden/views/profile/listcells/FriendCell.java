@@ -34,10 +34,7 @@ public class FriendCell extends ListCell<FriendData> {
         setGraphic(isEmpty ? null : this.controller.getView());
 
         // show item
-        if (!isEmpty) {
-            this.controller.setName(item.name);
-            this.controller.setAvatar(item.avatar);
-        }
+        if (!isEmpty) this.controller.init(item);
     }
 
 }
