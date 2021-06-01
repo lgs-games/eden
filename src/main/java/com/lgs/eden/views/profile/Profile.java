@@ -46,17 +46,24 @@ public class Profile {
     // ------------------------------ INSTANCE ----------------------------- \\
 
     @FXML // profile info
-    public Label bio;
-    public Label userID;
-    public Label since;
-    public Label username;
-    public Label lastLogin;
-    public ImageView avatar;
+    private Label bio;
+    @FXML
+    private Label userID;
+    @FXML
+    private Label since;
+    @FXML
+    private Label username;
+    @FXML
+    private Label lastLogin;
+    @FXML
+    private ImageView avatar;
 
     @FXML // reputation
-    public Label reputation;
-    public Label addOne;
-    public Label removeOne;
+    private Label reputation;
+    @FXML
+    private Label addOne;
+    @FXML
+    private Label removeOne;
 
     @FXML
     private GridPane recentGames;
@@ -71,13 +78,12 @@ public class Profile {
         this.data = Api.getProfileData(userID);
 
         // ------------------------------ FILL ATTRIBUTES ----------------------------- \\
-        this.username.setText(this.data.username);
-        this.userID.setText(String.format("%06d", this.data.userID));
-        this.bio.setText(this.data.biography+"");
-        this.lastLogin.setText(Translate.getDate(this.data.lastSeen));
-        this.since.setText(Translate.getDate(this.data.memberSinceDate));
-
-        this.avatar.setImage(this.data.avatar);
+        this.username.setText(this.data.username); // ex: Raphiki
+        this.userID.setText(String.format("%06d", this.data.userID)); // ex: 000006
+        this.bio.setText(this.data.biography+""); // ...
+        this.lastLogin.setText(Translate.getDate(this.data.lastSeen)); // getDate format
+        this.since.setText(Translate.getDate(this.data.memberSinceDate)); // getDate format
+        this.avatar.setImage(this.data.avatar); // set avatar
 
         // reputation
         int rep = Integer.compare(this.data.reputation, 0);
@@ -113,6 +119,7 @@ public class Profile {
 
         // ------------------------------ FILL FRIEND LIST ----------------------------- \\
 
+        // add friends in the list
         if (this.data.friendNumber > 0) {
             this.friendDataListView.setItems(this.data.friends);
             this.friendDataListView.setCellFactory(friendDataListView -> new FriendCell());
