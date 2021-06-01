@@ -17,8 +17,6 @@ public class FriendCell extends ListCell<FriendData> {
 
     public FriendCell() {
         this.controller = FriendCellController.load();
-        // add listener
-        this.setOnMouseClicked((e)->this.controller.onWantProfile());
     }
 
     // ------------------------------ METHODS ----------------------------- \\

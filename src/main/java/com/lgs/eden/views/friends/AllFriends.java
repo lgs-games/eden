@@ -69,8 +69,6 @@ public class AllFriends {
         controller.init(f);
         Parent view = controller.getView();
         view.getStyleClass().add("friend-list-div");
-        // add listener
-        view.setOnMouseClicked((e) -> controller.onWantProfile());
         parent.getChildren().add(view);
     }
 
