@@ -137,6 +137,9 @@
                            <font>
                               <Font name="System Bold" size="14.0" />
                            </font>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
                         </Label>
                      </children>
                   </Pane>
@@ -249,7 +252,7 @@
                                     <Insets bottom="10.0" right="10.0" top="10.0" />
                                  </VBox.margin>
                                  <content>
-                                    <Label fx:id="bio" maxWidth="410.0" text="This is a really long description where I This is a really long description where I This is a really long description where I'm going to... This is a really long description where I This is a really long description where I This is a really long description where I'm going to... This is a really long description where I This is a really long description where I This is a really long description where I'm going to...This is a really long description where I This is a really long description where I This is a really long description where I'm going to...  This is a really long description where I This is a really long description where I This is a really long description where I'm going to... This is a really long description where I This is a really long description where I This is a really long description where I'm going to... This is a really long description where I This is a really long description where I This is a really long description where I'm going to...This is a really long description where I This is a really long description where I This is a really long description where I'm going to... " wrapText="true">
+                                    <Label fx:id="bio" focusTraversable="false" maxWidth="410.0" text="This is a really long description where I This is a really long description where I This is a really long description where I'm going to... This is a really long description where I This is a really long description where I This is a really long description where I'm going to... This is a really long description where I This is a really long description where I This is a really long description where I'm going to...This is a really long description where I This is a really long description where I This is a really long description where I'm going to...  This is a really long description where I This is a really long description where I This is a really long description where I'm going to... This is a really long description where I This is a really long description where I This is a really long description where I'm going to... This is a really long description where I This is a really long description where I This is a really long description where I'm going to...This is a really long description where I This is a really long description where I This is a really long description where I'm going to... " wrapText="true">
                                        <font>
                                           <Font size="14.0" />
                                        </font>

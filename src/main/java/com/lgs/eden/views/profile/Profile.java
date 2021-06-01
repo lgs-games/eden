@@ -87,7 +87,7 @@ public class Profile {
 
         // reputation
         int rep = Integer.compare(this.data.reputation, 0);
-        String repSigne = rep == 1 ? "+" : "";
+        String repSigne = rep >= 0 ? "+" : "";
         String repStyle = rep == -1 ? "red-text": rep == 1 ? "green-text" : "";
         this.reputation.setText(repSigne+this.data.reputation);
         if(!repStyle.isEmpty()) this.reputation.getStyleClass().add(repStyle);
