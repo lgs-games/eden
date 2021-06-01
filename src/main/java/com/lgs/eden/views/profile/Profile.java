@@ -129,7 +129,7 @@ public class Profile {
     /** Listener of the see all friends label **/
     @FXML
     private void onSeeAllFriends(){
-        AppWindowHandler.setScreen(AllFriends.getScreen(this.data.userID));
+        AppWindowHandler.setScreen(AllFriends.getScreen(this.data.userID), ViewsPath.PROFILE);
     }
 
     /** Listener of the add friend button **/

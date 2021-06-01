@@ -17,7 +17,7 @@
 }
 
 .red-text { -fx-text-fill: #dd4411; }
-.red-text-i { -fx-text-fill: #dd4411 !important; }
+.red-text-i { -fx-text-fill: #dd4411; }
 .green-text { -fx-text-fill: #00ac41; }
 .white-text { -fx-text-fill: white; }
 .yellow-text { -fx-text-fill: #FFCC33; }

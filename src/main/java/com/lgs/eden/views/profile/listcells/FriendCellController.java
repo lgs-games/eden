@@ -56,7 +56,7 @@ public class FriendCellController {
      */
     @FXML
     public void onWantProfile() {
-        AppWindowHandler.setScreen(Profile.reloadWith(this.data.id));
+        AppWindowHandler.setScreen(Profile.reloadWith(this.data.id), ViewsPath.PROFILE);
     }
 
 }

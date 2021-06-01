@@ -34,11 +34,11 @@
                   </Label>
                </children>
             </HBox>
-            <Label layoutX="10.0" layoutY="10.0" text="%my_games">
+            <Label layoutX="10.0" layoutY="10.0" text="%my_games" fx:id="games">
                <font>
                   <Font size="14.0" />
                </font></Label>
-            <Label layoutX="38.0" layoutY="10.0" text="%library">
+            <Label layoutX="38.0" layoutY="10.0" text="%library" fx:id="library">
                <font>
                   <Font size="14.0" />
                </font></Label>

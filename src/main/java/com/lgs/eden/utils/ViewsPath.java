@@ -13,12 +13,15 @@ public enum ViewsPath {
     REGISTER("/views/register.fxml"),
     SETTINGS("/views/settings.fxml"),
 
-    PROFILE("/views/profile.fxml"),
+    PROFILE("/views/profile.fxml"), // profile menu
     FRIEND_CELL("/views/profile/friendcell.fxml"),
     PROFILE_CARD("/views/profile/card.fxml"),
-
     FRIENDS_LIST("/views/friends_list.fxml"),
-    INVENTORY("/views/inventory.fxml")
+    INVENTORY("/views/inventory.fxml"),
+
+    GAMES(null), // games menu
+
+    SHOP(null),
     ;
 
     // view path
