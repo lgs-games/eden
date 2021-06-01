@@ -9,6 +9,7 @@ import com.lgs.eden.views.friends.AllFriends;
 import com.lgs.eden.views.inventory.Inventory;
 import com.lgs.eden.views.login.Login;
 import com.lgs.eden.views.profile.Profile;
+import com.lgs.eden.views.settings.Settings;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -41,6 +42,11 @@ public class AppWindowHandler {
 
         // load
         WindowController.setSize(Config.SCREEN_WIDTH_APP, Config.SCREEN_HEIGHT_APP);
+        loadGameFrame();
+    }
+
+    /** load game menu bar with login, ... and menu **/
+    public static void loadGameFrame(){
         // load main frame and save as window
         FXMLLoader loader = Utility.loadView(ViewsPath.FRAME_MAIN.path);
         window = (BorderPane) Utility.loadViewPane(loader);
@@ -107,7 +113,7 @@ public class AppWindowHandler {
 
     @FXML
     public void openSettings() {
-        System.out.println("open settings");
+        setScreen(Settings.getScreen(false), ViewsPath.PROFILE);
     }
 
     @FXML
