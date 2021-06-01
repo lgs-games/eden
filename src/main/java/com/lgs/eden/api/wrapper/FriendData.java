@@ -3,6 +3,13 @@ package com.lgs.eden.api.wrapper;
 import com.lgs.eden.utils.Utility;
 import javafx.scene.image.Image;
 
+/**
+ * FriendData wrapper for API Result.
+ *
+ * We need an ID in order to show the profile,
+ * online to sort with online/offline in the friend list and
+ * image/avatar to show the friend.
+ */
 public class FriendData {
 
     public final Image avatar;

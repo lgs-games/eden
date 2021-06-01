@@ -7,7 +7,7 @@ import javafx.scene.image.Image;
 import java.util.Date;
 
 /**
- * Wrapper for profile Data
+ * Wrapper for profile data result from the API
  */
 public class ProfileData {
 
