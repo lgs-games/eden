@@ -5,10 +5,12 @@ import com.lgs.eden.api.wrapper.LoginResponseData;
 import com.lgs.eden.utils.Config;
 import com.lgs.eden.utils.Utility;
 import com.lgs.eden.utils.ViewsPath;
+import com.lgs.eden.views.friends.AllFriends;
 import com.lgs.eden.views.inventory.Inventory;
 import com.lgs.eden.views.login.Login;
 import com.lgs.eden.views.profile.Profile;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -115,4 +117,6 @@ public class AppWindowHandler {
     }
 
     public void goToProfile() { setScreen(Profile.getScreen(), ViewsPath.PROFILE); }
+
+    public void goToAllFriends() { setScreen(AllFriends.getScreen(loggedUser.userID), ViewsPath.PROFILE); }
 }

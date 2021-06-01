@@ -53,11 +53,20 @@
                               </ImageView>
                            </graphic>
                         </MenuItem>
-                        <MenuItem mnemonicParsing="false" text="%my_friends">
+                        <MenuItem mnemonicParsing="false" text="%my_friends" onAction="#goToAllFriends">
                            <graphic>
                               <ImageView>
                                  <image>
                                     <Image url="@../icons/16x16/friends.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </MenuItem>
+                       <MenuItem mnemonicParsing="false" text="%messages">
+                           <graphic>
+                              <ImageView>
+                                 <image>
+                                    <Image url="@../icons/16x16/message.png" />
                                  </image>
                               </ImageView>
                            </graphic>
