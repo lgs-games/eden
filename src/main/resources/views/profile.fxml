@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
@@ -75,11 +76,17 @@
                                  <font>
                                     <Font name="System Bold" size="24.0" />
                                  </font>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
                               </Label>
                               <Label fx:id="removeOne" onMouseClicked="#onMinusOneRep" styleClass="remove-rep" text="- 1" GridPane.columnIndex="1" GridPane.halignment="CENTER">
                                  <font>
                                     <Font name="System Bold" size="24.0" />
                                  </font>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
                               </Label>
                            </children>
                            <BorderPane.margin>
