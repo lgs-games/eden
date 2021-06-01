@@ -75,6 +75,11 @@
                         <Insets right="5.0" />
                      </padding></Label>
                   <Label fx:id="lastPlayedUnit" layoutX="88.0" layoutY="10.0" text="%days" />
+                  <Label fx:id="lastPlayedUnit1" layoutX="121.0" layoutY="10.0" text="%ago">
+                     <padding>
+                        <Insets left="5.0" />
+                     </padding>
+                  </Label>
                </children>
             </TextFlow>
          </children>

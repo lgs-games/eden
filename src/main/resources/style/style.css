@@ -37,7 +37,7 @@
 
 /** friend list css **/
 
-.friend-list-div {
+.friend-list-div > * {
     -fx-end-margin: 5px;
     -fx-start-margin: 5px;
     -fx-border-color: #1e262c;
