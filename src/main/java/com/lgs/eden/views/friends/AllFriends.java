@@ -32,7 +32,7 @@ public class AllFriends {
 
     /** Init view with user ID */
     private void init(int userID) {
-        ArrayList<FriendData> friendList = Api.getFriendList();
+        ArrayList<FriendData> friendList = Api.getFriendList(userID);
         boolean added = false;
 
         // online only
@@ -66,8 +66,7 @@ public class AllFriends {
     // create friend div, with border, padding, set values, ... and add it to parent
     private void createFriendDiv(FriendData f, FlowPane parent) {
         FriendCellController controller = FriendCellController.load();
-        controller.setAvatar(f.avatar);
-        controller.setName(f.name);
+        controller.init(f);
         Parent view = controller.getView();
         view.getStyleClass().add("friend-list-div");
         parent.getChildren().add(view);
