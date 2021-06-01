@@ -9,7 +9,6 @@ import com.lgs.eden.utils.ViewsPath;
 import com.lgs.eden.utils.helper.LoginRegisterForm;
 
 import com.lgs.eden.application.WindowController;
-import com.lgs.eden.views.profile.Profile;
 import com.lgs.eden.views.register.Register;
 import com.lgs.eden.views.settings.Settings;
 import javafx.event.ActionEvent;
@@ -47,7 +46,7 @@ public class Login extends LoginRegisterForm {
     @Override
     public void resetForm() {
         // get stored if we do have one
-        String stored_username = Config.getStored_username();
+        String stored_username = Config.getStoredUsername();
         this.login.setText(stored_username);
         this.rememberMe.setSelected(!stored_username.isEmpty());
         this.password.setText("tester");
@@ -70,9 +69,8 @@ public class Login extends LoginRegisterForm {
             // add user
             LoginResponseData response = Api.login(username, pwd);
             if (response.code == 0){ // this is an user id
-                Profile.setUserID(response.userID);
                 // so we are good
-                AppWindowHandler.changeToAppWindow();
+                AppWindowHandler.changeToAppWindow(response);
             } else {
                 error.append("Invalid credentials\n");
             }

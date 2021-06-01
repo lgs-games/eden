@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
@@ -14,6 +16,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.TextFlow?>
 
 <BorderPane minHeight="550.0" minWidth="1000.0" styleClass="app-background" stylesheets="@../style/style.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lgs.eden.views.profile.Profile">
    <right>
@@ -48,7 +51,7 @@
                               <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                            </rowConstraints>
                            <children>
-                              <Label alignment="CENTER" text="reputation_value" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                              <Label fx:id="reputation" alignment="CENTER" text="reputation_value" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                                  <font>
                                     <Font size="24.0" />
                                  </font>
@@ -69,15 +72,21 @@
                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
-                              <Label onMouseClicked="#onPlusOneRep" styleClass="add-rep" text="+ 1" GridPane.halignment="CENTER">
+                              <Label fx:id="addOne" onMouseClicked="#onPlusOneRep" styleClass="add-rep" text="+ 1" GridPane.halignment="CENTER">
                                  <font>
                                     <Font name="System Bold" size="24.0" />
                                  </font>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
                               </Label>
-                              <Label onMouseClicked="#onMinusOneRep" styleClass="remove-rep" text="- 1" GridPane.columnIndex="1" GridPane.halignment="CENTER">
+                              <Label fx:id="removeOne" onMouseClicked="#onMinusOneRep" styleClass="remove-rep" text="- 1" GridPane.columnIndex="1" GridPane.halignment="CENTER">
                                  <font>
                                     <Font name="System Bold" size="24.0" />
                                  </font>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
                               </Label>
                            </children>
                            <BorderPane.margin>
@@ -128,6 +137,9 @@
                            <font>
                               <Font name="System Bold" size="14.0" />
                            </font>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
                         </Label>
                      </children>
                   </Pane>
@@ -142,7 +154,7 @@
    <center>
       <VBox BorderPane.alignment="CENTER">
          <children>
-            <BorderPane styleClass="white-box" VBox.vgrow="ALWAYS">
+            <BorderPane styleClass="white-box">
                <left>
                   <BorderPane BorderPane.alignment="CENTER">
                      <bottom>
@@ -153,7 +165,7 @@
                                     <Font name="System Bold" size="12.0" />
                                  </font>
                               </Label>
-                              <Label text="last_login_value" />
+                              <Label fx:id="lastLogin" text="last_login_value" />
                            </children>
                            <BorderPane.margin>
                               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
@@ -161,9 +173,9 @@
                         </VBox>
                      </bottom>
                      <center>
-                        <ImageView fitHeight="200.0" fitWidth="197.0" BorderPane.alignment="CENTER">
+                        <ImageView fx:id="avatar" fitHeight="200.0" fitWidth="197.0" BorderPane.alignment="CENTER">
                            <image>
-                              <Image url="@../tests/avatar.png" />
+                              <Image url="@../avatars/avatar.png" />
                            </image>
                         </ImageView>
                      </center>
@@ -177,7 +189,7 @@
                      <top>
                         <VBox prefHeight="170.0" prefWidth="100.0" BorderPane.alignment="CENTER">
                            <children>
-                              <Label text="username">
+                              <Label fx:id="username" text="username">
                                  <font>
                                     <Font name="System Bold" size="48.0" />
                                  </font>
@@ -185,20 +197,47 @@
                                     <Insets top="25.0" />
                                  </VBox.margin>
                               </Label>
-                              <Label text="id 000000">
-                                 <font>
-                                    <Font size="24.0" />
-                                 </font>
-                              </Label>
-                              <Label layoutX="10.0" layoutY="105.0" text="member_since">
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font>
-                              </Label>
+                              <TextFlow>
+                                 <children>
+                                    <Label text="id">
+                                       <font>
+                                          <Font size="24.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="userID" layoutX="10.0" layoutY="10.0" text="000000">
+                                       <font>
+                                          <Font size="24.0" />
+                                       </font>
+                                       <padding>
+                                          <Insets left="10.0" />
+                                       </padding>
+                                    </Label>
+                                 </children>
+                              </TextFlow>
+                              <TextFlow>
+                                 <children>
+                                    <Label text="%member_since">
+                                       <font>
+                                          <Font size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="since" layoutX="10.0" layoutY="10.0" text="date">
+                                       <font>
+                                          <Font size="14.0" />
+                                       </font>
+                                       <padding>
+                                          <Insets left="10.0" />
+                                       </padding>
+                                    </Label>
+                                 </children>
+                              </TextFlow>
                            </children></VBox>
                      </top>
-                     <center>
-                        <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+                     <BorderPane.margin>
+                        <Insets left="10.0" />
+                     </BorderPane.margin>
+                     <bottom>
+                        <VBox BorderPane.alignment="CENTER">
                            <children>
                               <Label text="%biography">
                                  <VBox.margin>
@@ -208,19 +247,23 @@
                                     <Font size="24.0" />
                                  </font>
                               </Label>
-                              <Label text="This is a really long description where I This is a really long description where I This is a really long description where I'm going to..." wrapText="true">
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font>
+                              <ScrollPane focusTraversable="false" hbarPolicy="NEVER" maxHeight="90.0" pickOnBounds="false" prefHeight="90.0">
                                  <VBox.margin>
                                     <Insets bottom="10.0" right="10.0" top="10.0" />
                                  </VBox.margin>
-                              </Label>
+                                 <content>
+                                    <Label fx:id="bio" focusTraversable="false" maxWidth="410.0" text="This is a really long description where I This is a really long description where I This is a really long description where I'm going to... This is a really long description where I This is a really long description where I This is a really long description where I'm going to... This is a really long description where I This is a really long description where I This is a really long description where I'm going to...This is a really long description where I This is a really long description where I This is a really long description where I'm going to...  This is a really long description where I This is a really long description where I This is a really long description where I'm going to... This is a really long description where I This is a really long description where I This is a really long description where I'm going to... This is a really long description where I This is a really long description where I This is a really long description where I'm going to...This is a really long description where I This is a really long description where I This is a really long description where I'm going to... " wrapText="true">
+                                       <font>
+                                          <Font size="14.0" />
+                                       </font>
+                                       <padding>
+                                          <Insets bottom="5.0" left="5.0" top="5.0" />
+                                       </padding>
+                                    </Label>
+                                 </content>
+                              </ScrollPane>
                            </children></VBox>
-                     </center>
-                     <BorderPane.margin>
-                        <Insets left="10.0" />
-                     </BorderPane.margin>
+                     </bottom>
                   </BorderPane>
                </center>
             </BorderPane>

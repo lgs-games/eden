@@ -6,13 +6,23 @@ package com.lgs.eden.utils;
 public enum ViewsPath {
     FRAME("/views/frame.fxml"),
     FRAME_MAIN("/views/frame_main.fxml"),
+
     UPDATE("/views/update.fxml"),
+
     LOGIN("/views/login.fxml"),
-    PROFILE("/views/profile.fxml"),
     REGISTER("/views/register.fxml"),
     SETTINGS("/views/settings.fxml"),
+
+    PROFILE("/views/profile.fxml"), // profile menu
     FRIEND_CELL("/views/profile/friendcell.fxml"),
-    PROFILE_CARD("/views/profile/card.fxml");
+    PROFILE_CARD("/views/profile/card.fxml"),
+    FRIENDS_LIST("/views/friends_list.fxml"),
+    INVENTORY("/views/inventory.fxml"),
+
+    GAMES(null), // games menu
+
+    SHOP(null),
+    ;
 
     // view path
     public final String path;

@@ -5,8 +5,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.image.Image;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.ResourceBundle;
@@ -65,5 +68,16 @@ public final class Utility {
         } catch (IOException | IllegalStateException e) {
             throw new IllegalStateException(e);
         }
+    }
+
+    /** All path will use the Unix style */
+    public static String formatPath(String gameFolder) {
+        return gameFolder.replace("\\", "/");
+    }
+
+    /** return current directory **/
+    public static String getCurrentDirectory() {
+       String path = Utility.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+       return new File(path).getParent(); // get parent folder
     }
 }

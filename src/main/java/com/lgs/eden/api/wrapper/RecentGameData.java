@@ -3,7 +3,7 @@ package com.lgs.eden.api.wrapper;
 import javafx.scene.image.Image;
 
 /**
- * Wrapper for recents games data
+ * Wrapper for recent games data
  */
 public final class RecentGameData {
 

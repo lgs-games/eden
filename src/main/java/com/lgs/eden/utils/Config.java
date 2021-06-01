@@ -3,6 +3,7 @@ package com.lgs.eden.utils;
 import com.lgs.eden.api.Api;
 import javafx.scene.image.Image;
 
+import java.io.File;
 import java.util.Locale;
 
 /**
@@ -19,8 +20,9 @@ public class Config {
 
     // ------------------------------ CLASS VARIABLES ----------------------------- \\
 
-    private static String stored_username = "Raphik";
-    private static Locale locale = setLocale(Language.EN);
+    private static String gameFolder;
+    private static String storedUsername;
+    private static Locale locale;
 
     // ------------------------------ GENERAL METHODS ----------------------------- \\
 
@@ -48,25 +50,56 @@ public class Config {
     public static Language getLanguage() { return Language.valueOf(locale.getLanguage().toUpperCase()); }
 
     // set language
-    public static Locale setLocale(Language lang) { return locale = new Locale(lang.code); }
+    public static void setLocale(Language lang) { locale = new Locale(lang.code); }
 
     // ------------------------------ USERNAME ----------------------------- \\
 
     /** may store username or removed stored username **/
     public static void lastUsername(String username, boolean store) {
-        stored_username = store ? username : "";
-        System.out.println((store?"Storing username: ":"Removing username :") + stored_username);
+        storedUsername = store ? username : "";
+        System.out.println((store?"Storing username: ":"Removing username :") + storedUsername);
+        // todo: store new username
     }
 
     /** return stored username **/
-    public static String getStored_username() { return stored_username; }
+    public static String getStoredUsername() { return storedUsername; }
+
+    // ------------------------------ GAME FOLDER ----------------------------- \\
+
+    public static String getGameFolder() { return gameFolder; }
+
+    public static void setGameFolder(String newFolder) {
+        gameFolder = newFolder;
+        // todo: store new game folder
+        //  move all games in the old folder to the new one
+    }
+
+    public static String getDefaultGameFolder() { return Utility.getCurrentDirectory()+"/games/"; }
+
+    // ------------------------------ LOAD CONFIG ----------------------------- \\
 
     /**
-     * todo:
+     * todo: load from file
      * Load language by default from Config file
      * and load stored_username if we got one.
      */
     public static void init() {
+        storedUsername = "Raphik";
+        setLocale(Language.EN);
+        gameFolder = "C:\\Program Files\\eden";
 
+        // ensure that gameFolder is a valid folder
+        File f = new File(gameFolder);
+        // the game folder don't exists
+        if (!f.exists()){ // we use default one
+            gameFolder = Config.getDefaultGameFolder();
+            f = new File(gameFolder); // no default one
+            if (!f.exists() || !f.isDirectory()){
+                boolean mkdir = f.mkdir(); // we create it
+                if (!mkdir){ // can't create, use current directory
+                    gameFolder = Utility.getCurrentDirectory();
+                }
+            }
+        }
     }
 }

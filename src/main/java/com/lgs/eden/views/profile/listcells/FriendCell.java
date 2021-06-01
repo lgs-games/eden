@@ -12,19 +12,11 @@ import javafx.scene.control.ListCell;
  */
 public class FriendCell extends ListCell<FriendData> {
 
-    // ------------------------------ ATTRIBUTES ----------------------------- \\
-
-    private final Node graphic;
+    // controller of the view
     private final FriendCellController controller;
 
-    // ------------------------------ CONTROLLER ----------------------------- \\
-
     public FriendCell() {
-        FXMLLoader loader = Utility.loadView(ViewsPath.FRIEND_CELL.path);
-        this.graphic = Utility.loadViewPane(loader);
-        this.controller = loader.getController();
-        // add listener
-        this.setOnMouseClicked((e)->this.controller.onWantProfile());
+        this.controller = FriendCellController.load();
     }
 
     // ------------------------------ METHODS ----------------------------- \\
@@ -37,13 +29,10 @@ public class FriendCell extends ListCell<FriendData> {
         setBackground(null);
         setText(null);
         // we will only show the view if we got something
-        setGraphic(isEmpty ? null : this.graphic);
+        setGraphic(isEmpty ? null : this.controller.getView());
 
         // show item
-        if (!isEmpty) {
-            this.controller.setName(item.getName());
-            this.controller.setAvatar(item.getAvatar());
-        }
+        if (!isEmpty) this.controller.init(item);
     }
 
 }
