@@ -28,6 +28,7 @@
 .yellow-text { -fx-text-fill: #FFCC33; }
 .grey-text { -fx-text-fill: #575757; }
 .grey-text-i { -fx-text-fill: #575757 !important; }
+.blue-text { -fx-text-fill: #2aa198; }
 
 .installer-bg {
     -fx-background-radius: 5px;
@@ -48,6 +49,12 @@
 .no-friends-label {
     -fx-font-size: 17px;
     -fx-text-fill: #2aa198;
+}
+
+/** market css **/
+
+.clean-div {
+    -fx-background-color: transparent;
 }
 
 /** profile css **/
