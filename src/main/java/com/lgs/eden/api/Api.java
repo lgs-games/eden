@@ -92,7 +92,10 @@ public class Api {
 
             return new ProfileData("Raphik",
               23, friendNumber, 9999,
-                    "Raphiki is a great programmer at ENSIIE engineering school.\nCheck HunterFruitti25 on Xbox (:",
+                    "Raphiki is a great programmer at ENSIIE engineering school." +
+                            "aza"
+
+                    ,
                     new Date(), Date.from(Instant.parse("2021-12-03T10:15:30.00Z")), friendDataObservableList,
               recentGamesData
             );

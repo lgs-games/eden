@@ -40,18 +40,18 @@ public class Profile {
 
     // ------------------------------ INSTANCE ----------------------------- \\
 
-    @FXML
+    @FXML // profile info
     public Label bio;
-    @FXML
     public Label userID;
-    @FXML
     public Label since;
-    @FXML
     public Label username;
-    @FXML
     public Label lastLogin;
-    @FXML
+
+    @FXML // reputation
     public Label reputation;
+    public Label addOne;
+    public Label removeOne;
+
     @FXML
     private GridPane recentGames;
     @FXML
@@ -80,6 +80,12 @@ public class Profile {
             this.reputation.getStyleClass().add("red-text");
         } else {
             this.reputation.setText(this.data.reputation+"");
+        }
+
+        if (currentUserID == this.data.userID){
+            // disable +1 and -1 visually
+            this.addOne.setVisible(false);
+            this.removeOne.setVisible(false);
         }
 
         // ------------------------------ FILL RECENT GAMES ----------------------------- \\
@@ -113,7 +119,9 @@ public class Profile {
 
     /** Listener of the see all friends label **/
     @FXML
-    private void onSeeAllFriends(){ AppWindowHandler.setScreen(AllFriends.getScreen(data.userID)); }
+    private void onSeeAllFriends(){
+        AppWindowHandler.setScreen(AllFriends.getScreen(data.userID));
+    }
 
     /** Listener of the add friend button **/
     @FXML
@@ -124,13 +132,19 @@ public class Profile {
     /** Listener of the +1 rep label **/
     @FXML
     private void onPlusOneRep() {
-        System.out.println("+1 rep for him");
+        // api won't allow it
+        if (currentUserID == data.userID) return;
+
+        System.out.println("+1 rep for "+data.userID+" ("+data.username+")");
     }
 
     /** Listener of the -1 rep label **/
     @FXML
     private void onMinusOneRep() {
-        System.out.println("-1 rep for him");
+        // api won't allow it
+        if (currentUserID == data.userID) return;
+
+        System.out.println("-1 rep for "+data.userID+" ("+data.username+")");
     }
 
 }

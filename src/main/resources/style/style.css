@@ -20,6 +20,8 @@
 .green-text { -fx-text-fill: #00ac41; }
 .white-text { -fx-text-fill: white; }
 .yellow-text { -fx-text-fill: #FFCC33; }
+.grey-text { -fx-text-fill: #575757; }
+.grey-text-i { -fx-text-fill: #575757 !important; }
 
 .installer-bg {
     -fx-background-radius: 5px;

@@ -70,12 +70,13 @@
                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
-                              <Label onMouseClicked="#onPlusOneRep" styleClass="add-rep" text="+ 1" GridPane.halignment="CENTER">
+                              <Label onMouseClicked="#onPlusOneRep" styleClass="add-rep"
+                                     fx:id="addOne" text="+ 1" GridPane.halignment="CENTER">
                                  <font>
                                     <Font name="System Bold" size="24.0" />
                                  </font>
                               </Label>
-                              <Label onMouseClicked="#onMinusOneRep" styleClass="remove-rep" text="- 1" GridPane.columnIndex="1" GridPane.halignment="CENTER">
+                              <Label fx:id="removeOne" onMouseClicked="#onMinusOneRep" styleClass="remove-rep" text="- 1" GridPane.columnIndex="1" GridPane.halignment="CENTER">
                                  <font>
                                     <Font name="System Bold" size="24.0" />
                                  </font>
