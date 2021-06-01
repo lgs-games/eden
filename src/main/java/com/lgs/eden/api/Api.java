@@ -43,9 +43,9 @@ public class Api {
      */
     public static LoginResponseData login(String username, String pwd) {
         if (!username.equals("Raphik") || !pwd.equals("tester")) {
-            return new LoginResponseData(-1, -1);
+            return new LoginResponseData(-1);
         }
-        return new LoginResponseData(0, 23);
+        return new LoginResponseData(0, 23, username, "/avatars/23.png");
     }
 
     /**

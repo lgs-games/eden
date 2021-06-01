@@ -71,7 +71,7 @@ public class Login extends LoginRegisterForm {
             LoginResponseData response = Api.login(username, pwd);
             if (response.code == 0){ // this is an user id
                 // so we are good
-                AppWindowHandler.changeToAppWindow(response.userID);
+                AppWindowHandler.changeToAppWindow(response);
             } else {
                 error.append("Invalid credentials\n");
             }

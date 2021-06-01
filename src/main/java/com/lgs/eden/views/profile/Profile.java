@@ -28,7 +28,7 @@ public class Profile {
      * @return profile screen
      */
     public static Parent getScreen() {
-        return reloadWith(currentUserID);
+        return reloadWith(AppWindowHandler.currentUserID());
     }
 
     /**
@@ -42,10 +42,6 @@ public class Profile {
         controller.init(userID);
         return parent;
     }
-
-    // logged user id
-    private static int currentUserID = -1;
-    public static void setUserID(int userID) { currentUserID = userID; }
 
     // ------------------------------ INSTANCE ----------------------------- \\
 
@@ -90,7 +86,7 @@ public class Profile {
         this.reputation.setText(repSigne+this.data.reputation);
         if(!repStyle.isEmpty()) this.reputation.getStyleClass().add(repStyle);
         // disable +1 and -1 visually
-        if (currentUserID == this.data.userID){
+        if (AppWindowHandler.currentUserID() == this.data.userID){
             this.addOne.setDisable(true);
             this.removeOne.setDisable(true);
         }
@@ -139,7 +135,7 @@ public class Profile {
     @FXML
     private void onPlusOneRep() {
         // api won't allow it
-        if (currentUserID == data.userID) return;
+        if (AppWindowHandler.currentUserID() == data.userID) return;
 
         System.out.println("+1 rep for "+data.userID+" ("+data.username+")");
     }
@@ -148,7 +144,7 @@ public class Profile {
     @FXML
     private void onMinusOneRep() {
         // api won't allow it
-        if (currentUserID == data.userID) return;
+        if (AppWindowHandler.currentUserID() == data.userID) return;
 
         System.out.println("-1 rep for "+data.userID+" ("+data.username+")");
     }
