@@ -48,6 +48,6 @@
       </GridPane>
    </center>
    <bottom>
-      <Pagination fx:id="paginations" maxPageIndicatorCount="1" pageCount="1" BorderPane.alignment="CENTER" />
+      <Pagination fx:id="pagination" maxPageIndicatorCount="1" pageCount="1" BorderPane.alignment="CENTER" />
    </bottom>
 </BorderPane>

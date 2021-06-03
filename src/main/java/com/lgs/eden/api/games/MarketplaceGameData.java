@@ -9,6 +9,8 @@ import java.util.ArrayList;
  * Wrapper for marketplace game
  */
 public class MarketplaceGameData {
+    // store here the number of games in the marketplace, indicated by the API in the response
+    public static int gameCount;
 
     public final int id;
     public final String name;

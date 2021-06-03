@@ -7,9 +7,12 @@ import com.lgs.eden.utils.Utility;
 import com.lgs.eden.utils.ViewsPath;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Pagination;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
+import javafx.util.Callback;
 
 import java.util.ArrayList;
 
@@ -31,20 +34,24 @@ public class Marketplace {
     // ------------------------------ INSTANCE ----------------------------- \\
 
     private static final int COUNT_PER_PAGE = 4;
-    private int page = 0;
 
     @FXML
-    private Pagination paginations;
+    private Pagination pagination;
     @FXML
     private GridPane content;
 
     private void init() {
-        ArrayList<MarketplaceGameData> games = API.imp.getMarketPlaceGames(this.page, COUNT_PER_PAGE, Config.getCode());
+        this.pagination.setPageFactory(pageIndex -> {
+            ArrayList<MarketplaceGameData> games = API.imp.getMarketPlaceGames(pageIndex, COUNT_PER_PAGE, Config.getCode());
+            this.pagination.setPageCount(Math.round((float) MarketplaceGameData.gameCount / COUNT_PER_PAGE));
 
-        int i = 0;
-        for (MarketplaceGameData d: games) {
-            this.content.add(MarketplaceGame.getScreen(d), i % 2, i / 2);
-            i++;
-        }
+            this.content.getChildren().clear();
+            int i = 0;
+            for (MarketplaceGameData d: games) {
+                this.content.add(MarketplaceGame.getScreen(d), i % 2, i / 2);
+                i++;
+            }
+            return new VBox();
+        });
     }
 }

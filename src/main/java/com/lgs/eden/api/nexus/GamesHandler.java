@@ -27,6 +27,8 @@ class GamesHandler implements GameAPI {
     public ArrayList<MarketplaceGameData> getMarketPlaceGames(int begin, int count, String code) {
         ArrayList<MarketplaceGameData> games = new ArrayList<>();
 
+        MarketplaceGameData.gameCount = 10;
+
         ArrayList<String> tags = new ArrayList<>();
         tags.add("1-player");
         tags.add("Environment line");
