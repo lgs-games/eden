@@ -22,6 +22,7 @@ public enum ViewsPath {
     GAMES(null), // games menu
 
     MARKETPLACE("/views/market.fxml"),
+    MARKETPLACE_GAME("/views/market/market_game.fxml"),
     ;
 
     // view path

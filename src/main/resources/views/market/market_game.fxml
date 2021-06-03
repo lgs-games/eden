@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.TextFlow?>
+
+<TabPane styleClass="white-box" tabClosingPolicy="UNAVAILABLE"
+         xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1"
+    fx:controller="com.lgs.eden.views.marketplace.MarketPlaceGame">
+    <tabs>
+        <Tab text="About">
+            <content>
+                <BorderPane prefHeight="200.0" prefWidth="200.0">
+                    <left>
+                        <ImageView fitHeight="164.0" fitWidth="164.0" BorderPane.alignment="CENTER">
+                            <image>
+                                <Image url="@../../games/prim-pic.png" />
+                            </image>
+                            <BorderPane.margin>
+                                <Insets left="5.0" />
+                            </BorderPane.margin>
+                        </ImageView>
+                    </left>
+                    <center>
+                        <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+                            <BorderPane.margin>
+                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                            </BorderPane.margin>
+                            <children>
+                                <Label text="Prim">
+                                    <VBox.margin>
+                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                    </VBox.margin>
+                                    <font>
+                                        <Font name="System Bold" size="24.0" />
+                                    </font>
+                                    <graphic>
+                                        <ImageView>
+                                            <image>
+                                                <Image url="@../../games/prim-icon.png" />
+                                            </image>
+                                        </ImageView>
+                                    </graphic>
+                                </Label>
+                                <Label text="Prim is a production line game request by Dimitri Watel, teacher at ENSIIE engineering school. The main idea is that you will produce resources in order to close a gate. The folklore of the game is the ENSIIE so you will have a lot of ENSIIE-related content. Have fun !" wrapText="true" />
+                            </children>
+                        </VBox>
+                    </center>
+                </BorderPane>
+            </content>
+        </Tab>
+        <Tab text="Tags">
+            <content>
+                <VBox spacing="5.0">
+                    <children>
+                        <Label text="Languages">
+                            <font>
+                                <Font name="System Bold" size="14.0" />
+                            </font>
+                        </Label>
+                        <ScrollPane styleClass="clean-div">
+                            <content>
+                                <FlowPane hgap="5.0" styleClass="clean-div">
+                                    <children>
+                                        <Button mnemonicParsing="false" styleClass="eden-button" text="Français" />
+                                        <Button mnemonicParsing="false" styleClass="eden-button" text="English" />
+                                    </children>
+                                </FlowPane>
+                            </content>
+                        </ScrollPane>
+                        <Label layoutX="20.0" layoutY="20.0" text="Tags">
+                            <font>
+                                <Font name="System Bold" size="14.0" />
+                            </font>
+                        </Label>
+                        <ScrollPane layoutX="20.0" layoutY="45.0" styleClass="clean-div">
+                            <content>
+                                <FlowPane hgap="5.0" styleClass="clean-div" vgap="5.0">
+                                    <children>
+                                        <Button mnemonicParsing="false" styleClass="eden-button" text="1-player" />
+                                        <Button mnemonicParsing="false" styleClass="eden-button" text="Environment line" />
+                                        <Button layoutX="76.0" layoutY="10.0" mnemonicParsing="false" styleClass="eden-button" text="Original game" />
+                                        <Button layoutX="188.0" layoutY="10.0" mnemonicParsing="false" styleClass="eden-button" text="ENSIIE" />
+                                        <Button layoutX="286.0" layoutY="10.0" mnemonicParsing="false" styleClass="eden-button" text="Open Source" />
+                                    </children>
+                                </FlowPane>
+                            </content>
+                        </ScrollPane>
+                        <BorderPane />
+                    </children>
+                    <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                    </padding>
+                </VBox>
+            </content>
+        </Tab>
+        <Tab text="Download">
+            <content>
+                <BorderPane prefHeight="200.0" prefWidth="200.0">
+                    <center>
+                        <Button mnemonicParsing="false" text="Add to my library" BorderPane.alignment="CENTER" />
+                    </center>
+                    <top>
+                        <VBox BorderPane.alignment="CENTER">
+                            <BorderPane.margin>
+                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                            </BorderPane.margin>
+                            <children>
+                                <TextFlow>
+                                    <children>
+                                        <Label text="Current version">
+                                            <font>
+                                                <Font name="System Bold" size="14.0" />
+                                            </font>
+                                        </Label>
+                                        <Label layoutX="10.0" layoutY="10.0" styleClass="green-text" text="3.1.0">
+                                            <padding>
+                                                <Insets left="5.0" />
+                                            </padding>
+                                            <font>
+                                                <Font name="System Bold" size="14.0" />
+                                            </font>
+                                        </Label>
+                                    </children>
+                                </TextFlow>
+                                <TextFlow layoutX="10.0" layoutY="10.0">
+                                    <children>
+                                        <Label text="Game size">
+                                            <font>
+                                                <Font name="System Bold" size="14.0" />
+                                            </font>
+                                        </Label>
+                                        <Label layoutX="10.0" layoutY="10.0" styleClass="green-text" text="88 Mb">
+                                            <padding>
+                                                <Insets left="5.0" />
+                                            </padding>
+                                            <font>
+                                                <Font name="System Bold" size="14.0" />
+                                            </font>
+                                        </Label>
+                                    </children>
+                                </TextFlow>
+                            </children>
+                        </VBox>
+                    </top>
+                    <bottom>
+                        <VBox BorderPane.alignment="CENTER">
+                            <children>
+                                <FlowPane alignment="CENTER">
+                                    <children>
+                                        <Label styleClass="blue-text" text="If you got any idea to improve the game, tell us !" textAlignment="CENTER">
+                                            <font>
+                                                <Font size="14.0" />
+                                            </font>
+                                        </Label>
+                                    </children>
+                                </FlowPane>
+                            </children>
+                            <BorderPane.margin>
+                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                            </BorderPane.margin>
+                        </VBox>
+                    </bottom>
+                </BorderPane>
+            </content>
+        </Tab>
+    </tabs>
+</TabPane>
