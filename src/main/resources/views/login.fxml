@@ -15,7 +15,7 @@
    <bottom>
       <Pane prefHeight="83.0" prefWidth="700.0" BorderPane.alignment="CENTER">
          <children>
-            <Button layoutX="55.0" layoutY="20.0" mnemonicParsing="false" onAction="#onSigninIsPressed" prefHeight="34.0" prefWidth="125.0" text="%register_button" />
+            <Button layoutX="55.0" layoutY="20.0" mnemonicParsing="false" onAction="#onSignInIsPressed" prefHeight="34.0" prefWidth="125.0" text="%register_button" />
             <Button layoutX="520.0" layoutY="20.0" mnemonicParsing="false" onAction="#onSubmitWithButton" prefHeight="34.0" prefWidth="125.0" text="%connect" />
          </children>
       </Pane>

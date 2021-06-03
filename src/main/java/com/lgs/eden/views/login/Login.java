@@ -1,7 +1,7 @@
 package com.lgs.eden.views.login;
 
-import com.lgs.eden.api.Api;
-import com.lgs.eden.api.wrapper.LoginResponseData;
+import com.lgs.eden.api.API;
+import com.lgs.eden.api.auth.LoginResponseData;
 import com.lgs.eden.application.AppWindowHandler;
 import com.lgs.eden.application.PopupUtils;
 import com.lgs.eden.utils.Config;
@@ -11,7 +11,6 @@ import com.lgs.eden.utils.helper.LoginRegisterForm;
 import com.lgs.eden.application.WindowController;
 import com.lgs.eden.views.register.Register;
 import com.lgs.eden.views.settings.Settings;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.control.CheckBox;
@@ -49,7 +48,7 @@ public class Login extends LoginRegisterForm {
         String stored_username = Config.getStoredUsername();
         this.login.setText(stored_username);
         this.rememberMe.setSelected(!stored_username.isEmpty());
-        this.password.setText("tester");
+        this.password.setText("tester"); //todo: test
     }
 
     // ------------------------------ METHODS ----------------------------- \\
@@ -67,7 +66,7 @@ public class Login extends LoginRegisterForm {
 
         if (error.toString().isEmpty()){ // no error
             // add user
-            LoginResponseData response = Api.login(username, pwd);
+            LoginResponseData response = API.imp.login(username, pwd);
             if (response.code == 0){ // this is an user id
                 // so we are good
                 AppWindowHandler.changeToAppWindow(response);
@@ -91,7 +90,7 @@ public class Login extends LoginRegisterForm {
     public void onForgotPassword() { // rename @ignore if you use it
         if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
             try {
-                Desktop.getDesktop().browse(new URI(Api.passwordForgotPage(Config.getLanguage().code)));
+                Desktop.getDesktop().browse(new URI(API.imp.getPasswordForgotLink(Config.getLanguage().code)));
             } catch (URISyntaxException | IOException ignoreMeTooBlink) {
                 // TODO: add popup related to these exceptions
                 System.out.println("exception has occurred");
@@ -100,12 +99,12 @@ public class Login extends LoginRegisterForm {
     }
 
     @FXML
-    public void onSigninIsPressed(ActionEvent ignore) {
+    public void onSignInIsPressed() {
         WindowController.setScreen(Register.getScreen());
     }
 
     @FXML
-    public void onSettingsPressed(ActionEvent ignore) {
+    public void onSettingsPressed() {
         Settings.setBackScreen(ViewsPath.LOGIN);
         WindowController.setScreen(Settings.getScreen());
     }
