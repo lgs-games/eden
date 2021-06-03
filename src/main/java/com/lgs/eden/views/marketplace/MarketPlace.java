@@ -1,5 +1,7 @@
 package com.lgs.eden.views.marketplace;
 
+import com.lgs.eden.api.API;
+import com.lgs.eden.api.games.MarketplaceGameData;
 import com.lgs.eden.utils.Utility;
 import com.lgs.eden.utils.ViewsPath;
 import javafx.fxml.FXML;
@@ -7,6 +9,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Pagination;
 import javafx.scene.layout.GridPane;
+
+import java.util.ArrayList;
 
 /**
  * Controller for market.fxml
@@ -31,9 +35,14 @@ public class MarketPlace {
     private GridPane content;
 
     private void init() {
-        content.add(MarketPlaceGame.getScreen(), 0,0);
-        content.add(MarketPlaceGame.getScreen(), 1,0);
-        content.add(MarketPlaceGame.getScreen(), 0,1);
-        content.add(MarketPlaceGame.getScreen(), 1,1);
+        // todo: handle pagination
+
+        ArrayList<MarketplaceGameData> games = API.imp.getMarketPlaceGames();
+
+        int i = 0;
+        for (MarketplaceGameData d: games) {
+            this.content.add(MarketPlaceGame.getScreen(d), i % 2, i / 2);
+            i++;
+        }
     }
 }
