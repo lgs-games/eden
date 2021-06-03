@@ -1,6 +1,6 @@
 package com.lgs.eden.views.profile;
 
-import com.lgs.eden.api.wrapper.RecentGameData;
+import com.lgs.eden.api.profile.RecentGameData;
 import com.lgs.eden.utils.Translate;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;

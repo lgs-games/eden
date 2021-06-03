@@ -1,10 +1,9 @@
 package com.lgs.eden.views.profile;
 
-import com.lgs.eden.api.Api;
-import com.lgs.eden.api.wrapper.FriendData;
-import com.lgs.eden.api.wrapper.ProfileData;
+import com.lgs.eden.api.API;
+import com.lgs.eden.api.profile.FriendData;
+import com.lgs.eden.api.profile.ProfileData;
 import com.lgs.eden.application.AppWindowHandler;
-import com.lgs.eden.application.WindowController;
 import com.lgs.eden.utils.Translate;
 import com.lgs.eden.utils.Utility;
 import com.lgs.eden.views.friends.AllFriends;
@@ -12,7 +11,6 @@ import com.lgs.eden.views.profile.listcells.FriendCell;
 import javafx.fxml.FXML;
 import com.lgs.eden.utils.ViewsPath;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Cursor;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -77,7 +75,7 @@ public class Profile {
 
     /** set up profile view **/
     private void init(int userID) {
-        this.data = Api.getProfileData(userID);
+        this.data = API.imp.getProfileData(userID);
 
         // ------------------------------ FILL ATTRIBUTES ----------------------------- \\
         this.username.setText(this.data.username); // ex: Raphiki

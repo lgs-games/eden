@@ -1,10 +1,6 @@
 package com.lgs.eden.views.profile.listcells;
 
-import com.lgs.eden.api.wrapper.FriendData;
-import com.lgs.eden.utils.Utility;
-import com.lgs.eden.utils.ViewsPath;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
+import com.lgs.eden.api.profile.FriendData;
 import javafx.scene.control.ListCell;
 
 /**

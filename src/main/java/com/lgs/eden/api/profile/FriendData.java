@@ -1,4 +1,4 @@
-package com.lgs.eden.api.wrapper;
+package com.lgs.eden.api.profile;
 
 import com.lgs.eden.utils.Utility;
 import javafx.scene.image.Image;
