@@ -1,4 +1,4 @@
-package com.lgs.eden.api.wrapper;
+package com.lgs.eden.api.games;
 
 public class GameUpdateData {
 
