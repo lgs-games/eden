@@ -1,13 +1,13 @@
 package com.lgs.eden.utils;
 
-import com.lgs.eden.api.Api;
+import com.lgs.eden.api.API;
 import javafx.scene.image.Image;
 
 import java.io.File;
 import java.util.Locale;
 
 /**
- *
+ * Locale configuration handler.
  */
 public class Config {
 
@@ -32,7 +32,7 @@ public class Config {
      */
     public static boolean checkClientVersion() {
         System.out.println("Checking client version...");
-        return !VERSION.equals(Api.getEdenVersion().version);
+        return !VERSION.equals(API.imp.getEdenVersion().version);
     }
 
     /**
