@@ -5,7 +5,7 @@ package com.lgs.eden.api.games;
  */
 public class EdenVersionData extends GameUpdateData {
 
-    public EdenVersionData(String version) {
-        super(version);
+    public EdenVersionData(String version, int size) {
+        super(version, size);
     }
 }

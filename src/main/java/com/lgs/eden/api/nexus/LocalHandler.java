@@ -4,6 +4,7 @@ import com.lgs.eden.api.API;
 import com.lgs.eden.api.APIResponseCode;
 import com.lgs.eden.api.auth.LoginResponseData;
 import com.lgs.eden.api.games.EdenVersionData;
+import com.lgs.eden.api.games.MarketplaceGameData;
 import com.lgs.eden.api.profile.FriendData;
 import com.lgs.eden.api.profile.ProfileData;
 
@@ -60,6 +61,9 @@ public class LocalHandler implements API {
 
     @Override
     public EdenVersionData getEdenVersion() { return this.games.getEdenVersion(); }
+
+    @Override
+    public ArrayList<MarketplaceGameData> getMarketPlaceGames() { return this.games.getMarketPlaceGames(); }
 
     // ------------------------------ PROFILE ----------------------------- \\
 

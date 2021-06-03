@@ -1,5 +1,6 @@
 package com.lgs.eden.api.games;
 
+import com.lgs.eden.utils.Utility;
 import javafx.scene.image.Image;
 
 import java.util.ArrayList;
@@ -18,13 +19,13 @@ public class MarketplaceGameData {
     public final ArrayList<String> languages;
     public final GameUpdateData updateData;
 
-    public MarketplaceGameData(int id, String name, String desc, Image icon, Image image, ArrayList<String> tags,
+    public MarketplaceGameData(int id, String name, String desc, String icon, String image, ArrayList<String> tags,
                                ArrayList<String> languages, GameUpdateData updateData) {
         this.id = id;
         this.name = name;
         this.desc = desc;
-        this.icon = icon;
-        this.image = image;
+        this.icon = Utility.loadImage(icon);
+        this.image = Utility.loadImage(image);
         this.tags = tags;
         this.languages = languages;
         this.updateData = updateData;
