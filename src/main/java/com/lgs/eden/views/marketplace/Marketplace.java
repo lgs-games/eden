@@ -2,6 +2,7 @@ package com.lgs.eden.views.marketplace;
 
 import com.lgs.eden.api.API;
 import com.lgs.eden.api.games.MarketplaceGameData;
+import com.lgs.eden.utils.Config;
 import com.lgs.eden.utils.Utility;
 import com.lgs.eden.utils.ViewsPath;
 import javafx.fxml.FXML;
@@ -29,15 +30,16 @@ public class Marketplace {
 
     // ------------------------------ INSTANCE ----------------------------- \\
 
+    private static final int COUNT_PER_PAGE = 4;
+    private int page = 0;
+
     @FXML
     private Pagination paginations;
     @FXML
     private GridPane content;
 
     private void init() {
-        // todo: handle pagination
-
-        ArrayList<MarketplaceGameData> games = API.imp.getMarketPlaceGames();
+        ArrayList<MarketplaceGameData> games = API.imp.getMarketPlaceGames(this.page, COUNT_PER_PAGE, Config.getCode());
 
         int i = 0;
         for (MarketplaceGameData d: games) {

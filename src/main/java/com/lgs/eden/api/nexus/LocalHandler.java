@@ -63,7 +63,9 @@ public class LocalHandler implements API {
     public EdenVersionData getEdenVersion() { return this.games.getEdenVersion(); }
 
     @Override
-    public ArrayList<MarketplaceGameData> getMarketPlaceGames() { return this.games.getMarketPlaceGames(); }
+    public ArrayList<MarketplaceGameData> getMarketPlaceGames(int begin, int count, String code) {
+        return this.games.getMarketPlaceGames(begin, count, code);
+    }
 
     // ------------------------------ PROFILE ----------------------------- \\
 

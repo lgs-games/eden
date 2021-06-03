@@ -91,7 +91,7 @@ public class Login extends LoginRegisterForm {
     public void onForgotPassword() { // rename @ignore if you use it
         if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
             try {
-                Desktop.getDesktop().browse(new URI(API.imp.getPasswordForgotLink(Config.getLanguage().code)));
+                Desktop.getDesktop().browse(new URI(API.imp.getPasswordForgotLink(Config.getCode())));
             } catch (URISyntaxException | IOException ignoreMeTooBlink) {
                 // TODO: add popup related to these exceptions
                 System.out.println("exception has occurred");

@@ -52,6 +52,9 @@ public class Config {
     // set language
     public static void setLocale(Language lang) { locale = new Locale(lang.code); }
 
+    // shortcut for currentLanguage.code
+    public static String getCode() { return getLanguage().code; }
+
     // ------------------------------ USERNAME ----------------------------- \\
 
     /** may store username or removed stored username **/

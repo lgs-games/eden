@@ -24,7 +24,7 @@ class GamesHandler implements GameAPI {
     }
 
     @Override
-    public ArrayList<MarketplaceGameData> getMarketPlaceGames() {
+    public ArrayList<MarketplaceGameData> getMarketPlaceGames(int begin, int count, String code) {
         ArrayList<MarketplaceGameData> games = new ArrayList<>();
 
         ArrayList<String> tags = new ArrayList<>();
