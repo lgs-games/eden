@@ -1,38 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Pagination?>
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.Tab?>
-<?import javafx.scene.control.TabPane?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.text.TextFlow?>
 
-<BorderPane prefHeight="600.0" prefWidth="900.0" styleClass="app-background" stylesheets="@../style/style.css"
-            xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1"
-   fx:controller="com.lgs.eden.views.marketplace.Marketplace">
+<BorderPane prefHeight="600.0" prefWidth="900.0" styleClass="app-background" stylesheets="@../style/style.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lgs.eden.views.marketplace.Marketplace">
    <top>
       <VBox alignment="CENTER" BorderPane.alignment="CENTER">
          <BorderPane.margin>
             <Insets top="10.0" />
          </BorderPane.margin>
          <children>
-            <Label styleClass="yellow-text" text="Library">
+            <Label styleClass="yellow-text" text="%library">
                <font>
                   <Font name="System Bold" size="36.0" />
                </font>
             </Label>
-            <Label layoutX="351.0" layoutY="10.0" styleClass="yellow-text" text="Feel free to request a game using our website contact form, we might create it for your!">
+            <Label layoutX="351.0" layoutY="10.0" styleClass="yellow-text" text="%library_header">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
@@ -41,8 +31,7 @@
       </VBox>
    </top>
    <center>
-      <GridPane hgap="20.0" styleClass="app-background" vgap="20.0" BorderPane.alignment="CENTER"
-      fx:id="content">
+      <GridPane fx:id="content" hgap="20.0" styleClass="app-background" vgap="20.0" BorderPane.alignment="CENTER">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -59,6 +48,6 @@
       </GridPane>
    </center>
    <bottom>
-      <Pagination maxPageIndicatorCount="1" fx:id="paginations" pageCount="1" BorderPane.alignment="CENTER" />
+      <Pagination fx:id="paginations" maxPageIndicatorCount="1" pageCount="1" BorderPane.alignment="CENTER" />
    </bottom>
 </BorderPane>
