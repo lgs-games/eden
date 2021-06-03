@@ -28,19 +28,24 @@ class GamesHandler implements GameAPI {
         ArrayList<MarketplaceGameData> games = new ArrayList<>();
 
         ArrayList<String> tags = new ArrayList<>();
+        tags.add("1-player");
+        tags.add("Environment line");
+        tags.add("Original game");
+        tags.add("ENSIIE");
+        tags.add("Open Source");
+
         ArrayList<String> languages = new ArrayList<>();
-        GameUpdateData updatePrim = new GameUpdateData(
-          "3.1.0",
-                88
-        );
+        languages.add("English");
+        languages.add("Français");
+
+        GameUpdateData updatePrim = new GameUpdateData("3.1.0", 88);
 
         MarketplaceGameData prim = new MarketplaceGameData(
                 0, "Prim",
                 "Prim is a production line game request by Dimitri Watel, teacher at ENSIIE engineering school." +
                         " The main idea is that you will produce resources in order to close a gate. The folklore of " +
                         "the game is the ENSIIE so you will have a lot of ENSIIE-related content. Have fun !",
-                "/games/prim-pic.png",
-                "/games/prim-icon.png",
+                "/games/prim-icon.png","/games/prim-pic.png",
                 tags,
                 languages,
                 updatePrim

@@ -35,7 +35,7 @@
                                 <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                             </BorderPane.margin>
                             <children>
-                                <Label fx:id="gameName" text="Prim">
+                                <Label fx:id="gameName" text="Title">
                                     <VBox.margin>
                                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                     </VBox.margin>
@@ -50,7 +50,7 @@
                                         </ImageView>
                                     </graphic>
                                 </Label>
-                                <Label fx:id="gameDesc" text="Prim is a production line game request by Dimitri Watel, teacher at ENSIIE engineering school. The main idea is that you will produce resources in order to close a gate. The folklore of the game is the ENSIIE so you will have a lot of ENSIIE-related content. Have fun !" wrapText="true" />
+                                <Label fx:id="gameDesc" text="A desc here" wrapText="true" />
                             </children>
                         </VBox>
                     </center>
@@ -71,7 +71,6 @@
                                 <FlowPane fx:id="languages" hgap="5.0" styleClass="clean-div">
                                     <children>
                                         <Button mnemonicParsing="false" styleClass="eden-button" text="Français" />
-                                        <Button mnemonicParsing="false" styleClass="eden-button" text="English" />
                                     </children>
                                 </FlowPane>
                             </content>
@@ -86,10 +85,6 @@
                                 <FlowPane fx:id="tags" hgap="5.0" styleClass="clean-div" vgap="5.0">
                                     <children>
                                         <Button mnemonicParsing="false" styleClass="eden-button" text="1-player" />
-                                        <Button mnemonicParsing="false" styleClass="eden-button" text="Environment line" />
-                                        <Button layoutX="76.0" layoutY="10.0" mnemonicParsing="false" styleClass="eden-button" text="Original game" />
-                                        <Button layoutX="188.0" layoutY="10.0" mnemonicParsing="false" styleClass="eden-button" text="ENSIIE" />
-                                        <Button layoutX="286.0" layoutY="10.0" mnemonicParsing="false" styleClass="eden-button" text="Open Source" />
                                     </children>
                                 </FlowPane>
                             </content>
@@ -121,7 +116,7 @@
                                                 <Font name="System Bold" size="14.0" />
                                             </font>
                                         </Label>
-                                        <Label fx:id="gameVersion" layoutX="10.0" layoutY="10.0" styleClass="green-text" text="3.1.0">
+                                        <Label fx:id="gameVersion" layoutX="10.0" layoutY="10.0" styleClass="green-text" text="x.x.x">
                                             <padding>
                                                 <Insets left="5.0" />
                                             </padding>
@@ -138,7 +133,7 @@
                                                 <Font name="System Bold" size="14.0" />
                                             </font>
                                         </Label>
-                                        <Label fx:id="gameSize" layoutX="10.0" layoutY="10.0" styleClass="green-text" text="88">
+                                        <Label fx:id="gameSize" layoutX="10.0" layoutY="10.0" styleClass="green-text" text="xxxxx">
                                             <padding>
                                                 <Insets left="5.0" />
                                             </padding>
@@ -146,7 +141,7 @@
                                                 <Font name="System Bold" size="14.0" />
                                             </font>
                                         </Label>
-                              <Label fx:id="gameSize1" layoutX="89.0" layoutY="10.0" styleClass="green-text" text="%mb">
+                              <Label layoutX="89.0" layoutY="10.0" styleClass="green-text" text="%mb">
                                  <padding>
                                     <Insets left="3.0" />
                                  </padding>

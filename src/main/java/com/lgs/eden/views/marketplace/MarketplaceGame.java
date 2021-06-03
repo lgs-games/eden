@@ -40,8 +40,31 @@ public class MarketplaceGame {
     private FlowPane languages;
     @FXML
     private FlowPane tags;
+    @FXML
+    private Label gameVersion;
+    @FXML
+    private Label gameSize;
 
     private void init(MarketplaceGameData data) {
-        // ...
+        this.gameName.setText(data.name);
+        this.gameDesc.setText(data.desc);
+        this.gameImage.setImage(data.image);
+        this.gameIcon.setImage(data.icon);
+        this.gameVersion.setText(data.updateData.version);
+        this.gameSize.setText(data.updateData.size+"");
+
+        this.tags.getChildren().clear();
+        data.tags.forEach(s -> {
+            Button b = new Button(s);
+            b.getStyleClass().add("eden-button");
+            this.tags.getChildren().add(b);
+        });
+
+        this.languages.getChildren().clear();
+        data.languages.forEach(s -> {
+            Button b = new Button(s);
+            b.getStyleClass().add("eden-button");
+            this.languages.getChildren().add(b);
+        });
     }
 }
