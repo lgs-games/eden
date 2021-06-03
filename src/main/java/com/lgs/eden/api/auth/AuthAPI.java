@@ -1,5 +1,7 @@
 package com.lgs.eden.api.auth;
 
+import com.lgs.eden.api.APIResponseCode;
+
 /**
  * Login related part of the API
  */
@@ -18,7 +20,7 @@ public interface AuthAPI {
     /**
      *
      */
-    int register(String username, String pwd, String email);
+    APIResponseCode register(String username, String pwd, String email);
 
     /**
      * Returns the link to the password forget page

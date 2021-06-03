@@ -1,6 +1,7 @@
 package com.lgs.eden.api.nexus;
 
 import com.lgs.eden.api.API;
+import com.lgs.eden.api.APIResponseCode;
 import com.lgs.eden.api.auth.LoginResponseData;
 import com.lgs.eden.api.games.EdenVersionData;
 import com.lgs.eden.api.profile.FriendData;
@@ -48,7 +49,7 @@ public class LocalHandler implements API {
     public void logout() { this.login.logout(); }
 
     @Override
-    public int register(String username, String pwd, String email) { return this.login.register(username, pwd, email);   }
+    public APIResponseCode register(String username, String pwd, String email) { return this.login.register(username, pwd, email);   }
 
     @Override
     public String getPasswordForgotLink(String languageCode) {

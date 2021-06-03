@@ -1,6 +1,7 @@
 package com.lgs.eden.views.login;
 
 import com.lgs.eden.api.API;
+import com.lgs.eden.api.APIResponseCode;
 import com.lgs.eden.api.auth.LoginResponseData;
 import com.lgs.eden.application.AppWindowHandler;
 import com.lgs.eden.application.PopupUtils;
@@ -67,7 +68,7 @@ public class Login extends LoginRegisterForm {
         if (error.toString().isEmpty()){ // no error
             // add user
             LoginResponseData response = API.imp.login(username, pwd);
-            if (response.code == 0){ // this is an user id
+            if (response.code.equals(APIResponseCode.LOGIN_OK)){ // this is an user id
                 // so we are good
                 AppWindowHandler.changeToAppWindow(response);
             } else {

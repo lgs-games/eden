@@ -1,6 +1,7 @@
 package com.lgs.eden.views.register;
 
 import com.lgs.eden.api.API;
+import com.lgs.eden.api.APIResponseCode;
 import com.lgs.eden.utils.ViewsPath;
 import com.lgs.eden.application.PopupUtils;
 import com.lgs.eden.utils.helper.LoginRegisterForm;
@@ -60,15 +61,10 @@ public class Register extends LoginRegisterForm {
             error.append("wrong email");
         }
 
-        // TODO: Add a real submit method & real stock data methods
         if (error.toString().isEmpty()) { // no error
-            int response = API.imp.register(username, pwd, email);
-            if (response == 0){ //todo: create class
-                // todo: move to app
-                System.out.println("submitted, show message");
-            } else {
-                error.append("Register failed\n");
-            }
+            APIResponseCode response = API.imp.register(username, pwd, email);
+            // todo: show message
+            //  according to APIResponseCode and maybe go back to login
         }
 
         if (!error.toString().isBlank()){

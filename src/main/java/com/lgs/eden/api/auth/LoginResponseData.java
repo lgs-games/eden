@@ -1,5 +1,6 @@
 package com.lgs.eden.api.auth;
 
+import com.lgs.eden.api.APIResponseCode;
 import com.lgs.eden.utils.Utility;
 import javafx.scene.image.Image;
 
@@ -8,8 +9,8 @@ import javafx.scene.image.Image;
  */
 public class LoginResponseData {
 
-    /** result code, check todo: APIResponseCode **/
-    public final int code;
+    /** @see APIResponseCode **/
+    public final APIResponseCode code;
     /** logged userID username if logged successful **/
     public final int userID;
     /** logged username if logged successful **/
@@ -18,7 +19,7 @@ public class LoginResponseData {
     public final Image avatar;
 
     public LoginResponseData(int code, int userID, String username, String avatar) {
-        this.code = code;
+        this.code = APIResponseCode.fromCode(code);
         this.userID = userID;
         this.username = username;
         this.avatar = Utility.loadImage(avatar);
@@ -26,7 +27,7 @@ public class LoginResponseData {
 
     /** Set code and everything else at null/-1/"" */
     public LoginResponseData(int code) {
-        this.code = code;
+        this.code = APIResponseCode.fromCode(code);
         this.userID = -1;
         this.username = "";
         this.avatar = null;

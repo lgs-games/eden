@@ -1,6 +1,7 @@
 package com.lgs.eden.api.nexus;
 
 import com.lgs.eden.api.API;
+import com.lgs.eden.api.APIResponseCode;
 import com.lgs.eden.api.auth.AuthAPI;
 import com.lgs.eden.api.auth.LoginResponseData;
 import com.lgs.eden.api.helper.APIHelper;
@@ -12,10 +13,23 @@ class AuthHandler implements AuthAPI {
 
     @Override
     public LoginResponseData login(String username, String pwd) {
-        if (!username.equals("Raphik") || !pwd.equals("tester")) {
-            return new LoginResponseData(-1);
+        if (username.equals("Raphiki")){
+            // not activated
+            return new LoginResponseData(12);
         }
-        return new LoginResponseData(0, 23, username, "/avatars/23.png");
+
+        if (username.equals("Raphikis")){
+            // banned
+            return new LoginResponseData(13);
+        }
+
+        if (username.equals("Raphik") && pwd.equals("tester")) {
+            // okay
+            return new LoginResponseData(10, 23, username, "/avatars/23.png");
+        }
+
+        // invalid
+        return new LoginResponseData(11);
     }
 
     @Override
@@ -23,11 +37,20 @@ class AuthHandler implements AuthAPI {
     }
 
     @Override
-    public int register(String username, String pwd, String email) {
-        if (!username.equals("admin") || !pwd.equals("azerty") || !email.equals("a@b.c")) {
-            return -1;
+    public APIResponseCode register(String username, String pwd, String email) {
+        if (username.equals("admin") && pwd.equals("azerty") && email.equals("a@b.c")) {
+            return APIResponseCode.REGISTER_OK;
         }
-        return 0;
+
+        if (username.equals("Raphik")){
+            return APIResponseCode.REGISTER_FAILED_LOGIN;
+        }
+
+        if (email.equals("a@b.d")){
+            return APIResponseCode.REGISTER_FAILED_EMAIL;
+        }
+
+        return APIResponseCode.REGISTER_FAILED;
     }
 
     @Override
