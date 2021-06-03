@@ -1,7 +1,7 @@
 package com.lgs.eden.application;
 
-import com.lgs.eden.api.Api;
-import com.lgs.eden.api.wrapper.LoginResponseData;
+import com.lgs.eden.api.API;
+import com.lgs.eden.api.auth.LoginResponseData;
 import com.lgs.eden.utils.Config;
 import com.lgs.eden.utils.Utility;
 import com.lgs.eden.utils.ViewsPath;
@@ -118,7 +118,7 @@ public class AppWindowHandler {
 
     @FXML
     public void logout() {
-        Api.logout();
+        API.imp.logout();
         Platform.runLater(AppWindowHandler::goBackToMainApp);
     }
 
