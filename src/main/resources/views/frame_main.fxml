@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
@@ -35,11 +36,17 @@
             <Label fx:id="games" layoutX="10.0" layoutY="10.0" text="%my_games">
                <font>
                   <Font size="14.0" />
-               </font></Label>
-            <Label fx:id="library" layoutX="38.0" layoutY="10.0" text="%library" onMouseClicked="#goToMarketPlace">
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Label>
+            <Label fx:id="library" layoutX="38.0" layoutY="10.0" onMouseClicked="#goToMarketPlace" text="%library">
                <font>
                   <Font size="14.0" />
-               </font></Label>
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Label>
             <BorderPane HBox.hgrow="ALWAYS">
                <right>
                   <MenuButton fx:id="username" focusTraversable="false" mnemonicParsing="false" styleClass="bar-user-div" text="      username" BorderPane.alignment="CENTER">
@@ -53,7 +60,7 @@
                               </ImageView>
                            </graphic>
                         </MenuItem>
-                        <MenuItem mnemonicParsing="false" text="%my_friends" onAction="#goToAllFriends">
+                        <MenuItem mnemonicParsing="false" onAction="#goToAllFriends" text="%my_friends">
                            <graphic>
                               <ImageView>
                                  <image>
