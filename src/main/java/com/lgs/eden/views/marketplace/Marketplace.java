@@ -15,14 +15,14 @@ import java.util.ArrayList;
 /**
  * Controller for market.fxml
  */
-public class MarketPlace {
+public class Marketplace {
 
     // ------------------------------ STATIC ----------------------------- \\
 
     public static Parent getScreen() {
         FXMLLoader loader = Utility.loadView(ViewsPath.MARKETPLACE.path);
         Parent parent = Utility.loadViewPane(loader);
-        MarketPlace controller = loader.getController();
+        Marketplace controller = loader.getController();
         controller.init();
         return parent;
     }
@@ -41,7 +41,7 @@ public class MarketPlace {
 
         int i = 0;
         for (MarketplaceGameData d: games) {
-            this.content.add(MarketPlaceGame.getScreen(d), i % 2, i / 2);
+            this.content.add(MarketplaceGame.getScreen(d), i % 2, i / 2);
             i++;
         }
     }

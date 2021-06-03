@@ -8,7 +8,7 @@ import com.lgs.eden.utils.ViewsPath;
 import com.lgs.eden.views.friends.AllFriends;
 import com.lgs.eden.views.inventory.Inventory;
 import com.lgs.eden.views.login.Login;
-import com.lgs.eden.views.marketplace.MarketPlace;
+import com.lgs.eden.views.marketplace.Marketplace;
 import com.lgs.eden.views.profile.Profile;
 import com.lgs.eden.views.settings.Settings;
 import javafx.application.Platform;
@@ -127,6 +127,6 @@ public class AppWindowHandler {
     public void goToAllFriends() { setScreen(AllFriends.getScreen(loggedUser.userID), ViewsPath.PROFILE); }
 
     public void goToMarketPlace() {
-        setScreen(MarketPlace.getScreen(), ViewsPath.MARKETPLACE);
+        setScreen(Marketplace.getScreen(), ViewsPath.MARKETPLACE);
     }
 }

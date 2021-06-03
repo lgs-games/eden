@@ -14,12 +14,12 @@ import javafx.scene.layout.FlowPane;
 /**
  * Controller for market_game.fxml
  */
-public class MarketPlaceGame {
+public class MarketplaceGame {
 
     public static Parent getScreen(MarketplaceGameData data) {
         FXMLLoader loader = Utility.loadView(ViewsPath.MARKETPLACE_GAME.path);
         Parent parent = Utility.loadViewPane(loader);
-        MarketPlaceGame controller = loader.getController();
+        MarketplaceGame controller = loader.getController();
         controller.init(data);
         return parent;
     }

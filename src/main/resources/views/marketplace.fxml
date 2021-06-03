@@ -20,7 +20,7 @@
 
 <BorderPane prefHeight="600.0" prefWidth="900.0" styleClass="app-background" stylesheets="@../style/style.css"
             xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1"
-   fx:controller="com.lgs.eden.views.marketplace.MarketPlace">
+   fx:controller="com.lgs.eden.views.marketplace.Marketplace">
    <top>
       <VBox alignment="CENTER" BorderPane.alignment="CENTER">
          <BorderPane.margin>
