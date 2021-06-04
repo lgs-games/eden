@@ -113,7 +113,7 @@ public class Config {
     public static ObservableList<BasicGameData> getInstalledGames() {
         // todo: look into gameFolder
         ObservableList<BasicGameData> games = FXCollections.observableArrayList();
-        games.add(new BasicGameData(0, "Enigma - éditeur de maps", "/games/enigma-icon.png"));
+        games.add(new BasicGameData(0, "Enigma", "/games/enigma-icon.png"));
         games.add(new BasicGameData(1, "Prim", "/games/prim-icon.png"));
         return games;
     }

@@ -1,4 +1,4 @@
-package com.lgs.eden.api.nexus;
+package com.lgs.eden.api.local;
 
 import com.lgs.eden.api.games.EdenVersionData;
 import com.lgs.eden.api.games.GameAPI;
