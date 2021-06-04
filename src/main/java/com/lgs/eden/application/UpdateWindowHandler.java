@@ -175,9 +175,6 @@ public class UpdateWindowHandler {
             UpdateWindowHandler.formalizeStage(primaryStage, scene);
             // show login screen
             WindowController.setScreen(Login.getScreen());
-
-            AppWindowHandler.changeToAppWindow(new LoginResponseData(10, 23, "Raphiki", "/avatars/23.png"));
-            AppWindowHandler.setScreen(GameList.getScreen(), ViewsPath.GAMES);
         }
     }
 
