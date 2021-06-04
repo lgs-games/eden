@@ -6,6 +6,7 @@ import com.lgs.eden.utils.Config;
 import com.lgs.eden.utils.Utility;
 import com.lgs.eden.utils.ViewsPath;
 import com.lgs.eden.views.friends.AllFriends;
+import com.lgs.eden.views.gameslist.GameList;
 import com.lgs.eden.views.inventory.Inventory;
 import com.lgs.eden.views.login.Login;
 import com.lgs.eden.views.marketplace.Marketplace;
@@ -129,4 +130,6 @@ public class AppWindowHandler {
     public void goToMarketPlace() {
         setScreen(Marketplace.getScreen(), ViewsPath.MARKETPLACE);
     }
+
+    public void goToGameList() { setScreen(GameList.getScreen(), ViewsPath.GAMES); }
 }

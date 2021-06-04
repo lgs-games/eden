@@ -33,7 +33,7 @@
                   </Label>
                </children>
             </HBox>
-            <Label fx:id="games" layoutX="10.0" layoutY="10.0" text="%my_games">
+            <Label fx:id="games" layoutX="10.0" layoutY="10.0" onMouseClicked="#goToGameList" text="%my_games">
                <font>
                   <Font size="14.0" />
                </font>

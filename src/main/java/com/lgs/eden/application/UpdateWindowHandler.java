@@ -6,8 +6,8 @@ import com.lgs.eden.utils.Config;
 import com.lgs.eden.utils.Translate;
 import com.lgs.eden.utils.Utility;
 import com.lgs.eden.utils.ViewsPath;
+import com.lgs.eden.views.gameslist.GameList;
 import com.lgs.eden.views.login.Login;
-import com.lgs.eden.views.marketplace.Marketplace;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -177,7 +177,7 @@ public class UpdateWindowHandler {
             WindowController.setScreen(Login.getScreen());
 
             AppWindowHandler.changeToAppWindow(new LoginResponseData(10, 23, "Raphiki", "/avatars/23.png"));
-            AppWindowHandler.setScreen(Marketplace.getScreen(), ViewsPath.MARKETPLACE);
+            AppWindowHandler.setScreen(GameList.getScreen(), ViewsPath.GAMES);
         }
     }
 

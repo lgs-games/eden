@@ -20,6 +20,7 @@ public enum ViewsPath {
     INVENTORY("/views/inventory.fxml"),
 
     GAMES(null), // games menu
+    GAMES_LIST("/views/gameslist.fxml"), // games menu
 
     MARKETPLACE("/views/marketplace.fxml"),
     MARKETPLACE_GAME("/views/market/marketplace_game.fxml"),
