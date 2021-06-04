@@ -1,6 +1,7 @@
 package com.lgs.eden.views.gameslist;
 
 import com.lgs.eden.api.games.BasicGameData;
+import com.lgs.eden.utils.Config;
 import com.lgs.eden.utils.Utility;
 import com.lgs.eden.utils.ViewsPath;
 import com.lgs.eden.views.gameslist.cell.GameListCell;
@@ -35,11 +36,9 @@ public class GameList {
     private ListView<BasicGameData> games;
 
     private void init() {
-        ObservableList<BasicGameData> g;
-        g = FXCollections.observableArrayList();
-        g.add(new BasicGameData(0, "Enigma - éditeur de maps", "/games/enigma-icon.png"));
-        g.add(new BasicGameData(0, "Prim", "/games/prim-icon.png"));
-        this.games.setItems(g);
+        // fill game list
+        ObservableList<BasicGameData> myGames = Config.getInstalledGames();
+        this.games.setItems(myGames);
         this.games.setCellFactory(item -> new GameListCell());
     }
 }

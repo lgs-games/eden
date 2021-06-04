@@ -1,6 +1,9 @@
 package com.lgs.eden.utils;
 
 import com.lgs.eden.api.API;
+import com.lgs.eden.api.games.BasicGameData;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.image.Image;
 
 import java.io.File;
@@ -104,5 +107,14 @@ public class Config {
                 }
             }
         }
+    }
+
+    /** returns locally installed games **/
+    public static ObservableList<BasicGameData> getInstalledGames() {
+        // todo: look into gameFolder
+        ObservableList<BasicGameData> games = FXCollections.observableArrayList();
+        games.add(new BasicGameData(0, "Enigma - éditeur de maps", "/games/enigma-icon.png"));
+        games.add(new BasicGameData(1, "Prim", "/games/prim-icon.png"));
+        return games;
     }
 }
