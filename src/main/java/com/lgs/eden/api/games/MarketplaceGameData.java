@@ -8,14 +8,11 @@ import java.util.ArrayList;
 /**
  * Wrapper for marketplace game
  */
-public class MarketplaceGameData {
+public class MarketplaceGameData extends BasicGameData {
     // store here the number of games in the marketplace, indicated by the API in the response
     public static int gameCount;
 
-    public final int id;
-    public final String name;
     public final String desc;
-    public final Image icon;
     public final Image image;
     public final ArrayList<String> tags;
     public final ArrayList<String> languages;
@@ -23,10 +20,8 @@ public class MarketplaceGameData {
 
     public MarketplaceGameData(int id, String name, String desc, String icon, String image, ArrayList<String> tags,
                                ArrayList<String> languages, GameUpdateData updateData) {
-        this.id = id;
-        this.name = name;
+        super(id, name, icon);
         this.desc = desc;
-        this.icon = Utility.loadImage(icon);
         this.image = Utility.loadImage(image);
         this.tags = tags;
         this.languages = languages;
