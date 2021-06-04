@@ -25,4 +25,5 @@ module eden {
     opens com.lgs.eden.views.friends;
     opens com.lgs.eden.views.profile;
     opens com.lgs.eden.views.profile.listcells;
+    opens com.lgs.eden.views.gameslist.cell;
 }
