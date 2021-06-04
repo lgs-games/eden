@@ -37,11 +37,8 @@ public class GameList {
     private void init() {
         ObservableList<BasicGameData> g;
         g = FXCollections.observableArrayList();
-        g.add(new BasicGameData(
-           0, "Prim",
-           "/games/prim-icon.png"
-        ));
-
+        g.add(new BasicGameData(0, "Enigma - éditeur de maps", "/games/enigma-icon.png"));
+        g.add(new BasicGameData(0, "Prim", "/games/prim-icon.png"));
         this.games.setItems(g);
         this.games.setCellFactory(item -> new GameListCell());
     }

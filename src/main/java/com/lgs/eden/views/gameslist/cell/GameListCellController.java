@@ -3,6 +3,7 @@ package com.lgs.eden.views.gameslist.cell;
 import com.lgs.eden.api.games.BasicGameData;
 import com.lgs.eden.utils.Utility;
 import com.lgs.eden.utils.ViewsPath;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
@@ -27,12 +28,22 @@ public class GameListCellController {
 
     // ------------------------------ INSTANCE ----------------------------- \\
 
-    public ImageView gameAvatar;
-    public Label gameName;
+    @FXML
+    private ImageView gameAvatar;
+    @FXML
+    private Label gameName;
+    // our view
     private Parent view;
+    // info about the game in the view
+    private BasicGameData info;
 
     public void init(BasicGameData data){
+        this.gameName.setText(data.name);
+        this.gameName.setMaxWidth(150);
 
+        this.gameAvatar.setImage(data.icon);
+
+        this.info = data;
     }
 
     // our view

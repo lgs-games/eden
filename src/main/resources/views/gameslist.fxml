@@ -8,10 +8,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="500.0" prefWidth="800.0" stylesheets="@../style/style.css" xmlns="http://javafx.com/javafx/16"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lgs.eden.views.gameslist.GameList">
+<BorderPane prefHeight="500.0" prefWidth="850.0" stylesheets="@../style/style.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lgs.eden.views.gameslist.GameList">
    <left>
-      <BorderPane prefWidth="250.0" styleClass="app-background" BorderPane.alignment="CENTER">
+      <BorderPane maxWidth="275.0" minWidth="275.0" prefWidth="275.0" styleClass="app-background" BorderPane.alignment="CENTER">
          <top>
             <VBox alignment="CENTER" BorderPane.alignment="CENTER">
                <children>
@@ -20,7 +19,7 @@
                         <Font name="System Bold" size="24.0" />
                      </font>
                   </Label>
-                  <TextField focusTraversable="false" promptText="%search" fx:id="search">
+                  <TextField fx:id="search" focusTraversable="false" promptText="%search">
                      <VBox.margin>
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                      </VBox.margin>
@@ -32,7 +31,7 @@
             </VBox>
          </top>
          <center>
-            <ListView BorderPane.alignment="CENTER" fx:id="games">
+            <ListView fx:id="games" styleClass="app-background" BorderPane.alignment="CENTER">
                <BorderPane.margin>
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </BorderPane.margin>
