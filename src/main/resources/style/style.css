@@ -90,6 +90,13 @@
     -fx-text-fill: #dd4411;
 }
 
+.testa {
+    -fx-background-image: url('../games/prim-bg.png');
+    -fx-background-repeat: stretch;
+    -fx-background-size: 1200 800;
+    -fx-background-position: center center;
+}
+
 .bar-user-div { -fx-background-color: inherit; }
 
 .menu-item {
