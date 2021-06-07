@@ -22,7 +22,8 @@ And finally, we have a [Trello](https://trello.com/b/mc5OKuQH/eden) to stay orga
 
 ### Installation
 
+...
 
 ### Licence
-This project is licensed under the Apache-2.0 License.
 
+This project is licensed under the Apache-2.0 License.
