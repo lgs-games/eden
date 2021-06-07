@@ -20,4 +20,22 @@ public class BasicGameData {
         this.name = name;
         this.icon = Utility.loadImage(icon);
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof BasicGameData)) return false;
+
+        BasicGameData that = (BasicGameData) o;
+
+        if (this.id != that.id) return false;
+        return this.name.equals(that.name);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = this.id;
+        result = 31 * result + this.name.hashCode();
+        return result;
+    }
 }

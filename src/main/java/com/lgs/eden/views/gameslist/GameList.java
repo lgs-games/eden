@@ -18,15 +18,24 @@ import javafx.scene.control.TextField;
  * at the left and a game at the right.
  */
 public class GameList {
+
     // ------------------------------ STATIC ----------------------------- \\
 
     public static Parent getScreen() {
+        return getScreen(null);
+    }
+
+    public static Parent getScreen(BasicGameData data) {
         FXMLLoader loader = Utility.loadView(ViewsPath.GAMES_LIST.path);
         Parent parent = Utility.loadViewPane(loader);
         GameList controller = loader.getController();
+        GameList.data = data;
         controller.init();
         return parent;
     }
+
+    private static BasicGameData data;
+    public static BasicGameData getCurrentGameData() { return data; }
 
     // ------------------------------ INSTANCE ----------------------------- \\
 
@@ -38,7 +47,15 @@ public class GameList {
     private void init() {
         // fill game list
         ObservableList<BasicGameData> myGames = Config.getInstalledGames();
+        // set items
         this.games.setItems(myGames);
-        this.games.setCellFactory(item -> new GameListCell());
+        // try to find if we got a game
+        if (data == null && myGames.size() == 0){
+            System.out.println("no games");
+        } else {
+            if (data == null) data = myGames.get(0);
+            // change renderer
+            this.games.setCellFactory(item -> new GameListCell());
+        }
     }
 }
