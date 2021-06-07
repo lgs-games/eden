@@ -83,7 +83,10 @@ public class GameList {
             this.games.setCellFactory(item -> new GameListCell());
 
             // ------------------------------ GAME VIEW ----------------------------- \\
+            // fetch game data
             this.gameData = API.imp.getGameData(AppWindowHandler.currentUserID(), data.id);
+
+            // set view texts
             this.gameName.setText(this.gameData.name);
             this.gameVersion.setText(this.gameData.version);
             // news

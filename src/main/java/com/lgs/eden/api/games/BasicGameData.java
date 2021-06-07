@@ -18,7 +18,7 @@ public class BasicGameData {
     public BasicGameData(int id, String name, String icon) {
         this.id = id;
         this.name = name;
-        this.icon = Utility.loadImage(icon);
+        this.icon = icon != null ? Utility.loadImage(icon) : null;
     }
 
     @Override
