@@ -24,7 +24,7 @@ class GamesHandler implements GameAPI {
     }
 
     @Override
-    public ArrayList<MarketplaceGameData> getMarketPlaceGames(int begin, int count, String code) {
+    public ArrayList<MarketplaceGameData> getMarketPlaceGames(int begin, int count, String code, int userID) {
         ArrayList<MarketplaceGameData> games = new ArrayList<>();
 
         MarketplaceGameData.gameCount = 1;
@@ -50,7 +50,8 @@ class GamesHandler implements GameAPI {
                 "/games/prim-icon.png","/games/prim-pic.png",
                 tags,
                 languages,
-                updatePrim
+                updatePrim,
+                true
         );
 
         games.add(prim);

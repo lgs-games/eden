@@ -1,6 +1,7 @@
 package com.lgs.eden.views.marketplace;
 
 import com.lgs.eden.api.games.MarketplaceGameData;
+import com.lgs.eden.utils.Translate;
 import com.lgs.eden.utils.Utility;
 import com.lgs.eden.utils.ViewsPath;
 import javafx.fxml.FXML;
@@ -15,6 +16,8 @@ import javafx.scene.layout.FlowPane;
  * Controller for market_game.fxml
  */
 public class MarketplaceGame {
+
+    private MarketplaceGameData data;
 
     public static Parent getScreen(MarketplaceGameData data) {
         FXMLLoader loader = Utility.loadView(ViewsPath.MARKETPLACE_GAME.path);
@@ -46,6 +49,7 @@ public class MarketplaceGame {
     private Label gameSize;
 
     private void init(MarketplaceGameData data) {
+        this.data = data;
         this.gameName.setText(data.name);
         this.gameDesc.setText(data.desc);
         this.gameImage.setImage(data.image);
@@ -60,11 +64,23 @@ public class MarketplaceGame {
             this.tags.getChildren().add(b);
         });
 
+        String downloadMessage = data.inLibrary ? "goto_library" : "add_library";
+        this.downloadButton.setText(Translate.getTranslation(downloadMessage));
+
         this.languages.getChildren().clear();
         data.languages.forEach(s -> {
             Button b = new Button(s);
             b.getStyleClass().add("eden-button");
             this.languages.getChildren().add(b);
         });
+    }
+
+    @FXML
+    public void onDownloadPressed(){
+        if (this.data.inLibrary){
+            System.out.println("goto this game in the library (id="+this.data.id+")");
+        } else {
+            System.out.println("download..."+this.data);
+        }
     }
 }
