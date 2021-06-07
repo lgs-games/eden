@@ -25,4 +25,11 @@ public interface GameAPI {
      */
     ArrayList<MarketplaceGameData> getMarketPlaceGames(int begin, int count, String code);
 
+    /**
+     * Returns information such as the name of the game, the version, ...
+     * and information such as the number of friends playing, the achievement-related information, ...
+     * Mainly used to render for an user, the information about one game.
+     */
+    GameViewData getGameData(int userID, int gameID);
+
 }

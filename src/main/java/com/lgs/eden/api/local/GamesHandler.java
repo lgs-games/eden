@@ -1,9 +1,7 @@
 package com.lgs.eden.api.local;
 
-import com.lgs.eden.api.games.EdenVersionData;
-import com.lgs.eden.api.games.GameAPI;
-import com.lgs.eden.api.games.GameUpdateData;
-import com.lgs.eden.api.games.MarketplaceGameData;
+import com.lgs.eden.api.games.*;
+import com.lgs.eden.api.news.BasicNewsData;
 
 import java.util.ArrayList;
 
@@ -56,5 +54,33 @@ class GamesHandler implements GameAPI {
         games.add(prim);
 
         return games;
+    }
+
+    @Override
+    public GameViewData getGameData(int userID, int gameID) {
+        if (gameID == 0){
+            BasicNewsData prim = new BasicNewsData(
+                    "Version 3.1.0 released",
+                    "/news/news1.png",
+                    "We patched a lot of things and tried to improve" +
+                            "the game to make it less easy and more fun to play.",
+                    0
+            );
+            return new GameViewData(
+                    0, "Prim", "/games/prim-icon.png", "3.1.0", prim,
+                    0, 7, 0, 54
+            );
+        } else {
+            BasicNewsData enigma = new BasicNewsData(
+                    "Enigma (remaster)",
+                    "/news/news2.png",
+                    "Enigma will come back, full remade! New UI, new functionalities, multiplayer...",
+                    1
+            );
+            return new GameViewData(
+                    1, "Enigma", "/games/enigma-icon.png", "2.0.0", enigma,
+                    0, 24, 3, 4500
+            );
+        }
     }
 }
