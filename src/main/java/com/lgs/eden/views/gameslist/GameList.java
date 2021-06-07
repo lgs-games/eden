@@ -4,26 +4,28 @@ import com.lgs.eden.api.API;
 import com.lgs.eden.api.games.BasicGameData;
 import com.lgs.eden.api.games.GameViewData;
 import com.lgs.eden.application.AppWindowHandler;
-import com.lgs.eden.utils.Config;
 import com.lgs.eden.utils.Utility;
 import com.lgs.eden.utils.ViewsPath;
 import com.lgs.eden.views.gameslist.cell.GameListCell;
+import com.lgs.eden.views.gameslist.news.AllNews;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.CacheHint;
+import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.BorderPane;
 
-import java.util.stream.Stream;
+import java.util.ArrayList;
 
 /**
  * Pane with the list of games
@@ -73,10 +75,16 @@ public class GameList {
     private TextField search;
     @FXML
     private ListView<BasicGameData> games;
+    @FXML
+    private BorderPane gameViewPane;
+    @FXML
+    private Button back;
 
     // store game data
     private GameViewData gameData;
     private ObservableList<BasicGameData> myGames;
+    /** store old screen when changed **/
+    private final ArrayList<Node> backupCenter = new ArrayList<>();
 
     private void init() {
         // fill game list
@@ -112,7 +120,18 @@ public class GameList {
         }
     }
 
+    public void goToSubMenu(Parent view){
+        // backup
+        this.backupCenter.add(this.gameViewPane.getCenter());
+        // set view in center
+        this.gameViewPane.setCenter(view);
+        // show back
+        this.back.setVisible(true);
+    }
+
     // ------------------------------ Listeners ----------------------------- \\
+
+    // ------------------------------ Search ----------------------------- \\
 
     @FXML
     public void searchKey(KeyEvent e){
@@ -154,5 +173,26 @@ public class GameList {
         for (int i = 0; i < size; i++) {
             this.games.getItems().add(null);
         }
+    }
+
+    // ------------------------------ Buttons ----------------------------- \\
+
+    // go back
+    @FXML
+    public void backToMain(){
+        // get last and remove
+        int last = this.backupCenter.size() - 1;
+        Node node = this.backupCenter.get(last);
+        this.backupCenter.remove(last);
+        // go back
+        this.gameViewPane.setCenter(node);
+        // empty
+        if (last == 0) this.back.setVisible(false);
+    }
+
+    // all news
+    @FXML
+    public void seeAllNews(){
+        goToSubMenu(AllNews.getScreen(data.id));
     }
 }
