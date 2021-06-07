@@ -71,7 +71,7 @@ public class GameList {
 
     private void init() {
         // fill game list
-        ObservableList<BasicGameData> myGames = Config.getInstalledGames();
+        ObservableList<BasicGameData> myGames = API.imp.getUserGames(AppWindowHandler.currentUserID());
         // set items
         this.games.setItems(myGames);
         // try to find if we got a game

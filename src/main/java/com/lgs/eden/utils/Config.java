@@ -108,13 +108,4 @@ public class Config {
             }
         }
     }
-
-    /** returns locally installed games **/
-    public static ObservableList<BasicGameData> getInstalledGames() {
-        // todo: look into gameFolder
-        ObservableList<BasicGameData> games = FXCollections.observableArrayList();
-        games.add(new BasicGameData(1, "Enigma", "/games/enigma-icon.png"));
-        games.add(new BasicGameData(0, "Prim", "/games/prim-icon.png"));
-        return games;
-    }
 }

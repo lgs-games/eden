@@ -2,6 +2,8 @@ package com.lgs.eden.api.local;
 
 import com.lgs.eden.api.games.*;
 import com.lgs.eden.api.news.BasicNewsData;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 import java.util.ArrayList;
 
@@ -82,5 +84,12 @@ class GamesHandler implements GameAPI {
                     0, 24, 3, 4500
             );
         }
+    }
+
+    public ObservableList<BasicGameData> getUserGames(int userID) {
+        ObservableList<BasicGameData> games = FXCollections.observableArrayList();
+        games.add(new BasicGameData(1, "Enigma", "/games/enigma-icon.png"));
+        games.add(new BasicGameData(0, "Prim", "/games/prim-icon.png"));
+        return games;
     }
 }

@@ -1,5 +1,7 @@
 package com.lgs.eden.api.games;
 
+import javafx.collections.ObservableList;
+
 import java.util.ArrayList;
 
 /**
@@ -31,5 +33,10 @@ public interface GameAPI {
      * Mainly used to render for an user, the information about one game.
      */
     GameViewData getGameData(int userID, int gameID);
+
+    /**
+     * Returns basic data about the game that the user add to his library.
+     */
+    ObservableList<BasicGameData> getUserGames(int userID);
 
 }
