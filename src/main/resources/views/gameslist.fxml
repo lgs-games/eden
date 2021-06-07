@@ -99,7 +99,7 @@
                      <center>
                         <StackPane BorderPane.alignment="CENTER">
                            <children>
-                              <ImageView fitHeight="385.0" fitWidth="400.0">
+                              <ImageView fitHeight="385.0" fitWidth="440.0">
                                  <image>
                                     <Image url="@../news/news1.png" />
                                  </image>
@@ -296,10 +296,13 @@
                            </center>
                         </BorderPane>
                      </center>
+                     <GridPane.margin>
+                        <Insets right="10.0" />
+                     </GridPane.margin>
                   </BorderPane>
                </children>
                <BorderPane.margin>
-                  <Insets bottom="25.0" left="25.0" right="25.0" top="50.0" />
+                  <Insets bottom="25.0" top="50.0" />
                </BorderPane.margin>
                <padding>
                   <Insets bottom="40.0" />
