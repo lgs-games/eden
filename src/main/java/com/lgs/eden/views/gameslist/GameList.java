@@ -8,14 +8,22 @@ import com.lgs.eden.utils.Config;
 import com.lgs.eden.utils.Utility;
 import com.lgs.eden.utils.ViewsPath;
 import com.lgs.eden.views.gameslist.cell.GameListCell;
+import javafx.application.Platform;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.CacheHint;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+
+import java.util.stream.Stream;
 
 /**
  * Pane with the list of games
@@ -68,17 +76,19 @@ public class GameList {
 
     // store game data
     private GameViewData gameData;
+    private ObservableList<BasicGameData> myGames;
 
     private void init() {
         // fill game list
-        ObservableList<BasicGameData> myGames = API.imp.getUserGames(AppWindowHandler.currentUserID());
+        this.myGames = API.imp.getUserGames(AppWindowHandler.currentUserID());
         // set items
-        this.games.setItems(myGames);
+        this.games.setItems(FXCollections.observableArrayList());
+        search();
         // try to find if we got a game
-        if (data == null && myGames.size() == 0){
+        if (data == null && this.myGames.size() == 0){
             System.out.println("no games");
         } else {
-            if (data == null) data = myGames.get(0);
+            if (data == null) data = this.myGames.get(0);
             // change renderer
             this.games.setCellFactory(item -> new GameListCell());
 
@@ -99,6 +109,50 @@ public class GameList {
             // others
             this.friendsPlaying.setText(""+this.gameData.friendsPlaying);
             this.timePlayed.setText(""+this.gameData.timePlayed);
+        }
+    }
+
+    // ------------------------------ Listeners ----------------------------- \\
+
+    @FXML
+    public void searchKey(KeyEvent e){
+        if (e.getCode().equals(KeyCode.ESCAPE)){
+            unFocusSearch();
+        }
+    }
+
+    private void unFocusSearch() {
+        // focusing on someone else
+        Platform.runLater(() -> this.search.getParent().requestFocus());
+    }
+
+    @FXML
+    public void search(){
+        unFocusSearch();
+        // get input
+        String text = this.search.getText().trim().toLowerCase();
+        // if no input, select all
+        if (text.isEmpty()) {
+            this.games.getItems().clear();
+            this.games.getItems().addAll(this.myGames);
+            fillWithBlanksSinceBug(myGames.size());
+        }
+        else {
+            this.games.getItems().clear();
+            FilteredList<BasicGameData> filtered = this.myGames.filtered((e) -> e.name.toLowerCase().contains(text));
+            this.games.getItems().addAll(filtered);
+            fillWithBlanksSinceBug(filtered.size());
+        }
+    }
+
+    //todo: first JavaFX bug :(
+    // the list seems to show old rendering when the size
+    // just to two from one or go back to two.
+    private void fillWithBlanksSinceBug(int size) {
+        if (size == 1) size = 18;
+        else if (size == 2) size = 15;
+        for (int i = 0; i < size; i++) {
+            this.games.getItems().add(null);
         }
     }
 }

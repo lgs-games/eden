@@ -15,10 +15,13 @@ public class BasicGameData {
     public final String name;
     public final Image icon;
 
+    private final String path;
+
     public BasicGameData(int id, String name, String icon) {
         this.id = id;
         this.name = name;
         this.icon = icon != null ? Utility.loadImage(icon) : null;
+        this.path = icon;
     }
 
     @Override
@@ -37,5 +40,16 @@ public class BasicGameData {
         int result = this.id;
         result = 31 * result + this.name.hashCode();
         return result;
+    }
+
+    @Override
+    // can't size Image not clonable it seems
+    @SuppressWarnings("MethodDoesntCallSuperMethod")
+    public BasicGameData clone() {
+        return new BasicGameData(
+                this.id,
+                this.name,
+                this.path
+        );
     }
 }
