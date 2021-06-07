@@ -1,6 +1,9 @@
-package com.lgs.eden.api;
+package com.lgs.eden.api.local;
 
-import com.lgs.eden.api.wrapper.*;
+import com.lgs.eden.api.profile.FriendData;
+import com.lgs.eden.api.profile.ProfileAPI;
+import com.lgs.eden.api.profile.ProfileData;
+import com.lgs.eden.api.profile.RecentGameData;
 import com.lgs.eden.utils.Utility;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -10,59 +13,12 @@ import java.util.ArrayList;
 import java.util.Date;
 
 /**
- * Todo: fix this class, ...
+ * Implementation of ProfileAPI
  */
+class ProfileHandler implements ProfileAPI {
 
-public class Api {
-
-    public static EdenVersionData getEdenVersion() {
-        // fake some delay
-        try {
-            Thread.sleep(3000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        return new EdenVersionData("1.0.0");
-    }
-
-    public static String passwordForgotPage(String code) {
-        // website only supports en or fr
-        code = Api.formatCode(code);
-        return "https://lgs-games.com/"+code+"/password_forgot";
-    }
-
-    private static String formatCode(String code) {
-        if (!code.equals("en") && !code.equals("fr"))
-            code = "en";
-        return code;
-    }
-
-    /**
-     * todo
-     * Return code, see ApiCodes
-     */
-    public static LoginResponseData login(String username, String pwd) {
-        if (!username.equals("Raphik") || !pwd.equals("tester")) {
-            return new LoginResponseData(-1);
-        }
-        return new LoginResponseData(0, 23, username, "/avatars/23.png");
-    }
-
-    /**
-     * todo
-     * Return code, see ApiCodes
-     */
-    public static int register(String username, String pwd, String email) {
-        if (!username.equals("admin") || !pwd.equals("azerty") || !email.equals("a@b.c")) {
-            return -1;
-        }
-        return 0;
-    }
-
-    /**
-     * Returns complete friend list
-     */
-    public static ArrayList<FriendData> getFriendList(int userID) {
+    @Override
+    public ArrayList<FriendData> getFriendList(int userID) {
         ArrayList<FriendData> friendList = new ArrayList<>();
 
         FriendData fr0 = new FriendData("/avatars/23.png", "Raphik", false, 23);
@@ -82,10 +38,10 @@ public class Api {
         return friendList;
     }
 
-    /** Returns profile Data for an user. fixme: Only 23 to 27 are supported for now, as test values. */
-    public static ProfileData getProfileData(int userID) {
+    @Override
+    public ProfileData getProfileData(int userID) {
         ObservableList<FriendData> friendDataObservableList = FXCollections.observableArrayList();
-        friendDataObservableList.addAll(Api.getFriendList(userID));
+        friendDataObservableList.addAll(this.getFriendList(userID));
 
         int friendNumber = friendDataObservableList.size(); // observable friend list may contains
         // less user that friendNumber so that not the real value
@@ -102,7 +58,7 @@ public class Api {
                     friendNumber, 9999,
                     "Raphiki is a great programmer at ENSIIE engineering school.",
                     new Date(), Date.from(Instant.parse("2020-12-03T10:15:30.00Z")), friendDataObservableList,
-              recentGamesData
+                    recentGamesData
             );
         } else if (userID == 24){
             return new ProfileData("Raphik2",24, "/avatars/24.png", friendNumber, 0,
@@ -136,9 +92,5 @@ public class Api {
         }
 
         throw new IllegalStateException("Not supported");
-    }
-
-    public static void logout() {
-
     }
 }

@@ -1,10 +1,12 @@
 package com.lgs.eden.application;
 
 import com.goxr3plus.fxborderlessscene.borderless.BorderlessScene;
+import com.lgs.eden.api.auth.LoginResponseData;
 import com.lgs.eden.utils.Config;
 import com.lgs.eden.utils.Translate;
 import com.lgs.eden.utils.Utility;
 import com.lgs.eden.utils.ViewsPath;
+import com.lgs.eden.views.gameslist.GameList;
 import com.lgs.eden.views.login.Login;
 import javafx.application.Platform;
 import javafx.fxml.FXML;

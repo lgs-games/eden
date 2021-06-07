@@ -1,13 +1,16 @@
 package com.lgs.eden.utils;
 
-import com.lgs.eden.api.Api;
+import com.lgs.eden.api.API;
+import com.lgs.eden.api.games.BasicGameData;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.image.Image;
 
 import java.io.File;
 import java.util.Locale;
 
 /**
- *
+ * Locale configuration handler.
  */
 public class Config {
 
@@ -32,7 +35,7 @@ public class Config {
      */
     public static boolean checkClientVersion() {
         System.out.println("Checking client version...");
-        return !VERSION.equals(Api.getEdenVersion().version);
+        return !VERSION.equals(API.imp.getEdenVersion().version);
     }
 
     /**
@@ -51,6 +54,9 @@ public class Config {
 
     // set language
     public static void setLocale(Language lang) { locale = new Locale(lang.code); }
+
+    // shortcut for currentLanguage.code
+    public static String getCode() { return getLanguage().code; }
 
     // ------------------------------ USERNAME ----------------------------- \\
 
@@ -101,5 +107,14 @@ public class Config {
                 }
             }
         }
+    }
+
+    /** returns locally installed games **/
+    public static ObservableList<BasicGameData> getInstalledGames() {
+        // todo: look into gameFolder
+        ObservableList<BasicGameData> games = FXCollections.observableArrayList();
+        games.add(new BasicGameData(0, "Enigma", "/games/enigma-icon.png"));
+        games.add(new BasicGameData(1, "Prim", "/games/prim-icon.png"));
+        return games;
     }
 }

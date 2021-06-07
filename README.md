@@ -1,5 +1,7 @@
 # Eden
 
+[![Java CI with Gradle](https://github.com/lgs-games/eden/actions/workflows/gradle.yml/badge.svg)](https://github.com/lgs-games/eden/actions/workflows/gradle.yml)
+
 ### A short presentation
 Eden is the 2nd version of the **Legendary Games Studios** game launcher.
 It is supposed to launch games, to be a link between the players
@@ -20,7 +22,8 @@ And finally, we have a [Trello](https://trello.com/b/mc5OKuQH/eden) to stay orga
 
 ### Installation
 
+...
 
 ### Licence
-This project is licensed under the Apache-2.0 License.
 
+This project is licensed under the Apache-2.0 License.

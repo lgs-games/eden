@@ -1,0 +1,60 @@
+package com.lgs.eden.api.local;
+
+import com.lgs.eden.api.games.EdenVersionData;
+import com.lgs.eden.api.games.GameAPI;
+import com.lgs.eden.api.games.GameUpdateData;
+import com.lgs.eden.api.games.MarketplaceGameData;
+
+import java.util.ArrayList;
+
+/**
+ * Implementation of GameAPI
+ */
+class GamesHandler implements GameAPI {
+
+    @Override
+    public EdenVersionData getEdenVersion() {
+        // fake some delay
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return new EdenVersionData("1.0.0", 147);
+    }
+
+    @Override
+    public ArrayList<MarketplaceGameData> getMarketPlaceGames(int begin, int count, String code) {
+        ArrayList<MarketplaceGameData> games = new ArrayList<>();
+
+        MarketplaceGameData.gameCount = 10;
+
+        ArrayList<String> tags = new ArrayList<>();
+        tags.add("1-player");
+        tags.add("Environment line");
+        tags.add("Original game");
+        tags.add("ENSIIE");
+        tags.add("Open Source");
+
+        ArrayList<String> languages = new ArrayList<>();
+        languages.add("English");
+        languages.add("Français");
+
+        GameUpdateData updatePrim = new GameUpdateData("3.1.0", 88);
+
+        MarketplaceGameData prim = new MarketplaceGameData(
+                0, "Prim",
+                "Prim is a production line game request by Dimitri Watel, teacher at ENSIIE engineering school." +
+                        " The main idea is that you will produce resources in order to close a gate. The folklore of " +
+                        "the game is the ENSIIE so you will have a lot of ENSIIE-related content. Have fun !",
+                "/games/prim-icon.png","/games/prim-pic.png",
+                tags,
+                languages,
+                updatePrim
+        );
+
+        games.add(prim);
+
+        return games;
+    }
+}

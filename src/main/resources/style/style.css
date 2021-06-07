@@ -28,6 +28,7 @@
 .yellow-text { -fx-text-fill: #FFCC33; }
 .grey-text { -fx-text-fill: #575757; }
 .grey-text-i { -fx-text-fill: #575757 !important; }
+.blue-text { -fx-text-fill: #2aa198; }
 
 .installer-bg {
     -fx-background-radius: 5px;
@@ -48,6 +49,12 @@
 .no-friends-label {
     -fx-font-size: 17px;
     -fx-text-fill: #2aa198;
+}
+
+/** market css **/
+
+.clean-div {
+    -fx-background-color: transparent;
 }
 
 /** profile css **/
@@ -110,3 +117,25 @@ REPUTATION
 
 .add-rep { -fx-text-fill: #00ac41; }
 .remove-rep { -fx-text-fill: #dd4441; }
+
+/**
+GAMES
+**/
+
+/* todo: for test purposes */
+.testa {
+    -fx-background-image: url('../games/prim-bg.png');
+    -fx-background-repeat: stretch;
+    -fx-background-size: 1200 800;
+    -fx-background-position: center center;
+}
+
+.game-title-arrow {
+    -fx-background-color: rgba(237,241,242, 0.8);
+    -fx-text-fill: #dd4441;
+    -fx-background-radius: 0 500 500 0;
+}
+
+.news-bg {
+    -fx-background-color: rgba(85, 90, 98, 0.9);
+}

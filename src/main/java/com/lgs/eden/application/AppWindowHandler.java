@@ -1,17 +1,18 @@
 package com.lgs.eden.application;
 
-import com.lgs.eden.api.Api;
-import com.lgs.eden.api.wrapper.LoginResponseData;
+import com.lgs.eden.api.API;
+import com.lgs.eden.api.auth.LoginResponseData;
 import com.lgs.eden.utils.Config;
 import com.lgs.eden.utils.Utility;
 import com.lgs.eden.utils.ViewsPath;
 import com.lgs.eden.views.friends.AllFriends;
+import com.lgs.eden.views.gameslist.GameList;
 import com.lgs.eden.views.inventory.Inventory;
 import com.lgs.eden.views.login.Login;
+import com.lgs.eden.views.marketplace.Marketplace;
 import com.lgs.eden.views.profile.Profile;
 import com.lgs.eden.views.settings.Settings;
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -43,6 +44,7 @@ public class AppWindowHandler {
         // load
         WindowController.setSize(Config.SCREEN_WIDTH_APP, Config.SCREEN_HEIGHT_APP);
         loadGameFrame();
+        setScreen(GameList.getScreen(), ViewsPath.GAMES);
     }
 
     /** load game menu bar with login, ... and menu **/
@@ -69,7 +71,7 @@ public class AppWindowHandler {
     }
 
     /** convenience method, return userID **/
-    public static int currentUserID() { return loggedUser.userID; };
+    public static int currentUserID() { return loggedUser.userID; }
 
     // ------------------------------ INSTANCE ----------------------------- \\
 
@@ -96,7 +98,7 @@ public class AppWindowHandler {
         if (menu.equals(ViewsPath.PROFILE)){
             s = username;
             o2 = games;
-        } if (menu.equals(ViewsPath.SHOP)){
+        } if (menu.equals(ViewsPath.MARKETPLACE)){
             s = library;
             o1 = games;
         }
@@ -118,11 +120,17 @@ public class AppWindowHandler {
 
     @FXML
     public void logout() {
-        Api.logout();
+        API.imp.logout();
         Platform.runLater(AppWindowHandler::goBackToMainApp);
     }
 
     public void goToProfile() { setScreen(Profile.getScreen(), ViewsPath.PROFILE); }
 
     public void goToAllFriends() { setScreen(AllFriends.getScreen(loggedUser.userID), ViewsPath.PROFILE); }
+
+    public void goToMarketPlace() {
+        setScreen(Marketplace.getScreen(), ViewsPath.MARKETPLACE);
+    }
+
+    public void goToGameList() { setScreen(GameList.getScreen(), ViewsPath.GAMES); }
 }

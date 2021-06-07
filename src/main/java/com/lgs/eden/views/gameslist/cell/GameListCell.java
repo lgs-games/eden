@@ -1,24 +1,24 @@
-package com.lgs.eden.views.profile.listcells;
+package com.lgs.eden.views.gameslist.cell;
 
-import com.lgs.eden.api.profile.FriendData;
+import com.lgs.eden.api.games.BasicGameData;
 import javafx.scene.control.ListCell;
 
 /**
  * View for a cell
  */
-public class FriendCell extends ListCell<FriendData> {
+public class GameListCell extends ListCell<BasicGameData> {
 
     // controller of the view
-    private final FriendCellController controller;
+    private final GameListCellController controller;
 
-    public FriendCell() {
-        this.controller = FriendCellController.load();
+    public GameListCell() {
+        this.controller = GameListCellController.load();
     }
 
     // ------------------------------ METHODS ----------------------------- \\
 
     @Override
-    protected void updateItem(FriendData item, boolean empty) {
+    protected void updateItem(BasicGameData item, boolean empty) {
         boolean isEmpty = empty || item == null;
 
         // no background
