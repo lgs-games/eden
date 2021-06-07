@@ -30,6 +30,10 @@
 .grey-text-i { -fx-text-fill: #575757 !important; }
 .blue-text { -fx-text-fill: #2aa198; }
 
+.red-border-bottom {
+    -fx-border-color: transparent transparent #dd4411 transparent;
+}
+
 .installer-bg {
     -fx-background-radius: 5px;
     -fx-border-radius: 5px;
