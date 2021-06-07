@@ -192,7 +192,5 @@ public class GameList {
 
     // all news
     @FXML
-    public void seeAllNews(){
-        goToSubMenu(AllNews.getScreen(data.id));
-    }
+    public void seeAllNews(){ this.goToSubMenu(AllNews.getScreen(data.id)); }
 }

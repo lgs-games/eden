@@ -2,34 +2,29 @@ package com.lgs.eden.views.gameslist.news;
 
 import com.lgs.eden.utils.Utility;
 import com.lgs.eden.utils.ViewsPath;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.layout.VBox;
 
 /**
- * Show all news of a game
+ * View for a cell all the all_news view.
+ * See all_news_cell.fxml
  */
-public class AllNews {
+public class AllNewsCell {
+
     // ------------------------------ STATIC ----------------------------- \\
 
-    public static Parent getScreen(int gameID) {
-        FXMLLoader loader = Utility.loadView(ViewsPath.GAMES_ALL_NEWS.path);
+    public static Parent getScreen() {
+        FXMLLoader loader = Utility.loadView(ViewsPath.GAMES_ALL_NEWS_CELL.path);
         Parent parent = Utility.loadViewPane(loader);
-        AllNews controller = loader.getController();
+        AllNewsCell controller = loader.getController();
         controller.init();
         return parent;
     }
 
     // ------------------------------ INSTANCE ----------------------------- \\
 
-    @FXML
-    private VBox newsPanel;
-
     private void init() {
-        for (int i = 0; i < 7; i++) {
-            newsPanel.getChildren().add(AllNewsCell.getScreen());
-        };
+
     }
 
 }
