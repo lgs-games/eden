@@ -94,9 +94,7 @@ class GamesHandler implements GameAPI {
 
     @Override
     public ShortGameViewData getGameDateUpdate(int userID, int gameID) {
-
-
-
+        APIHelper.fakeDelay(3000);
         if (gameID == 1){
             return new ShortGameViewData(
               2, 1, 4600

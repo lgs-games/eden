@@ -26,8 +26,6 @@ public class APIHelper {
         // fake some delay
         try {
             Thread.sleep(ms);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        } catch (InterruptedException ignore) {}
     }
 }

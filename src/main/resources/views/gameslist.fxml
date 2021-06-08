@@ -197,7 +197,7 @@
                                                 <Font name="System Bold" size="18.0" />
                                              </font>
                                           </Label>
-                                          <Button contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" text="Button">
+                                          <Button fx:id="updateButton" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" onAction="#onUpdateRequest" text="Button">
                                              <graphic>
                                                 <ImageView>
                                                    <image>

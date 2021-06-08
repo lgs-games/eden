@@ -3,7 +3,9 @@ package com.lgs.eden.views.gameslist;
 import com.lgs.eden.api.API;
 import com.lgs.eden.api.games.BasicGameData;
 import com.lgs.eden.api.games.GameViewData;
+import com.lgs.eden.api.games.ShortGameViewData;
 import com.lgs.eden.application.AppWindowHandler;
+import com.lgs.eden.application.ApplicationCloseHandler;
 import com.lgs.eden.utils.Utility;
 import com.lgs.eden.utils.ViewsPath;
 import com.lgs.eden.views.gameslist.cell.GameListCell;
@@ -27,6 +29,8 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Pane with the list of games
@@ -84,6 +88,8 @@ public class GameList {
     private BorderPane gameViewPane;
     @FXML
     private Button back;
+    @FXML
+    private Button updateButton;
     @FXML
     private ImageView gameBackground;
 
@@ -214,5 +220,50 @@ public class GameList {
     @FXML
     public void showLastNews(){
         this.goToSubMenu(News.getScreen(this.gameData.lastNews));
+    }
+
+    // request game information update
+    private volatile boolean calledUpdate = false;
+    @FXML
+    public void onUpdateRequest(){
+        // get rid of focus
+        this.updateButton.getParent().requestFocus();
+        // only one per one
+        if (this.calledUpdate) return;
+        this.calledUpdate = true;
+        // image
+        ImageView image = (ImageView) this.updateButton.getGraphic();
+
+        // call
+        Timer timer = new Timer();
+        timer.scheduleAtFixedRate(new RotateUpdate(image), 0, 150);
+        ApplicationCloseHandler.startUpdateThread(timer, () -> {
+            ShortGameViewData view = API.imp.getGameDateUpdate(AppWindowHandler.currentUserID(), this.gameData.id);
+            // changes values
+            Platform.runLater(() -> {
+                this.achievementCount.setText(""+view.playerAchievements);
+                this.friendsPlaying.setText(""+view.friendsPlaying);
+                this.timePlayed.setText(""+view.timePlayed);
+                // done
+                this.calledUpdate = false;
+                image.setRotate(0); // reset
+                // close
+                ApplicationCloseHandler.closeUpdateThread();
+            });
+        });
+    }
+
+    /**
+     * Rotate loading image
+     */
+    private static class RotateUpdate extends TimerTask {
+
+        private final ImageView image;
+        private int rotation = 0;
+
+        public RotateUpdate(ImageView image) { this.image = image; }
+
+        @Override
+        public void run() { Platform.runLater(() -> image.setRotate(rotation += 50)); }
     }
 }

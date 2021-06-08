@@ -16,6 +16,7 @@ public class ApplicationCloseHandler implements EventHandler<WindowEvent> {
     private static Timer gameDateUpdateTimer = null;
     private static Thread gameDateUpdateThread = null;
     public static void startUpdateThread(Timer timer, Runnable r) {
+        closeUpdateThread();
         gameDateUpdateTimer = timer;
         gameDateUpdateThread = new Thread(r);
         gameDateUpdateThread.start();
@@ -23,6 +24,8 @@ public class ApplicationCloseHandler implements EventHandler<WindowEvent> {
     public static void closeUpdateThread(){
         if (gameDateUpdateTimer != null) gameDateUpdateTimer.cancel();
         if (gameDateUpdateThread != null) gameDateUpdateThread.interrupt();
+        gameDateUpdateTimer = null;
+        gameDateUpdateThread = null;
     }
 
 
