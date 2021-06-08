@@ -1,6 +1,7 @@
 package com.lgs.eden.views.profile.messages;
 
 import com.lgs.eden.api.profile.friends.conversation.ConversationData;
+import com.lgs.eden.application.AppWindowHandler;
 import com.lgs.eden.utils.Translate;
 import com.lgs.eden.utils.ViewsPath;
 import com.lgs.eden.utils.cell.CellHandler;
@@ -32,8 +33,11 @@ public class ConversationCell implements CellHandler<ConversationData> {
     @FXML
     private Button newMessages;
 
+    private ConversationData item;
+
     @Override
     public void init(ConversationData item) {
+        this.item = item;
         this.friendName.setText(item.name);
         this.friendAvatar.setImage(item.avatar);
         // status
@@ -48,6 +52,14 @@ public class ConversationCell implements CellHandler<ConversationData> {
         } else {
             this.view.getStyleClass().add("conv-bg");
         }
+    }
+
+    /**
+     * Wants to send a message to this person
+     */
+    @FXML
+    private void onWantMessage() {
+        AppWindowHandler.setScreen(Messages.getScreen(this.item.id), ViewsPath.PROFILE);
     }
 
     // ------------------------------ VIEW ----------------------------- \\
