@@ -9,25 +9,25 @@
 
 <BorderPane stylesheets="@../../style/style.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lgs.eden.views.gameslist.news.AllNewsCell">
     <right>
-        <Button mnemonicParsing="false" styleClass="eden-button" text="%see" BorderPane.alignment="CENTER" />
+        <Button mnemonicParsing="false" onAction="#gotoNews" styleClass="eden-button" text="%see" BorderPane.alignment="CENTER" />
     </right>
     <center>
         <VBox BorderPane.alignment="CENTER">
             <children>
-                <Label alignment="CENTER" text="Eating chocolate">
+                <Label fx:id="newsTitle" alignment="CENTER" text="Eating chocolate">
                     <font>
                         <Font name="System Bold" size="18.0" />
                     </font>
                 </Label>
-                <Label text="This is a short description of the news where you can try to summarize the news." />
+                <Label fx:id="newsDesc" text="This is a short description of the news where you can try to summarize the news." />
             </children>
         </VBox>
     </center>
     <left>
         <VBox alignment="CENTER" BorderPane.alignment="CENTER">
             <children>
-                <Label styleClass="blue-text" text="26" />
-                <Label styleClass="blue-text" text="Mar." />
+                <Label fx:id="newsDay" styleClass="blue-text" text="26" />
+                <Label fx:id="newsMonth" styleClass="blue-text" text="Mar." />
             </children>
             <BorderPane.margin>
                 <Insets right="10.0" />

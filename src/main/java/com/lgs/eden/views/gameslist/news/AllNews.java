@@ -68,8 +68,8 @@ public class AllNews {
                 int start = (pageIndex*COUNT_PER_PAGE)+1;
                 this.from.setText(""+start);
                 this.to.setText(""+(start+allNews.size()-1));
-                for (int i = 0; i < allNews.size(); i++) {
-                    this.newsPanel.getChildren().add(AllNewsCell.getScreen());
+                for (BasicNewsData news : allNews) {
+                    this.newsPanel.getChildren().add(AllNewsCell.getScreen(news));
                 }
             }
             // <=> we don't care

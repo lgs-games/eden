@@ -24,10 +24,18 @@ public final class Translate {
 
     /** return the date as day (int) month (string) year (ex: 1 June 2021 in english) **/
     public static String getDate(Date date) {
-        DateFormat f = new SimpleDateFormat("d%% LLLL yyy", Config.getLocale());
+        return getDate(date, "d%% LLLL yyy");
+    }
+
+    /** news format character %% will be replaced by st, nd, th in english for instance **/
+    public static String getDate(Date date, String dateFormat) {
+        DateFormat f = new SimpleDateFormat(dateFormat, Config.getLocale());
         String format = f.format(date);
-        String modifier = getDateModifier(f);
-        format = format.replace("%%", modifier);
+        // if the user wants a 5th for instance
+        if (dateFormat.contains("%%")){
+            String modifier = getDateModifier(f);
+            format = format.replace("%%", modifier);
+        }
         return format;
     }
 
