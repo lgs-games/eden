@@ -4,6 +4,7 @@ import com.lgs.eden.api.profile.FriendData;
 import com.lgs.eden.application.AppWindowHandler;
 import com.lgs.eden.utils.Utility;
 import com.lgs.eden.utils.ViewsPath;
+import com.lgs.eden.views.profile.Messages;
 import com.lgs.eden.views.profile.Profile;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -33,12 +34,15 @@ public class FriendCellController {
         return controller;
     }
 
+    // todo: maybe save c in a static variable and do not create
+    //  the same menu again and again...
     private static ContextMenu getContextMenu(FriendCellController c) {
         // create a menu
         // context menu
         ContextMenu contextMenu = new ContextMenu();
 
-        // create menuitems
+        // create menu items
+        // todo: translations
         MenuItem profile = new MenuItem("See profile");
         MenuItem addFriend = new MenuItem("Add as friend");
         MenuItem removeFriend = new MenuItem("Remove friend");
@@ -46,11 +50,12 @@ public class FriendCellController {
         MenuItem tchat = new MenuItem("Send message");
 
         // todo: disabled for now, maybe should only be shown when useful
+        //  like can't add friend again or remove if not friend, ...
         profile.setOnAction((e) -> c.onWantProfile(null));
         addFriend.setDisable(true);
         removeFriend.setDisable(true);
         blockUser.setDisable(true);
-        tchat.setDisable(true);
+        tchat.setOnAction((e) -> c.onWantMessage());
 
         // add menu items to menu
         contextMenu.getItems().add(profile);
@@ -109,6 +114,13 @@ public class FriendCellController {
             // goto profile
             AppWindowHandler.setScreen(Profile.reloadWith(this.data.id), ViewsPath.PROFILE);
         }
+    }
+
+    /**
+     * Wants to send a message to this person
+     */
+    private void onWantMessage() {
+        AppWindowHandler.setScreen(Messages.getScreen(this.data.id), ViewsPath.PROFILE);
     }
 
 }

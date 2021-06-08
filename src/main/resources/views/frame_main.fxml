@@ -69,7 +69,7 @@
                               </ImageView>
                            </graphic>
                         </MenuItem>
-                       <MenuItem mnemonicParsing="false" text="%messages">
+                       <MenuItem mnemonicParsing="false" text="%messages" onAction="#goToMessages">
                            <graphic>
                               <ImageView>
                                  <image>

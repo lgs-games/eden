@@ -10,6 +10,7 @@ import com.lgs.eden.views.gameslist.GameList;
 import com.lgs.eden.views.inventory.Inventory;
 import com.lgs.eden.views.login.Login;
 import com.lgs.eden.views.marketplace.Marketplace;
+import com.lgs.eden.views.profile.Messages;
 import com.lgs.eden.views.profile.Profile;
 import com.lgs.eden.views.settings.Settings;
 import javafx.application.Platform;
@@ -124,13 +125,20 @@ public class AppWindowHandler {
         Platform.runLater(AppWindowHandler::goBackToMainApp);
     }
 
+    @FXML
     public void goToProfile() { setScreen(Profile.getScreen(), ViewsPath.PROFILE); }
 
+    @FXML
     public void goToAllFriends() { setScreen(AllFriends.getScreen(loggedUser.userID), ViewsPath.PROFILE); }
 
+    @FXML
+    public void goToMessages() { setScreen(Messages.getScreen(), ViewsPath.PROFILE); }
+
+    @FXML
     public void goToMarketPlace() {
         setScreen(Marketplace.getScreen(), ViewsPath.MARKETPLACE);
     }
 
+    @FXML
     public void goToGameList() { setScreen(GameList.getScreen(), ViewsPath.GAMES); }
 }
