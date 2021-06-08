@@ -7,6 +7,7 @@ import com.lgs.eden.api.games.BasicGameData;
 import com.lgs.eden.api.games.EdenVersionData;
 import com.lgs.eden.api.games.GameViewData;
 import com.lgs.eden.api.games.MarketplaceGameData;
+import com.lgs.eden.api.news.BasicNewsData;
 import com.lgs.eden.api.profile.FriendData;
 import com.lgs.eden.api.profile.ProfileData;
 import javafx.collections.ObservableList;
@@ -37,11 +38,13 @@ public class LocalHandler implements API {
     private final AuthHandler login;
     private final GamesHandler games;
     private final ProfileHandler profile;
+    private final NewsHandler news;
 
     public LocalHandler() {
         this.login = new AuthHandler();
         this.games = new GamesHandler();
         this.profile = new ProfileHandler();
+        this.news = new NewsHandler();
     }
 
     // ------------------------------ LOGIN ----------------------------- \\
@@ -76,6 +79,13 @@ public class LocalHandler implements API {
     @Override
     public ObservableList<BasicGameData> getUserGames(int userID) { return this.games.getUserGames(userID); }
 
+    // ------------------------------ NEWS ----------------------------- \\
+
+    @Override
+    public ArrayList<BasicNewsData> getAllNews(int begin, int count, String code, int gameID) {
+        return this.news.getAllNews(begin, count, code, gameID);
+    }
+
     // ------------------------------ PROFILE ----------------------------- \\
 
     @Override
@@ -83,4 +93,5 @@ public class LocalHandler implements API {
 
     @Override
     public ProfileData getProfileData(int userID) { return this.profile.getProfileData(userID); }
+
 }

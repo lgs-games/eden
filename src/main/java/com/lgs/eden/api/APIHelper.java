@@ -1,4 +1,4 @@
-package com.lgs.eden.api.helper;
+package com.lgs.eden.api;
 
 import com.lgs.eden.utils.Language;
 
