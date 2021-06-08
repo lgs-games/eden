@@ -3,10 +3,11 @@ package com.lgs.eden.api.local;
 import com.lgs.eden.api.API;
 import com.lgs.eden.api.APIResponseCode;
 import com.lgs.eden.api.auth.LoginResponseData;
-import com.lgs.eden.api.games.EdenVersionData;
-import com.lgs.eden.api.games.MarketplaceGameData;
+import com.lgs.eden.api.games.*;
+import com.lgs.eden.api.news.BasicNewsData;
 import com.lgs.eden.api.profile.FriendData;
 import com.lgs.eden.api.profile.ProfileData;
+import javafx.collections.ObservableList;
 
 import java.util.ArrayList;
 
@@ -34,11 +35,13 @@ public class LocalHandler implements API {
     private final AuthHandler login;
     private final GamesHandler games;
     private final ProfileHandler profile;
+    private final NewsHandler news;
 
     public LocalHandler() {
         this.login = new AuthHandler();
         this.games = new GamesHandler();
         this.profile = new ProfileHandler();
+        this.news = new NewsHandler();
     }
 
     // ------------------------------ LOGIN ----------------------------- \\
@@ -63,8 +66,24 @@ public class LocalHandler implements API {
     public EdenVersionData getEdenVersion() { return this.games.getEdenVersion(); }
 
     @Override
-    public ArrayList<MarketplaceGameData> getMarketPlaceGames(int begin, int count, String code) {
-        return this.games.getMarketPlaceGames(begin, count, code);
+    public ArrayList<MarketplaceGameData> getMarketPlaceGames(int begin, int count, String code, int userID) {
+        return this.games.getMarketPlaceGames(begin, count, code, userID);
+    }
+
+    @Override
+    public GameViewData getGameData(int userID, int gameID) { return this.games.getGameData(userID, gameID); }
+
+    @Override
+    public ObservableList<BasicGameData> getUserGames(int userID) { return this.games.getUserGames(userID); }
+
+    @Override
+    public ShortGameViewData getGameDateUpdate(int userID, int gameID) { return this.games.getGameDateUpdate(userID, gameID); }
+
+    // ------------------------------ NEWS ----------------------------- \\
+
+    @Override
+    public ArrayList<BasicNewsData> getAllNews(int begin, int count, String code, int gameID) {
+        return this.news.getAllNews(begin, count, code, gameID);
     }
 
     // ------------------------------ PROFILE ----------------------------- \\
@@ -74,4 +93,5 @@ public class LocalHandler implements API {
 
     @Override
     public ProfileData getProfileData(int userID) { return this.profile.getProfileData(userID); }
+
 }

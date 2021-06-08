@@ -1,5 +1,7 @@
 package com.lgs.eden.api.games;
 
+import javafx.collections.ObservableList;
+
 import java.util.ArrayList;
 
 /**
@@ -23,6 +25,22 @@ public interface GameAPI {
      * one indicating when the result was last modified. The API should return something like
      * null if no changes or the usual result that we will need to cache.
      */
-    ArrayList<MarketplaceGameData> getMarketPlaceGames(int begin, int count, String code);
+    ArrayList<MarketplaceGameData> getMarketPlaceGames(int begin, int count, String code, int userID);
 
+    /**
+     * Returns information such as the name of the game, the version, ...
+     * and information such as the number of friends playing, the achievement-related information, ...
+     * Mainly used to render for an user, the information about one game.
+     */
+    GameViewData getGameData(int userID, int gameID);
+
+    /**
+     * Returns basic data about the game that the user add to his library.
+     */
+    ObservableList<BasicGameData> getUserGames(int userID);
+
+    /**
+     * Returns some part of the view that will be updated when update is requested.
+     */
+    ShortGameViewData getGameDateUpdate(int userID, int gameID);
 }

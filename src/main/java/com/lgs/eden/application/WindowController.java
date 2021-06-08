@@ -82,7 +82,11 @@ public class WindowController {
     @FXML
     public void onCloseRequest(ActionEvent ignore) {
         // todo: maybe make a class
-        Platform.runLater(() -> this.stage.close());
+        Platform.runLater(() -> {
+            this.stage.close();
+            // call handler
+            new ApplicationCloseHandler().handle(null);
+        });
     }
 
     @FXML

@@ -22,8 +22,9 @@ module eden {
     opens com.lgs.eden.views.inventory;
     opens com.lgs.eden.views.marketplace;
     opens com.lgs.eden.views.gameslist;
+    opens com.lgs.eden.views.gameslist.cell;
+    opens com.lgs.eden.views.gameslist.news;
     opens com.lgs.eden.views.friends;
     opens com.lgs.eden.views.profile;
     opens com.lgs.eden.views.profile.listcells;
-    opens com.lgs.eden.views.gameslist.cell;
 }

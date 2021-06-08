@@ -1,9 +1,10 @@
 package com.lgs.eden.api.local;
 
-import com.lgs.eden.api.games.EdenVersionData;
-import com.lgs.eden.api.games.GameAPI;
-import com.lgs.eden.api.games.GameUpdateData;
-import com.lgs.eden.api.games.MarketplaceGameData;
+import com.lgs.eden.api.APIHelper;
+import com.lgs.eden.api.games.*;
+import com.lgs.eden.api.news.BasicNewsData;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 import java.util.ArrayList;
 
@@ -14,20 +15,15 @@ class GamesHandler implements GameAPI {
 
     @Override
     public EdenVersionData getEdenVersion() {
-        // fake some delay
-        try {
-            Thread.sleep(3000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        APIHelper.fakeDelay(3000);
         return new EdenVersionData("1.0.0", 147);
     }
 
     @Override
-    public ArrayList<MarketplaceGameData> getMarketPlaceGames(int begin, int count, String code) {
+    public ArrayList<MarketplaceGameData> getMarketPlaceGames(int begin, int count, String code, int userID) {
         ArrayList<MarketplaceGameData> games = new ArrayList<>();
 
-        MarketplaceGameData.gameCount = 10;
+        MarketplaceGameData.gameCount = 1;
 
         ArrayList<String> tags = new ArrayList<>();
         tags.add("1-player");
@@ -50,11 +46,63 @@ class GamesHandler implements GameAPI {
                 "/games/prim-icon.png","/games/prim-pic.png",
                 tags,
                 languages,
-                updatePrim
+                updatePrim,
+                true
         );
 
         games.add(prim);
 
         return games;
+    }
+
+    @Override
+    public GameViewData getGameData(int userID, int gameID) {
+        if (gameID == 0){
+            BasicNewsData prim = new BasicNewsData(
+                    "Version 3.1.0 released",
+                    "/news/news1.png",
+                    "We patched a lot of things and tried to improve" +
+                            "the game to make it less easy and more fun to play.",
+                    0
+            );
+            return new GameViewData(
+                    0, "Prim", "/games/prim-icon.png", "3.1.0", prim,
+                    "/games/prim-bg.png",
+                    0, 7, 0, 54
+            );
+        } else {
+            BasicNewsData enigma = new BasicNewsData(
+                    "Enigma (remaster)",
+                    "/news/news2.png",
+                    "Enigma will come back, full remade! New UI, new functionalities, multiplayer...",
+                    1
+            );
+            return new GameViewData(
+                    1, "Enigma", "/games/enigma-icon.png", "2.0.0", enigma,
+                    "/games/enigma-bg.jpg",
+                    0, 24, 3, 4500
+            );
+        }
+    }
+
+    public ObservableList<BasicGameData> getUserGames(int userID) {
+        ObservableList<BasicGameData> games = FXCollections.observableArrayList();
+        games.add(new BasicGameData(1, "Enigma", "/games/enigma-icon.png"));
+        games.add(new BasicGameData(0, "Prim", "/games/prim-icon.png"));
+        return games;
+    }
+
+    @Override
+    public ShortGameViewData getGameDateUpdate(int userID, int gameID) {
+        APIHelper.fakeDelay(3000);
+        if (gameID == 1){
+            return new ShortGameViewData(
+              2, 1, 4600
+            );
+        } else {
+            return new ShortGameViewData(
+                    1, 1, 57
+            );
+        }
     }
 }

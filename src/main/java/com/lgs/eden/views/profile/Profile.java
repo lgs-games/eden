@@ -113,7 +113,7 @@ public class Profile {
         } else {
             // no recent games played
             Label l = new Label(Translate.getTranslation("game-recent-none"));
-            l.getStyleClass().add("profile-game-label");
+            l.getStyleClass().add("empty_message");
             this.recentGames.add(l, 0,0, 3, 1);
         }
 

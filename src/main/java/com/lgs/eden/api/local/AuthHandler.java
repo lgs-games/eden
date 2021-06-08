@@ -4,7 +4,7 @@ import com.lgs.eden.api.API;
 import com.lgs.eden.api.APIResponseCode;
 import com.lgs.eden.api.auth.AuthAPI;
 import com.lgs.eden.api.auth.LoginResponseData;
-import com.lgs.eden.api.helper.APIHelper;
+import com.lgs.eden.api.APIHelper;
 
 /**
  * Implementation of LoginAPI

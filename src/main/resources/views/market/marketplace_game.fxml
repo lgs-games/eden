@@ -101,7 +101,7 @@
             <content>
                 <BorderPane prefHeight="200.0" prefWidth="200.0">
                     <center>
-                        <Button fx:id="downloadButton" mnemonicParsing="false" text="Add to my library" BorderPane.alignment="CENTER" />
+                        <Button fx:id="downloadButton" onAction="#onDownloadPressed" mnemonicParsing="false" text="Add to my library" BorderPane.alignment="CENTER" />
                     </center>
                     <top>
                         <VBox BorderPane.alignment="CENTER">

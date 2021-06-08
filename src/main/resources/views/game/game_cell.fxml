@@ -23,7 +23,7 @@
             </BorderPane>
          </left>
          <right>
-            <Label fx:id="gameName" styleClass="yellow-text" text="game_name" wrapText="true" BorderPane.alignment="CENTER">
+            <Label fx:id="gameName" styleClass="white-text" text="game_name" wrapText="true" BorderPane.alignment="CENTER">
                <font>
                   <Font size="18.0" />
                </font>
