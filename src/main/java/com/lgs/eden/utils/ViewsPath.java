@@ -25,6 +25,7 @@ public enum ViewsPath {
     GAMES_A_NEWS("/views/game/a_news.fxml"), // all news
     GAMES_ALL_NEWS("/views/game/all_news.fxml"), // all news
     GAMES_ALL_NEWS_CELL("/views/game/all_news_cell.fxml"), // all news cell
+    GAMES_SETTINGS("/views/game/settings.fxml"), // settings
 
     MARKETPLACE("/views/marketplace.fxml"),
     MARKETPLACE_GAME("/views/market/marketplace_game.fxml"),

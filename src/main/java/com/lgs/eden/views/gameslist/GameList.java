@@ -193,7 +193,7 @@ public class GameList {
         }
     }
 
-    // ------------------------------ Buttons ----------------------------- \\
+    // ------------------------------ MOVE ----------------------------- \\
 
     // go back
     @FXML
@@ -214,13 +214,20 @@ public class GameList {
 
     // all news
     @FXML
-    public void seeAllNews(){ this.goToSubMenu(AllNews.getScreen(data.id)); }
+    public void seeAllNews(){ this.goToSubMenu(AllNews.getScreen(this.data.id)); }
 
     // one news
     @FXML
     public void showLastNews(){
         this.goToSubMenu(News.getScreen(this.gameData.lastNews));
     }
+
+    @FXML
+    public void showGameSettings() {
+        this.goToSubMenu(GameSettings.getScreen(this.data.id));
+    }
+
+    // ------------------------------ UPDATE GAME DATA ----------------------------- \\
 
     // request game information update
     private volatile boolean calledUpdate = false;

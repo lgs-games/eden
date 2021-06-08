@@ -356,7 +356,7 @@
                                  <center>
                                     <BorderPane BorderPane.alignment="CENTER">
                                        <top>
-                                          <VBox styleClass="white-box" BorderPane.alignment="CENTER">
+                                          <VBox onMouseClicked="#showGameSettings" styleClass="white-box" BorderPane.alignment="CENTER">
                                              <BorderPane.margin>
                                                 <Insets top="10.0" />
                                              </BorderPane.margin>
