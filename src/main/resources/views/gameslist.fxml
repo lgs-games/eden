@@ -101,9 +101,9 @@
                         </TextFlow>
                      </left>
                      <right>
-                        <Button fx:id="back" mnemonicParsing="false" onAction="#backToMain" text="%back" visible="false" BorderPane.alignment="CENTER">
+                        <Button fx:id="back" mnemonicParsing="false" onAction="#backToMain" styleClass="eden-button" text="%back" visible="false" BorderPane.alignment="CENTER">
                            <BorderPane.margin>
-                              <Insets right="50.0" top="30.0" />
+                              <Insets right="20.0" top="30.0" />
                            </BorderPane.margin>
                         </Button>
                      </right>
