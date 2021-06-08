@@ -8,24 +8,16 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane styleClass="conv-bg" stylesheets="@../../style/style.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lgs.eden.views.profile.messages.ConversationCell">
-   <bottom>
-      <Pane prefWidth="250.0" styleClass="white-box" stylesheets="@../../style/style.css" BorderPane.alignment="CENTER">
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-      </Pane>
-   </bottom>
+<BorderPane prefWidth="250.0" styleClass="conv-bg" stylesheets="@../../style/style.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lgs.eden.views.profile.messages.ConversationCell">
    <center>
       <BorderPane styleClass="conv-bg" BorderPane.alignment="CENTER">
          <center>
             <VBox alignment="CENTER_LEFT" BorderPane.alignment="CENTER">
                <children>
-                  <Label fx:id="convName" text="Calistral">
+                  <Label fx:id="friendName" text="Calistral">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -42,7 +34,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
          <left>
-            <ImageView fx:id="convAvatar" fitHeight="48.0" fitWidth="48.0" BorderPane.alignment="CENTER">
+            <ImageView fx:id="friendAvatar" fitHeight="48.0" fitWidth="48.0" BorderPane.alignment="CENTER">
                <image>
                   <Image url="@../../avatars/24.png" />
                </image>
@@ -68,7 +60,7 @@
          </right>
       </BorderPane>
    </center>
-   <right>
-      <BorderPane BorderPane.alignment="CENTER" />
-   </right>
+   <cursor>
+      <Cursor fx:constant="HAND" />
+   </cursor>
 </BorderPane>
