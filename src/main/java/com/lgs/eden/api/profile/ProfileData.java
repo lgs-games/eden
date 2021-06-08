@@ -1,5 +1,6 @@
 package com.lgs.eden.api.profile;
 
+import com.lgs.eden.api.profile.friends.FriendData;
 import com.lgs.eden.utils.Utility;
 import javafx.collections.ObservableList;
 import javafx.scene.image.Image;

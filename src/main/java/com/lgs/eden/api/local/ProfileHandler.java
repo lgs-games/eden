@@ -1,6 +1,6 @@
 package com.lgs.eden.api.local;
 
-import com.lgs.eden.api.profile.FriendData;
+import com.lgs.eden.api.profile.friends.FriendData;
 import com.lgs.eden.api.profile.ProfileAPI;
 import com.lgs.eden.api.profile.ProfileData;
 import com.lgs.eden.api.profile.RecentGameData;
