@@ -163,7 +163,7 @@ public class UpdateWindowHandler {
 
             // open a new one
             Stage primaryStage = new Stage();
-
+            primaryStage.setOnCloseRequest(new ApplicationCloseHandler());
             // load frame
             BorderPane root = WindowController.loadWindow(primaryStage);
             // make a borderless frame
