@@ -43,14 +43,18 @@ public class GameList {
     public static Parent getScreen(BasicGameData data) {
         FXMLLoader loader = Utility.loadView(ViewsPath.GAMES_LIST.path);
         Parent parent = Utility.loadViewPane(loader);
-        GameList controller = loader.getController();
-        GameList.data = data;
+        controller = loader.getController();
+        controller.data = data;
         controller.init();
         return parent;
     }
 
-    private static BasicGameData data;
-    public static BasicGameData getCurrentGameData() { return data; }
+    // current game data
+    public static BasicGameData getCurrentGameData() { return controller.gameData; }
+
+    // current controller
+    private static GameList controller;
+    public static GameList getController() { return controller; }
 
     // ------------------------------ INSTANCE ----------------------------- \\
 
@@ -84,9 +88,12 @@ public class GameList {
     private ImageView gameBackground;
 
     // store game data
-    private GameViewData gameData;
+    private BasicGameData data; // basic
+    private GameViewData gameData; // complete
+
+    // list of games
     private ObservableList<BasicGameData> myGames;
-    /** store old screen when changed **/
+    // store old screen when changed
     private final ArrayList<Node> backupCenter = new ArrayList<>();
 
     private void init() {
@@ -96,7 +103,8 @@ public class GameList {
         this.games.setItems(FXCollections.observableArrayList());
         search();
         // try to find if we got a game
-        if (data == null && this.myGames.size() == 0){
+        if (data == null && this.myGames.size() == 0) {
+            // todo: empty
             System.out.println("no games");
         } else {
             if (data == null) data = this.myGames.get(0);
@@ -198,6 +206,7 @@ public class GameList {
     @FXML
     public void seeAllNews(){ this.goToSubMenu(AllNews.getScreen(data.id)); }
 
+    // one news
     @FXML
     public void showLastNews(){
         this.goToSubMenu(News.getScreen(this.gameData.lastNews));
