@@ -2,6 +2,13 @@ package com.lgs.eden.utils.cell;
 
 import javafx.scene.control.ListCell;
 
+/**
+ * Allow to set some custom cell.
+ * View is loaded using {@link CellHandler#getView()}
+ * and then {@link CellHandler#init(Object)}
+ * is called to further into text or so one using the data.
+ * @param <T> data type
+ */
 public class CustomCells<T> extends ListCell<T> {
 
     // controller of the view

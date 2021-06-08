@@ -147,3 +147,12 @@ messages
 .text-area-div .content {
     -fx-background-color: rgba(237,241,242, 0.8);
 }
+
+.new-messages {
+    -fx-background-color: #fb3;
+    -fx-text-fill: #6c757d;
+}
+
+.conv-bg {
+    -fx-background-color: rgb(232,229,229);
+}

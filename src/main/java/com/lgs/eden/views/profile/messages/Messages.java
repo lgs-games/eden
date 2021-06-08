@@ -2,10 +2,12 @@ package com.lgs.eden.views.profile.messages;
 
 import com.lgs.eden.api.API;
 import com.lgs.eden.api.profile.friends.FriendConversationView;
+import com.lgs.eden.api.profile.friends.conversation.ConversationData;
 import com.lgs.eden.application.AppWindowHandler;
 import com.lgs.eden.utils.Translate;
 import com.lgs.eden.utils.Utility;
 import com.lgs.eden.utils.ViewsPath;
+import com.lgs.eden.utils.cell.CustomCells;
 import com.lgs.eden.views.profile.Profile;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -47,7 +49,7 @@ public class Messages {
     @FXML
     private Button sendMessage;
     @FXML
-    private ListView<?> userList;
+    private ListView<ConversationData> userList;
     @FXML
     private Button profileButton;
     @FXML
@@ -58,7 +60,6 @@ public class Messages {
 
     private void init(int friendID) {
         FriendConversationView conv = API.imp.getMessageWithFriend(friendID);
-        conv = Math.random() > 0?null:conv;
         if (conv == null){
             this.friendNameTag.getChildren().clear();
             this.friendNameTag.getChildren().add(new Label(Translate.getTranslation("no_conv")));
@@ -69,7 +70,8 @@ public class Messages {
             this.profileButton.setDisable(true);
         } else {
             this.friendID = conv.friendID;
-            System.out.println("blah blah");
+            this.userList.setItems(conv.conversations);
+            this.userList.setCellFactory(cellView -> new CustomCells<>(ConversationCell.load()));
         }
     }
 
