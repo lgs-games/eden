@@ -10,23 +10,23 @@ import java.util.Date;
  */
 public class BasicNewsData {
 
+    public static int newsCount; // total number of news
+
     public final String title;
     public final Image image;
     public final String desc;
     public final Date date;
     public final int newsID;
-    public final int newsCount; // total number of news
 
     public BasicNewsData(String title, String image, String desc, int newsID) {
-        this(title, image, desc, null, newsID, 1);
+        this(title, image, desc, null, newsID);
     }
 
-    public BasicNewsData(String title, String image, String desc, Date date, int newsID, int newsCount){
+    public BasicNewsData(String title, String image, String desc, Date date, int newsID){
         this.title = title;
         this.image = Utility.loadImage(image);
         this.desc = desc;
         this.date = date;
         this.newsID = newsID;
-        this.newsCount = newsCount;
     }
 }

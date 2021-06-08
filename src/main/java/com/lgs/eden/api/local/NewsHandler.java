@@ -15,8 +15,9 @@ public class NewsHandler implements NewsAPI {
         BasicNewsData n1 = new BasicNewsData(
                 "test1", "/news/news2", "This is a test",
                 Date.from(Instant.parse("2020-12-03T10:15:30.00Z")),
-                1, 1
+                1
         );
+        BasicNewsData.newsCount = 1;
         news.add(n1);
         return news;
     }
