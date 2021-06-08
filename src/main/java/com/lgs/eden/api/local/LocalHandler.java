@@ -3,10 +3,7 @@ package com.lgs.eden.api.local;
 import com.lgs.eden.api.API;
 import com.lgs.eden.api.APIResponseCode;
 import com.lgs.eden.api.auth.LoginResponseData;
-import com.lgs.eden.api.games.BasicGameData;
-import com.lgs.eden.api.games.EdenVersionData;
-import com.lgs.eden.api.games.GameViewData;
-import com.lgs.eden.api.games.MarketplaceGameData;
+import com.lgs.eden.api.games.*;
 import com.lgs.eden.api.news.BasicNewsData;
 import com.lgs.eden.api.profile.FriendData;
 import com.lgs.eden.api.profile.ProfileData;
@@ -78,6 +75,9 @@ public class LocalHandler implements API {
 
     @Override
     public ObservableList<BasicGameData> getUserGames(int userID) { return this.games.getUserGames(userID); }
+
+    @Override
+    public ShortGameViewData getGameDateUpdate(int userID, int gameID) { return this.games.getGameDateUpdate(userID, gameID); }
 
     // ------------------------------ NEWS ----------------------------- \\
 

@@ -39,4 +39,8 @@ public interface GameAPI {
      */
     ObservableList<BasicGameData> getUserGames(int userID);
 
+    /**
+     * Returns some part of the view that will be updated when update is requested.
+     */
+    ShortGameViewData getGameDateUpdate(int userID, int gameID);
 }

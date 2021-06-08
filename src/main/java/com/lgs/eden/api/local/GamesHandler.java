@@ -1,5 +1,6 @@
 package com.lgs.eden.api.local;
 
+import com.lgs.eden.api.APIHelper;
 import com.lgs.eden.api.games.*;
 import com.lgs.eden.api.news.BasicNewsData;
 import javafx.collections.FXCollections;
@@ -14,12 +15,7 @@ class GamesHandler implements GameAPI {
 
     @Override
     public EdenVersionData getEdenVersion() {
-        // fake some delay
-        try {
-            Thread.sleep(3000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        APIHelper.fakeDelay(3000);
         return new EdenVersionData("1.0.0", 147);
     }
 
@@ -94,5 +90,21 @@ class GamesHandler implements GameAPI {
         games.add(new BasicGameData(1, "Enigma", "/games/enigma-icon.png"));
         games.add(new BasicGameData(0, "Prim", "/games/prim-icon.png"));
         return games;
+    }
+
+    @Override
+    public ShortGameViewData getGameDateUpdate(int userID, int gameID) {
+
+
+
+        if (gameID == 1){
+            return new ShortGameViewData(
+              2, 1, 4600
+            );
+        } else {
+            return new ShortGameViewData(
+                    1, 1, 57
+            );
+        }
     }
 }

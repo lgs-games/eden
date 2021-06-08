@@ -19,4 +19,15 @@ public class APIHelper {
         return code; // return
     }
 
+    /**
+     * Fake some delay, meaning we wait for xxx ms
+     */
+    public static void fakeDelay(int ms) {
+        // fake some delay
+        try {
+            Thread.sleep(ms);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
 }
