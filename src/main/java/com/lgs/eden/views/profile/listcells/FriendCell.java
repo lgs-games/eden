@@ -1,6 +1,6 @@
 package com.lgs.eden.views.profile.listcells;
 
-import com.lgs.eden.api.profile.FriendData;
+import com.lgs.eden.api.profile.friends.FriendData;
 import javafx.scene.control.ListCell;
 
 /**

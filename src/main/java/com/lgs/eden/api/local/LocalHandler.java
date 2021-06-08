@@ -5,7 +5,7 @@ import com.lgs.eden.api.APIResponseCode;
 import com.lgs.eden.api.auth.LoginResponseData;
 import com.lgs.eden.api.games.*;
 import com.lgs.eden.api.news.BasicNewsData;
-import com.lgs.eden.api.profile.FriendData;
+import com.lgs.eden.api.profile.friends.FriendData;
 import com.lgs.eden.api.profile.ProfileData;
 import javafx.collections.ObservableList;
 

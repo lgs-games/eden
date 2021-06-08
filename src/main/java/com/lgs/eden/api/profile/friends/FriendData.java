@@ -1,4 +1,4 @@
-package com.lgs.eden.api.profile;
+package com.lgs.eden.api.profile.friends;
 
 import com.lgs.eden.utils.Utility;
 import javafx.scene.image.Image;

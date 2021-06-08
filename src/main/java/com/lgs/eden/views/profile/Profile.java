@@ -1,7 +1,7 @@
 package com.lgs.eden.views.profile;
 
 import com.lgs.eden.api.API;
-import com.lgs.eden.api.profile.FriendData;
+import com.lgs.eden.api.profile.friends.FriendData;
 import com.lgs.eden.api.profile.ProfileData;
 import com.lgs.eden.application.AppWindowHandler;
 import com.lgs.eden.utils.Translate;

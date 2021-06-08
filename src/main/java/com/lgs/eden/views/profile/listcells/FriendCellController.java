@@ -1,6 +1,6 @@
 package com.lgs.eden.views.profile.listcells;
 
-import com.lgs.eden.api.profile.FriendData;
+import com.lgs.eden.api.profile.friends.FriendData;
 import com.lgs.eden.application.AppWindowHandler;
 import com.lgs.eden.utils.Utility;
 import com.lgs.eden.utils.ViewsPath;
