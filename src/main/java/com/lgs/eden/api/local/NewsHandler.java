@@ -13,7 +13,7 @@ public class NewsHandler implements NewsAPI {
     public ArrayList<BasicNewsData> getAllNews(int begin, int count, String code, int gameID) {
         ArrayList<BasicNewsData> news = new ArrayList<>();
         BasicNewsData n1 = new BasicNewsData(
-                "test1", "/news/news2", "This is a test",
+                "test1", "/news/news2.png", "This is a test",
                 Date.from(Instant.parse("2020-12-03T10:15:30.00Z")),
                 1
         );
