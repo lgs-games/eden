@@ -33,7 +33,7 @@
                <top>
                   <BorderPane styleClass="grey-div" BorderPane.alignment="CENTER">
                      <left>
-                        <TextFlow BorderPane.alignment="CENTER">
+                        <TextFlow fx:id="friendNameTag" BorderPane.alignment="CENTER">
                            <BorderPane.margin>
                               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                            </BorderPane.margin>
@@ -65,7 +65,7 @@
                         </TextFlow>
                      </left>
                      <right>
-                        <Button contentDisplay="RIGHT" mnemonicParsing="false" styleClass="no-button" text="Profile " BorderPane.alignment="CENTER">
+                        <Button fx:id="profileButton" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#goToProfile" styleClass="no-button" text="Profile " BorderPane.alignment="CENTER">
                            <BorderPane.margin>
                               <Insets right="10.0" />
                            </BorderPane.margin>
@@ -84,18 +84,18 @@
                   </BorderPane>
                </top>
                <center>
-                  <ListView prefHeight="200.0" prefWidth="200.0" styleClass="messages-box" BorderPane.alignment="CENTER" />
+                  <ListView fx:id="messages" prefHeight="200.0" prefWidth="200.0" styleClass="messages-box" BorderPane.alignment="CENTER" />
                </center>
                <bottom>
                   <BorderPane styleClass="grey-div" BorderPane.alignment="CENTER">
                      <center>
-                        <TextArea prefHeight="58.0" prefWidth="678.0" promptText="..." styleClass="text-area-div" BorderPane.alignment="CENTER">
+                        <TextArea fx:id="inputMessage" prefHeight="58.0" prefWidth="678.0" promptText="..." styleClass="text-area-div" BorderPane.alignment="CENTER">
                            <font>
                               <Font size="14.0" />
                            </font></TextArea>
                      </center>
                      <right>
-                        <Button mnemonicParsing="false" text="Send" BorderPane.alignment="CENTER">
+                        <Button fx:id="sendMessage" mnemonicParsing="false" text="Send" BorderPane.alignment="CENTER">
                            <BorderPane.margin>
                               <Insets left="10.0" />
                            </BorderPane.margin>
@@ -114,7 +114,7 @@
       <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="300.0" BorderPane.alignment="CENTER">
          <children>
             <Button mnemonicParsing="false" styleClass="eden-button" text="New conversion" />
-            <ListView styleClass="clean-div" VBox.vgrow="ALWAYS">
+            <ListView fx:id="userList" styleClass="clean-div" VBox.vgrow="ALWAYS">
                <VBox.margin>
                   <Insets left="5.0" right="5.0" top="10.0" />
                </VBox.margin>
