@@ -34,16 +34,19 @@ public class ConversationCell implements CellHandler<ConversationData> {
 
     @Override
     public void init(ConversationData item) {
-        String message = Translate.getTranslation(item.online ? "online" : "offline");
-
         this.friendName.setText(item.name);
         this.friendAvatar.setImage(item.avatar);
-        this.friendStatus.setText(message);
+        // status
+        this.friendStatus.setText(Translate.getTranslation(item.online ? "online" : "offline"));
+        this.friendStatus.getStyleClass().set(0, item.online ? "green-text" : "red-text");
         // unread messages
-        if (item.unreadMessagesCount > 0){
-            this.newMessages.setText(""+item.unreadMessagesCount);
+        if (item.unreadMessagesCount > 0) this.newMessages.setText(""+item.unreadMessagesCount);
+        else this.newMessages.setVisible(false);
+        // background
+        if (Messages.isCurrentConv(item.id)){
+            this.view.getStyleClass().add("white-box");
         } else {
-            this.newMessages.setVisible(false);
+            this.view.getStyleClass().add("conv-bg");
         }
     }
 

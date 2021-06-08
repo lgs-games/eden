@@ -11,9 +11,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefWidth="250.0" styleClass="conv-bg" stylesheets="@../../style/style.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lgs.eden.views.profile.messages.ConversationCell">
+<BorderPane prefWidth="250.0" stylesheets="@../../style/style.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lgs.eden.views.profile.messages.ConversationCell">
    <center>
-      <BorderPane styleClass="conv-bg" BorderPane.alignment="CENTER">
+      <BorderPane BorderPane.alignment="CENTER">
          <center>
             <VBox alignment="CENTER_LEFT" BorderPane.alignment="CENTER">
                <children>
@@ -22,7 +22,7 @@
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <Label fx:id="friendStatus" layoutX="10.0" layoutY="10.0" styleClass="green-text" text="online">
+                  <Label fx:id="friendStatus" layoutX="10.0" layoutY="10.0" text="online">
                      <font>
                         <Font size="14.0" />
                      </font>

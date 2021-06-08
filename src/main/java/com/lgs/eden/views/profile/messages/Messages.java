@@ -2,6 +2,7 @@ package com.lgs.eden.views.profile.messages;
 
 import com.lgs.eden.api.API;
 import com.lgs.eden.api.profile.friends.FriendConversationView;
+import com.lgs.eden.api.profile.friends.FriendData;
 import com.lgs.eden.api.profile.friends.conversation.ConversationData;
 import com.lgs.eden.application.AppWindowHandler;
 import com.lgs.eden.utils.Translate;
@@ -25,16 +26,21 @@ public class Messages {
 
     // ------------------------------ STATIC ----------------------------- \\
 
+    private static Messages controller;
+
     // no friend in particular
     public static Parent getScreen() { return getScreen(-1); }
     // open "friendID" conv
     public static Parent getScreen(int friendID) {
         FXMLLoader loader = Utility.loadView(ViewsPath.MESSAGES.path);
         Parent view = Utility.loadViewPane(loader);
-        Messages controller = loader.getController();
+        controller = loader.getController();
         controller.init(friendID);
         return view;
     }
+
+    /** true if this user is the one we are chatting with **/
+    public static boolean isCurrentConv(int userID) { return controller.friendID == userID; }
 
     // ------------------------------ INSTANCE ----------------------------- \\
 
@@ -59,6 +65,8 @@ public class Messages {
     private int friendID;
 
     private void init(int friendID) {
+        // you cannot tchat with yourself
+        if (friendID == AppWindowHandler.currentUserID()) friendID = -1;
         FriendConversationView conv = API.imp.getMessageWithFriend(friendID);
         if (conv == null){
             this.friendNameTag.getChildren().clear();
@@ -72,6 +80,20 @@ public class Messages {
             this.friendID = conv.friendID;
             this.userList.setItems(conv.conversations);
             this.userList.setCellFactory(cellView -> new CustomCells<>(ConversationCell.load()));
+
+            FriendData friendData = null;
+            for (FriendData d:conv.conversations) {
+                if (d.id == conv.friendID){
+                    friendData = d;
+                    break;
+                }
+            }
+            // useless, checked in the API
+            if (friendData == null) friendData = conv.conversations.get(0);
+
+            // set message values
+            this.userName.setText(friendData.name);
+            this.userID.setText(String.format("%06d", friendData.id));
         }
     }
 

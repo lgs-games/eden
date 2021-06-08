@@ -125,10 +125,15 @@ class ProfileHandler implements ProfileAPI {
                             false
                     )
             );
-
-            conversations.add(new ConversationData("/avatars/24.png", "Raphik2", true, 24, 1));
-            conversations.add(new ConversationData("/avatars/27.png", "Raphistro", false, 27, 0));
+        } else if (friendID != 27){
+            ProfileData profileData = getProfileData(friendID);
+            conversations.add(new ConversationData("/avatars/"+friendID+".png",
+                    profileData.username, false, friendID, 0));
         }
+
+        conversations.add(new ConversationData("/avatars/24.png", "Raphik2", true, 24, 1));
+        conversations.add(new ConversationData("/avatars/27.png", "Raphistro", false, 27, 0));
+
 
         return new FriendConversationView(friendID, messages, conversations);
     }
