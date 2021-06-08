@@ -1,11 +1,10 @@
-package com.lgs.eden.views.profile.listcells;
+package com.lgs.eden.views.profile;
 
 import com.lgs.eden.api.profile.friends.FriendData;
 import com.lgs.eden.application.AppWindowHandler;
 import com.lgs.eden.utils.ViewsPath;
 import com.lgs.eden.utils.cell.CellHandler;
 import com.lgs.eden.views.profile.messages.Messages;
-import com.lgs.eden.views.profile.Profile;
 import javafx.fxml.FXML;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;

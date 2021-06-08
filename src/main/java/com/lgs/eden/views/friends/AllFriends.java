@@ -6,7 +6,7 @@ import com.lgs.eden.utils.Translate;
 import com.lgs.eden.utils.Utility;
 import com.lgs.eden.utils.ViewsPath;
 import com.lgs.eden.utils.cell.CellHandler;
-import com.lgs.eden.views.profile.listcells.FriendCellController;
+import com.lgs.eden.views.profile.FriendCellController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
