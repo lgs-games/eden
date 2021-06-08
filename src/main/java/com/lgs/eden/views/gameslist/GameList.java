@@ -8,6 +8,7 @@ import com.lgs.eden.utils.Utility;
 import com.lgs.eden.utils.ViewsPath;
 import com.lgs.eden.views.gameslist.cell.GameListCell;
 import com.lgs.eden.views.gameslist.news.AllNews;
+import com.lgs.eden.views.gameslist.news.News;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -196,4 +197,9 @@ public class GameList {
     // all news
     @FXML
     public void seeAllNews(){ this.goToSubMenu(AllNews.getScreen(data.id)); }
+
+    @FXML
+    public void showLastNews(){
+        this.goToSubMenu(News.getScreen(this.gameData.lastNews));
+    }
 }

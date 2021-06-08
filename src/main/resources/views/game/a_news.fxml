@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+
+<BorderPane prefHeight="500.0" prefWidth="800.0" stylesheets="@../../style/style.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lgs.eden.views.gameslist.news.News">
+   <top>
+      <VBox style="-fx-border-color: transparent transparent white transparent;" styleClass="app-background" BorderPane.alignment="CENTER">
+         <children>
+            <Label styleClass="yellow-text" text="This is a news title">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+               <VBox.margin>
+                  <Insets left="5.0" right="5.0" top="5.0" />
+               </VBox.margin>
+            </Label>
+            <Label styleClass="yellow-text" text="12/03/2020">
+               <VBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" />
+               </VBox.margin>
+            </Label>
+         </children>
+      </VBox>
+   </top>
+   <center>
+      <ScrollPane hbarPolicy="NEVER" styleClass="app-background" BorderPane.alignment="CENTER">
+         <content>
+            <VBox maxWidth="800.0" spacing="10.0" styleClass="app-background">
+               <children>
+                  <Label styleClass="yellow-text" text="Rerum eligendi velit ipsum modi. Illo magni modi ex doloribus vel tempore eum. Voluptatibus explicabo et delectus voluptatem beatae. Inventore sed quam praesentium. Quisquam qui sunt velit quaerat cupiditate debitis sit consequatur. Natus esse cupiditate incidunt dolores necessitatibus enim." wrapText="true" />
+                  <ImageView fitHeight="133.0" fitWidth="200.0">
+                     <image>
+                        <Image url="@../../games/enigma-bg.jpg" />
+                     </image>
+                  </ImageView>
+                  <Label layoutX="20.0" layoutY="20.0" styleClass="yellow-text" text="Et architecto odio numquam recusandae autem enim numquam doloremque. Consectetur rerum consequatur aut dicta possimus velit. Possimus odio vero voluptas at autem sint est. Enim quidem maiores eius consequuntur quasi ut accusantium non. Cumque ipsum eos dolore soluta in est. Temporibus quibusdam molestiae pariatur dolorum perferendis reprehenderit." wrapText="true" />
+                  <Label layoutX="20.0" layoutY="20.0" text="Voluptas tempore exercitationem culpa totam consequatur asperiores. Nihil minus sint quia quasi explicabo. Mollitia illo dolores in." wrapText="true" />
+                  <Label layoutX="20.0" layoutY="89.0" styleClass="yellow-text" text="Molestias beatae enim fugiat. Aut qui non rem voluptas facere aut iste ex. Veritatis mollitia mollitia fugiat molestias nihil. Veritatis at atque id rerum aliquam quod necessitatibus." wrapText="true" />
+                  <ImageView fitHeight="192.0" fitWidth="200.0">
+                     <image>
+                        <Image url="@../../news/news2.png" />
+                     </image>
+                  </ImageView>
+                  <Label layoutX="20.0" layoutY="124.0" text="Quas occaecati hic quasi delectus. Id placeat optio repudiandae cumque quo optio. Et voluptas architecto velit distinctio placeat sint voluptate error." wrapText="true" />
+               </children>
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="20.0" top="10.0" />
+               </padding>
+            </VBox>
+         </content>
+      </ScrollPane>
+   </center>
+   <opaqueInsets>
+      <Insets />
+   </opaqueInsets>
+   <padding>
+      <Insets top="10.0" />
+   </padding>
+</BorderPane>

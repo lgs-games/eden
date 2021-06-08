@@ -127,18 +127,23 @@
                            <center>
                               <StackPane BorderPane.alignment="CENTER">
                                  <children>
-                                    <ImageView fx:id="lastNewsImage" fitHeight="385.0" fitWidth="395.0">
-                                       <image>
-                                          <Image url="@../news/news1.png" />
-                                       </image>
-                                       <StackPane.margin>
-                                          <Insets />
-                                       </StackPane.margin>
-                                       <cursor>
-                                          <Cursor fx:constant="HAND" />
-                                       </cursor>
-                                    </ImageView>
-                                    <BorderPane>
+                                    <FlowPane alignment="CENTER">
+                                       <children>
+                                          <Pane>
+                                             <children>
+                                                <ImageView fx:id="lastNewsImage" fitHeight="385.0" fitWidth="395.0">
+                                                   <image>
+                                                      <Image url="@../news/news1.png" />
+                                                   </image>
+                                                </ImageView>
+                                             </children>
+                                             <cursor>
+                                                <Cursor fx:constant="HAND" />
+                                             </cursor>
+                                          </Pane>
+                                       </children>
+                                    </FlowPane>
+                                    <BorderPane onMouseClicked="#showLastNews">
                                        <bottom>
                                           <VBox prefWidth="357.0" styleClass="news-bg">
                                              <BorderPane.margin>
@@ -167,6 +172,9 @@
                                              </cursor>
                                           </VBox>
                                        </bottom>
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
                                     </BorderPane>
                                  </children>
                               </StackPane>
