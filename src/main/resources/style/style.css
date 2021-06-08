@@ -28,6 +28,7 @@
 .grey-text { -fx-text-fill: #575757; }
 .grey-text-i { -fx-text-fill: #575757 !important; }
 .blue-text { -fx-text-fill: #2aa198; }
+.grey-div { -fx-background-color: #e0e0e0; }
 
 .red-border-bottom {
     -fx-border-color: transparent transparent #dd4411 transparent;
@@ -133,4 +134,12 @@ GAMES
 
 .news-bg {
     -fx-background-color: rgba(85, 90, 98, 0.9);
+}
+
+/**
+messages
+ */
+
+.text-area-div .content {
+    -fx-background-color: rgba(237,241,242, 0.8);
 }
