@@ -5,6 +5,7 @@ import com.lgs.eden.api.APIResponseCode;
 import com.lgs.eden.api.auth.LoginResponseData;
 import com.lgs.eden.api.games.*;
 import com.lgs.eden.api.news.BasicNewsData;
+import com.lgs.eden.api.profile.friends.FriendConversationView;
 import com.lgs.eden.api.profile.friends.FriendData;
 import com.lgs.eden.api.profile.ProfileData;
 import javafx.collections.ObservableList;
@@ -94,4 +95,8 @@ public class LocalHandler implements API {
     @Override
     public ProfileData getProfileData(int userID) { return this.profile.getProfileData(userID); }
 
+    @Override
+    public FriendConversationView getMessageWithFriend(int friendID) {
+        return this.profile.getMessageWithFriend(friendID);
+    }
 }

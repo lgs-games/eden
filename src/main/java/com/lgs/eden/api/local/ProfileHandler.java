@@ -1,9 +1,13 @@
 package com.lgs.eden.api.local;
 
+import com.lgs.eden.api.profile.friends.FriendConversationView;
 import com.lgs.eden.api.profile.friends.FriendData;
 import com.lgs.eden.api.profile.ProfileAPI;
 import com.lgs.eden.api.profile.ProfileData;
 import com.lgs.eden.api.profile.RecentGameData;
+import com.lgs.eden.api.profile.friends.conversation.ConversationData;
+import com.lgs.eden.api.profile.friends.messages.MessageData;
+import com.lgs.eden.api.profile.friends.messages.MessageType;
 import com.lgs.eden.utils.Utility;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -92,5 +96,34 @@ class ProfileHandler implements ProfileAPI {
         }
 
         throw new IllegalStateException("Not supported");
+    }
+
+    @Override
+    public FriendConversationView getMessageWithFriend(int friendID) {
+        ArrayList<MessageData> messages = new ArrayList<>();
+        ArrayList<ConversationData> conversations = new ArrayList<>();
+
+        if (friendID == 24){
+            messages.add(
+                    new MessageData(
+                            23,
+                            "java.lang.NoSuchMethodException: com.lgs.eden.views.achievements.\nAchievements.<init>()",
+                            MessageType.TEXT,
+                            Date.from(Instant.now()),
+                            true
+                    )
+            );
+            messages.add(
+                    new MessageData(
+                            24,
+                            "new Achievements()",
+                            MessageType.TEXT,
+                            Date.from(Instant.now()),
+                            false
+                    )
+            );
+        }
+
+        return new FriendConversationView(messages, conversations);
     }
 }
