@@ -79,6 +79,8 @@ public class GameList {
     private BorderPane gameViewPane;
     @FXML
     private Button back;
+    @FXML
+    private ImageView gameBackground;
 
     // store game data
     private GameViewData gameData;
@@ -107,6 +109,7 @@ public class GameList {
             // set view texts
             this.gameName.setText(this.gameData.name);
             this.gameVersion.setText(this.gameData.version);
+            this.gameBackground.setImage(this.gameData.background);
             // news
             this.lastNewsTitle.setText(this.gameData.lastNews.title);
             this.lastNewsDesc.setText(this.gameData.lastNews.desc);

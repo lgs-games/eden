@@ -71,6 +71,7 @@ class GamesHandler implements GameAPI {
             );
             return new GameViewData(
                     0, "Prim", "/games/prim-icon.png", "3.1.0", prim,
+                    "/games/prim-bg.png",
                     0, 7, 0, 54
             );
         } else {
@@ -82,6 +83,7 @@ class GamesHandler implements GameAPI {
             );
             return new GameViewData(
                     1, "Enigma", "/games/enigma-icon.png", "2.0.0", enigma,
+                    "/games/enigma-bg.jpg",
                     0, 24, 3, 4500
             );
         }

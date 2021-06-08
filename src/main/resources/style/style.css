@@ -125,14 +125,6 @@ REPUTATION
 GAMES
 **/
 
-/* todo: for test purposes */
-.testa {
-    -fx-background-image: url('../games/prim-bg.png');
-    -fx-background-repeat: stretch;
-    -fx-background-size: 1200 800;
-    -fx-background-position: center center;
-}
-
 .game-title-arrow {
     -fx-background-color: rgba(237,241,242, 0.8);
     -fx-text-fill: #dd4441;
