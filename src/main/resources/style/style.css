@@ -6,14 +6,13 @@
 }
 
 .no-button { -fx-background-color: inherit; }
+.link { -fx-text-fill: #2aa198; -fx-cursor: HAND; }
+.button { -fx-cursor: HAND; }
 
-.link {
-    -fx-text-fill: #2aa198;
-    -fx-cursor: HAND;
-}
-
-.button {
-    -fx-cursor: HAND;
+.empty_message {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #dd4411;
 }
 
 .user-icon {

@@ -32,7 +32,7 @@
                         <Insets bottom="5.0" left="10.0" right="5.0" />
                      </padding>
                   </Label>
-                  <Label graphicTextGap="10.0" layoutX="308.0" layoutY="10.0" text="1">
+                  <Label fx:id="from" graphicTextGap="10.0" layoutX="308.0" layoutY="10.0" text="1">
                      <font>
                         <Font name="System Bold" size="24.0" />
                      </font>
@@ -45,7 +45,7 @@
                         <Insets left="5.0" right="5.0" />
                      </padding>
                   </Label>
-                  <Label graphicTextGap="10.0" layoutX="470.0" layoutY="10.0" text="7">
+                  <Label fx:id="to" graphicTextGap="10.0" layoutX="470.0" layoutY="10.0" text="7">
                      <font>
                         <Font name="System Bold" size="24.0" />
                      </font>
@@ -59,7 +59,7 @@
             </TextFlow>
          </top>
          <bottom>
-            <Pagination maxPageIndicatorCount="1" pageCount="1" BorderPane.alignment="CENTER" />
+            <Pagination fx:id="pagination" maxPageIndicatorCount="1" pageCount="1" BorderPane.alignment="CENTER" />
          </bottom>
          <center>
             <VBox fx:id="newsPanel" spacing="8.0" BorderPane.alignment="CENTER">
