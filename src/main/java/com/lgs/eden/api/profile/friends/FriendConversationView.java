@@ -2,8 +2,7 @@ package com.lgs.eden.api.profile.friends;
 
 import com.lgs.eden.api.profile.friends.conversation.ConversationData;
 import com.lgs.eden.api.profile.friends.messages.MessageData;
-
-import java.util.ArrayList;
+import javafx.collections.ObservableList;
 
 /**
  * Wrapper for the message view.
@@ -13,10 +12,10 @@ import java.util.ArrayList;
 public class FriendConversationView {
 
     public final int friendID;
-    public final ArrayList<MessageData> messages;
-    public final ArrayList<ConversationData> conversations;
+    public final ObservableList<MessageData> messages;
+    public final ObservableList<ConversationData> conversations;
 
-    public FriendConversationView(int friendID, ArrayList<MessageData> messages, ArrayList<ConversationData> conversations) {
+    public FriendConversationView(int friendID, ObservableList<MessageData> messages, ObservableList<ConversationData> conversations) {
         this.friendID = friendID;
         this.messages = messages;
         this.conversations = conversations;

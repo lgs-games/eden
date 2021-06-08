@@ -100,8 +100,8 @@ class ProfileHandler implements ProfileAPI {
 
     @Override
     public FriendConversationView getMessageWithFriend(int friendID) {
-        ArrayList<MessageData> messages = new ArrayList<>();
-        ArrayList<ConversationData> conversations = new ArrayList<>();
+        ObservableList<MessageData> messages = FXCollections.observableArrayList();
+        ObservableList<ConversationData> conversations = FXCollections.observableArrayList();
 
         // "we are faking the pick of the last recent one conv"
         if (friendID == -1) friendID = 24;
@@ -125,6 +125,9 @@ class ProfileHandler implements ProfileAPI {
                             false
                     )
             );
+
+            conversations.add(new ConversationData("/avatars/24.png", "Raphik2", true, 24, 1));
+            conversations.add(new ConversationData("/avatars/27.png", "Raphistro", false, 27, 0));
         }
 
         return new FriendConversationView(friendID, messages, conversations);
