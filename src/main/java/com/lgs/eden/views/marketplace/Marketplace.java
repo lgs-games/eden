@@ -47,7 +47,7 @@ public class Marketplace {
             ArrayList<MarketplaceGameData> games = API.imp.getMarketPlaceGames(pageIndex, COUNT_PER_PAGE,
                     Config.getCode(), AppWindowHandler.currentUserID());
             // set max page
-            this.pagination.setPageCount(Math.round((float) MarketplaceGameData.gameCount / COUNT_PER_PAGE));
+            this.pagination.setPageCount((int) Math.ceil((double) MarketplaceGameData.gameCount / COUNT_PER_PAGE));
             // clear old view
             this.content.getChildren().clear();
             int i = 0;
