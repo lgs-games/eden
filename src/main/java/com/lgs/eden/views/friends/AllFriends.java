@@ -5,6 +5,7 @@ import com.lgs.eden.api.profile.friends.FriendData;
 import com.lgs.eden.utils.Translate;
 import com.lgs.eden.utils.Utility;
 import com.lgs.eden.utils.ViewsPath;
+import com.lgs.eden.utils.cell.CellHandler;
 import com.lgs.eden.views.profile.listcells.FriendCellController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -70,7 +71,7 @@ public class AllFriends {
 
     // create friend div, with border, padding, set values, ... and add it to parent
     private void createFriendDiv(FriendData f, FlowPane parent) {
-        FriendCellController controller = FriendCellController.load();
+        CellHandler<FriendData> controller = FriendCellController.load();
         controller.init(f);
         Parent view = controller.getView();
         view.getStyleClass().add("friend-list-div");

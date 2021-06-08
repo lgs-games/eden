@@ -2,14 +2,11 @@ package com.lgs.eden.views.profile.listcells;
 
 import com.lgs.eden.api.profile.friends.FriendData;
 import com.lgs.eden.application.AppWindowHandler;
-import com.lgs.eden.utils.Utility;
 import com.lgs.eden.utils.ViewsPath;
 import com.lgs.eden.utils.cell.CellHandler;
 import com.lgs.eden.views.profile.messages.Messages;
 import com.lgs.eden.views.profile.Profile;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
@@ -27,13 +24,7 @@ public class FriendCellController implements CellHandler<FriendData> {
 
     // ------------------------------ STATIC ----------------------------- \\
 
-    public static FriendCellController load(){
-        FXMLLoader loader = Utility.loadView(ViewsPath.FRIEND_CELL.path);
-        Parent view = Utility.loadViewPane(loader);
-        FriendCellController controller = loader.getController();
-        controller.view = (Pane) view;
-        return controller;
-    }
+    public static CellHandler<FriendData> load(){ return CellHandler.load(ViewsPath.FRIEND_CELL); }
 
     // todo: maybe save c in a static variable and do not create
     //  the same menu again and again...
@@ -71,7 +62,6 @@ public class FriendCellController implements CellHandler<FriendData> {
 
     @FXML
     private Label friendName;
-
     @FXML
     private ImageView friendAvatar;
 
@@ -102,7 +92,10 @@ public class FriendCellController implements CellHandler<FriendData> {
     }
 
     @FXML
-    public Parent getView() { return this.view; }
+    public Pane getView() { return this.view; }
+
+    @Override
+    public void setView(Pane view) { this.view = view; }
 
     // ------------------------------ LISTENERS ----------------------------- \\
 
