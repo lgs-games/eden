@@ -1,9 +1,107 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="500.0" prefWidth="800.0" stylesheets="@../../style/style.css"
-            xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.lgs.eden.views.gameslist.GameSettings">
-
+<BorderPane prefHeight="500.0" prefWidth="800.0" stylesheets="@../../style/style.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lgs.eden.views.gameslist.GameSettings">
+   <center>
+      <VBox spacing="10.0" BorderPane.alignment="CENTER">
+         <children>
+            <BorderPane styleClass="app-background">
+               <right>
+                  <Button mnemonicParsing="false" styleClass="eden-button" text="%uninstall" BorderPane.alignment="CENTER" />
+               </right>
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding>
+               <left>
+                  <Label styleClass="white-text" text="%uninstall_desc" BorderPane.alignment="CENTER">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+               </left>
+               <bottom>
+                  <FlowPane styleClass="blue-text" BorderPane.alignment="CENTER">
+                     <children>
+                        <Label styleClass="blue-text" text="%uninstall_desc_full">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <FlowPane.margin>
+                              <Insets top="5.0" />
+                           </FlowPane.margin>
+                        </Label>
+                     </children>
+                  </FlowPane>
+               </bottom>
+            </BorderPane>
+            <BorderPane layoutX="10.0" layoutY="10.0" styleClass="app-background">
+               <right>
+                  <Button mnemonicParsing="false" styleClass="eden-button" text="%library_remove" BorderPane.alignment="CENTER" />
+               </right>
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding>
+               <bottom>
+                  <FlowPane styleClass="blue-text" BorderPane.alignment="CENTER">
+                     <children>
+                        <Label styleClass="blue-text" text="%library_remove_desc_full" wrapText="true">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <FlowPane.margin>
+                              <Insets top="5.0" />
+                           </FlowPane.margin>
+                        </Label>
+                     </children></FlowPane>
+               </bottom>
+               <left>
+                  <Label styleClass="white-text" text="%library_remove_desc" BorderPane.alignment="CENTER">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+               </left>
+            </BorderPane>
+            <BorderPane layoutX="10.0" layoutY="92.0" styleClass="app-background">
+               <right>
+                  <Button mnemonicParsing="false" styleClass="eden-button" text="%library_and_uninstall" BorderPane.alignment="CENTER" />
+               </right>
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding>
+               <left>
+                  <Label styleClass="white-text" text="%library_and_uninstall_desc" BorderPane.alignment="CENTER">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+               </left>
+               <bottom>
+                  <FlowPane styleClass="blue-text" BorderPane.alignment="CENTER">
+                     <children>
+                        <Label styleClass="blue-text" text="%library_and_uninstall_desc_full">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <FlowPane.margin>
+                              <Insets top="5.0" />
+                           </FlowPane.margin>
+                        </Label>
+                     </children>
+                  </FlowPane>
+               </bottom>
+            </BorderPane>
+         </children>
+         <BorderPane.margin>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </BorderPane.margin>
+      </VBox>
+   </center>
 </BorderPane>
