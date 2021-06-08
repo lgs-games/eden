@@ -6,8 +6,9 @@ import com.lgs.eden.api.profile.ProfileData;
 import com.lgs.eden.application.AppWindowHandler;
 import com.lgs.eden.utils.Translate;
 import com.lgs.eden.utils.Utility;
+import com.lgs.eden.utils.cell.CustomCells;
 import com.lgs.eden.views.friends.AllFriends;
-import com.lgs.eden.views.profile.listcells.FriendCell;
+import com.lgs.eden.views.profile.listcells.FriendCellController;
 import javafx.fxml.FXML;
 import com.lgs.eden.utils.ViewsPath;
 import javafx.fxml.FXMLLoader;
@@ -122,7 +123,7 @@ public class Profile {
         // add friends in the list
         if (this.data.friendNumber > 0) {
             this.friendDataListView.setItems(this.data.friends);
-            this.friendDataListView.setCellFactory(friendDataListView -> new FriendCell());
+            this.friendDataListView.setCellFactory(friendDataListView -> new CustomCells<>(FriendCellController.load()));
         }
     }
 

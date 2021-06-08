@@ -1,24 +1,18 @@
-package com.lgs.eden.views.profile.listcells;
+package com.lgs.eden.utils.cell;
 
-import com.lgs.eden.api.profile.friends.FriendData;
 import javafx.scene.control.ListCell;
 
-/**
- * View for a cell
- */
-public class FriendCell extends ListCell<FriendData> {
+public class CustomCells<T> extends ListCell<T> {
 
     // controller of the view
-    private final FriendCellController controller;
+    private final CellHandler<T> controller;
 
-    public FriendCell() {
-        this.controller = FriendCellController.load();
-    }
+    public CustomCells(CellHandler<T> controller) { this.controller = controller; }
 
     // ------------------------------ METHODS ----------------------------- \\
 
     @Override
-    protected void updateItem(FriendData item, boolean empty) {
+    protected void updateItem(T item, boolean empty) {
         boolean isEmpty = empty || item == null;
 
         // no background
@@ -30,5 +24,4 @@ public class FriendCell extends ListCell<FriendData> {
         // show item
         if (!isEmpty) this.controller.init(item);
     }
-
 }

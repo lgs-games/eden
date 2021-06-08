@@ -4,6 +4,7 @@ import com.lgs.eden.api.profile.friends.FriendData;
 import com.lgs.eden.application.AppWindowHandler;
 import com.lgs.eden.utils.Utility;
 import com.lgs.eden.utils.ViewsPath;
+import com.lgs.eden.utils.cell.CellHandler;
 import com.lgs.eden.views.profile.messages.Messages;
 import com.lgs.eden.views.profile.Profile;
 import javafx.fxml.FXML;
@@ -22,7 +23,7 @@ import javafx.scene.shape.Circle;
 /**
  * Controller for friendcell.fxml
  */
-public class FriendCellController {
+public class FriendCellController implements CellHandler<FriendData> {
 
     // ------------------------------ STATIC ----------------------------- \\
 
@@ -81,6 +82,7 @@ public class FriendCellController {
 
     // ------------------------------ METHODS ----------------------------- \\
 
+    @FXML
     public void init(FriendData d){
         this.data = d;
         this.friendName.setText(d.name);
@@ -99,6 +101,7 @@ public class FriendCellController {
         });
     }
 
+    @FXML
     public Parent getView() { return this.view; }
 
     // ------------------------------ LISTENERS ----------------------------- \\
