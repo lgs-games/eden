@@ -42,7 +42,7 @@ public class AllFriends {
             createFriendDiv(f, this.online);
         }
 
-        if (!added){ this.online.getChildren().add(getEmpty()); }
+        if (!added){ this.online.getChildren().add(getEmpty(true)); }
         added = false;
 
         // offline only
@@ -53,13 +53,18 @@ public class AllFriends {
             createFriendDiv(f, this.offline);
         }
 
-        if (!added){ this.offline.getChildren().add(getEmpty()); }
+        if (!added){ this.offline.getChildren().add(getEmpty(false)); }
     }
 
     // empty label
-    private Node getEmpty() {
-        Label label = new Label(Translate.getTranslation("no-friends-here"));
-        label.getStyleClass().add("no-friends-label");
+    private Node getEmpty(boolean isOnline) {
+        // get text
+        String text = Translate.getTranslation("no-friends-here") +" ";
+        text += Translate.getTranslation(isOnline ? "online" : "offline").toLowerCase();
+        // create label
+        Label label = new Label(text);
+        label.getStyleClass().add("empty_message");
+        label.getStyleClass().add("blue-text");
         return label;
     }
 
