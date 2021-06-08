@@ -140,6 +140,10 @@ GAMES
 messages
  */
 
+.messages-box {
+    -fx-background-color: rgba(237,241,242, 0.8);
+}
+
 .text-area-div .content {
     -fx-background-color: rgba(237,241,242, 0.8);
 }

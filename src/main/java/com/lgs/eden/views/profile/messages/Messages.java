@@ -1,4 +1,4 @@
-package com.lgs.eden.views.profile;
+package com.lgs.eden.views.profile.messages;
 
 import com.lgs.eden.utils.Utility;
 import com.lgs.eden.utils.ViewsPath;

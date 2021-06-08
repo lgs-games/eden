@@ -12,8 +12,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.TextFlow?>
 
-
-<BorderPane prefHeight="600.0" prefWidth="1100.0" styleClass="app-background" stylesheets="@../../style/style.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lgs.eden.views.profile.Messages">
+<BorderPane prefHeight="600.0" prefWidth="1100.0" styleClass="app-background" stylesheets="@../../style/style.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lgs.eden.views.profile.messages.Messages">
    <center>
       <BorderPane BorderPane.alignment="CENTER">
          <top>
@@ -85,12 +84,15 @@
                   </BorderPane>
                </top>
                <center>
-                  <ListView prefHeight="200.0" prefWidth="200.0" styleClass="white-box" BorderPane.alignment="CENTER" />
+                  <ListView prefHeight="200.0" prefWidth="200.0" styleClass="messages-box" BorderPane.alignment="CENTER" />
                </center>
                <bottom>
                   <BorderPane styleClass="grey-div" BorderPane.alignment="CENTER">
                      <center>
-                        <TextArea prefHeight="58.0" prefWidth="678.0" promptText="..." styleClass="text-area-div" BorderPane.alignment="CENTER" />
+                        <TextArea prefHeight="58.0" prefWidth="678.0" promptText="..." styleClass="text-area-div" BorderPane.alignment="CENTER">
+                           <font>
+                              <Font size="14.0" />
+                           </font></TextArea>
                      </center>
                      <right>
                         <Button mnemonicParsing="false" text="Send" BorderPane.alignment="CENTER">

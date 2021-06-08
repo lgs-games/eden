@@ -10,7 +10,7 @@ import com.lgs.eden.views.gameslist.GameList;
 import com.lgs.eden.views.inventory.Inventory;
 import com.lgs.eden.views.login.Login;
 import com.lgs.eden.views.marketplace.Marketplace;
-import com.lgs.eden.views.profile.Messages;
+import com.lgs.eden.views.profile.messages.Messages;
 import com.lgs.eden.views.profile.Profile;
 import com.lgs.eden.views.settings.Settings;
 import javafx.application.Platform;
