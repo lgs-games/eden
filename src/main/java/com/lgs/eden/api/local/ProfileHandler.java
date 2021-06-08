@@ -103,6 +103,9 @@ class ProfileHandler implements ProfileAPI {
         ArrayList<MessageData> messages = new ArrayList<>();
         ArrayList<ConversationData> conversations = new ArrayList<>();
 
+        // "we are faking the pick of the last recent one conv"
+        if (friendID == -1) friendID = 24;
+
         if (friendID == 24){
             messages.add(
                     new MessageData(
@@ -124,6 +127,6 @@ class ProfileHandler implements ProfileAPI {
             );
         }
 
-        return new FriendConversationView(messages, conversations);
+        return new FriendConversationView(friendID, messages, conversations);
     }
 }

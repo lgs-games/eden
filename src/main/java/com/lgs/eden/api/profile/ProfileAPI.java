@@ -22,6 +22,8 @@ public interface ProfileAPI {
      * Returns the conversation with a friend. We have the messages
      * with this friend, and we have the list of conversation that this
      * user that with others users.
+     *
+     * Returns null if no conversations at all.
      */
     FriendConversationView getMessageWithFriend(int friendID);
 }

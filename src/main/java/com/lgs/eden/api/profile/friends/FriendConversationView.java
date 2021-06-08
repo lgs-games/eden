@@ -12,10 +12,12 @@ import java.util.ArrayList;
  */
 public class FriendConversationView {
 
+    public final int friendID;
     public final ArrayList<MessageData> messages;
     public final ArrayList<ConversationData> conversations;
 
-    public FriendConversationView(ArrayList<MessageData> messages, ArrayList<ConversationData> conversations) {
+    public FriendConversationView(int friendID, ArrayList<MessageData> messages, ArrayList<ConversationData> conversations) {
+        this.friendID = friendID;
         this.messages = messages;
         this.conversations = conversations;
     }
