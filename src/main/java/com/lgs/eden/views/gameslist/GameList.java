@@ -199,7 +199,11 @@ public class GameList {
         // go back
         this.gameViewPane.setCenter(node);
         // empty
-        if (last == 0) this.back.setVisible(false);
+        if (last == 0) {
+            this.back.setVisible(false);
+            //fix bug, do not give focus to another button
+            this.back.getParent().requestFocus();
+        }
     }
 
     // all news
