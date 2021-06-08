@@ -26,7 +26,11 @@ public final class Utility {
      * @throws NullPointerException if the path is not reachable
      */
     public static Image loadImage(String path) throws NullPointerException {
-        return new Image(Objects.requireNonNull(Utility.class.getResourceAsStream(path)));
+        try {
+            return new Image(Objects.requireNonNull(Utility.class.getResourceAsStream(path)));
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Image not found "+path);
+        }
     }
 
     /**
