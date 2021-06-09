@@ -165,15 +165,14 @@ class ProfileHandler implements ProfileAPI {
                             true
                     )
             );
-            messages.add(
-                    new MessageData(
-                            24,
-                            "new Achievements()",
-                            MessageType.TEXT,
-                            Date.from(Instant.now()),
-                            false
-                    )
+            MessageData msg = new MessageData(
+                    24,
+                    "new Achievements()",
+                    MessageType.TEXT,
+                    Date.from(Instant.now()),
+                    false
             );
+            messages.add(msg);
         } else if (friendID != 27){
             ProfileData profileData = getProfileData(friendID, friendID);
             conversations.add(new ConversationData("/avatars/"+friendID+".png",

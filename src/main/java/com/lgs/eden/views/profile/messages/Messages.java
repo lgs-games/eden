@@ -4,6 +4,7 @@ import com.lgs.eden.api.API;
 import com.lgs.eden.api.profile.friends.FriendConversationView;
 import com.lgs.eden.api.profile.friends.FriendData;
 import com.lgs.eden.api.profile.friends.conversation.ConversationData;
+import com.lgs.eden.api.profile.friends.messages.MessageData;
 import com.lgs.eden.application.AppWindowHandler;
 import com.lgs.eden.utils.Translate;
 import com.lgs.eden.utils.Utility;
@@ -40,7 +41,12 @@ public class Messages {
     }
 
     /** true if this user is the one we are chatting with **/
-    public static boolean isCurrentConv(int userID) { return controller.friendID == userID; }
+    public static boolean isCurrentConv(int userID) { return controller.friend.id == userID; }
+
+    /** returns the sender **/
+    public static FriendData getSender(int senderID) {
+        return controller.friend.id == senderID ? controller.friend : controller.user;
+    }
 
     // ------------------------------ INSTANCE ----------------------------- \\
 
@@ -49,7 +55,7 @@ public class Messages {
     @FXML
     private Label userID;
     @FXML
-    private ListView<?> messages;
+    private ListView<MessageData> messages;
     @FXML
     private TextArea inputMessage;
     @FXML
@@ -62,43 +68,41 @@ public class Messages {
     private TextFlow friendNameTag;
 
     // save friendID
-    private int friendID;
+    private FriendData friend;
+    private FriendData user;
 
     private void init(int friendID) {
         // you cannot tchat with yourself
         if (friendID == AppWindowHandler.currentUserID()) friendID = -1;
-        FriendConversationView conv = API.imp.getMessageWithFriend(friendID);
-        if (conv == null){
+        FriendConversationView conv = API.imp.getMessageWithFriend(friendID, AppWindowHandler.currentUserID());
+        if (conv == null) {
             this.friendNameTag.getChildren().clear();
             this.friendNameTag.getChildren().add(new Label(Translate.getTranslation("no_conv")));
-
             // disable all
             this.sendMessage.setDisable(true);
             this.inputMessage.setDisable(true);
             this.profileButton.setDisable(true);
         } else {
-            this.friendID = conv.friendID;
+            this.friend = conv.friend;
+            this.user = conv.user;
+
+            // ------------------------------ CONVERSATIONS ----------------------------- \\
             this.userList.setItems(conv.conversations);
             this.userList.setCellFactory(cellView -> new CustomCells<>(ConversationCell.load()));
 
-            FriendData friendData = null;
-            for (FriendData d:conv.conversations) {
-                if (d.id == conv.friendID){
-                    friendData = d;
-                    break;
-                }
-            }
-            // useless, checked in the API
-            if (friendData == null) friendData = conv.conversations.get(0);
-
+            // ------------------------------ MAIN DATA ----------------------------- \\
             // set message values
-            this.userName.setText(friendData.name);
-            this.userID.setText(String.format("%06d", friendData.id));
+            this.userName.setText(conv.friend.name);
+            this.userID.setText(String.format("%06d", conv.friend.id));
+
+            // ------------------------------ MESSAGES ----------------------------- \\
+            this.messages.setItems(conv.messages);
+            this.messages.setCellFactory(cellView -> new CustomCells<>(MessageCell.load()));
         }
     }
 
     @FXML
     public void goToProfile(){
-        AppWindowHandler.setScreen(Profile.reloadWith(this.friendID), ViewsPath.PROFILE);
+        AppWindowHandler.setScreen(Profile.reloadWith(this.friend.id), ViewsPath.PROFILE);
     }
 }

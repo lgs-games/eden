@@ -2,10 +2,7 @@ package com.lgs.eden.utils;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.ResourceBundle;
+import java.util.*;
 
 /**
  * Handle translations-related utilities
@@ -29,6 +26,9 @@ public final class Translate {
 
     /** news format character %% will be replaced by st, nd, th in english for instance **/
     public static String getDate(Date date, String dateFormat) {
+        if (Config.getLanguage().equals(Language.FR)){ // hours from 0 to 24
+            dateFormat = dateFormat.replace("h:mm", "k:mm");
+        }
         DateFormat f = new SimpleDateFormat(dateFormat, Config.getLocale());
         String format = f.format(date);
         // if the user wants a 5th for instance
