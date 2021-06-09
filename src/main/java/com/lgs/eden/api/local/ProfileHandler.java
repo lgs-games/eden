@@ -12,6 +12,7 @@ import com.lgs.eden.api.profile.friends.messages.MessageType;
 import com.lgs.eden.utils.Utility;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.geometry.Point2D;
 
 import java.time.Instant;
 import java.util.ArrayList;
@@ -155,7 +156,44 @@ class ProfileHandler implements ProfileAPI {
         // "we are faking the pick of the last recent one conv"
         if (friendID == -1) friendID = 24;
 
-        if (friendID == 24){
+        messages.addAll(getUserMessagesWith(friendID, loggedID));
+        messages.forEach(m -> m.read = true);
+
+        if (friendID != 27 && friendID != 24){
+            ProfileData profileData = getProfileData(friendID, friendID);
+            conversations.add(new ConversationData("/avatars/"+friendID+".png",
+                    profileData.username, false, friendID, getUnreadMessagesCount(friendID, loggedID)));
+        }
+
+        conversations.add(new ConversationData("/avatars/24.png", "Raphik2", true, 24,
+                    getUnreadMessagesCount(24, loggedID)));
+        conversations.add(new ConversationData("/avatars/27.png", "Raphistro", false, 27,
+                getUnreadMessagesCount(27, loggedID)));
+
+        return new FriendConversationView(getFriendData(friendID), getFriendData(loggedID), messages,
+                conversations);
+    }
+
+    private int getUnreadMessagesCount(int friendID, int loggedID) {
+        ArrayList<MessageData> messages = getUserMessagesWith(friendID, loggedID);
+        int count = 0;
+        for (MessageData d: messages) {
+            if (!d.read) count++;
+        }
+        System.out.println("v ("+friendID+","+loggedID+")="+count);
+        return count;
+    }
+
+    private final HashMap<Point2D, ArrayList<MessageData>> messages = new HashMap<>();
+
+    private ArrayList<MessageData> getUserMessagesWith(int friendID, int loggedID) {
+        Point2D key = new Point2D(friendID, loggedID);
+        if (this.messages.containsKey(key))
+            return this.messages.get(key);
+
+        ArrayList<MessageData> messages = new ArrayList<>();
+
+        if (friendID == 24 && loggedID == 23) {
             messages.add(
                     new MessageData(
                             23,
@@ -180,16 +218,10 @@ class ProfileHandler implements ProfileAPI {
             messages.add(new MessageData(24, "new 13()", MessageType.TEXT, Date.from(Instant.now()), false));
             messages.add(new MessageData(24, "new 14()", MessageType.TEXT, Date.from(Instant.now()), false));
             messages.add(new MessageData(24, "new 215()", MessageType.TEXT, Date.from(Instant.now()), false));
-        } else if (friendID != 27){
-            ProfileData profileData = getProfileData(friendID, friendID);
-            conversations.add(new ConversationData("/avatars/"+friendID+".png",
-                    profileData.username, false, friendID, 0));
         }
 
-        conversations.add(new ConversationData("/avatars/24.png", "Raphik2", true, 24, 1));
-        conversations.add(new ConversationData("/avatars/27.png", "Raphistro", false, 27, 0));
-
-        return new FriendConversationView(getFriendData(friendID), getFriendData(loggedID), messages, conversations);
+        this.messages.put(key, messages);
+        return this.messages.get(key);
     }
 
     // ------------------------------ UTILS ----------------------------- \\
