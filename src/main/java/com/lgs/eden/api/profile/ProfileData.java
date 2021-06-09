@@ -1,6 +1,7 @@
 package com.lgs.eden.api.profile;
 
 import com.lgs.eden.api.profile.friends.FriendData;
+import com.lgs.eden.api.profile.friends.FriendShipStatus;
 import com.lgs.eden.utils.Utility;
 import javafx.collections.ObservableList;
 import javafx.scene.image.Image;
@@ -19,7 +20,7 @@ public class ProfileData {
     public final RecentGameData[] recentGames;
     // id user
     public final int userID;
-    // real number of friends, not neccessarily the size of
+    // real number of friends, not necessarily the size of
     public final int friendNumber;
     // reputation
     public final int reputation;
@@ -32,10 +33,13 @@ public class ProfileData {
     // avatar path
     public Image avatar;
 
+    public final FriendShipStatus statusWithLogged;
+
     public ProfileData(String username, int userID, String avatar,
                        int friendNumber, int reputation, String biography, Date lastSeen,
                        Date memberSinceDate,
-                       ObservableList<FriendData> friends, RecentGameData[] recentGames) {
+                       ObservableList<FriendData> friends, RecentGameData[] recentGames,
+                       FriendShipStatus statusWithLogged) {
         this.username = username;
         this.avatar = Utility.loadImage(avatar);
         this.friends = friends;
@@ -46,5 +50,6 @@ public class ProfileData {
         this.biography = biography;
         this.lastSeen = lastSeen;
         this.memberSinceDate = memberSinceDate;
+        this.statusWithLogged = statusWithLogged;
     }
 }

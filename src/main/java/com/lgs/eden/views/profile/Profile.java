@@ -12,6 +12,7 @@ import javafx.fxml.FXML;
 import com.lgs.eden.utils.ViewsPath;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.image.ImageView;
@@ -70,12 +71,18 @@ public class Profile {
     @FXML
     private ListView<FriendData> friendDataListView;
 
+    // friends
+    @FXML
+    private Button addFriend;
+    @FXML
+    private Button removeFriend;
+
     // current profile data, can be used in listeners
     private ProfileData data;
 
     /** set up profile view **/
     private void init(int userID) {
-        this.data = API.imp.getProfileData(userID);
+        this.data = API.imp.getProfileData(userID, AppWindowHandler.currentUserID());
 
         // ------------------------------ FILL ATTRIBUTES ----------------------------- \\
         this.username.setText(this.data.username); // ex: Raphiki
@@ -95,6 +102,15 @@ public class Profile {
         if (AppWindowHandler.currentUserID() == this.data.userID){
             this.addOne.setDisable(true);
             this.removeOne.setDisable(true);
+        }
+
+        // ------------------------------ ADD/REMOVE FRIEND ----------------------------- \\
+
+        if (AppWindowHandler.currentUserID() == this.data.userID){
+            this.addFriend.setDisable(true);
+            this.removeFriend.setVisible(false);
+        } else {
+
         }
 
         // ------------------------------ FILL RECENT GAMES ----------------------------- \\
@@ -136,6 +152,12 @@ public class Profile {
     @FXML
     private void onAddFriend() {
         System.out.println("Wanna have some new friends ?");
+    }
+
+    /** Listener of the remove friend button **/
+    @FXML
+    private void onRemoveFriend() {
+        System.out.println("Wanna remove this friend :( ?");
     }
 
     /** Listener of the +1 rep label **/

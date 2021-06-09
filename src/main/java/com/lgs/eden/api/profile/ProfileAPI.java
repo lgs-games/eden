@@ -16,7 +16,7 @@ public interface ProfileAPI {
     /**
      * Returns profile Data for an user.
      */
-    ProfileData getProfileData(int userID);
+    ProfileData getProfileData(int userID, int loggedID);
 
     /**
      * Returns the conversation with a friend. We have the messages

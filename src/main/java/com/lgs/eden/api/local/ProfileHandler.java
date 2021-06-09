@@ -5,6 +5,7 @@ import com.lgs.eden.api.profile.friends.FriendData;
 import com.lgs.eden.api.profile.ProfileAPI;
 import com.lgs.eden.api.profile.ProfileData;
 import com.lgs.eden.api.profile.RecentGameData;
+import com.lgs.eden.api.profile.friends.FriendShipStatus;
 import com.lgs.eden.api.profile.friends.conversation.ConversationData;
 import com.lgs.eden.api.profile.friends.messages.MessageData;
 import com.lgs.eden.api.profile.friends.messages.MessageType;
@@ -43,7 +44,7 @@ class ProfileHandler implements ProfileAPI {
     }
 
     @Override
-    public ProfileData getProfileData(int userID) {
+    public ProfileData getProfileData(int userID, int loggedID) {
         ObservableList<FriendData> friendDataObservableList = FXCollections.observableArrayList();
         friendDataObservableList.addAll(this.getFriendList(userID));
 
@@ -62,19 +63,22 @@ class ProfileHandler implements ProfileAPI {
                     friendNumber, 9999,
                     "Raphiki is a great programmer at ENSIIE engineering school.",
                     new Date(), Date.from(Instant.parse("2020-12-03T10:15:30.00Z")), friendDataObservableList,
-                    recentGamesData
+                    recentGamesData,
+                    FriendShipStatus.FRIENDS
             );
         } else if (userID == 24){
             return new ProfileData("Raphik2",24, "/avatars/24.png", friendNumber, 0,
                     "No description yet.",
                     new Date(), Date.from(Instant.parse("2021-03-18T10:15:30.00Z")), friendDataObservableList,
-                    recentGamesData
+                    recentGamesData,
+                    FriendShipStatus.FRIENDS
             );
         } else if (userID == 25){
             return new ProfileData("Calistral",25, "/avatars/25.png", friendNumber, -1,
                     "No description yet.",
                     new Date(), Date.from(Instant.parse("2020-12-03T10:15:30.00Z")), friendDataObservableList,
-                    recentGamesData
+                    recentGamesData,
+                    FriendShipStatus.FRIENDS
             );
         } else if (userID == 26){
             return new ProfileData("Caliki", 26, "/avatars/26.png", friendNumber, 0,
@@ -85,13 +89,15 @@ class ProfileHandler implements ProfileAPI {
                             +"This is a really"+"This is a really"+"This is a really"+"This is a really"+"This is a really"
                             +"This is a really"+"This is a really"+"This is a really"+"This is a really"+"This is a really",
                     new Date(), Date.from(Instant.parse("2020-12-03T10:15:30.00Z")), friendDataObservableList,
-                    recentGamesData
+                    recentGamesData,
+                    FriendShipStatus.FRIENDS
             );
         } else if (userID == 27){
             return new ProfileData("Raphistro",27, "/avatars/27.png", friendNumber, 17570,
                     "No description yet.",
                     new Date(), Date.from(Instant.parse("2020-03-09T10:15:30.00Z")), friendDataObservableList,
-                    recentGamesData
+                    recentGamesData,
+                    FriendShipStatus.FRIENDS
             );
         }
 
@@ -126,7 +132,7 @@ class ProfileHandler implements ProfileAPI {
                     )
             );
         } else if (friendID != 27){
-            ProfileData profileData = getProfileData(friendID);
+            ProfileData profileData = getProfileData(friendID, friendID);
             conversations.add(new ConversationData("/avatars/"+friendID+".png",
                     profileData.username, false, friendID, 0));
         }

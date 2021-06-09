@@ -96,7 +96,7 @@ public class LocalHandler implements API {
     public ArrayList<FriendData> getFriendList(int userID) { return this.profile.getFriendList(userID); }
 
     @Override
-    public ProfileData getProfileData(int userID) { return this.profile.getProfileData(userID); }
+    public ProfileData getProfileData(int userID, int loggedID) { return this.profile.getProfileData(userID, loggedID); }
 
     @Override
     public FriendConversationView getMessageWithFriend(int friendID) {
