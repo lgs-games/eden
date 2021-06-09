@@ -159,6 +159,21 @@ class ProfileHandler implements ProfileAPI {
         messages.addAll(getUserMessagesWith(friendID, loggedID));
         messages.forEach(m -> m.read = true);
 
+        conversations.addAll(getConversations(friendID, loggedID));
+
+        return new FriendConversationView(getFriendData(friendID), getFriendData(loggedID), messages,
+                conversations);
+    }
+
+    private final HashMap<Point2D, ArrayList<ConversationData>> conversations = new HashMap<>();
+
+    private ArrayList<ConversationData> getConversations(int friendID, int loggedID) {
+        Point2D key = new Point2D(friendID, loggedID);
+        if (this.conversations.containsKey(key))
+            return this.conversations.get(key);
+
+        ArrayList<ConversationData> conversations = new ArrayList<>();
+
         if (friendID != 27 && friendID != 24){
             ProfileData profileData = getProfileData(friendID, friendID);
             conversations.add(new ConversationData("/avatars/"+friendID+".png",
@@ -166,12 +181,12 @@ class ProfileHandler implements ProfileAPI {
         }
 
         conversations.add(new ConversationData("/avatars/24.png", "Raphik2", true, 24,
-                    getUnreadMessagesCount(24, loggedID)));
+                getUnreadMessagesCount(24, loggedID)));
         conversations.add(new ConversationData("/avatars/27.png", "Raphistro", false, 27,
                 getUnreadMessagesCount(27, loggedID)));
 
-        return new FriendConversationView(getFriendData(friendID), getFriendData(loggedID), messages,
-                conversations);
+        this.conversations.put(key, conversations);
+        return this.conversations.get(key);
     }
 
     private int getUnreadMessagesCount(int friendID, int loggedID) {
