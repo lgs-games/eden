@@ -165,14 +165,21 @@ class ProfileHandler implements ProfileAPI {
                             true
                     )
             );
-            MessageData msg = new MessageData(
-                    24,
-                    "new Achievements()",
-                    MessageType.TEXT,
-                    Date.from(Instant.now()),
-                    false
-            );
-            messages.add(msg);
+            messages.add(new MessageData(24, "new Achievements()", MessageType.TEXT, Date.from(Instant.now()), false));
+            messages.add(new MessageData(24, "new 2()", MessageType.TEXT, Date.from(Instant.now()), false));
+            messages.add(new MessageData(24, "new 3()", MessageType.TEXT, Date.from(Instant.now()), false));
+            messages.add(new MessageData(24, "new 4()", MessageType.TEXT, Date.from(Instant.now()), false));
+            messages.add(new MessageData(24, "new 5()", MessageType.TEXT, Date.from(Instant.now()), false));
+            messages.add(new MessageData(24, "new 6()", MessageType.TEXT, Date.from(Instant.now()), false));
+            messages.add(new MessageData(24, "new 7()", MessageType.TEXT, Date.from(Instant.now()), false));
+            messages.add(new MessageData(24, "new 8()", MessageType.TEXT, Date.from(Instant.now()), false));
+            messages.add(new MessageData(24, "new 9()", MessageType.TEXT, Date.from(Instant.now()), false));
+            messages.add(new MessageData(24, "new 10()", MessageType.TEXT, Date.from(Instant.now()), false));
+            messages.add(new MessageData(24, "new 11()", MessageType.TEXT, Date.from(Instant.now()), false));
+            messages.add(new MessageData(24, "new 12()", MessageType.TEXT, Date.from(Instant.now()), false));
+            messages.add(new MessageData(24, "new 13()", MessageType.TEXT, Date.from(Instant.now()), false));
+            messages.add(new MessageData(24, "new 14()", MessageType.TEXT, Date.from(Instant.now()), false));
+            messages.add(new MessageData(24, "new 215()", MessageType.TEXT, Date.from(Instant.now()), false));
         } else if (friendID != 27){
             ProfileData profileData = getProfileData(friendID, friendID);
             conversations.add(new ConversationData("/avatars/"+friendID+".png",

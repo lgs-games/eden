@@ -27,6 +27,9 @@ public class CustomCells<T> extends ListCell<T> {
     protected void updateItem(T item, boolean empty) {
         boolean isEmpty = empty || item == null;
 
+        // call to super
+        super.updateItem(item, empty);
+
         // no background
         setBackground(null);
         setText(null);

@@ -34,6 +34,7 @@
 .grey-text-i { -fx-text-fill: #575757 !important; }
 .blue-text { -fx-text-fill: #2aa198; }
 .grey-div { -fx-background-color: #e0e0e0; }
+.black-text { -fx-text-fill: #1e262c; }
 
 .red-border-bottom {
     -fx-border-color: transparent transparent #dd4411 transparent;

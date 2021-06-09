@@ -23,14 +23,14 @@
             <Insets left="10.0" />
          </BorderPane.margin>
          <bottom>
-            <Label fx:id="content" text="java.lang.NoSuchMethodException: com.lgs.eden.views.achievements." wrapText="true" BorderPane.alignment="TOP_LEFT" />
+            <Label fx:id="content" styleClass="black-text" text="java.lang.NoSuchMethodException: com.lgs.eden.views.achievements." wrapText="true" BorderPane.alignment="TOP_LEFT" />
          </bottom>
          <center>
             <FlowPane alignment="CENTER_LEFT" BorderPane.alignment="CENTER">
                <children>
                   <TextFlow>
                      <children>
-                        <Label fx:id="username" text="Raphiki">
+                        <Label fx:id="username" styleClass="black-text" text="Raphiki">
                            <padding>
                               <Insets right="5.0" />
                            </padding>

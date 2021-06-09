@@ -17,7 +17,7 @@
          <center>
             <VBox alignment="CENTER_LEFT" BorderPane.alignment="CENTER">
                <children>
-                  <Label fx:id="friendName" text="Calistral">
+                  <Label fx:id="friendName" styleClass="black-text" text="Calistral">
                      <font>
                         <Font size="18.0" />
                      </font>
