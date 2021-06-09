@@ -35,8 +35,11 @@ class ProfileHandler implements ProfileAPI {
             friends.add(getFriendData(25));
             friends.add(getFriendData(26));
             friends.add(getFriendData(27));
+        } else if ( userID != 25 ){
+            friends.add(getFriendData(23));
         } else {
             friends.add(getFriendData(23));
+            friends.add(getFriendData(24));
         }
 
         friendList.put(userID, friends);
@@ -47,6 +50,8 @@ class ProfileHandler implements ProfileAPI {
     public ProfileData getProfileData(int userID, int loggedID) {
         ObservableList<FriendData> friendDataObservableList = FXCollections.observableArrayList();
         for (FriendData f:this.getFriendList(userID, loggedID)) {
+            // only show friend with the profile shown
+            if(!evaluateRelationShip(userID, f.id).equals(FriendShipStatus.FRIENDS)) continue;
             friendDataObservableList.add(
                     new FriendData(
                       f.getAvatarPath(),
@@ -116,14 +121,28 @@ class ProfileHandler implements ProfileAPI {
 
     @Override
     public void addFriend(int userID, int currentUserID){
-        ArrayList<FriendData> friendList = getFriendList(userID, currentUserID);
-        friendList.add(getFriendData(currentUserID));
+        ArrayList<FriendData> friendList = getFriendList(currentUserID, userID);
+        friendList.add(getFriendData(userID));
     }
 
     @Override
     public void removeFriend(int userID, int currentUserID){
         ArrayList<FriendData> friendList = getFriendList(userID, currentUserID);
         friendList.remove(getFriendData(currentUserID));
+
+        friendList = getFriendList(currentUserID, userID);
+        friendList.remove(getFriendData(userID));
+    }
+
+    @Override
+    public void acceptFriend(int userID, int currentUserID) {
+        ArrayList<FriendData> friendList = getFriendList(currentUserID, userID);
+        friendList.add(getFriendData(userID));
+    }
+
+    @Override
+    public void refuseFriend(int userID, int currentUserID) {
+        removeFriend(userID, currentUserID);
     }
 
     // ------------------------------ Messages ----------------------------- \\
@@ -170,7 +189,7 @@ class ProfileHandler implements ProfileAPI {
 
     // ------------------------------ UTILS ----------------------------- \\
 
-    private FriendData getFriendData(int userID){
+    private FriendData getFriendData(int userID) {
         switch (userID){
             case 23: return new FriendData("/avatars/23.png", "Raphik", false, 23, FriendShipStatus.FRIENDS);
             case 24: return new FriendData("/avatars/24.png", "Raphik2", false, 24, FriendShipStatus.FRIENDS);
@@ -184,7 +203,12 @@ class ProfileHandler implements ProfileAPI {
     private FriendShipStatus evaluateRelationShip(int userID, int loggedID) {
         if(loggedID == userID) return FriendShipStatus.USER;
 
-        if (inFriendList(userID, loggedID)) return FriendShipStatus.FRIENDS;
+        boolean one = inFriendList(userID, loggedID);
+        boolean two = inFriendList(loggedID, userID);
+
+        if (one && two) return FriendShipStatus.FRIENDS;
+        if (one) return FriendShipStatus.GOT_REQUESTED;
+        if (two) return FriendShipStatus.REQUESTED;
 
         return FriendShipStatus.NONE;
     }

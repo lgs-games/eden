@@ -106,4 +106,10 @@ public class LocalHandler implements API {
 
     @Override
     public void removeFriend(int userID, int currentUserID) { this.profile.removeFriend(userID, currentUserID); }
+
+    @Override
+    public void acceptFriend(int userID, int currentUserID) { this.profile.acceptFriend(userID, currentUserID); }
+
+    @Override
+    public void refuseFriend(int userID, int currentUserID) { this.profile.refuseFriend(userID, currentUserID); }
 }

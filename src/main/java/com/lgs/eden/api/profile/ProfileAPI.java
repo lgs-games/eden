@@ -36,4 +36,15 @@ public interface ProfileAPI {
      * Cancel friendship
      */
     void removeFriend(int userID, int currentUserID);
+
+    /**
+     * Accept friend request
+     */
+    void acceptFriend(int userID, int currentUserID);
+
+    /**
+     * Cancel friend request or refuse
+     * friend request.
+     */
+    void refuseFriend(int userID, int currentUserID);
 }

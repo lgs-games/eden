@@ -80,6 +80,10 @@ public class Profile {
     private Button addFriend;
     @FXML
     private Button removeFriend;
+    @FXML
+    private Button acceptFriend;
+    @FXML
+    private Button refuseFriend;
 
     // current profile data, can be used in listeners
     private ProfileData data;
@@ -87,6 +91,8 @@ public class Profile {
     /** set up profile view **/
     private void init(int userID) {
         this.data = API.imp.getProfileData(userID, AppWindowHandler.currentUserID());
+
+        System.out.println(data.statusWithLogged+" by "+data.username);
 
         // ------------------------------ FILL ATTRIBUTES ----------------------------- \\
         this.username.setText(this.data.username); // ex: Raphiki
@@ -110,28 +116,31 @@ public class Profile {
 
         // ------------------------------ ADD/REMOVE FRIEND ----------------------------- \\
 
-        boolean add = true;
-        boolean disabled = true;
+        boolean add = false;
+        boolean remove = false;
+        boolean acceptFriend = false;
+        boolean refuseFriend = false;
 
         // todo: handle requests
-        switch (this.data.statusWithLogged){
-            case USER:
-            case REQUESTED:
-            case GOT_REQUESTED:
-                break;
-            case FRIENDS:
-                add = false; // remove
-                disabled = false; // can remove
-                break;
-            case NONE:
-                disabled = false; // can add
-                break;
+        switch (this.data.statusWithLogged) {
+            case USER: break;
+            case REQUESTED: refuseFriend = true; break;
+            case GOT_REQUESTED: acceptFriend = true; refuseFriend = true; break;
+            case FRIENDS: remove = true; /* can remove */ break;
+            case NONE: add = true; /* can add */ break;
         }
 
         this.addFriend.setVisible(add);
-        this.removeFriend.setManaged(!add);
-        this.removeFriend.setVisible(!add);
-        this.addFriend.setDisable(disabled);
+        this.addFriend.setManaged(add);
+
+        this.removeFriend.setManaged(remove);
+        this.removeFriend.setVisible(remove);
+
+        this.acceptFriend.setVisible(acceptFriend);
+        this.acceptFriend.setManaged(acceptFriend);
+
+        this.refuseFriend.setVisible(refuseFriend);
+        this.refuseFriend.setManaged(refuseFriend);
 
         // ------------------------------ FILL RECENT GAMES ----------------------------- \\
 
@@ -204,6 +213,26 @@ public class Profile {
         if (AppWindowHandler.currentUserID() == data.userID) return;
 
         System.out.println("-1 rep for "+data.userID+" ("+data.username+")");
+    }
+
+    /** Listener of the accept friend button **/
+    @FXML
+    private void onAcceptFriend() {
+        onAcceptFriend(this.data.userID);
+    }
+    public void onAcceptFriend(int friendID) {
+        API.imp.acceptFriend(friendID, AppWindowHandler.currentUserID());
+        AppWindowHandler.setScreen(Profile.reloadWith(friendID), ViewsPath.PROFILE);
+    }
+
+    /** Listener of the accept friend button **/
+    @FXML
+    private void onRefuseFriend() {
+        onRefuseFriend(this.data.userID);
+    }
+    public void onRefuseFriend(int friendID) {
+        API.imp.refuseFriend(friendID, AppWindowHandler.currentUserID());
+        AppWindowHandler.setScreen(Profile.reloadWith(friendID), ViewsPath.PROFILE);
     }
 
     @FXML
