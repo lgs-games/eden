@@ -1,8 +1,10 @@
 package com.lgs.eden.views.marketplace;
 
+import com.lgs.eden.api.API;
 import com.lgs.eden.api.games.BasicGameData;
 import com.lgs.eden.api.games.MarketplaceGameData;
 import com.lgs.eden.application.AppWindowHandler;
+import com.lgs.eden.application.PopupUtils;
 import com.lgs.eden.utils.Translate;
 import com.lgs.eden.utils.Utility;
 import com.lgs.eden.utils.ViewsPath;
@@ -80,12 +82,16 @@ public class MarketplaceGame {
 
     @FXML
     public void onDownloadPressed(){
-        if (this.data.inLibrary){
-            // System.out.println("goto this game in the library (id="+this.data.id+")");
-            Parent screen = GameList.getScreen(new BasicGameData(this.data.id, this.data.name, null));
-            AppWindowHandler.setScreen(screen, ViewsPath.GAMES);
-        } else {
-            System.out.println("download..."+this.data);
+        BasicGameData newGame = new BasicGameData(this.data.id, this.data.name, this.data.getIconPath());
+        // add to library
+        if (!this.data.inLibrary){
+            if (!API.imp.addToLibrary(newGame)){
+                PopupUtils.showPopup(Translate.getTranslation("add_library_failed"));
+                return;
+            }
         }
+
+        Parent screen = GameList.getScreen(newGame);
+        AppWindowHandler.setScreen(screen, ViewsPath.GAMES);
     }
 }

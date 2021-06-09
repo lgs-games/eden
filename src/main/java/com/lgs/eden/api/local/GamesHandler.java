@@ -95,8 +95,8 @@ class GamesHandler implements GameAPI {
 
     @Override
     public ObservableList<BasicGameData> getUserGames(int userID) {
-        games.clear();
         if (userID == 23){
+            games.clear();
             games.add(new BasicGameData(1, "Enigma", "/games/enigma-icon.png"));
             games.add(new BasicGameData(0, "Prim", "/games/prim-icon.png"));
         }

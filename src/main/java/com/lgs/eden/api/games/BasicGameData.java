@@ -24,6 +24,8 @@ public class BasicGameData {
         this.path = icon;
     }
 
+    public String getIconPath() { return this.path; }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
