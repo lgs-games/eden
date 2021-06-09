@@ -19,7 +19,8 @@ public enum ViewsPath {
     FRIENDS_LIST("/views/friends_list.fxml"),
     INVENTORY("/views/inventory.fxml"),
     MESSAGES("/views/profile/messages.fxml"),
-    MESSAGES_CELL("/views/profile/conversation_cell.fxml"),
+    CONVERSATION_CELL("/views/profile/conversation_cell.fxml"),
+    MESSAGE_CELL("/views/profile/message_cell.fxml"),
 
     GAMES(null), // games menu
     GAMES_LIST("/views/gameslist.fxml"), // games menu

@@ -19,7 +19,7 @@ public class ConversationCell implements CellHandler<ConversationData> {
     // ------------------------------ STATIC ----------------------------- \\
 
     public static CellHandler<ConversationData> load() {
-        return CellHandler.load(ViewsPath.MESSAGES_CELL);
+        return CellHandler.load(ViewsPath.CONVERSATION_CELL);
     }
 
     // ------------------------------ INSTANCE ----------------------------- \\
