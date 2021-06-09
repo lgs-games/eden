@@ -11,6 +11,7 @@ import com.lgs.eden.views.friends.AllFriends;
 import javafx.fxml.FXML;
 import com.lgs.eden.utils.ViewsPath;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -146,7 +147,7 @@ public class Profile {
         } else {
             // no recent games played
             Label l = new Label(Translate.getTranslation("game-recent-none"));
-            l.getStyleClass().add("empty_message");
+            l.getStyleClass().add("empty-message-15");
             this.recentGames.add(l, 0,0, 3, 1);
         }
 

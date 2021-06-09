@@ -64,8 +64,7 @@ public class AllFriends {
         text += Translate.getTranslation(isOnline ? "online" : "offline").toLowerCase();
         // create label
         Label label = new Label(text);
-        label.getStyleClass().add("empty_message");
-        label.getStyleClass().add("blue-text");
+        label.getStyleClass().add("empty-message-15");
         return label;
     }
 
