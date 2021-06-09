@@ -2,6 +2,7 @@ package com.lgs.eden.views.friends;
 
 import com.lgs.eden.api.API;
 import com.lgs.eden.api.profile.friends.FriendData;
+import com.lgs.eden.application.AppWindowHandler;
 import com.lgs.eden.utils.Translate;
 import com.lgs.eden.utils.Utility;
 import com.lgs.eden.utils.ViewsPath;
@@ -33,7 +34,7 @@ public class AllFriends {
 
     /** Init view with user ID */
     private void init(int userID) {
-        ArrayList<FriendData> friendList = API.imp.getFriendList(userID);
+        ArrayList<FriendData> friendList = API.imp.getFriendList(userID, AppWindowHandler.currentUserID());
         boolean added = false;
 
         // online only

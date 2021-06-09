@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public interface ProfileAPI {
 
     /** Returns complete friend list **/
-    ArrayList<FriendData> getFriendList(int userID);
+    ArrayList<FriendData> getFriendList(int userID, int loggedID);
 
     /**
      * Returns profile Data for an user.

@@ -25,36 +25,38 @@ public class FriendCellController implements CellHandler<FriendData> {
 
     public static CellHandler<FriendData> load(){ return CellHandler.load(ViewsPath.FRIEND_CELL); }
 
-    // todo: maybe save c in a static variable and do not create
-    //  the same menu again and again...
-    private static ContextMenu getContextMenu(FriendCellController c) {
-        // create a menu
-        // context menu
-        ContextMenu contextMenu = new ContextMenu();
+    private static FriendCellController current;
+    private static ContextMenu contextMenu;
+    private static MenuItem addFriend;
+    private static MenuItem removeFriend;
+    private static MenuItem tchat;
+
+    /**
+     * Show the context menu for an user
+     */
+    private static void initContextMenu() {
+        if (contextMenu != null) return;
+        // create a context menu
+        contextMenu = new ContextMenu();
 
         // create menu items
         // todo: translations
         MenuItem profile = new MenuItem("See profile");
-        MenuItem addFriend = new MenuItem("Add as friend");
-        MenuItem removeFriend = new MenuItem("Remove friend");
-        MenuItem blockUser = new MenuItem("Block user");
-        MenuItem tchat = new MenuItem("Send message");
+        addFriend = new MenuItem("Add as friend");
+        removeFriend = new MenuItem("Remove friend");
+        tchat = new MenuItem("Send message");
 
-        // todo: disabled for now, maybe should only be shown when useful
-        //  like can't add friend again or remove if not friend, ...
-        profile.setOnAction((e) -> c.onWantProfile(null));
-        addFriend.setDisable(true);
-        removeFriend.setDisable(true);
-        blockUser.setDisable(true);
-        tchat.setOnAction((e) -> c.onWantMessage());
+        // listeners
+        profile.setOnAction((e) -> current.onWantProfile(null));
+        addFriend.setOnAction((e) -> current.onAddUser());
+        removeFriend.setOnAction((e) -> current.onRemoveUser());
+        tchat.setOnAction((e) -> current.onWantMessage());
 
         // add menu items to menu
         contextMenu.getItems().add(profile);
         contextMenu.getItems().add(addFriend);
         contextMenu.getItems().add(removeFriend);
-        contextMenu.getItems().add(blockUser);
         contextMenu.getItems().add(tchat);
-        return contextMenu;
     }
 
     // ------------------------------ INSTANCE ----------------------------- \\
@@ -73,6 +75,7 @@ public class FriendCellController implements CellHandler<FriendData> {
 
     @FXML
     public void init(FriendData d){
+        System.out.println(d);
         this.data = d;
         this.friendName.setText(d.name);
 
@@ -83,9 +86,32 @@ public class FriendCellController implements CellHandler<FriendData> {
 
         // fill pane with nodes, etc
         // create context menu and menu items as above
-        view.setOnMousePressed(event -> {
+        this.view.setOnMousePressed(event -> {
             if (event.isSecondaryButtonDown()) {
-                getContextMenu(this).show(view, event.getScreenX(), event.getScreenY());
+                // save
+                current = this;
+
+                // init
+                initContextMenu();
+
+                boolean disabledAdd = false;
+                boolean disabledFriend = true;
+
+                // show add / remove friend
+                switch (current.data.friendShipStatus){
+                    case FRIENDS: disabledAdd = true; disabledFriend = false; break;
+                    case NONE: disabledAdd = false; disabledFriend = true; break;
+                    case USER: case REQUESTED:case GOT_REQUESTED:
+                        disabledAdd = true; disabledFriend = true;
+                        break;
+                }
+                // disabled if friend
+                addFriend.setDisable(disabledAdd);
+                removeFriend.setDisable(disabledFriend);
+                tchat.setDisable(disabledFriend);
+
+                // show
+                contextMenu.show(this.view, event.getScreenX(), event.getScreenY());
             }
         });
     }
@@ -98,9 +124,7 @@ public class FriendCellController implements CellHandler<FriendData> {
 
     // ------------------------------ LISTENERS ----------------------------- \\
 
-    /**
-     * Triggered when the user clicks on a cell, redirects to this friends profile
-     */
+    /** Triggered when the user clicks on a cell, redirects to this friends profile */
     @FXML
     public void onWantProfile(MouseEvent e) {
         // left click
@@ -111,11 +135,19 @@ public class FriendCellController implements CellHandler<FriendData> {
         }
     }
 
-    /**
-     * Wants to send a message to this person
-     */
+    /** Wants to send a message to this person */
     private void onWantMessage() {
         AppWindowHandler.setScreen(Messages.getScreen(this.data.id), ViewsPath.PROFILE);
+    }
+
+    /** Wants to remove this friend */
+    private void onAddUser() {
+
+    }
+
+    /** Wants to add this user */
+    private void onRemoveUser() {
+
     }
 
 }

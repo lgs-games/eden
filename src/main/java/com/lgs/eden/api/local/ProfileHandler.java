@@ -26,7 +26,7 @@ class ProfileHandler implements ProfileAPI {
     private final HashMap<Integer, ArrayList<FriendData>> friendList = new HashMap<>();
 
     @Override
-    public ArrayList<FriendData> getFriendList(int userID) {
+    public ArrayList<FriendData> getFriendList(int userID, int loggedID) {
         if (friendList.containsKey(userID)) return friendList.get(userID);
 
         ArrayList<FriendData> friends = new ArrayList<>();
@@ -46,7 +46,17 @@ class ProfileHandler implements ProfileAPI {
     @Override
     public ProfileData getProfileData(int userID, int loggedID) {
         ObservableList<FriendData> friendDataObservableList = FXCollections.observableArrayList();
-        friendDataObservableList.addAll(this.getFriendList(userID));
+        for (FriendData f:this.getFriendList(userID, loggedID)) {
+            friendDataObservableList.add(
+                    new FriendData(
+                      f.getAvatarPath(),
+                      f.name,
+                      f.online,
+                      f.id,
+                      evaluateRelationShip(f.id, loggedID)
+                    )
+            );
+        }
 
         int friendNumber = friendDataObservableList.size(); // observable friend list may contains
         // less user that friendNumber so that not the real value
@@ -106,13 +116,13 @@ class ProfileHandler implements ProfileAPI {
 
     @Override
     public void addFriend(int userID, int currentUserID){
-        ArrayList<FriendData> friendList = getFriendList(userID);
+        ArrayList<FriendData> friendList = getFriendList(userID, currentUserID);
         friendList.add(getFriendData(currentUserID));
     }
 
     @Override
     public void removeFriend(int userID, int currentUserID){
-        ArrayList<FriendData> friendList = getFriendList(userID);
+        ArrayList<FriendData> friendList = getFriendList(userID, currentUserID);
         friendList.remove(getFriendData(currentUserID));
     }
 
@@ -162,11 +172,11 @@ class ProfileHandler implements ProfileAPI {
 
     private FriendData getFriendData(int userID){
         switch (userID){
-            case 23: return new FriendData("/avatars/23.png", "Raphik", false, 23);
-            case 24: return new FriendData("/avatars/24.png", "Raphik2", false, 24);
-            case 25: return new FriendData("/avatars/25.png", "Calistral", false, 25);
-            case 26: return new FriendData("/avatars/26.png", "Caliki", false, 26);
-            case 27: return new FriendData("/avatars/27.png", "Raphistro", false, 27);
+            case 23: return new FriendData("/avatars/23.png", "Raphik", false, 23, FriendShipStatus.FRIENDS);
+            case 24: return new FriendData("/avatars/24.png", "Raphik2", false, 24, FriendShipStatus.FRIENDS);
+            case 25: return new FriendData("/avatars/25.png", "Calistral", false, 25, FriendShipStatus.FRIENDS);
+            case 26: return new FriendData("/avatars/26.png", "Caliki", false, 26, FriendShipStatus.FRIENDS);
+            case 27: return new FriendData("/avatars/27.png", "Raphistro", false, 27, FriendShipStatus.FRIENDS);
         }
         throw new IllegalArgumentException("not supported userID");
     }
@@ -180,7 +190,7 @@ class ProfileHandler implements ProfileAPI {
     }
 
     private boolean inFriendList(int userID, int loggedID){
-        ArrayList<FriendData> friendList = getFriendList(userID);
-        return friendList.contains(new FriendData(null, null, false, loggedID));
+        ArrayList<FriendData> friendList = getFriendList(userID, loggedID);
+        return friendList.contains(new FriendData(null, null, false, loggedID, FriendShipStatus.NONE));
     }
 }

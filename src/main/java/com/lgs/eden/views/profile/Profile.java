@@ -113,7 +113,6 @@ public class Profile {
         switch (this.data.statusWithLogged){
             case USER:
             case REQUESTED:
-                break;
             case GOT_REQUESTED:
                 break;
             case FRIENDS:
