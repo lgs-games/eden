@@ -89,6 +89,12 @@ public class Messages {
             // ------------------------------ CONVERSATIONS ----------------------------- \\
             this.userList.setItems(conv.conversations);
             this.userList.setCellFactory(cellView -> new CustomCells<>(ConversationCell.load()));
+            for (ConversationData d:conv.conversations) {
+                if (d.id == conv.friend.id){
+                    this.userList.scrollTo(d);
+                    break;
+                }
+            }
 
             // ------------------------------ MAIN DATA ----------------------------- \\
             // set message values
@@ -98,6 +104,8 @@ public class Messages {
             // ------------------------------ MESSAGES ----------------------------- \\
             this.messages.setItems(conv.messages);
             this.messages.setCellFactory(cellView -> new CustomCells<>(MessageCell.load()));
+
+            if (conv.messages.size() > 0) this.messages.scrollTo(conv.messages.size() - 1);
         }
     }
 
