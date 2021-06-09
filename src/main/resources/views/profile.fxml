@@ -6,6 +6,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
@@ -126,6 +127,9 @@
                                        </image>
                                     </ImageView>
                                  </graphic>
+                                 <tooltip>
+                                    <Tooltip text="%add_user" />
+                                 </tooltip>
                               </Button>
                               <Button fx:id="removeFriend" contentDisplay="GRAPHIC_ONLY" layoutX="10.0" layoutY="16.0" mnemonicParsing="false" onAction="#onRemoveFriend" styleClass="eden-button" text="remove_friends">
                                  <font>
@@ -138,6 +142,9 @@
                                        </image>
                                     </ImageView>
                                  </graphic>
+                                 <tooltip>
+                                    <Tooltip text="%remove_user" />
+                                 </tooltip>
                               </Button>
                               <Button fx:id="acceptFriend" contentDisplay="GRAPHIC_ONLY" layoutX="47.0" layoutY="16.0" mnemonicParsing="false" onAction="#onAcceptFriend" styleClass="eden-button" text="accept">
                                  <font>
@@ -150,6 +157,9 @@
                                        </image>
                                     </ImageView>
                                  </graphic>
+                                 <tooltip>
+                                    <Tooltip text="%accept_request" />
+                                 </tooltip>
                               </Button>
                               <Button fx:id="refuseFriend" contentDisplay="GRAPHIC_ONLY" layoutX="84.0" layoutY="16.0" mnemonicParsing="false" onAction="#onRefuseFriend" styleClass="eden-button" text="cancel">
                                  <font>
@@ -162,6 +172,9 @@
                                        </image>
                                     </ImageView>
                                  </graphic>
+                                 <tooltip>
+                                    <Tooltip text="%refuse_cancel_request" />
+                                 </tooltip>
                               </Button>
                            </children>
                         </HBox>

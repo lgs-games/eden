@@ -92,8 +92,6 @@ public class Profile {
     private void init(int userID) {
         this.data = API.imp.getProfileData(userID, AppWindowHandler.currentUserID());
 
-        System.out.println(data.statusWithLogged+" by "+data.username);
-
         // ------------------------------ FILL ATTRIBUTES ----------------------------- \\
         this.username.setText(this.data.username); // ex: Raphiki
         this.userID.setText(String.format("%06d", this.data.userID)); // ex: 000006

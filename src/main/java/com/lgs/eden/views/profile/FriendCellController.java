@@ -2,6 +2,7 @@ package com.lgs.eden.views.profile;
 
 import com.lgs.eden.api.profile.friends.FriendData;
 import com.lgs.eden.application.AppWindowHandler;
+import com.lgs.eden.utils.Translate;
 import com.lgs.eden.utils.ViewsPath;
 import com.lgs.eden.utils.cell.CellHandler;
 import com.lgs.eden.views.profile.messages.Messages;
@@ -43,14 +44,13 @@ public class FriendCellController implements CellHandler<FriendData> {
         contextMenu = new ContextMenu();
 
         // create menu items
-        // todo: translations
-        MenuItem profile = new MenuItem("See profile");
-        addFriend = new MenuItem("Send friend request");
-        removeFriend = new MenuItem("Remove friend");
-        acceptFriendRequest = new MenuItem("Accept friend request");
-        refuseFriendRequest = new MenuItem("Refuse friend request");
-        cancelFriendRequest = new MenuItem("Cancel friend request");
-        tchat = new MenuItem("Send message");
+        MenuItem profile = new MenuItem(Translate.getTranslation("see_profile"));
+        addFriend = new MenuItem(Translate.getTranslation("add_user"));
+        removeFriend = new MenuItem(Translate.getTranslation("remove_user"));
+        acceptFriendRequest = new MenuItem(Translate.getTranslation("accept_request"));
+        refuseFriendRequest = new MenuItem(Translate.getTranslation("refuse_request"));
+        cancelFriendRequest = new MenuItem(Translate.getTranslation("cancel_request"));
+        tchat = new MenuItem(Translate.getTranslation("send_message"));
 
         // listeners
         profile.setOnAction((e) -> current.onWantProfile(null));
