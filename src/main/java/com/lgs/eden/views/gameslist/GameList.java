@@ -45,12 +45,16 @@ public class GameList {
     }
 
     public static Parent getScreen(BasicGameData data) {
-        FXMLLoader loader = Utility.loadView(ViewsPath.GAMES_LIST.path);
-        Parent parent = Utility.loadViewPane(loader);
-        controller = loader.getController();
-        controller.data = data;
-        controller.init();
-        return parent;
+        ObservableList<BasicGameData> userGames = API.imp.getUserGames(AppWindowHandler.currentUserID());
+        if (userGames.isEmpty()){
+            return EmptyGameList.getScreen();
+        } else {
+            FXMLLoader loader = Utility.loadView(ViewsPath.GAMES_LIST.path);
+            Parent parent = Utility.loadViewPane(loader);
+            controller = loader.getController();
+            controller.init(userGames, data);
+            return parent;
+        }
     }
 
     // current game data
@@ -102,12 +106,13 @@ public class GameList {
     // store old screen when changed
     private final ArrayList<Node> backupCenter = new ArrayList<>();
 
-    private void init() {
+    private void init(ObservableList<BasicGameData> myGames, BasicGameData data) {
         // fill game list
-        this.myGames = API.imp.getUserGames(AppWindowHandler.currentUserID());
+        this.myGames = myGames;
+        this.data = data;
         // set items
         this.games.setItems(FXCollections.observableArrayList());
-        search();
+        search(); // setup left search
         // try to find if we got a game
         if (data == null && this.myGames.size() == 0) {
             // todo: empty

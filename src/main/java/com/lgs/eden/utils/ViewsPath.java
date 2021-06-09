@@ -23,6 +23,7 @@ public enum ViewsPath {
 
     GAMES(null), // games menu
     GAMES_LIST("/views/gameslist.fxml"), // games menu
+    GAMES_LIST_EMPTY("/views/game/gameslist_empty.fxml"), // games menu
     GAMES_LIST_CELL("/views/game/game_cell.fxml"), // games cell
     GAMES_A_NEWS("/views/game/a_news.fxml"), // all news
     GAMES_ALL_NEWS("/views/game/all_news.fxml"), // all news
