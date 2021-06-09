@@ -112,7 +112,7 @@ public class GameList {
         this.data = data;
         // set items
         this.games.setItems(FXCollections.observableArrayList());
-        search(); // setup left search
+        this.games.getItems().addAll(this.myGames);
         // try to find if we got a game
         if (data == null && this.myGames.size() == 0) {
             // todo: empty
