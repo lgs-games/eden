@@ -113,11 +113,34 @@
                         </Label>
                      </left>
                      <right>
-                        <Button mnemonicParsing="false" onAction="#onAddFriend" styleClass="eden-button" text="%add_friends" BorderPane.alignment="CENTER">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                        </Button>
+                        <HBox alignment="CENTER" BorderPane.alignment="CENTER">
+                           <children>
+                              <Button fx:id="addFriend" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" onAction="#onAddFriend" styleClass="eden-button" text="add_friends">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                                 <graphic>
+                                    <ImageView>
+                                       <image>
+                                          <Image url="@../icons/16x16/user-add.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </Button>
+                              <Button fx:id="removeFriend" contentDisplay="GRAPHIC_ONLY" layoutX="10.0" layoutY="16.0" mnemonicParsing="false" onAction="#onRemoveFriend" styleClass="eden-button" text="remove_friends">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                                 <graphic>
+                                    <ImageView>
+                                       <image>
+                                          <Image url="@../icons/16x16/user-remove.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </Button>
+                           </children>
+                        </HBox>
                      </right>
                      <BorderPane.margin>
                         <Insets />

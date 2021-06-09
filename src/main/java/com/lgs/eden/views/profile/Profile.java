@@ -106,12 +106,29 @@ public class Profile {
 
         // ------------------------------ ADD/REMOVE FRIEND ----------------------------- \\
 
-        if (AppWindowHandler.currentUserID() == this.data.userID){
-            this.addFriend.setDisable(true);
-            this.removeFriend.setVisible(false);
-        } else {
+        boolean add = true;
+        boolean disabled = true;
 
+        // todo: handle requests
+        switch (this.data.statusWithLogged){
+            case USER:
+            case REQUESTED:
+                break;
+            case GOT_REQUESTED:
+                break;
+            case FRIENDS:
+                add = false; // remove
+                disabled = false; // can remove
+                break;
+            case NONE:
+                disabled = false; // can add
+                break;
         }
+
+        this.addFriend.setVisible(add);
+        this.removeFriend.setManaged(!add);
+        this.removeFriend.setVisible(!add);
+        this.addFriend.setDisable(disabled);
 
         // ------------------------------ FILL RECENT GAMES ----------------------------- \\
 

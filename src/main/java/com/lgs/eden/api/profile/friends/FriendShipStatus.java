@@ -8,5 +8,6 @@ public enum FriendShipStatus {
     REQUESTED,
     GOT_REQUESTED,
     FRIENDS,
-    NONE
+    NONE,
+    USER // if user request with himself
 }

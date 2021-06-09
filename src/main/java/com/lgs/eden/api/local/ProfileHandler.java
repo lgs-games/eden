@@ -64,21 +64,21 @@ class ProfileHandler implements ProfileAPI {
                     "Raphiki is a great programmer at ENSIIE engineering school.",
                     new Date(), Date.from(Instant.parse("2020-12-03T10:15:30.00Z")), friendDataObservableList,
                     recentGamesData,
-                    FriendShipStatus.FRIENDS
+                    loggedID == userID ? FriendShipStatus.USER : FriendShipStatus.FRIENDS
             );
         } else if (userID == 24){
             return new ProfileData("Raphik2",24, "/avatars/24.png", friendNumber, 0,
                     "No description yet.",
                     new Date(), Date.from(Instant.parse("2021-03-18T10:15:30.00Z")), friendDataObservableList,
                     recentGamesData,
-                    FriendShipStatus.FRIENDS
+                    loggedID == userID ? FriendShipStatus.USER : FriendShipStatus.FRIENDS
             );
         } else if (userID == 25){
             return new ProfileData("Calistral",25, "/avatars/25.png", friendNumber, -1,
                     "No description yet.",
                     new Date(), Date.from(Instant.parse("2020-12-03T10:15:30.00Z")), friendDataObservableList,
                     recentGamesData,
-                    FriendShipStatus.FRIENDS
+                    loggedID == 23 ? FriendShipStatus.FRIENDS : FriendShipStatus.NONE
             );
         } else if (userID == 26){
             return new ProfileData("Caliki", 26, "/avatars/26.png", friendNumber, 0,
@@ -90,14 +90,14 @@ class ProfileHandler implements ProfileAPI {
                             +"This is a really"+"This is a really"+"This is a really"+"This is a really"+"This is a really",
                     new Date(), Date.from(Instant.parse("2020-12-03T10:15:30.00Z")), friendDataObservableList,
                     recentGamesData,
-                    FriendShipStatus.FRIENDS
+                    loggedID == 23 ? FriendShipStatus.FRIENDS : FriendShipStatus.NONE
             );
         } else if (userID == 27){
             return new ProfileData("Raphistro",27, "/avatars/27.png", friendNumber, 17570,
                     "No description yet.",
                     new Date(), Date.from(Instant.parse("2020-03-09T10:15:30.00Z")), friendDataObservableList,
                     recentGamesData,
-                    FriendShipStatus.FRIENDS
+                    loggedID == 23 ? FriendShipStatus.FRIENDS : FriendShipStatus.NONE
             );
         }
 
