@@ -29,6 +29,8 @@ public class CustomCells<T> extends ListCell<T> {
         setGraphic(isEmpty ? null : this.controller.getView());
 
         // show item
-        if (!isEmpty) this.controller.init(item);
+        if (!isEmpty) {
+            this.controller.init(item);
+        }
     }
 }

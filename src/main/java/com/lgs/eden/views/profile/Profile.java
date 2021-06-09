@@ -32,6 +32,8 @@ public class Profile {
         return reloadWith(AppWindowHandler.currentUserID());
     }
 
+    private static Profile controller;
+
     /**
      * @return reloaded profile screen with profile data for userID
      * Should only be called if user is not currentUserID
@@ -39,10 +41,12 @@ public class Profile {
     public static Parent reloadWith(int userID) {
         FXMLLoader loader = Utility.loadView(ViewsPath.PROFILE.path);
         Parent parent = Utility.loadViewPane(loader);
-        Profile controller = loader.getController();
+        controller = loader.getController();
         controller.init(userID);
         return parent;
     }
+
+    public static Profile getController() { return controller; }
 
     // ------------------------------ INSTANCE ----------------------------- \\
 
@@ -167,15 +171,21 @@ public class Profile {
     /** Listener of the add friend button **/
     @FXML
     private void onAddFriend() {
-        API.imp.addFriend(this.data.userID, AppWindowHandler.currentUserID());
-        AppWindowHandler.setScreen(Profile.reloadWith(this.data.userID), ViewsPath.PROFILE);
+        onAddFriend(this.data.userID);
+    }
+    public void onAddFriend(int friendID){
+        API.imp.addFriend(friendID, AppWindowHandler.currentUserID());
+        AppWindowHandler.setScreen(Profile.reloadWith(friendID), ViewsPath.PROFILE);
     }
 
     /** Listener of the remove friend button **/
     @FXML
     private void onRemoveFriend() {
-        API.imp.removeFriend(this.data.userID, AppWindowHandler.currentUserID());
-        AppWindowHandler.setScreen(Profile.reloadWith(this.data.userID), ViewsPath.PROFILE);
+        onRemoveFriend(this.data.userID);
+    }
+    public void onRemoveFriend(int friendID) {
+        API.imp.removeFriend(friendID, AppWindowHandler.currentUserID());
+        AppWindowHandler.setScreen(Profile.reloadWith(friendID), ViewsPath.PROFILE);
     }
 
     /** Listener of the +1 rep label **/

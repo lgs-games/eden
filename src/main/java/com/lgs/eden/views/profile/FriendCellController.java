@@ -73,9 +73,11 @@ public class FriendCellController implements CellHandler<FriendData> {
 
     // ------------------------------ METHODS ----------------------------- \\
 
+    private boolean init = false;
+
     @FXML
     public void init(FriendData d){
-        System.out.println(d);
+        if (init) return;
         this.data = d;
         this.friendName.setText(d.name);
 
@@ -114,6 +116,7 @@ public class FriendCellController implements CellHandler<FriendData> {
                 contextMenu.show(this.view, event.getScreenX(), event.getScreenY());
             }
         });
+        init = true;
     }
 
     @FXML
@@ -142,12 +145,12 @@ public class FriendCellController implements CellHandler<FriendData> {
 
     /** Wants to remove this friend */
     private void onAddUser() {
-
+        Profile.getController().onAddFriend(this.data.id);
     }
 
     /** Wants to add this user */
     private void onRemoveUser() {
-
+        Profile.getController().onRemoveFriend(this.data.id);
     }
 
 }
