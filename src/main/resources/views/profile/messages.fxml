@@ -84,7 +84,10 @@
                   </BorderPane>
                </top>
                <center>
-                  <ListView fx:id="messages" prefHeight="200.0" prefWidth="200.0" styleClass="messages-box" BorderPane.alignment="CENTER" />
+                  <ListView fx:id="messages" prefHeight="200.0" prefWidth="200.0" styleClass="messages-box" BorderPane.alignment="CENTER">
+                     <BorderPane.margin>
+                        <Insets top="5.0" />
+                     </BorderPane.margin></ListView>
                </center>
                <bottom>
                   <BorderPane styleClass="grey-div" BorderPane.alignment="CENTER">

@@ -5,10 +5,9 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.TextFlow?>
-
 
 <BorderPane prefHeight="50.0" prefWidth="500.0" stylesheets="@../../style/style.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lgs.eden.views.profile.messages.MessageCell">
    <left>
@@ -19,30 +18,36 @@
       </ImageView>
    </left>
    <center>
-      <VBox BorderPane.alignment="CENTER">
-         <children>
-            <TextFlow>
-               <children>
-                  <Label fx:id="username" text="Raphiki">
-                     <padding>
-                        <Insets right="5.0" />
-                     </padding>
-                     <font>
-                        <Font name="System Bold" size="14.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="date" layoutX="10.0" layoutY="10.0" styleClass="grey-text" text="12:38 - 30 Mai 2021">
-                     <font>
-                        <Font size="10.0" />
-                     </font>
-                  </Label>
-               </children>
-            </TextFlow>
-            <Label fx:id="content" layoutX="10.0" layoutY="10.0" text="java.lang.NoSuchMethodException: com.lgs.eden.views.achievements. Achievements.&lt;init&gt;()" wrapText="true" />
-         </children>
+      <BorderPane maxWidth="600.0" BorderPane.alignment="CENTER">
          <BorderPane.margin>
             <Insets left="10.0" />
          </BorderPane.margin>
-      </VBox>
+         <bottom>
+            <Label fx:id="content" text="java.lang.NoSuchMethodException: com.lgs.eden.views.achievements." wrapText="true" BorderPane.alignment="TOP_LEFT" />
+         </bottom>
+         <center>
+            <FlowPane alignment="CENTER_LEFT" BorderPane.alignment="CENTER">
+               <children>
+                  <TextFlow>
+                     <children>
+                        <Label fx:id="username" text="Raphiki">
+                           <padding>
+                              <Insets right="5.0" />
+                           </padding>
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="date" layoutX="10.0" layoutY="10.0" styleClass="grey-text" text="12:38 - 30 Mai 2021">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </TextFlow>
+               </children>
+            </FlowPane>
+         </center>
+      </BorderPane>
    </center>
 </BorderPane>

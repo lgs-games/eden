@@ -14,7 +14,12 @@ public class CustomCells<T> extends ListCell<T> {
     // controller of the view
     private final CellHandler<T> controller;
 
-    public CustomCells(CellHandler<T> controller) { this.controller = controller; }
+    private T initCalled;
+
+    public CustomCells(CellHandler<T> controller) {
+        this.controller = controller;
+        this.initCalled = null;
+    }
 
     // ------------------------------ METHODS ----------------------------- \\
 
@@ -29,8 +34,8 @@ public class CustomCells<T> extends ListCell<T> {
         setGraphic(isEmpty ? null : this.controller.getView());
 
         // show item
-        if (!isEmpty) {
-            this.controller.init(item);
+        if (!isEmpty && !item.equals(initCalled)) {
+            this.controller.init(this.initCalled = item);
         }
     }
 }
