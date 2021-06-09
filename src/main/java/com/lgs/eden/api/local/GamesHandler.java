@@ -14,11 +14,7 @@ import java.util.ArrayList;
 class GamesHandler implements GameAPI {
 
     // games
-    private final ObservableList<BasicGameData> games;
-
-    public GamesHandler() {
-        this.games = FXCollections.observableArrayList();
-    }
+    private ObservableList<BasicGameData> games = null;
 
     @Override
     public EdenVersionData getEdenVersion() {
@@ -28,7 +24,7 @@ class GamesHandler implements GameAPI {
 
     @Override
     public ArrayList<MarketplaceGameData> getMarketPlaceGames(int begin, int count, String code, int userID) {
-        getUserGames(userID); // init
+        initGames(userID); // init
         ArrayList<MarketplaceGameData> games = new ArrayList<>();
 
         MarketplaceGameData.gameCount = 1;
@@ -95,18 +91,22 @@ class GamesHandler implements GameAPI {
 
     @Override
     public ObservableList<BasicGameData> getUserGames(int userID) {
-        if (userID == 23){
-            games.clear();
-            games.add(new BasicGameData(1, "Enigma", "/games/enigma-icon.png"));
-            games.add(new BasicGameData(0, "Prim", "/games/prim-icon.png"));
-        }
+        initGames(userID);
         return games;
     }
 
     @Override
-    public boolean addToLibrary(BasicGameData game) {
+    public boolean addToLibrary(int userID, BasicGameData game) {
+        initGames(userID);
         if (this.games.contains(game)) return true;
         return this.games.add(game);
+    }
+
+    @Override
+    public boolean removeFromLibrary(int userID, BasicGameData game) {
+        initGames(userID);
+        if (!this.games.contains(game)) return false;
+        return this.games.remove(game);
     }
 
     @Override
@@ -120,6 +120,17 @@ class GamesHandler implements GameAPI {
             return new ShortGameViewData(
                     1, 1, 57
             );
+        }
+    }
+
+    // ------------------------------ UTILS ----------------------------- \\
+
+    private void initGames(int userID) {
+        if (this.games != null) return;
+        this.games = FXCollections.observableArrayList();
+        if (userID == 23){
+            this.games.add(new BasicGameData(1, "Enigma", "/games/enigma-icon.png"));
+            this.games.add(new BasicGameData(0, "Prim", "/games/prim-icon.png"));
         }
     }
 }

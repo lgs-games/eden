@@ -81,7 +81,10 @@ public class LocalHandler implements API {
     public ShortGameViewData getGameDateUpdate(int userID, int gameID) { return this.games.getGameDateUpdate(userID, gameID); }
 
     @Override
-    public boolean addToLibrary(BasicGameData game) { return this.games.addToLibrary(game); }
+    public boolean addToLibrary(int userID, BasicGameData game) { return this.games.addToLibrary(userID, game); }
+
+    @Override
+    public boolean removeFromLibrary(int userID, BasicGameData game) { return this.games.removeFromLibrary(userID, game); }
 
     // ------------------------------ NEWS ----------------------------- \\
 

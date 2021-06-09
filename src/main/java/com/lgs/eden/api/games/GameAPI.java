@@ -43,7 +43,13 @@ public interface GameAPI {
      * Add a game to the user library. Return false if could not add
      * this game.
      */
-    boolean addToLibrary(BasicGameData game);
+    boolean addToLibrary(int userID, BasicGameData game);
+
+    /**
+     * Remove a game to the user library. Return false if could not remove
+     * this game.
+     */
+    boolean removeFromLibrary(int userID, BasicGameData game);
 
     /**
      * Returns some part of the view that will be updated when update is requested.

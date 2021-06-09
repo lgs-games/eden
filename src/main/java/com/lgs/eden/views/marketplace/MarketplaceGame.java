@@ -85,7 +85,7 @@ public class MarketplaceGame {
         BasicGameData newGame = new BasicGameData(this.data.id, this.data.name, this.data.getIconPath());
         // add to library
         if (!this.data.inLibrary){
-            if (!API.imp.addToLibrary(newGame)){
+            if (!API.imp.addToLibrary(AppWindowHandler.currentUserID(), newGame)){
                 PopupUtils.showPopup(Translate.getTranslation("add_library_failed"));
                 return;
             }

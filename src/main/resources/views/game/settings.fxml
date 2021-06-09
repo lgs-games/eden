@@ -15,7 +15,7 @@
                <children>
                   <BorderPane maxWidth="800.0">
                      <right>
-                        <Button mnemonicParsing="false" styleClass="eden-button" text="%uninstall" BorderPane.alignment="CENTER" />
+                        <Button mnemonicParsing="false" onAction="#onUninstallGame" styleClass="eden-button" text="%uninstall" BorderPane.alignment="CENTER" />
                      </right>
                      <left>
                         <Label styleClass="white-text" text="%uninstall_desc" BorderPane.alignment="CENTER">
@@ -42,7 +42,7 @@
                <children>
                   <BorderPane maxWidth="800.0">
                      <right>
-                        <Button mnemonicParsing="false" styleClass="eden-button" text="%library_remove" BorderPane.alignment="CENTER" />
+                        <Button mnemonicParsing="false" onAction="#onLibraryRemoveGame" styleClass="eden-button" text="%library_remove" BorderPane.alignment="CENTER" />
                      </right>
                      <left>
                         <Label styleClass="white-text" text="%library_remove_desc" BorderPane.alignment="CENTER">
@@ -69,7 +69,7 @@
                <children>
                   <BorderPane maxWidth="800.0">
                      <right>
-                        <Button mnemonicParsing="false" styleClass="eden-button" text="%library_and_uninstall" BorderPane.alignment="CENTER" />
+                        <Button mnemonicParsing="false" onAction="#onUninstallAndRemoveGame" styleClass="eden-button" text="%library_and_uninstall" BorderPane.alignment="CENTER" />
                      </right>
                      <left>
                         <Label styleClass="white-text" text="%library_and_uninstall_desc" BorderPane.alignment="CENTER">

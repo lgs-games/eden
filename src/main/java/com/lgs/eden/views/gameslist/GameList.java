@@ -109,38 +109,32 @@ public class GameList {
     private void init(ObservableList<BasicGameData> myGames, BasicGameData data) {
         // fill game list
         this.myGames = myGames;
-        this.data = data;
+        this.data = data = data == null ? myGames.get(0) : data;
         // set items
         this.games.setItems(FXCollections.observableArrayList());
         this.games.getItems().addAll(this.myGames);
-        // try to find if we got a game
-        if (data == null && this.myGames.size() == 0) {
-            // todo: empty
-            System.out.println("no games");
-        } else {
-            if (data == null) data = this.myGames.get(0);
-            // change renderer
-            this.games.setCellFactory(item -> new GameListCell());
 
-            // ------------------------------ GAME VIEW ----------------------------- \\
-            // fetch game data
-            this.gameData = API.imp.getGameData(AppWindowHandler.currentUserID(), data.id);
+        // change renderer
+        this.games.setCellFactory(item -> new GameListCell());
 
-            // set view texts
-            this.gameName.setText(this.gameData.name);
-            this.gameVersion.setText(this.gameData.version);
-            this.gameBackground.setImage(this.gameData.background);
-            // news
-            this.lastNewsTitle.setText(this.gameData.lastNews.title);
-            this.lastNewsDesc.setText(this.gameData.lastNews.desc);
-            this.lastNewsImage.setImage(this.gameData.lastNews.image);
-            // achievements
-            this.achievementCount.setText(""+this.gameData.playerAchievements);
-            this.achievementMax.setText(""+this.gameData.numberOfAchievements);
-            // others
-            this.friendsPlaying.setText(""+this.gameData.friendsPlaying);
-            this.timePlayed.setText(""+this.gameData.timePlayed);
-        }
+        // ------------------------------ GAME VIEW ----------------------------- \\
+        // fetch game data
+        this.gameData = API.imp.getGameData(AppWindowHandler.currentUserID(), data.id);
+
+        // set view texts
+        this.gameName.setText(this.gameData.name);
+        this.gameVersion.setText(this.gameData.version);
+        this.gameBackground.setImage(this.gameData.background);
+        // news
+        this.lastNewsTitle.setText(this.gameData.lastNews.title);
+        this.lastNewsDesc.setText(this.gameData.lastNews.desc);
+        this.lastNewsImage.setImage(this.gameData.lastNews.image);
+        // achievements
+        this.achievementCount.setText(""+this.gameData.playerAchievements);
+        this.achievementMax.setText(""+this.gameData.numberOfAchievements);
+        // others
+        this.friendsPlaying.setText(""+this.gameData.friendsPlaying);
+        this.timePlayed.setText(""+this.gameData.timePlayed);
     }
 
     public void goToSubMenu(Parent view){
@@ -229,7 +223,7 @@ public class GameList {
 
     @FXML
     public void showGameSettings() {
-        this.goToSubMenu(GameSettings.getScreen(this.data.id));
+        this.goToSubMenu(GameSettings.getScreen(this.data));
     }
 
     // ------------------------------ UPDATE GAME DATA ----------------------------- \\

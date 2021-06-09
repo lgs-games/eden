@@ -54,4 +54,12 @@ public class BasicGameData {
                 this.path
         );
     }
+
+    @Override
+    public String toString() {
+        return "BasicGameData{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
+    }
 }
