@@ -11,12 +11,15 @@ import javafx.collections.ObservableList;
  */
 public class FriendConversationView {
 
-    public final int friendID;
+    public final FriendData friend;
+    public final FriendData user;
     public final ObservableList<MessageData> messages;
     public final ObservableList<ConversationData> conversations;
 
-    public FriendConversationView(int friendID, ObservableList<MessageData> messages, ObservableList<ConversationData> conversations) {
-        this.friendID = friendID;
+    public FriendConversationView(FriendData friend, FriendData user,
+                                  ObservableList<MessageData> messages, ObservableList<ConversationData> conversations) {
+        this.friend = friend;
+        this.user = user;
         this.messages = messages;
         this.conversations = conversations;
     }

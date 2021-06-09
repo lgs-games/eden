@@ -8,7 +8,7 @@ import java.util.Date;
 public class MessageData {
 
     public final int senderID;
-    public final Object messageContent;
+    private final Object messageContent;
     public final MessageType type;
     public final Date date;
     public final boolean read;
@@ -20,4 +20,6 @@ public class MessageData {
         this.date = date;
         this.read = read;
     }
+
+    public String getMessageAsText(){ return messageContent.toString(); }
 }

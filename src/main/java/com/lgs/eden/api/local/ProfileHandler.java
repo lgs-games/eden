@@ -148,7 +148,7 @@ class ProfileHandler implements ProfileAPI {
     // ------------------------------ Messages ----------------------------- \\
 
     @Override
-    public FriendConversationView getMessageWithFriend(int friendID) {
+    public FriendConversationView getMessageWithFriend(int friendID, int loggedID) {
         ObservableList<MessageData> messages = FXCollections.observableArrayList();
         ObservableList<ConversationData> conversations = FXCollections.observableArrayList();
 
@@ -183,8 +183,7 @@ class ProfileHandler implements ProfileAPI {
         conversations.add(new ConversationData("/avatars/24.png", "Raphik2", true, 24, 1));
         conversations.add(new ConversationData("/avatars/27.png", "Raphistro", false, 27, 0));
 
-
-        return new FriendConversationView(friendID, messages, conversations);
+        return new FriendConversationView(getFriendData(friendID), getFriendData(loggedID), messages, conversations);
     }
 
     // ------------------------------ UTILS ----------------------------- \\

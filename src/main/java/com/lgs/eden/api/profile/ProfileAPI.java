@@ -25,7 +25,7 @@ public interface ProfileAPI {
      *
      * Returns null if no conversations at all.
      */
-    FriendConversationView getMessageWithFriend(int friendID);
+    FriendConversationView getMessageWithFriend(int friendID, int loggedID);
 
     /**
      * Request (from current to user) or accept friendship (from user)
