@@ -247,7 +247,7 @@
                                     <Font size="24.0" />
                                  </font>
                               </Label>
-                              <ScrollPane focusTraversable="false" hbarPolicy="NEVER" maxHeight="90.0" pickOnBounds="false" prefHeight="90.0">
+                              <ScrollPane focusTraversable="false" hbarPolicy="NEVER" maxHeight="90.0" onMouseClicked="#dropFocus" pickOnBounds="false" prefHeight="90.0">
                                  <VBox.margin>
                                     <Insets bottom="10.0" right="10.0" top="10.0" />
                                  </VBox.margin>

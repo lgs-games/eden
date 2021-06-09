@@ -80,7 +80,7 @@ public class Profile {
         // ------------------------------ FILL ATTRIBUTES ----------------------------- \\
         this.username.setText(this.data.username); // ex: Raphiki
         this.userID.setText(String.format("%06d", this.data.userID)); // ex: 000006
-        this.bio.setText(this.data.biography+""); // ...
+        this.bio.setText(this.data.biography+""); // bio
         this.lastLogin.setText(Translate.getDate(this.data.lastSeen)); // getDate format
         this.since.setText(Translate.getDate(this.data.memberSinceDate)); // getDate format
         this.avatar.setImage(this.data.avatar); // set avatar
@@ -155,5 +155,8 @@ public class Profile {
 
         System.out.println("-1 rep for "+data.userID+" ("+data.username+")");
     }
+
+    @FXML
+    private void dropFocus(){ this.bio.getParent().getParent().requestFocus(); }
 
 }
