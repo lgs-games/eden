@@ -11,7 +11,6 @@ import com.lgs.eden.views.friends.AllFriends;
 import javafx.fxml.FXML;
 import com.lgs.eden.utils.ViewsPath;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -169,13 +168,15 @@ public class Profile {
     /** Listener of the add friend button **/
     @FXML
     private void onAddFriend() {
-        System.out.println("Wanna have some new friends ?");
+        API.imp.addFriend(this.data.userID, AppWindowHandler.currentUserID());
+        AppWindowHandler.setScreen(Profile.reloadWith(this.data.userID), ViewsPath.PROFILE);
     }
 
     /** Listener of the remove friend button **/
     @FXML
     private void onRemoveFriend() {
-        System.out.println("Wanna remove this friend :( ?");
+        API.imp.removeFriend(this.data.userID, AppWindowHandler.currentUserID());
+        AppWindowHandler.setScreen(Profile.reloadWith(this.data.userID), ViewsPath.PROFILE);
     }
 
     /** Listener of the +1 rep label **/

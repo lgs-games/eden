@@ -16,31 +16,31 @@ import javafx.collections.ObservableList;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 
 /**
  * Implementation of ProfileAPI
  */
 class ProfileHandler implements ProfileAPI {
 
+    private final HashMap<Integer, ArrayList<FriendData>> friendList = new HashMap<>();
+
     @Override
     public ArrayList<FriendData> getFriendList(int userID) {
-        ArrayList<FriendData> friendList = new ArrayList<>();
+        if (friendList.containsKey(userID)) return friendList.get(userID);
 
-        FriendData fr0 = new FriendData("/avatars/23.png", "Raphik", false, 23);
-        FriendData fr1 = new FriendData("/avatars/24.png", "Raphik2", false, 24);
-        FriendData fr2 = new FriendData("/avatars/25.png", "Calistral", false, 25);
-        FriendData fr3 = new FriendData("/avatars/26.png", "Caliki", false, 26);
-        FriendData fr4 = new FriendData("/avatars/27.png", "Raphistro", false, 27);
-
+        ArrayList<FriendData> friends = new ArrayList<>();
         if (userID == 23){
-            friendList.add(fr1);
-            friendList.add(fr2);
-            friendList.add(fr3);
-            friendList.add(fr4);
+            friends.add(getFriendData(24));
+            friends.add(getFriendData(25));
+            friends.add(getFriendData(26));
+            friends.add(getFriendData(27));
         } else {
-            friendList.add(fr0);
+            friends.add(getFriendData(23));
         }
-        return friendList;
+
+        friendList.put(userID, friends);
+        return friendList.get(userID);
     }
 
     @Override
@@ -64,21 +64,21 @@ class ProfileHandler implements ProfileAPI {
                     "Raphiki is a great programmer at ENSIIE engineering school.",
                     new Date(), Date.from(Instant.parse("2020-12-03T10:15:30.00Z")), friendDataObservableList,
                     recentGamesData,
-                    loggedID == userID ? FriendShipStatus.USER : FriendShipStatus.FRIENDS
+                    evaluateRelationShip(userID, loggedID)
             );
         } else if (userID == 24){
             return new ProfileData("Raphik2",24, "/avatars/24.png", friendNumber, 0,
                     "No description yet.",
                     new Date(), Date.from(Instant.parse("2021-03-18T10:15:30.00Z")), friendDataObservableList,
                     recentGamesData,
-                    loggedID == userID ? FriendShipStatus.USER : FriendShipStatus.FRIENDS
+                    evaluateRelationShip(userID, loggedID)
             );
         } else if (userID == 25){
             return new ProfileData("Calistral",25, "/avatars/25.png", friendNumber, -1,
                     "No description yet.",
                     new Date(), Date.from(Instant.parse("2020-12-03T10:15:30.00Z")), friendDataObservableList,
                     recentGamesData,
-                    loggedID == 23 ? FriendShipStatus.FRIENDS : FriendShipStatus.NONE
+                    evaluateRelationShip(userID, loggedID)
             );
         } else if (userID == 26){
             return new ProfileData("Caliki", 26, "/avatars/26.png", friendNumber, 0,
@@ -90,19 +90,33 @@ class ProfileHandler implements ProfileAPI {
                             +"This is a really"+"This is a really"+"This is a really"+"This is a really"+"This is a really",
                     new Date(), Date.from(Instant.parse("2020-12-03T10:15:30.00Z")), friendDataObservableList,
                     recentGamesData,
-                    loggedID == 23 ? FriendShipStatus.FRIENDS : FriendShipStatus.NONE
+                    evaluateRelationShip(userID, loggedID)
             );
         } else if (userID == 27){
             return new ProfileData("Raphistro",27, "/avatars/27.png", friendNumber, 17570,
                     "No description yet.",
                     new Date(), Date.from(Instant.parse("2020-03-09T10:15:30.00Z")), friendDataObservableList,
                     recentGamesData,
-                    loggedID == 23 ? FriendShipStatus.FRIENDS : FriendShipStatus.NONE
+                    evaluateRelationShip(userID, loggedID)
             );
         }
 
         throw new IllegalStateException("Not supported");
     }
+
+    @Override
+    public void addFriend(int userID, int currentUserID){
+        ArrayList<FriendData> friendList = getFriendList(userID);
+        friendList.add(getFriendData(currentUserID));
+    }
+
+    @Override
+    public void removeFriend(int userID, int currentUserID){
+        ArrayList<FriendData> friendList = getFriendList(userID);
+        friendList.remove(getFriendData(currentUserID));
+    }
+
+    // ------------------------------ Messages ----------------------------- \\
 
     @Override
     public FriendConversationView getMessageWithFriend(int friendID) {
@@ -142,5 +156,31 @@ class ProfileHandler implements ProfileAPI {
 
 
         return new FriendConversationView(friendID, messages, conversations);
+    }
+
+    // ------------------------------ UTILS ----------------------------- \\
+
+    private FriendData getFriendData(int userID){
+        switch (userID){
+            case 23: return new FriendData("/avatars/23.png", "Raphik", false, 23);
+            case 24: return new FriendData("/avatars/24.png", "Raphik2", false, 24);
+            case 25: return new FriendData("/avatars/25.png", "Calistral", false, 25);
+            case 26: return new FriendData("/avatars/26.png", "Caliki", false, 26);
+            case 27: return new FriendData("/avatars/27.png", "Raphistro", false, 27);
+        }
+        throw new IllegalArgumentException("not supported userID");
+    }
+
+    private FriendShipStatus evaluateRelationShip(int userID, int loggedID) {
+        if(loggedID == userID) return FriendShipStatus.USER;
+
+        if (inFriendList(userID, loggedID)) return FriendShipStatus.FRIENDS;
+
+        return FriendShipStatus.NONE;
+    }
+
+    private boolean inFriendList(int userID, int loggedID){
+        ArrayList<FriendData> friendList = getFriendList(userID);
+        return friendList.contains(new FriendData(null, null, false, loggedID));
     }
 }

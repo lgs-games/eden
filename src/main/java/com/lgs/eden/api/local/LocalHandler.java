@@ -99,7 +99,11 @@ public class LocalHandler implements API {
     public ProfileData getProfileData(int userID, int loggedID) { return this.profile.getProfileData(userID, loggedID); }
 
     @Override
-    public FriendConversationView getMessageWithFriend(int friendID) {
-        return this.profile.getMessageWithFriend(friendID);
-    }
+    public FriendConversationView getMessageWithFriend(int friendID) { return this.profile.getMessageWithFriend(friendID); }
+
+    @Override
+    public void addFriend(int userID, int currentUserID) { this.profile.addFriend(userID, currentUserID); }
+
+    @Override
+    public void removeFriend(int userID, int currentUserID) { this.profile.removeFriend(userID, currentUserID); }
 }

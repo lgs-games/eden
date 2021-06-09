@@ -18,10 +18,30 @@ public class FriendData {
     public final int id;
 
     public FriendData(String avatar, String name, boolean online, int id) {
-        this.avatar = Utility.loadImage(avatar);
+        this.avatar = avatar == null ? null : Utility.loadImage(avatar);
         this.name = name;
         this.online = online;
         this.id = id;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof FriendData)) return false;
+
+        FriendData that = (FriendData) o;
+
+        return id == that.id;
+    }
+
+    @Override
+    public int hashCode() { return id; }
+
+    @Override
+    public String toString() {
+        return "FriendData{" +
+                "name='" + name + '\'' +
+                ", id=" + id +
+                '}';
+    }
 }
