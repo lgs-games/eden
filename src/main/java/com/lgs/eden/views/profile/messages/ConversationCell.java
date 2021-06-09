@@ -59,6 +59,7 @@ public class ConversationCell implements CellHandler<ConversationData> {
      */
     @FXML
     private void onWantMessage() {
+        if (Messages.isCurrentConv(item.id)) return; // no need is already current
         AppWindowHandler.setScreen(Messages.getScreen(this.item.id), ViewsPath.PROFILE);
     }
 
