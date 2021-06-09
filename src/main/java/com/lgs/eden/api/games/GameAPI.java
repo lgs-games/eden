@@ -40,6 +40,12 @@ public interface GameAPI {
     ObservableList<BasicGameData> getUserGames(int userID);
 
     /**
+     * Add a game to the user library. Return false if could not add
+     * this game.
+     */
+    boolean addToLibrary(BasicGameData game);
+
+    /**
      * Returns some part of the view that will be updated when update is requested.
      */
     ShortGameViewData getGameDateUpdate(int userID, int gameID);

@@ -28,6 +28,11 @@ class AuthHandler implements AuthAPI {
             return new LoginResponseData(10, 23, username, "/avatars/23.png");
         }
 
+        if (username.equals("Raphik2") && pwd.equals("tester")) {
+            // okay
+            return new LoginResponseData(10, 24, username, "/avatars/24.png");
+        }
+
         // invalid
         return new LoginResponseData(11);
     }

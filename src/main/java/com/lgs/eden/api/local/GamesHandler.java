@@ -13,6 +13,13 @@ import java.util.ArrayList;
  */
 class GamesHandler implements GameAPI {
 
+    // games
+    private final ObservableList<BasicGameData> games;
+
+    public GamesHandler() {
+        this.games = FXCollections.observableArrayList();
+    }
+
     @Override
     public EdenVersionData getEdenVersion() {
         APIHelper.fakeDelay(3000);
@@ -21,6 +28,7 @@ class GamesHandler implements GameAPI {
 
     @Override
     public ArrayList<MarketplaceGameData> getMarketPlaceGames(int begin, int count, String code, int userID) {
+        getUserGames(userID); // init
         ArrayList<MarketplaceGameData> games = new ArrayList<>();
 
         MarketplaceGameData.gameCount = 1;
@@ -47,7 +55,7 @@ class GamesHandler implements GameAPI {
                 tags,
                 languages,
                 updatePrim,
-                true
+                this.games.contains(new BasicGameData(0, "Prim", null))
         );
 
         games.add(prim);
@@ -85,11 +93,20 @@ class GamesHandler implements GameAPI {
         }
     }
 
+    @Override
     public ObservableList<BasicGameData> getUserGames(int userID) {
-        ObservableList<BasicGameData> games = FXCollections.observableArrayList();
-        games.add(new BasicGameData(1, "Enigma", "/games/enigma-icon.png"));
-        games.add(new BasicGameData(0, "Prim", "/games/prim-icon.png"));
+        games.clear();
+        if (userID == 23){
+            games.add(new BasicGameData(1, "Enigma", "/games/enigma-icon.png"));
+            games.add(new BasicGameData(0, "Prim", "/games/prim-icon.png"));
+        }
         return games;
+    }
+
+    @Override
+    public boolean addToLibrary(BasicGameData game) {
+        if (this.games.contains(game)) return true;
+        return this.games.add(game);
     }
 
     @Override
