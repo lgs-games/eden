@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.ResourceBundle;
@@ -19,6 +20,8 @@ import java.util.ResourceBundle;
  */
 public final class Utility {
 
+    private static final HashMap<String, Image> images = new HashMap<>();
+
     /**
      * Loads images from the path given
      * @param path path of the needed image
@@ -26,8 +29,10 @@ public final class Utility {
      * @throws NullPointerException if the path is not reachable
      */
     public static Image loadImage(String path) throws NullPointerException {
+        if (images.containsKey(path)) return images.get(path);
         try {
-            return new Image(Objects.requireNonNull(Utility.class.getResourceAsStream(path)));
+            images.put(path, new Image(Objects.requireNonNull(Utility.class.getResourceAsStream(path))));
+            return images.get(path);
         } catch (Exception e) {
             throw new IllegalArgumentException("Image not found "+path);
         }
