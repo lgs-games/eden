@@ -58,7 +58,7 @@ class ProfileHandler implements ProfileAPI {
                       f.name,
                       f.online,
                       f.id,
-                      evaluateRelationShip(f.id, loggedID)
+                      evaluateRelationShip(loggedID, f.id)
                     )
             );
         }

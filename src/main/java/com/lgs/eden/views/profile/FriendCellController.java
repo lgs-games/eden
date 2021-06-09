@@ -29,6 +29,9 @@ public class FriendCellController implements CellHandler<FriendData> {
     private static ContextMenu contextMenu;
     private static MenuItem addFriend;
     private static MenuItem removeFriend;
+    private static MenuItem acceptFriendRequest;
+    private static MenuItem refuseFriendRequest;
+    private static MenuItem cancelFriendRequest;
     private static MenuItem tchat;
 
     /**
@@ -42,20 +45,29 @@ public class FriendCellController implements CellHandler<FriendData> {
         // create menu items
         // todo: translations
         MenuItem profile = new MenuItem("See profile");
-        addFriend = new MenuItem("Add as friend");
+        addFriend = new MenuItem("Send friend request");
         removeFriend = new MenuItem("Remove friend");
+        acceptFriendRequest = new MenuItem("Accept friend request");
+        refuseFriendRequest = new MenuItem("Refuse friend request");
+        cancelFriendRequest = new MenuItem("Cancel friend request");
         tchat = new MenuItem("Send message");
 
         // listeners
         profile.setOnAction((e) -> current.onWantProfile(null));
         addFriend.setOnAction((e) -> current.onAddUser());
         removeFriend.setOnAction((e) -> current.onRemoveUser());
+        acceptFriendRequest.setOnAction((e) -> current.onAcceptFriend());
+        refuseFriendRequest.setOnAction((e) -> current.onRefuseFriend());
+        cancelFriendRequest.setOnAction((e) -> current.onCancelRequest());
         tchat.setOnAction((e) -> current.onWantMessage());
 
         // add menu items to menu
         contextMenu.getItems().add(profile);
         contextMenu.getItems().add(addFriend);
         contextMenu.getItems().add(removeFriend);
+        contextMenu.getItems().add(acceptFriendRequest);
+        contextMenu.getItems().add(refuseFriendRequest);
+        contextMenu.getItems().add(cancelFriendRequest);
         contextMenu.getItems().add(tchat);
     }
 
@@ -96,21 +108,39 @@ public class FriendCellController implements CellHandler<FriendData> {
                 // init
                 initContextMenu();
 
-                boolean disabledAdd = false;
-                boolean disabledFriend = true;
+                boolean add = false;
+                boolean friend = false; // both remove and send message
+                boolean acceptFR = false;
+                boolean refuseFR = false;
+                boolean cancelFR = false;
 
                 // show add / remove friend
                 switch (current.data.friendShipStatus){
-                    case FRIENDS: disabledAdd = true; disabledFriend = false; break;
-                    case NONE: disabledAdd = false; disabledFriend = true; break;
-                    case USER: case REQUESTED:case GOT_REQUESTED:
-                        disabledAdd = true; disabledFriend = true;
-                        break;
+                    case FRIENDS: add = true; friend = false; break;
+                    case NONE: add = false; friend = true; break;
+                    case USER: add = true; friend = true; break;
+                    case REQUESTED: cancelFR = true; break;
+                    case GOT_REQUESTED: acceptFR = true; refuseFR = true; break;
                 }
-                // disabled if friend
-                addFriend.setDisable(disabledAdd);
-                removeFriend.setDisable(disabledFriend);
-                tchat.setDisable(disabledFriend);
+
+                // disabled if not available
+                if (!acceptFR && !cancelFR){
+                    acceptFriendRequest.setDisable(true);
+                    refuseFriendRequest.setDisable(true);
+                    cancelFriendRequest.setDisable(true);
+
+                    addFriend.setDisable(add);
+                    removeFriend.setDisable(friend);
+                    tchat.setDisable(friend);
+                } else {
+                    addFriend.setDisable(true);
+                    removeFriend.setDisable(true);
+                    tchat.setDisable(true);
+
+                    acceptFriendRequest.setDisable(acceptFR);
+                    refuseFriendRequest.setDisable(refuseFR);
+                    cancelFriendRequest.setDisable(cancelFR);
+                }
 
                 // show
                 contextMenu.show(this.view, event.getScreenX(), event.getScreenY());
@@ -151,6 +181,21 @@ public class FriendCellController implements CellHandler<FriendData> {
     /** Wants to add this user */
     private void onRemoveUser() {
         Profile.getController().onRemoveFriend(this.data.id);
+    }
+
+    /** Wants to add this user */
+    private void onAcceptFriend() {
+        Profile.getController().onAcceptFriend(this.data.id);
+    }
+
+    /** Wants to add this user */
+    private void onRefuseFriend() {
+        Profile.getController().onRefuseFriend(this.data.id);
+    }
+
+    /** Wants to add this user */
+    private void onCancelRequest() {
+        Profile.getController().onRefuseFriend(this.data.id);
     }
 
 }
