@@ -5,17 +5,24 @@ import com.lgs.eden.application.ApplicationCloseHandler;
 import com.lgs.eden.utils.Translate;
 import com.lgs.eden.utils.Utility;
 import com.lgs.eden.utils.ViewsPath;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
-import javafx.scene.layout.VBox;
 
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import org.commonmark.node.*;
 import org.commonmark.parser.Parser;
 import org.commonmark.renderer.html.HtmlRenderer;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+import org.w3c.dom.events.EventListener;
+import org.w3c.dom.events.EventTarget;
+
+import static javafx.concurrent.Worker.State;
 
 /**
  * View for a news
@@ -38,6 +45,8 @@ public class News {
     private Label newsDate;
     @FXML
     private WebView newsContent;
+
+    private String content;
 
     // ------------------------------ INSTANCE ----------------------------- \\
 
@@ -102,29 +111,68 @@ public class News {
 
         WebEngine engine = this.newsContent.getEngine();
         engine.loadContent(
-                "<html>" +
-                "<style>" +
-                        "body {\n" +
-                        "    font-family: Segoe UI,Helvetica,Arial,sans-serif;\n" +
-                        "    font-size: 17px;\n" +
-                        "\n" +
-                        "    background : #1e262c;\n" +
-                        "    color:#FFFFFF;\n" +
-                        "\n" +
-                        "    padding: 0 20px 0 0;\n" +
-                        "}"+
-                        "a {\n" +
-                        "    color: #2aa198;\n" +
-                        "}"+
-                        "h1, h2, h3, h4, h5, h6 {\n" +
-                        "    color: #FFCC33;\n" +
-                        "}"+
-                "</style>" +
-                "<body>"
-                +renderer.render(document)
-                +"</body>"
+               this.content =  "<html>" +
+                       "<style>" +
+                       "body {\n" +
+                       "    font-family: Segoe UI,Helvetica,Arial,sans-serif;\n" +
+                       "    font-size: 17px;\n" +
+                       "\n" +
+                       "    background : #1e262c;\n" +
+                       "    color:#FFFFFF;\n" +
+                       "\n" +
+                       "    padding: 0 20px 0 0;\n" +
+                       "}"+
+                       "a {\n" +
+                       "    color: #2aa198;\n" +
+                       "}"+
+                       "h1, h2, h3, h4, h5, h6 {\n" +
+                       "    color: #FFCC33;\n" +
+                       "}"+
+                       "</style>" +
+                       "<body>"
+                       +renderer.render(document)
+                       +"</body>"
         );
 
+        // disabled right-click
+        newsContent.setContextMenuEnabled(false);
+
+        // link listener
+        engine.getLoadWorker().stateProperty().addListener(new LinkExternalBrowserListener(engine, content));
+
         ApplicationCloseHandler.registerLastEngine(engine);
+    }
+
+    /**
+     * Should open links in user browser.
+     */
+    private static class LinkExternalBrowserListener implements ChangeListener<State> {
+        private final WebEngine engine;
+        private final String content;
+
+        private LinkExternalBrowserListener(WebEngine engine, String content) { this.engine = engine;this.content = content; }
+
+        @Override
+        public void changed(ObservableValue<? extends State> o, State oldState,
+                            State newState) {
+            if (newState == State.SUCCEEDED) {
+
+                // note next classes are from org.w3c.dom domain
+                EventListener listener = ev -> {
+                    ev.preventDefault();
+                    String href = ((Element)ev.getTarget()).getAttribute("href");
+                    Utility.openInBrowser(href);
+                    engine.loadContent(content);
+                };
+
+                org.w3c.dom.Document doc = engine.getDocument();
+                // add listener to add links
+                NodeList links = doc.getElementsByTagName("a");
+                for (int i=0; i < links.getLength(); i++) {
+                    ((EventTarget)links.item(i))
+                            .addEventListener("click", listener, false);
+                }
+            }
+        }
     }
 }
