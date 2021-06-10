@@ -16,7 +16,7 @@
          </BorderPane.margin>
          <children>
             <Label styleClass="yellow-text" text="It seems we have some problems with the search bar, please press enter again if the result is wrong" textAlignment="CENTER" wrapText="true" />
-            <TextField fx:id="search" focusTraversable="false" onAction="#onSearch" promptText="friend name or id">
+            <TextField fx:id="search" focusTraversable="false" onAction="#onSearch" promptText="username or id">
                <padding>
                   <Insets bottom="10.0" right="10.0" top="10.0" />
                </padding>
@@ -29,6 +29,6 @@
       </VBox>
    </top>
    <center>
-      <ListView fx:id="friends" prefHeight="200.0" prefWidth="200.0" styleClass="app-background" BorderPane.alignment="CENTER" />
+      <ListView fx:id="users" prefHeight="200.0" prefWidth="200.0" styleClass="app-background" BorderPane.alignment="CENTER" />
    </center>
 </BorderPane>

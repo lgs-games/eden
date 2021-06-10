@@ -30,11 +30,13 @@ class ProfileHandler implements ProfileAPI {
     private ArrayList<FriendData> users = null;
 
     public ArrayList<FriendData> searchUsers(String filter, int currentUserID) {
+        if (filter.isEmpty()) return new ArrayList<>();
         // return cache
         if (cache.containsKey(filter)) return cache.get(filter);
 
         if (users == null){
             users = new ArrayList<>();
+            users.add(getFriendData(23));
             users.add(getFriendData(24));
             users.add(getFriendData(25));
             users.add(getFriendData(26));

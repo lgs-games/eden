@@ -21,6 +21,8 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.text.TextFlow;
 
+import java.util.ArrayList;
+
 /**
  * Controller for message.fxml view
  */
@@ -71,6 +73,7 @@ public class Messages {
     // save friendID
     private FriendData friend;
     private FriendData user;
+    private ArrayList<FriendData> friendList;
 
     private void init(int friendID) {
         // you cannot tchat with yourself
@@ -107,6 +110,8 @@ public class Messages {
             this.messages.setCellFactory(cellView -> new CustomCells<>(MessageCell.load()));
 
             if (conv.messages.size() > 0) this.messages.scrollTo(conv.messages.size() - 1);
+
+            this.friendList = API.imp.getFriendList(AppWindowHandler.currentUserID());
         }
     }
 
@@ -117,6 +122,16 @@ public class Messages {
 
     @FXML
     public void onNewConversationRequest() {
-        PopupUtils.showPopup(SearchForFriends.getScreen(AppWindowHandler.currentUserID()));
+        PopupUtils.showPopup(SearchForFriends.getScreen(
+                (s) -> {
+                    ArrayList<FriendData> selected = new ArrayList<>();
+                    this.friendList.forEach((d) -> {
+                        if (s.isEmpty() || d.name.toLowerCase().contains(s) || (d.id+"").equals(s)){
+                            selected.add(d);
+                        }
+                    });
+                    return selected;
+                }
+        ));
     }
 }

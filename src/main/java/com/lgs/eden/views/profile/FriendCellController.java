@@ -18,7 +18,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 
 /**
- * Controller for friendcell.fxml
+ * Controller for friend_cell.fxml
  */
 public class FriendCellController implements CellHandler<FriendData> {
 

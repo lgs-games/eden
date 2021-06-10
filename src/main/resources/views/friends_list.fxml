@@ -20,7 +20,7 @@
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </VBox.margin>
                <children>
-                  <Button mnemonicParsing="false" styleClass="eden-button" text="search for a player" />
+                  <Button onAction="#searchForUser" mnemonicParsing="false" styleClass="eden-button" text="search for a player" />
                </children>
             </FlowPane>
             <BorderPane styleClass="white-box">

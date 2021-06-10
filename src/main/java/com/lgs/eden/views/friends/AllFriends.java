@@ -2,11 +2,16 @@ package com.lgs.eden.views.friends;
 
 import com.lgs.eden.api.API;
 import com.lgs.eden.api.profile.friends.FriendData;
+import com.lgs.eden.application.AppWindowHandler;
+import com.lgs.eden.application.PopupUtils;
 import com.lgs.eden.utils.Translate;
 import com.lgs.eden.utils.Utility;
 import com.lgs.eden.utils.ViewsPath;
 import com.lgs.eden.utils.cell.CellHandler;
 import com.lgs.eden.views.profile.FriendCellController;
+import com.lgs.eden.views.profile.messages.SearchForFriends;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -20,8 +25,7 @@ import java.util.ArrayList;
  */
 public class AllFriends {
 
-    public FlowPane online;
-    public FlowPane offline;
+    // ------------------------------ STATIC ----------------------------- \\
 
     public static Parent getScreen(int userID) {
         FXMLLoader loader = Utility.loadView(ViewsPath.FRIENDS_LIST.path);
@@ -30,6 +34,13 @@ public class AllFriends {
         controller.init(userID);
         return parent;
     }
+
+    // ------------------------------ INSTANCE ----------------------------- \\
+
+    @FXML
+    private FlowPane online;
+    @FXML
+    private FlowPane offline;
 
     /** Init view with user ID */
     private void init(int userID) {
@@ -56,6 +67,15 @@ public class AllFriends {
 
         if (!added){ this.offline.getChildren().add(getEmpty(false)); }
     }
+
+    // ------------------------------ LISTENERS ----------------------------- \\
+
+    @FXML
+    public void searchForUser() {
+        PopupUtils.showPopup(SearchForFriends.getScreen((s) -> API.imp.searchUsers(s, AppWindowHandler.currentUserID())));
+    }
+
+    // ------------------------------ UTILS ----------------------------- \\
 
     // empty label
     private Node getEmpty(boolean isOnline) {
