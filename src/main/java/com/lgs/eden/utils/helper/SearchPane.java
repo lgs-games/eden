@@ -1,4 +1,4 @@
-package com.lgs.eden.views.profile.messages;
+package com.lgs.eden.utils.helper;
 
 import com.lgs.eden.api.profile.friends.FriendData;
 import com.lgs.eden.utils.Utility;
@@ -13,13 +13,14 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
 
 import java.util.ArrayList;
 
 /**
  * Search for user/friend controller
  */
-public class SearchForFriends {
+public class SearchPane {
 
     /** Called when filter text is set */
     public interface FilterCallback {
@@ -30,7 +31,7 @@ public class SearchForFriends {
     public static Parent getScreen(FilterCallback handler) {
         FXMLLoader loader = Utility.loadView(ViewsPath.SEARCH.path);
         Parent parent = Utility.loadViewPane(loader);
-        SearchForFriends controller = loader.getController();
+        SearchPane controller = loader.getController();
         controller.init(handler);
         return parent;
     }
@@ -39,13 +40,14 @@ public class SearchForFriends {
     private TextField search;
     @FXML
     private ListView<FriendData> users;
+    @FXML
+    private BorderPane container;
 
     private FilterCallback handler;
-    private ObservableList<FriendData> userListObservable;
 
     private void init(FilterCallback handler) {
         this.handler = handler;
-        this.userListObservable = FXCollections.observableArrayList();
+        ObservableList<FriendData> userListObservable = FXCollections.observableArrayList();
         this.users.setItems(userListObservable);
         this.users.setCellFactory(friendDataListView -> new CustomCells<>(FriendCellController.load()));
 
@@ -57,9 +59,18 @@ public class SearchForFriends {
     public void onSearch(){
         String text = this.search.getText().trim().toLowerCase();
         Platform.runLater(() -> {
-            this.userListObservable.clear();
+            users = new ListView<>();
+            users.getStyleClass().add("app-background");
             ArrayList<FriendData> filter = this.handler.filter(text);
-            this.userListObservable.addAll(filter);
+            users.setItems(FXCollections.observableArrayList(filter));
+            users.setCellFactory(friendDataListView -> new CustomCells<>(FriendCellController.load()));
+            container.setCenter(users);
+
+            // fixme: this is a patch of
+            //  that didn't show the right results and some cached ones
+            // this.userListObservable.clear();
+            // ArrayList<FriendData> filter = this.handler.filter(text);
+            // this.userListObservable.addAll(filter);
         });
     }
 

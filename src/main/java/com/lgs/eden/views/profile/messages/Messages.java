@@ -11,6 +11,7 @@ import com.lgs.eden.utils.Translate;
 import com.lgs.eden.utils.Utility;
 import com.lgs.eden.utils.ViewsPath;
 import com.lgs.eden.utils.cell.CustomCells;
+import com.lgs.eden.utils.helper.SearchPane;
 import com.lgs.eden.views.profile.Profile;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -122,7 +123,7 @@ public class Messages {
 
     @FXML
     public void onNewConversationRequest() {
-        PopupUtils.showPopup(SearchForFriends.getScreen(
+        PopupUtils.showPopup(SearchPane.getScreen(
                 (s) -> {
                     ArrayList<FriendData> selected = new ArrayList<>();
                     this.friendList.forEach((d) -> {

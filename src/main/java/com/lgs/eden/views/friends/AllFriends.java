@@ -9,8 +9,7 @@ import com.lgs.eden.utils.Utility;
 import com.lgs.eden.utils.ViewsPath;
 import com.lgs.eden.utils.cell.CellHandler;
 import com.lgs.eden.views.profile.FriendCellController;
-import com.lgs.eden.views.profile.messages.SearchForFriends;
-import javafx.event.ActionEvent;
+import com.lgs.eden.utils.helper.SearchPane;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -72,7 +71,7 @@ public class AllFriends {
 
     @FXML
     public void searchForUser() {
-        PopupUtils.showPopup(SearchForFriends.getScreen((s) -> API.imp.searchUsers(s, AppWindowHandler.currentUserID())));
+        PopupUtils.showPopup(SearchPane.getScreen((s) -> API.imp.searchUsers(s, AppWindowHandler.currentUserID())));
     }
 
     // ------------------------------ UTILS ----------------------------- \\
