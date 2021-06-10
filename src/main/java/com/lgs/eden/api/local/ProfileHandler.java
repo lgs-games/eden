@@ -205,17 +205,21 @@ class ProfileHandler implements ProfileAPI {
 
         if (conversations.isEmpty() || !conversations.contains(new ConversationData(friendID))){
              // we add a new one
-            if (newConversation(friendID, currentUserID)){
-                conversations.clear();
-                conversations.addAll(getConversations(currentUserID));
-            } else {
-                throw new IllegalStateException("error");
+            if (!newConversation(friendID, currentUserID)){
+               throw new IllegalStateException("error");
             }
         }
 
         // load messages
         messages.addAll(getUserMessagesWith(friendID, currentUserID));
         messages.forEach(m -> m.read = true);
+
+        closeConversation(friendID, currentUserID);
+        if (!newConversation(friendID, currentUserID)){
+            throw new IllegalStateException("error");
+        }
+        conversations.clear();
+        conversations.addAll(getConversations(currentUserID));
 
         return new FriendConversationView(getFriendData(friendID), getFriendData(currentUserID), messages,
                 conversations);
@@ -229,7 +233,8 @@ class ProfileHandler implements ProfileAPI {
                 friendData.name, friendData.online, friendID,
                 getUnreadMessagesCount(friendID, currentUserID)
         );
-        return conversations.add(conv);
+        conversations.add(0, conv);
+        return true;
     }
 
     @Override
@@ -247,10 +252,18 @@ class ProfileHandler implements ProfileAPI {
         ArrayList<ConversationData> conversations = new ArrayList<>();
 
         if (loggedID == 23) {
-            conversations.add(new ConversationData("/avatars/24.png", "Raphik2", true, 24,
-                    getUnreadMessagesCount(24, loggedID)));
-            conversations.add(new ConversationData("/avatars/27.png", "Raphistro", false, 27,
-                    getUnreadMessagesCount(27, loggedID)));
+            FriendData friendData = getFriendData(24);
+            ConversationData conv = new ConversationData("/avatars/"+24+".png",
+                    friendData.name, friendData.online, 24,
+                    getUnreadMessagesCount(24, 23)
+            );
+            conversations.add(conv);
+            friendData = getFriendData(27);
+            conv = new ConversationData("/avatars/"+27+".png",
+                    friendData.name, friendData.online, 27,
+                    getUnreadMessagesCount(27, 23)
+            );
+            conversations.add(conv);
         }
 
         this.conversations.put(loggedID, conversations);
@@ -311,8 +324,8 @@ class ProfileHandler implements ProfileAPI {
 
     private FriendData getFriendData(int userID) {
         switch (userID){
-            case 23: return new FriendData("/avatars/23.png", "Raphik", false, 23, FriendShipStatus.FRIENDS);
-            case 24: return new FriendData("/avatars/24.png", "Raphik2", false, 24, FriendShipStatus.FRIENDS);
+            case 23: return new FriendData("/avatars/23.png", "Raphik", true, 23, FriendShipStatus.FRIENDS);
+            case 24: return new FriendData("/avatars/24.png", "Raphik2", true, 24, FriendShipStatus.FRIENDS);
             case 25: return new FriendData("/avatars/25.png", "Calistral", false, 25, FriendShipStatus.FRIENDS);
             case 26: return new FriendData("/avatars/26.png", "Caliki", false, 26, FriendShipStatus.FRIENDS);
             case 27: return new FriendData("/avatars/27.png", "Raphistro", false, 27, FriendShipStatus.FRIENDS);
