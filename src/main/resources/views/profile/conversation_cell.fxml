@@ -49,12 +49,15 @@
          <right>
             <HBox alignment="CENTER" BorderPane.alignment="CENTER">
                <children>
-                  <Button fx:id="newMessages" focusTraversable="false" mnemonicParsing="false" styleClass="new-messages" text="2">
+                  <Button fx:id="newMessages" focusTraversable="false"
+                          mnemonicParsing="false" styleClass="new-messages" text="2">
                      <HBox.margin>
                         <Insets right="10.0" />
                      </HBox.margin>
                   </Button>
-                  <Button mnemonicParsing="false" text="x" HBox.hgrow="ALWAYS" />
+                  <Button mnemonicParsing="false" text="x"
+                          onAction="#onCloseRequest"
+                          HBox.hgrow="ALWAYS" />
                </children>
             </HBox>
          </right>

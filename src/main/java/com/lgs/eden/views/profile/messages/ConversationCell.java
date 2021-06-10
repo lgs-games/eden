@@ -1,5 +1,6 @@
 package com.lgs.eden.views.profile.messages;
 
+import com.lgs.eden.api.API;
 import com.lgs.eden.api.profile.friends.conversation.ConversationData;
 import com.lgs.eden.application.AppWindowHandler;
 import com.lgs.eden.utils.Translate;
@@ -61,6 +62,16 @@ public class ConversationCell implements CellHandler<ConversationData> {
     private void onWantMessage() {
         if (Messages.isCurrentConv(item.id)) return; // no need is already current
         AppWindowHandler.setScreen(Messages.getScreen(this.item.id), ViewsPath.PROFILE);
+    }
+
+    @FXML
+    private void onCloseRequest(){
+        if (API.imp.closeConversation(this.item.id, AppWindowHandler.currentUserID())){
+            AppWindowHandler.setScreen(Messages.getScreen(), ViewsPath.PROFILE);
+        } else {
+            // todo: show error
+            System.out.println("Can't close conv");
+        }
     }
 
     // ------------------------------ VIEW ----------------------------- \\
