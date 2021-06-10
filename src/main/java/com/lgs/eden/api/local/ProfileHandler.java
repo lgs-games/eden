@@ -153,15 +153,31 @@ class ProfileHandler implements ProfileAPI {
         ObservableList<MessageData> messages = FXCollections.observableArrayList();
         ObservableList<ConversationData> conversations = FXCollections.observableArrayList();
 
-        // "we are faking the pick of the last recent one conv"
-        if (friendID == -1) friendID = 24;
-
-        messages.addAll(getUserMessagesWith(friendID, currentUserID));
-        messages.forEach(m -> m.read = true);
-
+        // get conversations
         conversations.addAll(getConversations(currentUserID));
 
-        if (conversations.isEmpty()) return null;
+        // can't find one
+        if (friendID == -1 && conversations.isEmpty()) return null;
+
+        // take the first conversation id one
+        if (friendID == -1){
+            ConversationData conversationData = conversations.get(0);
+            friendID = conversationData.id;
+        }
+
+        if (conversations.isEmpty() || !conversations.contains(new ConversationData(friendID))){
+             // we add a new one
+            if (newConversation(friendID, currentUserID)){
+                conversations.clear();
+                conversations.addAll(getConversations(currentUserID));
+            } else {
+                throw new IllegalStateException("error");
+            }
+        }
+
+        // load messages
+        messages.addAll(getUserMessagesWith(friendID, currentUserID));
+        messages.forEach(m -> m.read = true);
 
         return new FriendConversationView(getFriendData(friendID), getFriendData(currentUserID), messages,
                 conversations);
@@ -169,13 +185,19 @@ class ProfileHandler implements ProfileAPI {
 
     @Override
     public boolean newConversation(int friendID, int currentUserID) {
-        return false;
+        ArrayList<ConversationData> conversations = getConversations(currentUserID);
+        FriendData friendData = getFriendData(friendID);
+        ConversationData conv = new ConversationData("/avatars/"+friendID+".png",
+                friendData.name, friendData.online, friendID,
+                getUnreadMessagesCount(friendID, currentUserID)
+        );
+        return conversations.add(conv);
     }
 
     @Override
     public boolean closeConversation(int friendID, int currentUserID) {
         ArrayList<ConversationData> conversations = getConversations(currentUserID);
-        return conversations.remove(new ConversationData(null, null, true, friendID, 0));
+        return conversations.remove(new ConversationData(friendID));
     }
 
     private final HashMap<Integer, ArrayList<ConversationData>> conversations = new HashMap<>();
