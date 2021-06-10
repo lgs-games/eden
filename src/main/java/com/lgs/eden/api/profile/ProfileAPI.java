@@ -10,6 +10,11 @@ import java.util.ArrayList;
  */
 public interface ProfileAPI {
 
+    /**
+     * Returns a list of users from a filter.
+     */
+    ArrayList<FriendData> searchUsers(String filter, int currentUserID);
+
     /** Returns complete friend list **/
     ArrayList<FriendData> getFriendList(int userID);
 

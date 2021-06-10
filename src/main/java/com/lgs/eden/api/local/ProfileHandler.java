@@ -26,6 +26,42 @@ class ProfileHandler implements ProfileAPI {
 
     private final HashMap<Integer, ArrayList<FriendData>> friendList = new HashMap<>();
 
+    private final HashMap<String, ArrayList<FriendData>> cache = new HashMap<>();
+    private ArrayList<FriendData> users = null;
+
+    public ArrayList<FriendData> searchUsers(String filter, int currentUserID) {
+        // return cache
+        if (cache.containsKey(filter)) return cache.get(filter);
+
+        if (users == null){
+            users = new ArrayList<>();
+            users.add(getFriendData(24));
+            users.add(getFriendData(25));
+            users.add(getFriendData(26));
+            users.add(getFriendData(27));
+            users.add(getFriendData(28));
+            users.add(getFriendData(29));
+        }
+
+        ArrayList<FriendData> selected = new ArrayList<>();
+        // apply filter
+        for (FriendData d: users) {
+            if (d.name.toLowerCase().contains(filter) || (d.id+"").equals(filter)){
+                selected.add(new FriendData(
+                        d.getAvatarPath(),
+                        d.name,
+                        d.online,
+                        d.id,
+                        evaluateRelationShip(currentUserID, d.id)
+                ));
+            }
+        }
+
+        // cache
+        cache.put(filter, selected);
+        return selected;
+    }
+
     @Override
     public ArrayList<FriendData> getFriendList(int userID) {
         if (friendList.containsKey(userID)) return friendList.get(userID);
@@ -278,6 +314,8 @@ class ProfileHandler implements ProfileAPI {
             case 25: return new FriendData("/avatars/25.png", "Calistral", false, 25, FriendShipStatus.FRIENDS);
             case 26: return new FriendData("/avatars/26.png", "Caliki", false, 26, FriendShipStatus.FRIENDS);
             case 27: return new FriendData("/avatars/27.png", "Raphistro", false, 27, FriendShipStatus.FRIENDS);
+            case 28: return new FriendData("/avatars/27.png", "XXX", false, 28, FriendShipStatus.FRIENDS);
+            case 29: return new FriendData("/avatars/25.png", "YYY", false, 29, FriendShipStatus.FRIENDS);
         }
         throw new IllegalArgumentException("not supported userID");
     }
