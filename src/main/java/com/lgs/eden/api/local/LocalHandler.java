@@ -96,23 +96,30 @@ public class LocalHandler implements API {
     // ------------------------------ PROFILE ----------------------------- \\
 
     @Override
-    public ArrayList<FriendData> getFriendList(int userID, int loggedID) { return this.profile.getFriendList(userID, loggedID); }
+    public ArrayList<FriendData> getFriendList(int userID, int currentUserID) { return this.profile.getFriendList(userID, currentUserID); }
 
     @Override
-    public ProfileData getProfileData(int userID, int loggedID) { return this.profile.getProfileData(userID, loggedID); }
+    public ProfileData getProfileData(int userID, int currentUserID) { return this.profile.getProfileData(userID, currentUserID); }
 
     @Override
-    public FriendConversationView getMessageWithFriend(int friendID, int loggedID) { return this.profile.getMessageWithFriend(friendID, loggedID); }
+    public FriendConversationView getMessageWithFriend(int friendID, int currentUserID) { return this.profile.getMessageWithFriend(friendID, currentUserID); }
 
     @Override
-    public void addFriend(int userID, int currentUserID) { this.profile.addFriend(userID, currentUserID); }
+    public void addFriend(int friendID, int currentUserID) { this.profile.addFriend(friendID, currentUserID); }
 
     @Override
-    public void removeFriend(int userID, int currentUserID) { this.profile.removeFriend(userID, currentUserID); }
+    public void removeFriend(int friendID, int currentUserID) { this.profile.removeFriend(friendID, currentUserID); }
 
     @Override
-    public void acceptFriend(int userID, int currentUserID) { this.profile.acceptFriend(userID, currentUserID); }
+    public void acceptFriend(int friendID, int currentUserID) { this.profile.acceptFriend(friendID, currentUserID); }
 
     @Override
-    public void refuseFriend(int userID, int currentUserID) { this.profile.refuseFriend(userID, currentUserID); }
+    public void refuseFriend(int friendID, int currentUserID) { this.profile.refuseFriend(friendID, currentUserID); }
+
+    @Override
+    public boolean newConversation(int friendID, int currentUserID) { return this.profile.newConversation(friendID, currentUserID); }
+
+    @Override
+    public boolean closeConversation(int friendID, int currentUserID) { return this.profile.closeConversation(friendID, currentUserID); }
+
 }
