@@ -68,9 +68,7 @@ public class News {
                 .build();
 
         WebEngine engine = this.newsContent.getEngine();
-        String content;
-        engine.loadContent(
-               content =  "<html>" +
+        engine.loadContent("<html>" +
                        "<style>" +
                        "body {\n" +
                        "    font-family: Segoe UI,Helvetica,Arial,sans-serif;\n" +
@@ -97,7 +95,7 @@ public class News {
         newsContent.setContextMenuEnabled(false);
 
         // link listener
-        engine.getLoadWorker().stateProperty().addListener(new LinkExternalBrowserListener(engine, content));
+        engine.getLoadWorker().stateProperty().addListener(new LinkExternalBrowserListener(engine));
 
         ApplicationCloseHandler.registerLastEngine(engine);
     }
@@ -109,9 +107,8 @@ public class News {
      */
     private static class LinkExternalBrowserListener implements ChangeListener<State> {
         private final WebEngine engine;
-        private final String content;
 
-        private LinkExternalBrowserListener(WebEngine engine, String content) { this.engine = engine;this.content = content; }
+        private LinkExternalBrowserListener(WebEngine engine) { this.engine = engine; }
 
         @Override
         public void changed(ObservableValue<? extends State> o, State oldState,
@@ -123,7 +120,6 @@ public class News {
                     ev.preventDefault();
                     String href = ((Element)ev.getTarget()).getAttribute("href");
                     Utility.openInBrowser(href);
-                    engine.loadContent(content);
                 };
 
                 org.w3c.dom.Document doc = engine.getDocument();
