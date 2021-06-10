@@ -11,6 +11,7 @@ module eden {
     requires javafx.web;
     requires java.desktop;
     requires org.commonmark;
+    requires org.commonmark.ext.gfm.tables;
 
     // our main module
     exports com.lgs.eden;

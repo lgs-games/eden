@@ -1,5 +1,3 @@
-# Tyrn v1
-
 Legendary Games Studio is honoured to present our new application : Tyrn.
 
 The software is open-source (meaning you can read/edit the source code)
@@ -39,6 +37,15 @@ We will make a patch in the next weeks.
 
 Documentation will be available around the 20th of September at
 [https://github.com/lgs-games/tyrn/wiki](https://github.com/lgs-games/tyrn/wiki).
+
+| Colonne | Colonne |
+| ------ | ------ |
+| tab[0][0] | tab[0][1] |
+| tab[1][0] | tab[1][1] |
+| tab[2][0] | tab[2][1] |
+| tab[3][0] | tab[3][1] |
+| tab[4][0] | tab[4][1] |
+| tab[5][0] | tab[5][1] |
 
 ### Crédits
 
