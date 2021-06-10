@@ -6,7 +6,9 @@ import com.lgs.eden.api.news.BasicNewsData;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Implementation of GameAPI
@@ -67,6 +69,7 @@ class GamesHandler implements GameAPI {
                     "/news/news1.png",
                     "We patched a lot of things and tried to improve" +
                             "the game to make it less easy and more fun to play.",
+                    Date.from(Instant.now()),
                     0
             );
             return new GameViewData(
@@ -79,6 +82,7 @@ class GamesHandler implements GameAPI {
                     "Enigma (remaster)",
                     "/news/news2.png",
                     "Enigma will come back, full remade! New UI, new functionalities, multiplayer...",
+                    Date.from(Instant.now()),
                     1
             );
             return new GameViewData(

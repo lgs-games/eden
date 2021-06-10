@@ -18,10 +18,6 @@ public class BasicNewsData {
     public final Date date;
     public final int newsID;
 
-    public BasicNewsData(String title, String image, String desc, int newsID) {
-        this(title, image, desc, null, newsID);
-    }
-
     public BasicNewsData(String title, String image, String desc, Date date, int newsID){
         this.title = title;
         this.image = Utility.loadImage(image);

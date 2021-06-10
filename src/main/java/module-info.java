@@ -8,7 +8,9 @@ module eden {
     requires javafx.controls;
     requires javafx.graphics;
     requires javafx.base;
+    requires javafx.web;
     requires java.desktop;
+    requires org.commonmark;
 
     // our main module
     exports com.lgs.eden;
