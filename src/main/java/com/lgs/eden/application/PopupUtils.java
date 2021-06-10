@@ -2,6 +2,7 @@ package com.lgs.eden.application;
 
 import com.lgs.eden.utils.Config;
 import javafx.geometry.Insets;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
@@ -20,6 +21,16 @@ public class PopupUtils {
      * Create and display to popup with some text
      */
     public static void showPopup(String text){
+        // create a label, wrap it in a borderpane
+        Label textLabel = new Label(text);
+        textLabel.setWrapText(true);
+        showPopup(textLabel);
+    }
+
+    /**
+     * Create and display to popup with a custom content
+     */
+    public static void showPopup(Parent content){
         Stage popup = new Stage();
         // make it beautiful
         popup.getIcons().add(Config.appIcon());
@@ -31,10 +42,8 @@ public class PopupUtils {
         popup.initOwner(WindowController.getStage());
 
         // create a label, wrap it in a borderpane
-        Label textLabel = new Label(text);
-        textLabel.setWrapText(true);
         BorderPane pane = new BorderPane();
-        pane.setCenter(textLabel);
+        pane.setCenter(content);
         pane.setPadding(new Insets(SPACE));
 
         // create and show popup
