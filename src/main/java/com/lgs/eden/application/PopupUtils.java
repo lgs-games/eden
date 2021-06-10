@@ -24,7 +24,12 @@ public class PopupUtils {
         // create a label, wrap it in a borderpane
         Label textLabel = new Label(text);
         textLabel.setWrapText(true);
-        showPopup(textLabel);
+
+        BorderPane pane = new BorderPane();
+        pane.setCenter(textLabel);
+        pane.setPadding(new Insets(SPACE));
+
+        showPopup(pane);
     }
 
     /**
@@ -41,13 +46,8 @@ public class PopupUtils {
         popup.initModality(Modality.APPLICATION_MODAL);
         popup.initOwner(WindowController.getStage());
 
-        // create a label, wrap it in a borderpane
-        BorderPane pane = new BorderPane();
-        pane.setCenter(content);
-        pane.setPadding(new Insets(SPACE));
-
         // create and show popup
-        Scene dialogScene = new Scene(pane, WIDTH, -1);
+        Scene dialogScene = new Scene(content, WIDTH, -1);
         popup.setScene(dialogScene);
         popup.show();
     }

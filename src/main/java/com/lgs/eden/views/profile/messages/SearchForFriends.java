@@ -6,8 +6,11 @@ import com.lgs.eden.utils.Utility;
 import com.lgs.eden.utils.ViewsPath;
 import com.lgs.eden.utils.cell.CustomCells;
 import com.lgs.eden.views.profile.FriendCellController;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -34,35 +37,27 @@ public class SearchForFriends {
     @FXML
     private ListView<FriendData> friends;
 
-    private ObservableList<FriendData> originalList;
+    private ArrayList<FriendData> friendList;
+    private ObservableList<FriendData> friendListObservable;
 
     private void init(int userID) {
-        ArrayList<FriendData> friendList = API.imp.getFriendList(userID);
-        this.originalList = FXCollections.observableArrayList(friendList);
-        this.friends.setItems(getFriendListCopy());
+        this.friendList = API.imp.getFriendList(userID);
+        this.friendListObservable = FXCollections.observableArrayList(friendList);
+        this.friends.setItems(friendListObservable);
         this.friends.setCellFactory(friendDataListView -> new CustomCells<>(FriendCellController.load()));
     }
 
     @FXML
     public void onSearch(){
         String text = this.search.getText().trim().toLowerCase();
-        if (text.isEmpty()){
-            this.friends.setItems(getFriendListCopy());
-        } else {
-            ObservableList<FriendData> copy = FXCollections.observableArrayList();
-            for (FriendData d: originalList) {
-                if (d.name.toLowerCase().contains(text) || (d.id+"").equals(text)) {
-                    copy.add(d);
-                }
-            }
-            this.friends.setItems(copy);
-        }
-    }
 
-    public ObservableList<FriendData> getFriendListCopy(){
-        ObservableList<FriendData> copy = FXCollections.observableArrayList();
-        copy.addAll(originalList);
-        return copy;
+        Platform.runLater(() -> {
+            this.friendListObservable.clear();
+            this.friendList.forEach((d) -> {
+                if (text.isEmpty() || d.name.toLowerCase().contains(text) || (d.id+"").equals(text))
+                    this.friendListObservable.add(d);
+            });
+        });
     }
 
 }
