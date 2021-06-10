@@ -1,12 +1,16 @@
 package com.lgs.eden.utils;
 
+import com.lgs.eden.api.API;
 import com.lgs.eden.application.WindowController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.image.Image;
 
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
@@ -97,4 +101,14 @@ public final class Utility {
        return new File(path).getParent(); // get parent folder
     }
 
+    /** open a link in browser or throws an exception **/
+    public static void openInBrowser(String link) {
+        if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
+            try {
+                Desktop.getDesktop().browse(new URI(link));
+            } catch (URISyntaxException | IOException ignoreMeTooBlink) {
+                throw new IllegalStateException("Couldn't open link "+link);
+            }
+        }
+    }
 }

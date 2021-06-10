@@ -6,6 +6,7 @@ import com.lgs.eden.api.auth.LoginResponseData;
 import com.lgs.eden.application.AppWindowHandler;
 import com.lgs.eden.application.PopupUtils;
 import com.lgs.eden.utils.Config;
+import com.lgs.eden.utils.Utility;
 import com.lgs.eden.utils.ViewsPath;
 import com.lgs.eden.utils.helper.LoginRegisterForm;
 
@@ -89,14 +90,7 @@ public class Login extends LoginRegisterForm {
      */
     @FXML
     public void onForgotPassword() { // rename @ignore if you use it
-        if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
-            try {
-                Desktop.getDesktop().browse(new URI(API.imp.getPasswordForgotLink(Config.getCode())));
-            } catch (URISyntaxException | IOException ignoreMeTooBlink) {
-                // TODO: add popup related to these exceptions
-                System.out.println("exception has occurred");
-            }
-        }
+        Utility.openInBrowser(API.imp.getPasswordForgotLink(Config.getCode()));
     }
 
     @FXML
