@@ -6,6 +6,7 @@ import com.lgs.eden.api.profile.friends.FriendData;
 import com.lgs.eden.api.profile.friends.conversation.ConversationData;
 import com.lgs.eden.api.profile.friends.messages.MessageData;
 import com.lgs.eden.application.AppWindowHandler;
+import com.lgs.eden.application.PopupUtils;
 import com.lgs.eden.utils.Translate;
 import com.lgs.eden.utils.Utility;
 import com.lgs.eden.utils.ViewsPath;
@@ -112,5 +113,10 @@ public class Messages {
     @FXML
     public void goToProfile(){
         AppWindowHandler.setScreen(Profile.reloadWith(this.friend.id), ViewsPath.PROFILE);
+    }
+
+    @FXML
+    public void onNewConversationRequest() {
+        PopupUtils.showPopup(SearchForFriends.getScreen(AppWindowHandler.currentUserID()));
     }
 }

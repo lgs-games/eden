@@ -116,7 +116,8 @@
    <left>
       <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="300.0" BorderPane.alignment="CENTER">
          <children>
-            <Button mnemonicParsing="false" styleClass="eden-button" text="New conversion" />
+            <Button mnemonicParsing="false" styleClass="eden-button" text="New conversion"
+            onAction="#onNewConversationRequest" />
             <ListView fx:id="userList" styleClass="clean-div" VBox.vgrow="ALWAYS">
                <VBox.margin>
                   <Insets left="5.0" right="5.0" top="10.0" />

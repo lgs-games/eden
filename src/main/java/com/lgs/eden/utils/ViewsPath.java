@@ -22,6 +22,8 @@ public enum ViewsPath {
     CONVERSATION_CELL("/views/profile/conversation_cell.fxml"),
     MESSAGE_CELL("/views/profile/message_cell.fxml"),
 
+    SEARCH("/views/search.fxml"),
+
     GAMES(null), // games menu
     GAMES_LIST("/views/gameslist.fxml"), // games menu
     GAMES_LIST_EMPTY("/views/game/gameslist_empty.fxml"), // games menu
