@@ -1,6 +1,8 @@
 package com.lgs.eden.application;
 
+import javafx.application.Platform;
 import javafx.event.EventHandler;
+import javafx.scene.web.WebEngine;
 import javafx.stage.WindowEvent;
 
 import java.util.Timer;
@@ -15,6 +17,8 @@ public class ApplicationCloseHandler implements EventHandler<WindowEvent> {
     // see GameList#onUpdateRequest
     private static Timer gameDateUpdateTimer = null;
     private static Thread gameDateUpdateThread = null;
+    private static WebEngine engine;
+
     public static void startUpdateThread(Timer timer, Runnable r) {
         closeUpdateThread();
         gameDateUpdateTimer = timer;
@@ -28,6 +32,17 @@ public class ApplicationCloseHandler implements EventHandler<WindowEvent> {
         gameDateUpdateThread = null;
     }
 
+    public static void registerLastEngine(WebEngine engine) {
+        closeWebEngine();
+        ApplicationCloseHandler.engine = engine;
+    }
+
+    private static void closeWebEngine() {
+        if (engine != null){
+            engine.load(null);
+        }
+    }
+
 
     // ------------------------------ HANDLER ----------------------------- \\
 
@@ -35,5 +50,8 @@ public class ApplicationCloseHandler implements EventHandler<WindowEvent> {
     public void handle(WindowEvent event) {
         // ends
         closeUpdateThread();
+        closeWebEngine();
+        // radical ends
+        Platform.exit();
     }
 }

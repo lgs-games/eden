@@ -39,6 +39,13 @@ public final class Utility {
     }
 
     /**
+     * Return file URL path
+     */
+    public static String getURL(String path) {
+        return Objects.requireNonNull(Utility.class.getResource(path)).getPath();
+    }
+
+    /**
      * A method made to load the views with only the path
      * @param path path to the view needed
      * @return an FXMLLoader containing the view
@@ -89,4 +96,5 @@ public final class Utility {
        String path = Utility.class.getProtectionDomain().getCodeSource().getLocation().getPath();
        return new File(path).getParent(); // get parent folder
     }
+
 }

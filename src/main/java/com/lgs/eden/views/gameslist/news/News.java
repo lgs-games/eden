@@ -1,6 +1,7 @@
 package com.lgs.eden.views.gameslist.news;
 
 import com.lgs.eden.api.news.BasicNewsData;
+import com.lgs.eden.application.ApplicationCloseHandler;
 import com.lgs.eden.utils.Translate;
 import com.lgs.eden.utils.Utility;
 import com.lgs.eden.utils.ViewsPath;
@@ -101,11 +102,29 @@ public class News {
 
         WebEngine engine = this.newsContent.getEngine();
         engine.loadContent(
-                "<body style='background : #1e262c;color:#FFFFFF;font-size: 17px;padding: 0 20px 0 0;" +
-                        "font-family: Segoe UI,Helvetica,Arial,sans-serif;'>"
+                "<html>" +
+                "<style>" +
+                        "body {\n" +
+                        "    font-family: Segoe UI,Helvetica,Arial,sans-serif;\n" +
+                        "    font-size: 17px;\n" +
+                        "\n" +
+                        "    background : #1e262c;\n" +
+                        "    color:#FFFFFF;\n" +
+                        "\n" +
+                        "    padding: 0 20px 0 0;\n" +
+                        "}"+
+                        "a {\n" +
+                        "    color: #2aa198;\n" +
+                        "}"+
+                        "h1, h2, h3, h4, h5, h6 {\n" +
+                        "    color: #FFCC33;\n" +
+                        "}"+
+                "</style>" +
+                "<body>"
                 +renderer.render(document)
                 +"</body>"
         );
-        this.newsContent.getStyleClass().add("app-background");
+
+        ApplicationCloseHandler.registerLastEngine(engine);
     }
 }
