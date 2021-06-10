@@ -27,7 +27,7 @@ class ProfileHandler implements ProfileAPI {
     private final HashMap<Integer, ArrayList<FriendData>> friendList = new HashMap<>();
 
     @Override
-    public ArrayList<FriendData> getFriendList(int userID, int currentUserID) {
+    public ArrayList<FriendData> getFriendList(int userID) {
         if (friendList.containsKey(userID)) return friendList.get(userID);
 
         ArrayList<FriendData> friends = new ArrayList<>();
@@ -50,7 +50,7 @@ class ProfileHandler implements ProfileAPI {
     @Override
     public ProfileData getProfileData(int userID, int currentUserID) {
         ObservableList<FriendData> friendDataObservableList = FXCollections.observableArrayList();
-        for (FriendData f:this.getFriendList(userID, currentUserID)) {
+        for (FriendData f:this.getFriendList(userID)) {
             // only show friend with the profile shown
             if(!evaluateRelationShip(userID, f.id).equals(FriendShipStatus.FRIENDS)) continue;
             friendDataObservableList.add(
@@ -122,22 +122,22 @@ class ProfileHandler implements ProfileAPI {
 
     @Override
     public void addFriend(int friendID, int currentUserID){
-        ArrayList<FriendData> friendList = getFriendList(currentUserID, friendID);
+        ArrayList<FriendData> friendList = getFriendList(currentUserID);
         friendList.add(getFriendData(friendID));
     }
 
     @Override
     public void removeFriend(int friendID, int currentUserID){
-        ArrayList<FriendData> friendList = getFriendList(friendID, currentUserID);
+        ArrayList<FriendData> friendList = getFriendList(friendID);
         friendList.remove(getFriendData(currentUserID));
 
-        friendList = getFriendList(currentUserID, friendID);
+        friendList = getFriendList(currentUserID);
         friendList.remove(getFriendData(friendID));
     }
 
     @Override
     public void acceptFriend(int friendID, int currentUserID) {
-        ArrayList<FriendData> friendList = getFriendList(currentUserID, friendID);
+        ArrayList<FriendData> friendList = getFriendList(currentUserID);
         friendList.add(getFriendData(friendID));
     }
 
@@ -274,7 +274,7 @@ class ProfileHandler implements ProfileAPI {
     }
 
     private boolean inFriendList(int userID, int loggedID){
-        ArrayList<FriendData> friendList = getFriendList(userID, loggedID);
+        ArrayList<FriendData> friendList = getFriendList(userID);
         return friendList.contains(new FriendData(null, null, false, loggedID, FriendShipStatus.NONE));
     }
 }

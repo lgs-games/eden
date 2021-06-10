@@ -96,7 +96,7 @@ public class LocalHandler implements API {
     // ------------------------------ PROFILE ----------------------------- \\
 
     @Override
-    public ArrayList<FriendData> getFriendList(int userID, int currentUserID) { return this.profile.getFriendList(userID, currentUserID); }
+    public ArrayList<FriendData> getFriendList(int userID) { return this.profile.getFriendList(userID); }
 
     @Override
     public ProfileData getProfileData(int userID, int currentUserID) { return this.profile.getProfileData(userID, currentUserID); }
