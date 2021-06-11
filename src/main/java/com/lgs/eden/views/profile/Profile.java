@@ -27,9 +27,7 @@ public class Profile {
 
     // ------------------------------ STATIC ----------------------------- \\
 
-    /**
-     * @return profile screen
-     */
+    /** @return profile screen */
     public static Parent getScreen() {
         return reloadWith(AppWindowHandler.currentUserID());
     }
@@ -162,7 +160,7 @@ public class Profile {
 
     /** Listener of the see all friends label **/
     @FXML
-    private void onSeeAllFriends(){
+    private void onSeeAllFriends() {
         AppWindowHandler.setScreen(AllFriends.getScreen(this.data.userID), ViewsPath.PROFILE);
     }
 
@@ -171,7 +169,7 @@ public class Profile {
     private void onAddFriend() {
         onAddFriend(this.data.userID);
     }
-    public void onAddFriend(int friendID){
+    public void onAddFriend(int friendID) {
         API.imp.addFriend(friendID, AppWindowHandler.currentUserID());
         reloadWith(friendID);
     }
@@ -258,11 +256,11 @@ public class Profile {
     // ------------------------------ UTILS ----------------------------- \\
 
     /** reload view **/
-    public void reload(int friendID){
+    public void reload(int friendID) {
         AppWindowHandler.setScreen(Profile.reloadWith(friendID), ViewsPath.PROFILE);
     }
 
     @FXML
-    private void dropFocus(){ this.bio.getParent().getParent().requestFocus(); }
+    private void dropFocus() { this.bio.getParent().getParent().requestFocus(); }
 
 }

@@ -1,7 +1,7 @@
 package com.lgs.eden.utils;
 
-import com.lgs.eden.api.API;
-import com.lgs.eden.application.WindowController;
+import com.lgs.eden.utils.config.Config;
+import com.lgs.eden.utils.config.OperatingSystem;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.image.Image;
@@ -12,8 +12,6 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.net.URLDecoder;
-import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Objects;
@@ -110,5 +108,11 @@ public final class Utility {
                 throw new IllegalStateException("Couldn't open link "+link);
             }
         }
+    }
+
+    /** returns the user OS **/
+    public static OperatingSystem getOS() {
+        // todo: code this
+        return OperatingSystem.WINDOWS;
     }
 }

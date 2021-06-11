@@ -28,15 +28,6 @@ public class Config {
     // ------------------------------ GENERAL METHODS ----------------------------- \\
 
     /**
-     * Checks if there is a new version of the application
-     * @return true if the client needs an update, false instead
-     */
-    public static boolean checkClientVersion() {
-        System.out.println("Checking client version...");
-        return !VERSION.equals(API.imp.getEdenVersion().version);
-    }
-
-    /**
      * Is used to call the app icon
      * @return an image containing the default app icon
      */

@@ -1,5 +1,6 @@
 package com.lgs.eden.application;
 
+import com.lgs.eden.utils.download.DownloadManager;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.scene.web.WebEngine;
@@ -17,7 +18,8 @@ public class ApplicationCloseHandler implements EventHandler<WindowEvent> {
     // see GameList#onUpdateRequest
     private static Timer gameDateUpdateTimer = null;
     private static Thread gameDateUpdateThread = null;
-    private static WebEngine engine;
+    private static WebEngine engine = null;
+    private static Thread downloadManager = null;
 
     public static void startUpdateThread(Timer timer, Runnable r) {
         closeUpdateThread();
@@ -37,10 +39,32 @@ public class ApplicationCloseHandler implements EventHandler<WindowEvent> {
         ApplicationCloseHandler.engine = engine;
     }
 
-    private static void closeWebEngine() {
+    public static void closeWebEngine() {
         if (engine != null){
             engine.load(null);
         }
+    }
+
+    public static void startDownloadThread(Thread downloadManager) {
+        closeDownloadThread();
+        ApplicationCloseHandler.downloadManager = downloadManager;
+        downloadManager.start();
+    }
+
+    public static void closeDownloadThread() {
+        if (downloadManager != null) {
+            downloadManager.interrupt();
+        }
+        downloadManager = null;
+    }
+
+    public static void close() {
+        // ends
+        closeUpdateThread();
+        closeWebEngine();
+        closeDownloadThread();
+        // radical ends
+        Platform.exit();
     }
 
 
@@ -48,10 +72,6 @@ public class ApplicationCloseHandler implements EventHandler<WindowEvent> {
 
     @Override
     public void handle(WindowEvent event) {
-        // ends
-        closeUpdateThread();
-        closeWebEngine();
-        // radical ends
-        Platform.exit();
+        close();
     }
 }

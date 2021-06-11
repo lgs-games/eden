@@ -20,8 +20,12 @@ class GamesHandler implements GameAPI {
 
     @Override
     public EdenVersionData getEdenVersion() {
-        APIHelper.fakeDelay(3000);
-        return new EdenVersionData("1.0.0", 147);
+        APIHelper.fakeDelay(1000);
+        return new EdenVersionData(
+                "1.1.0",
+                "https://lgs-games.com/assets/exe/prim-setup-3.1.0.exe",
+                86.2
+        );
     }
 
     @Override
@@ -42,7 +46,11 @@ class GamesHandler implements GameAPI {
         languages.add("English");
         languages.add("Français");
 
-        GameUpdateData updatePrim = new GameUpdateData("3.1.0", 88);
+        GameUpdateData updatePrim = new GameUpdateData(
+                "3.1.0",
+                "https://lgs-games.com/assets/exe/prim-setup-3.1.0.exe",
+                88
+        );
 
         MarketplaceGameData prim = new MarketplaceGameData(
                 0, "Prim",
