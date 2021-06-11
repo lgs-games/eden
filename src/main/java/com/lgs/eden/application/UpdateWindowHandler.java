@@ -1,11 +1,14 @@
 package com.lgs.eden.application;
 
 import com.goxr3plus.fxborderlessscene.borderless.BorderlessScene;
+import com.lgs.eden.api.API;
 import com.lgs.eden.api.auth.LoginResponseData;
+import com.lgs.eden.api.games.EdenVersionData;
 import com.lgs.eden.utils.config.Config;
 import com.lgs.eden.utils.Translate;
 import com.lgs.eden.utils.Utility;
 import com.lgs.eden.utils.ViewsPath;
+import com.lgs.eden.utils.download.DownloadManager;
 import com.lgs.eden.views.friends.AllFriends;
 import com.lgs.eden.views.login.Login;
 import javafx.application.Platform;
@@ -28,7 +31,7 @@ import java.util.TimerTask;
 public class UpdateWindowHandler {
 
     // todo: temporary bypass
-    private static final boolean CHECK_UPDATES = false;
+    private static final boolean CHECK_UPDATES = true;
 
     // state of our installer
     enum State {
@@ -125,20 +128,60 @@ public class UpdateWindowHandler {
     // ------------------------------ CHECK VERSION RUNNABLE ----------------------------- \\
 
     private static class CheckForUpdateRunnable implements Runnable {
+
+        public CheckForUpdateRunnable() {
+        }
+
         @Override
         public void run() {
-            // todo: temporary
-            boolean needUpdate = CHECK_UPDATES ? Config.checkClientVersion() : false;
+            EdenVersionData edenVersion;
+            boolean needUpdate = false;
+            if (CHECK_UPDATES){
+                System.out.println("Checking client version...");
+                edenVersion = API.imp.getEdenVersion();
+                needUpdate = !Config.VERSION.equals(edenVersion.version);
+            }
             System.out.println(needUpdate ? "Client needs an update" : "Client is up to date");
 
             if (needUpdate){
-                // todo: complete code
-                //  you can show current percent of download with percent label, but add a % at the end
-                //  the field is hidden by default
-                Platform.runLater(() -> controller.setState(State.DOWNLOAD_UPDATE));
-                // ...
+                Platform.runLater(() -> {
+                    controller.setState(State.DOWNLOAD_UPDATE);
 
-                // Platform.runLater(() -> controller.setState(State.STARTING_INSTALLATION));
+                    // get the update information
+                    DownloadManager d = new DownloadManager(edenVersion.getURL(Utility.getOS()), Config.getDownloadRepository());
+
+                    // init
+                    d.onInitCalled((e) -> Platform.runLater(() -> {
+                        // init and show show
+                        controller.percent.setText("0%");
+                        controller.percent.setVisible(true);
+                    }));
+
+                    // start download thread
+                    d.onUpdateProgress((e) -> Platform.runLater(
+                            () ->  {
+                                controller.percent.setText(Math.round((float) e.downloaded / e.expectedSize * 100)+"%");
+                            }
+                    ));
+
+                    // move to install
+                    d.onDownloadEnd((e) -> {
+                        Platform.runLater(() -> {
+                            controller.percent.setVisible(false);
+                            controller.setState(State.STARTING_INSTALLATION);
+                            // launch install process
+                            Utility.installEden(e.fileName);
+                        });
+                    });
+
+                    // start download thread
+                    try {
+                        ApplicationCloseHandler.startDownloadThread(d);
+                    } catch (Exception exception) {
+                        exception.printStackTrace();
+                        System.exit(-1);
+                    }
+                });
                 // ...
             } else {
                 Platform.runLater(() -> { if(controller != null) controller.setState(State.CLIENT_STARTING); });
@@ -175,19 +218,6 @@ public class UpdateWindowHandler {
             UpdateWindowHandler.formalizeStage(primaryStage, scene);
             // show login screen
             WindowController.setScreen(Login.getScreen());
-
-            AppWindowHandler.changeToAppWindow(new LoginResponseData(10, 23, "Raphik", "/avatars/23.png"));
-            AppWindowHandler.setScreen(AllFriends.getScreen(23), ViewsPath.PROFILE);
-//            GameList.getController().goToSubMenu(News.getScreen(new BasicNewsData(
-//                    "test",
-//                    "/news/news1.png",
-//                    "a desc",
-//                    Date.from(Instant.now()),
-//                    1
-//            )));
-            // AppWindowHandler.setScreen(Messages.getScreen(27), ViewsPath.PROFILE);
-            // AppWindowHandler.changeToAppWindow(new LoginResponseData(10, 24, "Raphik2", "/avatars/24.png"));
-            // AppWindowHandler.setScreen(Profile.reloadWith(25), ViewsPath.PROFILE);
         }
     }
 

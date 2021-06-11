@@ -8,6 +8,7 @@ package com.lgs.eden.utils.download;
  * @see DownloadEvent#expectedSize size such as 92415878 for 92 mb 415Ko 878o
  * @see DownloadEvent#speed speed such as 1605632 for 1MB 605Ko 632o per second
  * @see DownloadEvent#timeRemaining estimated remaining time based on speed and remaining size, in s
+ * @see DownloadEvent#fileName file name
  */
 public class DownloadEvent {
 
@@ -15,12 +16,15 @@ public class DownloadEvent {
     public final long expectedSize;
     public final long speed;
     public final long timeRemaining;
+    public final String fileName;
 
-    public DownloadEvent(long downloaded, long expectedSize, long speed, long timeRemaining) {
+    public DownloadEvent(long downloaded, long expectedSize, long speed, long timeRemaining,
+                         String fileName) {
         this.downloaded = downloaded;
         this.expectedSize = expectedSize;
         this.speed = speed;
         this.timeRemaining = timeRemaining;
+        this.fileName = fileName;
     }
 
 }

@@ -8,7 +8,6 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.ByteBuffer;
-import java.nio.channels.Channel;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
 import java.nio.file.Paths;
@@ -75,8 +74,8 @@ public class DownloadManager extends Thread implements ReadableByteChannel {
             this.readChannel = Channels.newChannel(new URL(url).openStream());
             // call init callback with the values we have
             if( this.initRunnable != null ) this.initRunnable.downloadCallBack( event = new DownloadEvent(
-                    0, this.size, -1, -1
-            ));
+                    0, this.size, -1, -1,
+                    fileName));
 
             // then start the transfert
             this.fileOutput = new FileOutputStream(this.fileName);
@@ -117,28 +116,28 @@ public class DownloadManager extends Thread implements ReadableByteChannel {
     // ------------------------------ CHANNELS ----------------------------- \\
 
     public int read( ByteBuffer bb ) throws IOException {
-        long downloaded, speed = event.speed, timeRemaining;
+        long downloaded, speed = this.event.speed, timeRemaining;
         int n;
         // first call
-        if( last == null ) {
-            timeElapsed = System.currentTimeMillis();
-            last = event;
+        if( this.last == null ) {
+            this.timeElapsed = System.currentTimeMillis();
+            this.last = event;
         }
 
-        if(System.currentTimeMillis() - timeElapsed > 1000L){//= 1s
-            speed = event.downloaded - last.downloaded;
+        if(System.currentTimeMillis() - this.timeElapsed > 1000L){//= 1s
+            speed = this.event.downloaded - this.last.downloaded;
             //reset
-            last = event;
-            timeElapsed = System.currentTimeMillis();
+            this.last = this.event;
+            this.timeElapsed = System.currentTimeMillis();
         }
 
-        if ( ( n = readChannel.read(bb) ) > 0) {
-            downloaded = n + event.downloaded;
+        if ( ( n = this.readChannel.read(bb) ) > 0) {
+            downloaded = n + this.event.downloaded;
             if(speed < 0) speed = 0;
             if(speed != 0){
-                timeRemaining = (size - downloaded) / speed;
+                timeRemaining = (this.size - downloaded) / speed;
             } else timeRemaining = Long.MAX_VALUE;
-            this.event = new DownloadEvent(downloaded, size, speed, timeRemaining);
+            this.event = new DownloadEvent(downloaded, this.size, speed, timeRemaining, fileName);
             this.onUpdateRunnable.downloadCallBack(this.event);
         }
 
@@ -147,7 +146,10 @@ public class DownloadManager extends Thread implements ReadableByteChannel {
 
     // ------------------------------ CLOSE ----------------------------- \\
 
-    @Override public void close() throws IOException { this.readChannel.close(); }
-    @Override public boolean isOpen() { return this.readChannel.isOpen(); }
+    @Override
+    public void close() throws IOException { this.readChannel.close(); }
+
+    @Override
+    public boolean isOpen() { return this.readChannel.isOpen(); }
 
 }

@@ -1,7 +1,10 @@
 package com.lgs.eden.utils;
 
+import com.lgs.eden.application.ApplicationCloseHandler;
+import com.lgs.eden.application.PopupUtils;
 import com.lgs.eden.utils.config.Config;
 import com.lgs.eden.utils.config.OperatingSystem;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.image.Image;
@@ -114,5 +117,30 @@ public final class Utility {
     public static OperatingSystem getOS() {
         // todo: code this
         return OperatingSystem.WINDOWS;
+    }
+
+    /** install eden, close program **/
+    public static void installEden(String installer) {
+        OperatingSystem os = getOS();
+        if (os.equals(OperatingSystem.WINDOWS)){
+            try {
+                // and close
+                ApplicationCloseHandler.closeDownloadThread();
+                ApplicationCloseHandler.close();
+                Platform.exit();
+
+
+                ProcessBuilder process = new ProcessBuilder(installer, "/VERYSILENT", "/MERGETASKS=\"desktopicon,postinstall\"");
+                process.directory(new File(new File(installer).getParent()));
+                process.start();
+
+                System.exit(0);
+            } catch (IOException ex) {
+                System.out.println("Unable to install new version.");
+                // PopupUtils.showPopup(Translate.getTranslation("Unable to install new version."));
+            }
+        } else {
+            throw new UnsupportedOperationException("not yet");
+        }
     }
 }

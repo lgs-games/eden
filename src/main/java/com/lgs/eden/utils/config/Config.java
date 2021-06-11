@@ -97,4 +97,23 @@ public class Config {
             }
         }
     }
+
+    private static String downloadRepository = null;
+
+    /**
+     * Return download repository path
+     */
+    public static String getDownloadRepository() {
+        if (downloadRepository == null){
+            downloadRepository = Utility.getCurrentDirectory() + File.separator + ".cache";
+            File file = new File(downloadRepository);
+            if (!file.exists() || !file.isDirectory()) {
+                if (!file.mkdir()){
+                    // current
+                    downloadRepository = Utility.getCurrentDirectory();
+                }
+            }
+        }
+        return downloadRepository;
+    }
 }
