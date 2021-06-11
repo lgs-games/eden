@@ -2,14 +2,12 @@ package com.lgs.eden.application;
 
 import com.goxr3plus.fxborderlessscene.borderless.BorderlessScene;
 import com.lgs.eden.api.API;
-import com.lgs.eden.api.auth.LoginResponseData;
 import com.lgs.eden.api.games.EdenVersionData;
 import com.lgs.eden.utils.config.Config;
 import com.lgs.eden.utils.Translate;
 import com.lgs.eden.utils.Utility;
 import com.lgs.eden.utils.ViewsPath;
 import com.lgs.eden.utils.download.DownloadManager;
-import com.lgs.eden.views.friends.AllFriends;
 import com.lgs.eden.views.login.Login;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -51,6 +49,7 @@ public class UpdateWindowHandler {
     public static void start(Stage primaryStage){
         // save for later
         oldStage = primaryStage;
+        WindowController.setStage(oldStage);
 
         if (CHECK_UPDATES){
             // init installer
@@ -71,7 +70,11 @@ public class UpdateWindowHandler {
             formalizeStage(primaryStage, scene);
 
             // we need that to close 3 dots thread
-            primaryStage.setOnCloseRequest(event -> oldStage = null);
+            primaryStage.setOnCloseRequest(event -> {
+                new ApplicationCloseHandler().handle(event);
+                // todo: move to close handler
+                oldStage = null;
+            });
         }
 
         // call check for update runnable
@@ -159,28 +162,21 @@ public class UpdateWindowHandler {
 
                     // start download thread
                     d.onUpdateProgress((e) -> Platform.runLater(
-                            () ->  {
-                                controller.percent.setText(Math.round((float) e.downloaded / e.expectedSize * 100)+"%");
-                            }
+                            () -> controller.percent.setText(Math.round((float) e.downloaded / e.expectedSize * 100)+"%")
                     ));
 
                     // move to install
-                    d.onDownloadEnd((e) -> {
-                        Platform.runLater(() -> {
-                            controller.percent.setVisible(false);
-                            controller.setState(State.STARTING_INSTALLATION);
-                            // launch install process
-                            Utility.installEden(e.fileName);
-                        });
-                    });
+                    d.onDownloadEnd((e) ->
+                            Platform.runLater(() -> {
+                                controller.percent.setVisible(false);
+                                controller.setState(State.STARTING_INSTALLATION);
+                                // launch install process
+                                Utility.installEden(e.fileName);
+                            }
+                    ));
 
                     // start download thread
-                    try {
-                        ApplicationCloseHandler.startDownloadThread(d);
-                    } catch (Exception exception) {
-                        exception.printStackTrace();
-                        System.exit(-1);
-                    }
+                    ApplicationCloseHandler.startDownloadThread(d);
                 });
                 // ...
             } else {
@@ -201,6 +197,7 @@ public class UpdateWindowHandler {
         @Override
         public void run() {
             // close old
+            oldStage.setOnCloseRequest((e) -> {});
             oldStage.close();
             oldStage = null;
 

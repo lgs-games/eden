@@ -1,10 +1,11 @@
 package com.lgs.eden.utils.config;
 
-import com.lgs.eden.api.API;
 import com.lgs.eden.utils.Utility;
 import javafx.scene.image.Image;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.Locale;
 
 /**
@@ -105,13 +106,10 @@ public class Config {
      */
     public static String getDownloadRepository() {
         if (downloadRepository == null){
-            downloadRepository = Utility.getCurrentDirectory() + File.separator + ".cache";
-            File file = new File(downloadRepository);
-            if (!file.exists() || !file.isDirectory()) {
-                if (!file.mkdir()){
-                    // current
-                    downloadRepository = Utility.getCurrentDirectory();
-                }
+            try {
+                downloadRepository = Files.createTempDirectory("eden").toFile().getAbsolutePath();
+            } catch (IOException e) {
+                System.exit(0);
             }
         }
         return downloadRepository;

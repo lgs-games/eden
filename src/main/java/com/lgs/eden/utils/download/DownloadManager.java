@@ -1,16 +1,16 @@
 package com.lgs.eden.utils.download;
 
+import com.lgs.eden.application.PopupUtils;
+import javafx.application.Platform;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.ByteBuffer;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
-import java.nio.file.Paths;
+import java.util.Arrays;
 
 /**
  * Download a file to a location. You may add
@@ -49,52 +49,64 @@ public class DownloadManager extends Thread implements ReadableByteChannel {
     private String fileName;
     private int size;
     private long timeElapsed = 0L;
-    private long speed = 0L;
 
     @Override
     public void run() {
-        File out = new File(this.location);
-        // try create dir
-        if( !out.exists() ){
-            try {
-                if (!out.mkdir()) { throw new IOException(); }
-            } catch (IOException|SecurityException e) {
-                throw new IllegalStateException("Can't create location folder for "+this.location);
-            }
-        }
-
-        //reading
+        // todo: fix view inside model
         try {
-            HttpURLConnection.setFollowRedirects(false);
-            HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
-            connection.setRequestMethod("HEAD");
+            File out = new File(this.location);
 
-            this.size = connection.getContentLength();
-            this.fileName = this.location + File.separator + Paths.get(new URI(url).getPath()).getFileName().toString();
-            this.readChannel = Channels.newChannel(new URL(url).openStream());
-            // call init callback with the values we have
-            if( this.initRunnable != null ) this.initRunnable.downloadCallBack( event = new DownloadEvent(
-                    0, this.size, -1, -1,
-                    fileName));
+            // try create dir
+            if( !out.exists() ){
+                try {
+                    if (!out.mkdir()) { throw new IOException(); }
+                } catch (IOException|SecurityException e) {
+                    Platform.runLater(()-> PopupUtils.showPopup(
+                            "Unable to create a directory to store the new version."
+                    ));
+                }
+            }
 
-            // then start the transfert
-            this.fileOutput = new FileOutputStream(this.fileName);
+            //reading
+            try {
+//                HttpsURLConnection.setFollowRedirects(false);
+//                HttpsURLConnection connection = (HttpsURLConnection) new URL(url).openConnection();
+//                connection.setRequestMethod("HEAD");
 
-            System.out.println(fileName);
+                // this.size = connection.getContentLength();
+                // this.fileName = this.location + File.separator + Paths.get(new URI(url).getPath()).getFileName().toString();
+                this.size = 0;
+                this.fileName =  this.location + File.separator + "eden-setup-1.1.0.exe";
+                this.readChannel = Channels.newChannel(new URL(url).openStream());
+                // call init callback with the values we have
+                if( this.initRunnable != null ) this.initRunnable.downloadCallBack( event = new DownloadEvent(
+                        0, this.size, -1, -1,
+                        fileName));
 
-            this.fileOutput.getChannel().transferFrom(this, 0, Long.MAX_VALUE);
-            this.fileOutput.close();
-            this.fileOutput = null;
-            if(this.fileName != null){
-                this.endRunnable.downloadCallBack(event);
-            } // else callDownloadCancel();
-        } catch (IOException| URISyntaxException e){
-            /*
-             * causes may be
-             * - can't find URL
-             * - invalid location path / can't create
-             */
-            throw new IllegalStateException("Download failed");
+                // then start the transfert
+                this.fileOutput = new FileOutputStream(this.fileName);
+
+                this.fileOutput.getChannel().transferFrom(this, 0, Long.MAX_VALUE);
+                this.fileOutput.close();
+                this.fileOutput = null;
+                if(this.fileName != null){
+                    this.endRunnable.downloadCallBack(event);
+                } // else callDownloadCancel();
+            } catch (IOException e){
+                /*
+                 * causes may be
+                 * - can't find URL
+                 * - invalid location path / can't create
+                 */
+                throw new IllegalStateException(e);
+            }
+        } catch (Exception e) {
+            Platform.runLater(()-> PopupUtils.showPopup(
+                    "Unable to download new version.\n"+
+                    e.getMessage()
+                    +"\n"+
+                    Arrays.toString(e.getStackTrace()))
+            );
         }
     }
 

@@ -54,7 +54,12 @@ public class WindowController {
     public static void setScreen(Parent content){ window.setCenter(content); }
 
     /** returns primary stage **/
-    public static Stage getStage() { return instance.stage; }
+    public static Stage getStage() { return instance != null ? instance.stage : oldStage; }
+
+    private static Stage oldStage;
+    public static void setStage(Stage oldStage) {
+        WindowController.oldStage = oldStage;
+    }
 
     /** change window size **/
     public static void setSize(int width, int height){

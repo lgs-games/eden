@@ -58,13 +58,17 @@ public class ApplicationCloseHandler implements EventHandler<WindowEvent> {
         downloadManager = null;
     }
 
-    public static void close() {
+    public static void close(boolean simpleExit) {
         // ends
         closeUpdateThread();
         closeWebEngine();
         closeDownloadThread();
         // radical ends
         Platform.exit();
+
+        if (simpleExit){
+            System.exit(0);
+        }
     }
 
 
@@ -72,6 +76,6 @@ public class ApplicationCloseHandler implements EventHandler<WindowEvent> {
 
     @Override
     public void handle(WindowEvent event) {
-        close();
+        close(true);
     }
 }

@@ -98,8 +98,7 @@ public final class Utility {
 
     /** return current directory **/
     public static String getCurrentDirectory() {
-       String path = Utility.class.getProtectionDomain().getCodeSource().getLocation().getPath();
-       return new File(path).getParent(); // get parent folder
+        return System.getProperty("user.dir");
     }
 
     /** open a link in browser or throws an exception **/
@@ -125,15 +124,14 @@ public final class Utility {
         if (os.equals(OperatingSystem.WINDOWS)){
             try {
                 // and close
-                ApplicationCloseHandler.closeDownloadThread();
-                ApplicationCloseHandler.close();
-                Platform.exit();
+                ApplicationCloseHandler.close(false);
 
-
+                // start exe
                 ProcessBuilder process = new ProcessBuilder(installer, "/VERYSILENT", "/MERGETASKS=\"desktopicon,postinstall\"");
                 process.directory(new File(new File(installer).getParent()));
                 process.start();
 
+                // kill program
                 System.exit(0);
             } catch (IOException ex) {
                 System.out.println("Unable to install new version.");
