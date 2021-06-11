@@ -38,6 +38,7 @@ Name: "french"; MessagesFile: "compiler:Languages\French.isl"
 
 [Tasks]
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
+Name: "postinstall"; Description: Run;
 
 [Files]
 Source: "..\eden\exe\eden.exe"; DestDir: "{app}"; Flags: ignoreversion
@@ -50,3 +51,5 @@ Source: "..\eden\exe\runtime\*"; DestDir: "{app}\runtime"; Flags: ignoreversion 
 Name: "{autoprograms}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"
 Name: "{autodesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: desktopicon
 
+[Run]
+Filename: {app}\eden.exe; Flags: shellexec nowait; Tasks: postinstall
