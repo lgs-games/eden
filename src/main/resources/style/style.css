@@ -86,12 +86,17 @@
     -fx-border-radius: 5px;
 }
 
-.profile-game {
+.profile-game-playing {
     -fx-border-width: 1px;
     -fx-border-color: #00ac41;
 }
 
-.profile-game-playing {
+.profile-game {
+    -fx-border-width: 1px;
+    -fx-border-color: #1e262c;
+}
+
+.profile-game-playing-label {
     -fx-text-fill: #00ac41;
 }
 
