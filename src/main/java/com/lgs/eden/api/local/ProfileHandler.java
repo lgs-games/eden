@@ -1,5 +1,7 @@
 package com.lgs.eden.api.local;
 
+import com.lgs.eden.api.APIResponseCode;
+import com.lgs.eden.api.profile.ReputationScore;
 import com.lgs.eden.api.profile.friends.FriendConversationView;
 import com.lgs.eden.api.profile.friends.FriendData;
 import com.lgs.eden.api.profile.ProfileAPI;
@@ -85,8 +87,12 @@ class ProfileHandler implements ProfileAPI {
         return friendList.get(userID);
     }
 
+    private final HashMap<Integer, ProfileData> profiles = new HashMap<>();
+
     @Override
     public ProfileData getProfileData(int userID, int currentUserID) {
+        if (profiles.containsKey(userID)) return profiles.get(userID);
+
         ObservableList<FriendData> friendDataObservableList = FXCollections.observableArrayList();
         for (FriendData f:this.getFriendList(userID)) {
             // only show friend with the profile shown
@@ -107,35 +113,40 @@ class ProfileHandler implements ProfileAPI {
 
         RecentGameData[] recentGamesData = new RecentGameData[]{};
 
+        ProfileData r = null;
+
         if (userID == 23){
             recentGamesData = new RecentGameData[]{
                     new RecentGameData(Utility.loadImage("/games/prim-icon.png"), "Prim", 0, RecentGameData.PLAYING),
                     new RecentGameData(Utility.loadImage("/games/enigma-icon.png"), "Enigma", 1020, 30)
             };
 
-            return new ProfileData("Raphik",23, "/avatars/23.png",
+            r = new ProfileData("Raphik", 23, "/avatars/23.png",
                     friendNumber, 9999,
                     "Raphiki is a great programmer at ENSIIE engineering school.",
                     new Date(), Date.from(Instant.parse("2020-12-03T10:15:30.00Z")), friendDataObservableList,
                     recentGamesData,
-                    evaluateRelationShip(userID, currentUserID)
+                    evaluateRelationShip(userID, currentUserID),
+                    ReputationScore.NONE
             );
         } else if (userID == 24){
-            return new ProfileData("Raphik2",24, "/avatars/24.png", friendNumber, 0,
+            r = new ProfileData("Raphik2",24, "/avatars/24.png", friendNumber, 0,
                     "No description yet.",
                     new Date(), Date.from(Instant.parse("2021-03-18T10:15:30.00Z")), friendDataObservableList,
                     recentGamesData,
-                    evaluateRelationShip(userID, currentUserID)
+                    evaluateRelationShip(userID, currentUserID),
+                    ReputationScore.NONE
             );
         } else if (userID == 25){
-            return new ProfileData("Calistral",25, "/avatars/25.png", friendNumber, -1,
+            r = new ProfileData("Calistral",25, "/avatars/25.png", friendNumber, -1,
                     "No description yet.",
                     new Date(), Date.from(Instant.parse("2020-12-03T10:15:30.00Z")), friendDataObservableList,
                     recentGamesData,
-                    evaluateRelationShip(userID, currentUserID)
+                    evaluateRelationShip(userID, currentUserID),
+                    ReputationScore.DECREASED
             );
         } else if (userID == 26){
-            return new ProfileData("Caliki", 26, "/avatars/26.png", friendNumber, 0,
+            r = new ProfileData("Caliki", 26, "/avatars/26.png", friendNumber, 0,
                     "This is a really"+"This is a really"+"This is a really"+"This is a really"+"This is a really"
                             +"This is a really"+"This is a really"+"This is a really"+"This is a really"+"This is a really"
                             +"This is a really"+"This is a really"+"This is a really"+"This is a really"+"This is a really"
@@ -144,18 +155,62 @@ class ProfileHandler implements ProfileAPI {
                             +"This is a really"+"This is a really"+"This is a really"+"This is a really"+"This is a really",
                     new Date(), Date.from(Instant.parse("2020-12-03T10:15:30.00Z")), friendDataObservableList,
                     recentGamesData,
-                    evaluateRelationShip(userID, currentUserID)
+                    evaluateRelationShip(userID, currentUserID),
+                    ReputationScore.NONE
             );
         } else if (userID == 27){
-            return new ProfileData("Raphistro",27, "/avatars/27.png", friendNumber, 17570,
+            r = new ProfileData("Raphistro",27, "/avatars/27.png", friendNumber, 17570,
                     "No description yet.",
                     new Date(), Date.from(Instant.parse("2020-03-09T10:15:30.00Z")), friendDataObservableList,
                     recentGamesData,
-                    evaluateRelationShip(userID, currentUserID)
+                    evaluateRelationShip(userID, currentUserID),
+                    ReputationScore.INCREASED
             );
         }
 
-        throw new IllegalStateException("Not supported");
+        if (r == null ) throw new IllegalStateException("Not supported");
+
+        profiles.put(userID, r);
+        return r;
+    }
+
+    @Override
+    public ProfileData changeReputation(int userID, int currentUserID, boolean increase) {
+        ProfileData p = getProfileData(userID, currentUserID);
+
+        ReputationScore score = p.score;
+        // new values
+        int newRep = p.reputation;
+        ReputationScore newScore = ReputationScore.NONE;
+        switch (score){
+            case NONE:
+                if (increase){
+                    newRep++;
+                    newScore = ReputationScore.INCREASED;
+                } else {
+                    newRep--;
+                    newScore = ReputationScore.DECREASED;
+                }
+                break;
+            case INCREASED:
+                if (increase) return null;
+                else {
+                    newRep--;
+                }
+                break;
+            case DECREASED:
+                if (!increase) return null;
+                else {
+                    newRep++;
+                }
+                break;
+        }
+
+        ProfileData newProfileData = new ProfileData(p, newRep, newScore);
+
+        profiles.put(userID, newProfileData);
+
+        return newProfileData;
     }
 
     @Override

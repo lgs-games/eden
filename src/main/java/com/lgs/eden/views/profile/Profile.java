@@ -1,6 +1,7 @@
 package com.lgs.eden.views.profile;
 
 import com.lgs.eden.api.API;
+import com.lgs.eden.api.APIResponseCode;
 import com.lgs.eden.api.profile.friends.FriendData;
 import com.lgs.eden.api.profile.ProfileData;
 import com.lgs.eden.application.AppWindowHandler;
@@ -8,6 +9,7 @@ import com.lgs.eden.utils.Translate;
 import com.lgs.eden.utils.Utility;
 import com.lgs.eden.utils.cell.CustomCells;
 import com.lgs.eden.views.friends.AllFriends;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import com.lgs.eden.utils.ViewsPath;
 import javafx.fxml.FXMLLoader;
@@ -100,17 +102,7 @@ public class Profile {
         this.since.setText(Translate.getDate(this.data.memberSinceDate)); // getDate format
         this.avatar.setImage(this.data.avatar); // set avatar
 
-        // reputation
-        int rep = Integer.compare(this.data.reputation, 0);
-        String repSigne = rep >= 0 ? "+" : "";
-        String repStyle = rep == -1 ? "red-text": rep == 1 ? "green-text" : "";
-        this.reputation.setText(repSigne+this.data.reputation);
-        if(!repStyle.isEmpty()) this.reputation.getStyleClass().add(repStyle);
-        // disable +1 and -1 visually
-        if (AppWindowHandler.currentUserID() == this.data.userID){
-            this.addOne.setDisable(true);
-            this.removeOne.setDisable(true);
-        }
+        setReputation(this.data);
 
         // ------------------------------ ADD/REMOVE FRIEND ----------------------------- \\
 
@@ -182,7 +174,7 @@ public class Profile {
     }
     public void onAddFriend(int friendID){
         API.imp.addFriend(friendID, AppWindowHandler.currentUserID());
-        AppWindowHandler.setScreen(Profile.reloadWith(friendID), ViewsPath.PROFILE);
+        reloadWith(friendID);
     }
 
     /** Listener of the remove friend button **/
@@ -192,7 +184,7 @@ public class Profile {
     }
     public void onRemoveFriend(int friendID) {
         API.imp.removeFriend(friendID, AppWindowHandler.currentUserID());
-        AppWindowHandler.setScreen(Profile.reloadWith(friendID), ViewsPath.PROFILE);
+        reload(friendID);
     }
 
     /** Listener of the +1 rep label **/
@@ -200,8 +192,8 @@ public class Profile {
     private void onPlusOneRep() {
         // api won't allow it
         if (AppWindowHandler.currentUserID() == data.userID) return;
-
-        System.out.println("+1 rep for "+data.userID+" ("+data.username+")");
+        ProfileData r = API.imp.changeReputation(data.userID, AppWindowHandler.currentUserID(), true);
+        if (r != null) this.setReputation(this.data = r);
     }
 
     /** Listener of the -1 rep label **/
@@ -210,7 +202,38 @@ public class Profile {
         // api won't allow it
         if (AppWindowHandler.currentUserID() == data.userID) return;
 
-        System.out.println("-1 rep for "+data.userID+" ("+data.username+")");
+        ProfileData r = API.imp.changeReputation(data.userID, AppWindowHandler.currentUserID(), false);
+        if (r != null) this.setReputation(this.data = r);
+    }
+
+    private void setReputation(ProfileData data) {
+        // reputation
+        int rep = Integer.compare(data.reputation, 0);
+        String repSigne = rep >= 0 ? "+" : "";
+        String repStyle = rep == -1 ? "red-text": rep == 1 ? "green-text" : "black-text";
+        this.reputation.setText(repSigne+data.reputation);
+        this.reputation.getStyleClass().set(0, repStyle);
+
+        // disable +1 and -1 visually
+        if (AppWindowHandler.currentUserID() == this.data.userID){
+            this.addOne.setDisable(true);
+            this.removeOne.setDisable(true);
+        } else {
+            switch (data.score){
+                case NONE:
+                    this.addOne.setDisable(false);
+                    this.removeOne.setDisable(false);
+                    break;
+                case INCREASED:
+                    this.addOne.setDisable(true);
+                    this.removeOne.setDisable(false);
+                    break;
+                case DECREASED:
+                    this.addOne.setDisable(false);
+                    this.removeOne.setDisable(true);
+                    break;
+            }
+        }
     }
 
     /** Listener of the accept friend button **/
@@ -220,7 +243,7 @@ public class Profile {
     }
     public void onAcceptFriend(int friendID) {
         API.imp.acceptFriend(friendID, AppWindowHandler.currentUserID());
-        AppWindowHandler.setScreen(Profile.reloadWith(friendID), ViewsPath.PROFILE);
+        reloadWith(friendID);
     }
 
     /** Listener of the accept friend button **/
@@ -230,6 +253,13 @@ public class Profile {
     }
     public void onRefuseFriend(int friendID) {
         API.imp.refuseFriend(friendID, AppWindowHandler.currentUserID());
+        reloadWith(friendID);
+    }
+
+    // ------------------------------ UTILS ----------------------------- \\
+
+    /** reload view **/
+    public void reload(int friendID){
         AppWindowHandler.setScreen(Profile.reloadWith(friendID), ViewsPath.PROFILE);
     }
 

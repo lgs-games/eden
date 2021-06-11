@@ -18,6 +18,9 @@ public enum APIResponseCode {
     REGISTER_FAILED_EMAIL(22),
     REGISTER_FAILED_LOGIN(23),
     REGISTER_FAILED_SIZE(24),
+
+    CHANGE_REPUTATION_OK(272),
+    CHANGE_REPUTATION_KO(273)
     ;
 
     private final int code;

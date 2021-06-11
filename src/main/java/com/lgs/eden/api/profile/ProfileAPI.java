@@ -1,5 +1,6 @@
 package com.lgs.eden.api.profile;
 
+import com.lgs.eden.api.APIResponseCode;
 import com.lgs.eden.api.profile.friends.FriendConversationView;
 import com.lgs.eden.api.profile.friends.FriendData;
 
@@ -24,13 +25,14 @@ public interface ProfileAPI {
     ProfileData getProfileData(int userID, int currentUserID);
 
     /**
-     * Returns the conversation with a friend. We have the messages
-     * with this friend, and we have the list of conversation that this
-     * user that with others users.
+     * Change reputation value from currentUserID to
+     * userID. Increase up to +1 and decease up to -1.
      *
-     * Returns null if no conversations at all.
+     * Return CHANGE_REPUTATION_OK or CHANGE_REPUTATION_KO
      */
-    FriendConversationView getMessageWithFriend(int friendID, int currentUserID);
+    ProfileData changeReputation(int userID, int currentUserID, boolean increase);
+
+    // ------------------------------ FRIENDS ----------------------------- \\
 
     /**
      * Request (from current to user) or accept friendship (from user)
@@ -52,6 +54,17 @@ public interface ProfileAPI {
      * friend request.
      */
     void refuseFriend(int friendID, int currentUserID);
+
+    // ------------------------------ CONVERSATIONS ----------------------------- \\
+
+    /**
+     * Returns the conversation with a friend. We have the messages
+     * with this friend, and we have the list of conversation that this
+     * user that with others users.
+     *
+     * Returns null if no conversations at all.
+     */
+    FriendConversationView getMessageWithFriend(int friendID, int currentUserID);
 
     /**
      * Create a new conversation in the list of conversation of this user.

@@ -31,15 +31,18 @@ public class ProfileData {
     // member since
     public final Date memberSinceDate;
     // avatar path
-    public Image avatar;
+    public final Image avatar;
+    public final String avatarPath;
 
     public final FriendShipStatus statusWithLogged;
+    public final ReputationScore score;
 
     public ProfileData(String username, int userID, String avatar,
                        int friendNumber, int reputation, String biography, Date lastSeen,
                        Date memberSinceDate,
                        ObservableList<FriendData> friends, RecentGameData[] recentGames,
-                       FriendShipStatus statusWithLogged) {
+                       FriendShipStatus statusWithLogged, ReputationScore score) {
+        this.avatarPath = avatar;
         this.username = username;
         this.avatar = Utility.loadImage(avatar);
         this.friends = friends;
@@ -51,5 +54,29 @@ public class ProfileData {
         this.lastSeen = lastSeen;
         this.memberSinceDate = memberSinceDate;
         this.statusWithLogged = statusWithLogged;
+        this.score = score;
+    }
+
+    /**
+     * Make a new one while changing two fields
+     */
+    public ProfileData(ProfileData data, int reputation, ReputationScore score) {
+        this(data.username, data.userID, data.avatarPath, data.friendNumber, reputation, data.biography,
+                data.lastSeen, data.memberSinceDate, data.friends, data.recentGames, data.statusWithLogged, score);
+    }
+
+    @Override
+    public String toString() {
+        return "ProfileData{" +
+                "username='" + username + '\'' +
+                ", userID=" + userID +
+                ", friendNumber=" + friendNumber +
+                ", reputation=" + reputation +
+                ", biography='" + biography + '\'' +
+                ", lastSeen=" + lastSeen +
+                ", memberSinceDate=" + memberSinceDate +
+                ", avatarPath='" + avatarPath + '\'' +
+                ", statusWithLogged=" + statusWithLogged +
+                '}';
     }
 }

@@ -105,7 +105,11 @@ public class LocalHandler implements API {
     public ProfileData getProfileData(int userID, int currentUserID) { return this.profile.getProfileData(userID, currentUserID); }
 
     @Override
-    public FriendConversationView getMessageWithFriend(int friendID, int currentUserID) { return this.profile.getMessageWithFriend(friendID, currentUserID); }
+    public ProfileData changeReputation(int userID, int currentUserID, boolean increase) {
+        return this.profile.changeReputation(userID, currentUserID, increase);
+    }
+
+    // friends
 
     @Override
     public void addFriend(int friendID, int currentUserID) { this.profile.addFriend(friendID, currentUserID); }
@@ -118,6 +122,11 @@ public class LocalHandler implements API {
 
     @Override
     public void refuseFriend(int friendID, int currentUserID) { this.profile.refuseFriend(friendID, currentUserID); }
+
+    // conv
+
+    @Override
+    public FriendConversationView getMessageWithFriend(int friendID, int currentUserID) { return this.profile.getMessageWithFriend(friendID, currentUserID); }
 
     @Override
     public boolean newConversation(int friendID, int currentUserID) { return this.profile.newConversation(friendID, currentUserID); }
