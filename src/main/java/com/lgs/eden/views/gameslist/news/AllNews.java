@@ -2,7 +2,7 @@ package com.lgs.eden.views.gameslist.news;
 
 import com.lgs.eden.api.API;
 import com.lgs.eden.api.news.BasicNewsData;
-import com.lgs.eden.utils.Config;
+import com.lgs.eden.utils.config.Config;
 import com.lgs.eden.utils.Translate;
 import com.lgs.eden.utils.Utility;
 import com.lgs.eden.utils.ViewsPath;

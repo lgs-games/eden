@@ -1,6 +1,6 @@
 package com.lgs.eden.application;
 
-import com.lgs.eden.utils.Config;
+import com.lgs.eden.utils.config.Config;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;

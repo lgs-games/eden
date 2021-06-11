@@ -111,7 +111,6 @@ public class Profile {
         boolean acceptFriend = false;
         boolean refuseFriend = false;
 
-        // todo: handle requests
         switch (this.data.statusWithLogged) {
             case USER: break;
             case REQUESTED: refuseFriend = true; break;

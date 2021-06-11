@@ -1,6 +1,6 @@
 package com.lgs.eden.api;
 
-import com.lgs.eden.utils.Language;
+import com.lgs.eden.utils.config.Language;
 
 /**
  * Methods to factorize some code

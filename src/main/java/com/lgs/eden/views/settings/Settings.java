@@ -3,25 +3,20 @@ package com.lgs.eden.views.settings;
 import com.lgs.eden.application.AppWindowHandler;
 import com.lgs.eden.application.WindowController;
 import com.lgs.eden.utils.*;
-import com.lgs.eden.views.login.Login;
+import com.lgs.eden.utils.config.Config;
+import com.lgs.eden.utils.config.Language;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.stage.DirectoryChooser;
-import javafx.stage.FileChooser;
 
 import java.io.File;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
 /**
  * Controller for settings.fxml

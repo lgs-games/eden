@@ -3,17 +3,15 @@ package com.lgs.eden.views.marketplace;
 import com.lgs.eden.api.API;
 import com.lgs.eden.api.games.MarketplaceGameData;
 import com.lgs.eden.application.AppWindowHandler;
-import com.lgs.eden.utils.Config;
+import com.lgs.eden.utils.config.Config;
 import com.lgs.eden.utils.Utility;
 import com.lgs.eden.utils.ViewsPath;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Pagination;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
-import javafx.util.Callback;
 
 import java.util.ArrayList;
 

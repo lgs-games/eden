@@ -2,7 +2,7 @@ package com.lgs.eden.application;
 
 import com.lgs.eden.api.API;
 import com.lgs.eden.api.auth.LoginResponseData;
-import com.lgs.eden.utils.Config;
+import com.lgs.eden.utils.config.Config;
 import com.lgs.eden.utils.Utility;
 import com.lgs.eden.utils.ViewsPath;
 import com.lgs.eden.views.friends.AllFriends;

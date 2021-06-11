@@ -2,11 +2,11 @@ package com.lgs.eden.application;
 
 import com.goxr3plus.fxborderlessscene.borderless.BorderlessScene;
 import com.lgs.eden.api.auth.LoginResponseData;
-import com.lgs.eden.utils.Config;
+import com.lgs.eden.utils.config.Config;
 import com.lgs.eden.utils.Translate;
 import com.lgs.eden.utils.Utility;
 import com.lgs.eden.utils.ViewsPath;
-import com.lgs.eden.views.gameslist.GameList;
+import com.lgs.eden.views.friends.AllFriends;
 import com.lgs.eden.views.login.Login;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -175,6 +175,19 @@ public class UpdateWindowHandler {
             UpdateWindowHandler.formalizeStage(primaryStage, scene);
             // show login screen
             WindowController.setScreen(Login.getScreen());
+
+            AppWindowHandler.changeToAppWindow(new LoginResponseData(10, 23, "Raphik", "/avatars/23.png"));
+            AppWindowHandler.setScreen(AllFriends.getScreen(23), ViewsPath.PROFILE);
+//            GameList.getController().goToSubMenu(News.getScreen(new BasicNewsData(
+//                    "test",
+//                    "/news/news1.png",
+//                    "a desc",
+//                    Date.from(Instant.now()),
+//                    1
+//            )));
+            // AppWindowHandler.setScreen(Messages.getScreen(27), ViewsPath.PROFILE);
+            // AppWindowHandler.changeToAppWindow(new LoginResponseData(10, 24, "Raphik2", "/avatars/24.png"));
+            // AppWindowHandler.setScreen(Profile.reloadWith(25), ViewsPath.PROFILE);
         }
     }
 

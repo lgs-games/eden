@@ -1,9 +1,7 @@
-package com.lgs.eden.utils;
+package com.lgs.eden.utils.config;
 
 import com.lgs.eden.api.API;
-import com.lgs.eden.api.games.BasicGameData;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import com.lgs.eden.utils.Utility;
 import javafx.scene.image.Image;
 
 import java.io.File;

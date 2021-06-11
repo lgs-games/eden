@@ -5,7 +5,7 @@ import com.lgs.eden.api.APIResponseCode;
 import com.lgs.eden.api.auth.LoginResponseData;
 import com.lgs.eden.application.AppWindowHandler;
 import com.lgs.eden.application.PopupUtils;
-import com.lgs.eden.utils.Config;
+import com.lgs.eden.utils.config.Config;
 import com.lgs.eden.utils.Utility;
 import com.lgs.eden.utils.ViewsPath;
 import com.lgs.eden.utils.helper.LoginRegisterForm;
@@ -16,11 +16,6 @@ import com.lgs.eden.views.settings.Settings;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.control.CheckBox;
-
-import java.awt.Desktop;
-import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
 
 /**
  * Controller for Login.
