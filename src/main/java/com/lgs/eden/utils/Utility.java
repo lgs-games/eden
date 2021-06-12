@@ -1,21 +1,22 @@
 package com.lgs.eden.utils;
 
-import com.lgs.eden.api.games.GameViewData;
-import com.lgs.eden.application.ApplicationCloseHandler;
-import com.lgs.eden.application.PopupUtils;
 import com.lgs.eden.utils.config.Config;
 import com.lgs.eden.utils.config.OperatingSystem;
-import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.image.Image;
 
+import javax.net.ssl.HttpsURLConnection;
 import java.awt.*;
-import java.io.File;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Objects;
@@ -125,4 +126,35 @@ public final class Utility {
         throw new UnsupportedOperationException("OS not supported");
     }
 
+    private static boolean isLink(String source){
+        return source.startsWith("http") || source.startsWith("https");
+    }
+
+    public static String getFileAsString(String source) {
+        if (isLink(source)){
+            try {
+                HttpsURLConnection.setFollowRedirects(false);
+                HttpsURLConnection connection = (HttpsURLConnection) new URL(source).openConnection();
+                // open
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                // read
+                StringBuilder buffer = new StringBuilder();
+                String line;
+                while ((line = bufferedReader.readLine()) != null) buffer.append(line).append("\n");
+                // close
+                bufferedReader.close();
+                return buffer.toString();
+            } catch (IOException e) {
+                throw new IllegalStateException("Couldn't read remote file");
+            }
+        } else {
+            try {
+                URL url = Utility.class.getResource(source);
+                if (url == null) throw new IOException();
+                return Files.readString(Path.of(url.toURI()), StandardCharsets.UTF_8);
+            } catch (URISyntaxException | IOException e){
+                throw new IllegalStateException("Couldn't read remote file");
+            }
+        }
+    }
 }

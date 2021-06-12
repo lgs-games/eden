@@ -48,7 +48,7 @@ public class AllNews {
     private void init(int gameID) {
         this.pagination.setPageFactory(pageIndex -> {
             // get the news for our page
-            ArrayList<BasicNewsData> allNews = API.imp.getAllNews(pageIndex, COUNT_PER_PAGE, Config.getCode(), gameID);
+            ArrayList<BasicNewsData> allNews = API.imp.getAllNews(pageIndex, COUNT_PER_PAGE, Config.getCode(), gameID, Config.getLanguage());
             // set max page
             this.pagination.setPageCount((int) Math.ceil((double) BasicNewsData.newsCount / COUNT_PER_PAGE));
             // clear old view

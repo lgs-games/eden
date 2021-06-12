@@ -60,8 +60,7 @@ public class News {
         Parser parser = Parser.builder()
                 .extensions(extensions)
                 .build();
-        // todo: load from url
-        Node document = parser.parse(MARKDOWN_TEST);
+        Node document = parser.parse(Utility.getFileAsString(news.link));
 
         HtmlRenderer renderer = HtmlRenderer.builder()
                 .extensions(extensions)

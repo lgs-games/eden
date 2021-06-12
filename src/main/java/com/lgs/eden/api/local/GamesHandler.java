@@ -79,6 +79,7 @@ class GamesHandler implements GameAPI {
                     "/news/news1.png",
                     "We patched a lot of things and tried to improve" +
                             "the game to make it less easy and more fun to play.",
+                    "https://lgs-games.com/api/news/test.md",
                     Date.from(Instant.now()),
                     0
             );
@@ -99,6 +100,7 @@ class GamesHandler implements GameAPI {
                     "Enigma (remaster)",
                     "/news/news2.png",
                     "Enigma will come back, full remade! New UI, new functionalities, multiplayer...",
+                    "https://lgs-games.com/api/news/test.md",
                     Date.from(Instant.now()),
                     1
             );

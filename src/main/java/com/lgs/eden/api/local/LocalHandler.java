@@ -9,6 +9,7 @@ import com.lgs.eden.api.profile.friends.FriendConversationView;
 import com.lgs.eden.api.profile.friends.FriendData;
 import com.lgs.eden.api.profile.ProfileData;
 import com.lgs.eden.api.profile.friends.messages.MessageData;
+import com.lgs.eden.utils.config.Language;
 import javafx.collections.ObservableList;
 
 import java.util.ArrayList;
@@ -90,8 +91,8 @@ public class LocalHandler implements API {
     // ------------------------------ NEWS ----------------------------- \\
 
     @Override
-    public ArrayList<BasicNewsData> getAllNews(int begin, int count, String code, int gameID) {
-        return this.news.getAllNews(begin, count, code, gameID);
+    public ArrayList<BasicNewsData> getAllNews(int begin, int count, String code, int gameID, Language l) {
+        return this.news.getAllNews(begin, count, code, gameID, l);
     }
 
     // ------------------------------ PROFILE ----------------------------- \\
