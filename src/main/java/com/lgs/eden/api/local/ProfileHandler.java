@@ -30,7 +30,6 @@ class ProfileHandler implements ProfileAPI {
                 r.add(friendFromProfil(d));
             }
         }
-        System.out.println(r);
         return r;
     }
 

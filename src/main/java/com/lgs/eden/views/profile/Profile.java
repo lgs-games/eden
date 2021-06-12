@@ -112,8 +112,6 @@ public class Profile {
         boolean acceptFriend = false;
         boolean refuseFriend = false;
 
-        System.out.println("status:"+data.statusWithLogged);
-
         switch (this.data.statusWithLogged) {
             case USER: break;
             case REQUESTED: refuseFriend = true; break;

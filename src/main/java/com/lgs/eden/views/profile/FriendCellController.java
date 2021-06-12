@@ -23,8 +23,18 @@ import javafx.scene.shape.Circle;
 public class FriendCellController implements CellHandler<FriendData> {
 
     // ------------------------------ STATIC ----------------------------- \\
+    /** called after each event **/
+    private static Runnable afterEvent;
 
-    public static CellHandler<FriendData> load(){ return CellHandler.load(ViewsPath.FRIEND_CELL); }
+    public static CellHandler<FriendData> load(){
+        afterEvent = () -> {};
+        return CellHandler.load(ViewsPath.FRIEND_CELL);
+    }
+
+    public static CellHandler<FriendData> load(Runnable r){
+        afterEvent = r;
+        return CellHandler.load(ViewsPath.FRIEND_CELL);
+    }
 
     private static FriendCellController current;
     private static ContextMenu contextMenu;
@@ -53,13 +63,13 @@ public class FriendCellController implements CellHandler<FriendData> {
         tchat = new MenuItem(Translate.getTranslation("send_message"));
 
         // listeners
-        profile.setOnAction((e) -> current.onWantProfile(null));
-        addFriend.setOnAction((e) -> current.onAddUser());
-        removeFriend.setOnAction((e) -> current.onRemoveUser());
-        acceptFriendRequest.setOnAction((e) -> current.onAcceptFriend());
-        refuseFriendRequest.setOnAction((e) -> current.onRefuseFriend());
-        cancelFriendRequest.setOnAction((e) -> current.onCancelRequest());
-        tchat.setOnAction((e) -> current.onWantMessage());
+        profile.setOnAction((e) -> { current.onWantProfile(null); afterEvent.run(); });
+        addFriend.setOnAction((e) -> { current.onAddUser(); afterEvent.run(); });
+        removeFriend.setOnAction((e) -> { current.onRemoveUser(); afterEvent.run(); });
+        acceptFriendRequest.setOnAction((e) -> { current.onAcceptFriend(); afterEvent.run(); });
+        refuseFriendRequest.setOnAction((e) -> { current.onRefuseFriend(); afterEvent.run(); });
+        cancelFriendRequest.setOnAction((e) -> { current.onCancelRequest(); afterEvent.run(); });
+        tchat.setOnAction((e) -> { current.onWantMessage(); afterEvent.run(); });
 
         // add menu items to menu
         contextMenu.getItems().add(profile);

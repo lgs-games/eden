@@ -63,7 +63,7 @@ public class SearchPane {
             users.getStyleClass().add("app-background");
             ArrayList<FriendData> filter = this.handler.filter(text);
             users.setItems(FXCollections.observableArrayList(filter));
-            users.setCellFactory(friendDataListView -> new CustomCells<>(FriendCellController.load()));
+            users.setCellFactory(friendDataListView -> new CustomCells<>(FriendCellController.load(this::onSearch)));
             container.setCenter(users);
 
             // fixme: this is a patch of
