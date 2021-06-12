@@ -5,6 +5,8 @@ import com.lgs.eden.application.WindowController;
 import com.lgs.eden.utils.*;
 import com.lgs.eden.utils.config.Config;
 import com.lgs.eden.utils.config.Language;
+import com.lgs.eden.views.login.Login;
+import com.lgs.eden.views.register.Register;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -31,13 +33,7 @@ public class Settings implements ChangeListener<Language> {
      * Setter for the Parent of the screen that called settings
      * @param entry the Parent that called the settings screen
      */
-    public static void setBackScreen(ViewsPath entry) {backScreen = entry;}
-
-    /**
-     * Getter for the parent that called the settings screen
-     * @return the Parent stocked in backScreen
-     */
-    public static ViewsPath getBackScreen() {return backScreen;}
+    public static void setBackScreen(ViewsPath entry) { backScreen = entry; }
 
     /**
      * @return settings screen
@@ -133,10 +129,10 @@ public class Settings implements ChangeListener<Language> {
      */
     @FXML
     public void onBackIsPressed() {
-        try {
-            WindowController.setScreen(Utility.loadViewPane(backScreen.path));
-        } catch (IllegalStateException e) {
-            e.printStackTrace();
+        if (backScreen.equals(ViewsPath.LOGIN)){
+            WindowController.setScreen(Login.getScreen());
+        } else {
+            WindowController.setScreen(Register.getScreen());
         }
     }
 
