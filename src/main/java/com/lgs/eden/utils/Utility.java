@@ -1,5 +1,6 @@
 package com.lgs.eden.utils;
 
+import com.lgs.eden.api.games.GameViewData;
 import com.lgs.eden.application.ApplicationCloseHandler;
 import com.lgs.eden.application.PopupUtils;
 import com.lgs.eden.utils.config.Config;
@@ -113,55 +114,15 @@ public final class Utility {
     }
 
     /** returns the user OS **/
-    public static OperatingSystem getOS() {
-        // todo: code this
-        return OperatingSystem.WINDOWS;
+    public static OperatingSystem getUserOS() {
+        String os = System.getProperty("os.name", "generic").toLowerCase();
+        // check for os
+        if (os.contains("win"))
+            return OperatingSystem.WINDOWS;
+        else if (os.contains("nux"))
+            return OperatingSystem.LINUX;
+
+        throw new UnsupportedOperationException("OS not supported");
     }
 
-    /** install eden, close program **/
-    public static void installEden(String installer) {
-        OperatingSystem os = getOS();
-        if (os.equals(OperatingSystem.WINDOWS)){
-            try {
-                // and close
-                ApplicationCloseHandler.close(false);
-
-                // start exe
-                ProcessBuilder process = new ProcessBuilder(installer, "/VERYSILENT", "/MERGETASKS=\"desktopicon,postinstall\"");
-                process.directory(new File(new File(installer).getParent()));
-                process.start();
-
-                // kill program
-                System.exit(0);
-            } catch (IOException ex) {
-                System.out.println("Unable to install new version.");
-                // PopupUtils.showPopup(Translate.getTranslation("Unable to install new version."));
-            }
-        } else {
-            throw new UnsupportedOperationException("not yet");
-        }
-    }
-
-    /** install game **/
-    public static boolean installGame(String installer, int gameID) {
-        OperatingSystem os = getOS();
-
-        String location = Config.getGameFolder() + gameID + "/";
-
-        if (os.equals(OperatingSystem.WINDOWS)){
-            try {
-                // start exe
-                ProcessBuilder process = new ProcessBuilder(installer, "/SILENT", "/MERGETASKS=\"desktopicon\""
-                , "/DIR="+location);
-                process.directory(new File(new File(installer).getParent()));
-                Process start = process.start();
-                int r = start.waitFor();
-                return r == 0;
-            } catch (IOException|InterruptedException ex) {
-                return false;
-            }
-        } else {
-            throw new UnsupportedOperationException("not yet");
-        }
-    }
 }

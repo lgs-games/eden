@@ -20,6 +20,7 @@ public class ApplicationCloseHandler implements EventHandler<WindowEvent> {
     private static Thread gameDateUpdateThread = null;
     private static WebEngine engine = null;
     private static Thread downloadManager = null;
+    private static Thread gameThread = null;
 
     public static void startUpdateThread(Timer timer, Runnable r) {
         closeUpdateThread();
@@ -68,6 +69,18 @@ public class ApplicationCloseHandler implements EventHandler<WindowEvent> {
 
         if (simpleExit){
             System.exit(0);
+        }
+    }
+
+    public static void startGameThread(Runnable runnable) {
+        closeGameThread();
+        gameThread = new Thread(runnable);
+        gameThread.start();
+    }
+
+    private static void closeGameThread() {
+        if (gameThread != null){
+            gameThread.interrupt();
         }
     }
 

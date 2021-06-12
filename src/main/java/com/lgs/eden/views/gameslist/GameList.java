@@ -6,11 +6,12 @@ import com.lgs.eden.api.games.GameViewData;
 import com.lgs.eden.api.games.ShortGameViewData;
 import com.lgs.eden.application.AppWindowHandler;
 import com.lgs.eden.application.ApplicationCloseHandler;
-import com.lgs.eden.application.UpdateWindowHandler;
+import com.lgs.eden.application.PopupUtils;
+import com.lgs.eden.utils.Translate;
 import com.lgs.eden.utils.Utility;
 import com.lgs.eden.utils.ViewsPath;
 import com.lgs.eden.utils.config.Config;
-import com.lgs.eden.utils.download.DownloadManager;
+import com.lgs.eden.utils.config.InstallUtils;
 import com.lgs.eden.views.gameslist.cell.GameListCell;
 import com.lgs.eden.views.gameslist.news.AllNews;
 import com.lgs.eden.views.gameslist.news.News;
@@ -41,6 +42,8 @@ import java.util.TimerTask;
  * at the left and a game at the right.
  */
 public class GameList {
+
+    private static boolean gameRunning = false;
 
     // ------------------------------ STATIC ----------------------------- \\
 
@@ -148,11 +151,9 @@ public class GameList {
         // ------------------------------ DOWNLOAD ----------------------------- \\
 
         if (Config.isGameInstalled(gameData.id)) {
-            // todo: translation
-            this.download.setText("Play");
+            this.download.setText(Translate.getTranslation("play"));
             this.download.setOnAction((e) -> launchGame());
         } else {
-            this.download.setText("Download");
             this.download.setOnAction((e) -> downloadGame());
         }
     }
@@ -296,15 +297,24 @@ public class GameList {
     // ------------------------------ DOWNLOAD ----------------------------- \\
 
     public void launchGame(){
-        System.out.println("start game");
+        if (Config.isGameInstalled(gameData.id)) {
+            if (gameRunning){
+                PopupUtils.showPopup(Translate.getTranslation("game_running"));
+            } else {
+                InstallUtils.runGame(gameData, () -> gameRunning = false);
+                gameRunning = true;
+            }
+        } else {
+            this.download.setText(Translate.getTranslation("download"));
+            this.download.setOnAction((e) -> downloadGame());
+        }
     }
 
     private void downloadGame() {
         this.downloadBox.getChildren().add(1, DownloadBox.getView(this.gameData,
             () -> this.downloadBox.getChildren().remove(1),
             () -> Platform.runLater(() -> {
-                    // todo: translation
-                    this.download.setText("Play");
+                    this.download.setText(Translate.getTranslation("play"));
                     this.download.setOnAction((e) -> launchGame());
                     this.downloadBox.getChildren().remove(1);
                 }

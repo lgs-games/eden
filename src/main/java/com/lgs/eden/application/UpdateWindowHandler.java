@@ -7,6 +7,7 @@ import com.lgs.eden.utils.config.Config;
 import com.lgs.eden.utils.Translate;
 import com.lgs.eden.utils.Utility;
 import com.lgs.eden.utils.ViewsPath;
+import com.lgs.eden.utils.config.InstallUtils;
 import com.lgs.eden.utils.download.DownloadManager;
 import com.lgs.eden.views.login.Login;
 import javafx.application.Platform;
@@ -151,7 +152,7 @@ public class UpdateWindowHandler {
                     controller.setState(State.DOWNLOAD_UPDATE);
 
                     // get the update information
-                    DownloadManager d = new DownloadManager(edenVersion.getURL(Utility.getOS()), Config.getDownloadRepository());
+                    DownloadManager d = new DownloadManager(edenVersion.getURL(Utility.getUserOS()), Config.getDownloadRepository());
 
                     // init
                     d.onInitCalled((e) -> Platform.runLater(() -> {
@@ -171,7 +172,7 @@ public class UpdateWindowHandler {
                                 controller.percent.setVisible(false);
                                 controller.setState(State.STARTING_INSTALLATION);
                                 // launch install process
-                                Utility.installEden(e.fileName);
+                                InstallUtils.installEden(e.fileName);
                             }
                     ));
 

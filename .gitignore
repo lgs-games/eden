@@ -121,6 +121,7 @@ hs_err_pid*
 build/*
 .gradle/*
 eden/*
+games/*
 
 !libs/*.jar
 !docs/gen/*.jar

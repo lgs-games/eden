@@ -49,6 +49,8 @@ class GamesHandler implements GameAPI {
         GameUpdateData updatePrim = new GameUpdateData(
                 "3.1.0",
                 "https://lgs-games.com/assets/exe/prim-setup-3.1.0.exe",
+                "prim.exe",
+                "unins000.exe",
                 88
         );
 
@@ -81,12 +83,14 @@ class GamesHandler implements GameAPI {
                     0
             );
             return new GameViewData(
-                    0, "Prim", "/games/prim-icon.png", "3.1.0", prim,
+                    0, "Prim", "/games/prim-icon.png", "3.1.1", prim,
                     "/games/prim-bg.png",
                     0, 7, 0, 54,
                     new GameUpdateData(
-                            "3.1.0",
-                            "https://lgs-games.com/assets/exe/prim-setup-3.1.0.exe",
+                            "3.1.1",
+                            "https://lgs-games.com/assets/exe/prim-setup-3.1.1.exe",
+                            "prim.exe",
+                            "unins000.exe",
                             88
                     )
             );
@@ -102,7 +106,8 @@ class GamesHandler implements GameAPI {
                     1, "Enigma", "/games/enigma-icon.png", "2.0.0", enigma,
                     "/games/enigma-bg.jpg",
                     0, 24, 3, 4500,
-                    null);
+                    null
+            );
         }
     }
 

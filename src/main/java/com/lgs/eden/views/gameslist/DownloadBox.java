@@ -5,6 +5,7 @@ import com.lgs.eden.application.ApplicationCloseHandler;
 import com.lgs.eden.utils.Utility;
 import com.lgs.eden.utils.ViewsPath;
 import com.lgs.eden.utils.config.Config;
+import com.lgs.eden.utils.config.InstallUtils;
 import com.lgs.eden.utils.download.DownloadListener;
 import com.lgs.eden.utils.download.DownloadManager;
 import javafx.application.Platform;
@@ -43,7 +44,7 @@ public class DownloadBox {
         this.onCancel = onCancel;
 
         // get the update information
-        String url = data.update.getURL(Utility.getOS());
+        String url = data.update.getURL(Utility.getUserOS());
 
         DownloadManager d = new DownloadManager(url, Config.getDownloadRepository());
 
@@ -58,7 +59,7 @@ public class DownloadBox {
         d.onUpdateProgress(l);
         // move to install
         d.onDownloadEnd((e) -> {
-            if (Utility.installGame(e.fileName, data.id)){
+            if (InstallUtils.installGame(e.fileName, data.id)){
                 onInstalled.run();
             }
         });

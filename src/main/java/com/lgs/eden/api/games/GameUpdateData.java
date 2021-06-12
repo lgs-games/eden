@@ -10,17 +10,31 @@ import com.lgs.eden.utils.config.OperatingSystem;
 public class GameUpdateData {
 
     private final String downloadURL;
+    private final String runnable;
+    private final String uninstall;
+
     public final String version;
     public final double size;
 
-    public GameUpdateData(String version, String downloadURL, double size) {
+    public GameUpdateData(String version, String downloadURL, String runnable, String uninstall, double size) {
         this.version = version;
         this.downloadURL = downloadURL;
+        this.runnable = runnable;
+        this.uninstall = uninstall;
         this.size = size;
     }
 
+    // todo: should return the right ... according to the OS
+
     public String getURL(OperatingSystem os) {
-        // todo: should return the right URL according to the OS
         return downloadURL;
+    }
+
+    public String getRunnable(OperatingSystem os) {
+        return runnable;
+    }
+
+    public String getUninstall(OperatingSystem os) {
+        return uninstall;
     }
 }
