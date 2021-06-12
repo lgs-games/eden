@@ -5,6 +5,7 @@ import com.lgs.eden.api.APIResponseCode;
 import com.lgs.eden.api.profile.friends.FriendData;
 import com.lgs.eden.api.profile.ProfileData;
 import com.lgs.eden.application.AppWindowHandler;
+import com.lgs.eden.application.PopupUtils;
 import com.lgs.eden.utils.Translate;
 import com.lgs.eden.utils.Utility;
 import com.lgs.eden.utils.cell.CustomCells;
@@ -46,7 +47,9 @@ public class Profile {
         return parent;
     }
 
-    public static Profile getController() { return controller; }
+    public static Profile getController() {
+        if (controller == null) getScreen();
+        return controller; }
 
     // ------------------------------ INSTANCE ----------------------------- \\
 
@@ -171,7 +174,7 @@ public class Profile {
     }
     public void onAddFriend(int friendID) {
         API.imp.addFriend(friendID, AppWindowHandler.currentUserID());
-        reloadWith(friendID);
+        reload(friendID);
     }
 
     /** Listener of the remove friend button **/
@@ -240,7 +243,7 @@ public class Profile {
     }
     public void onAcceptFriend(int friendID) {
         API.imp.acceptFriend(friendID, AppWindowHandler.currentUserID());
-        reloadWith(friendID);
+        reload(friendID);
     }
 
     /** Listener of the accept friend button **/
@@ -250,7 +253,7 @@ public class Profile {
     }
     public void onRefuseFriend(int friendID) {
         API.imp.refuseFriend(friendID, AppWindowHandler.currentUserID());
-        reloadWith(friendID);
+        reload(friendID);
     }
 
     // ------------------------------ UTILS ----------------------------- \\

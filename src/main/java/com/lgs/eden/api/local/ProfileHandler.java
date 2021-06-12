@@ -77,7 +77,7 @@ class ProfileHandler implements ProfileAPI {
             friends.add(getFriendData(26));
             friends.add(getFriendData(27));
         } else if ( userID != 25 ){
-            friends.add(getFriendData(23));
+            if ( userID != 28 && userID != 29) friends.add(getFriendData(23));
         } else {
             friends.add(getFriendData(23));
             friends.add(getFriendData(24));
@@ -165,6 +165,22 @@ class ProfileHandler implements ProfileAPI {
                     recentGamesData,
                     evaluateRelationShip(userID, currentUserID),
                     ReputationScore.INCREASED
+            );
+        } else if (userID == 28){
+            r = new ProfileData("XXX",28, "/avatars/27.png", friendNumber, 0,
+                    "No description yet.",
+                    new Date(), Date.from(Instant.parse("2020-03-09T10:15:30.00Z")), friendDataObservableList,
+                    recentGamesData,
+                    evaluateRelationShip(userID, currentUserID),
+                    ReputationScore.NONE
+            );
+        } else if (userID == 29){
+            r = new ProfileData("YYY",29, "/avatars/25.png", friendNumber, 0,
+                    "No description yet.",
+                    new Date(), Date.from(Instant.parse("2020-03-09T10:15:30.00Z")), friendDataObservableList,
+                    recentGamesData,
+                    evaluateRelationShip(userID, currentUserID),
+                    ReputationScore.NONE
             );
         }
 
