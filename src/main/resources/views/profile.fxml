@@ -100,7 +100,7 @@
             </Pane>
          </top>
          <center>
-            <BorderPane styleClass="white-box" BorderPane.alignment="CENTER">
+            <BorderPane fx:id="friendsPane" styleClass="white-box" BorderPane.alignment="CENTER">
                <BorderPane.margin>
                   <Insets top="10.0" />
                </BorderPane.margin>

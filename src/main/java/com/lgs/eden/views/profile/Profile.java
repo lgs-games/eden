@@ -14,11 +14,14 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import com.lgs.eden.utils.ViewsPath;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 
 /**
@@ -87,6 +90,8 @@ public class Profile {
     private Button acceptFriend;
     @FXML
     private Button refuseFriend;
+    @FXML
+    private BorderPane friendsPane;
 
     // current profile data, can be used in listeners
     private ProfileData data;
@@ -158,6 +163,11 @@ public class Profile {
         if (this.data.friendNumber > 0) {
             this.friendDataListView.setItems(this.data.friends);
             this.friendDataListView.setCellFactory(friendDataListView -> new CustomCells<>(FriendCellController.load()));
+        } else {
+            FlowPane p = new FlowPane();
+            p.setAlignment(Pos.CENTER);
+            p.getChildren().add(new Label(Translate.getTranslation("no_friends_yet")));
+            friendsPane.setCenter(p);
         }
     }
 
