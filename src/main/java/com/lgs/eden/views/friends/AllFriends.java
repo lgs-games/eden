@@ -43,7 +43,7 @@ public class AllFriends {
 
     /** Init view with user ID */
     private void init(int userID) {
-        ArrayList<FriendData> friendList = API.imp.getFriendList(userID);
+        ArrayList<FriendData> friendList = API.imp.getFriendList(userID, -1);
         boolean added = false;
 
         // online only

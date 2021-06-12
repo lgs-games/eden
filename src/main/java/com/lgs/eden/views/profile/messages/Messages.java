@@ -13,7 +13,6 @@ import com.lgs.eden.utils.ViewsPath;
 import com.lgs.eden.utils.cell.CustomCells;
 import com.lgs.eden.utils.helper.SearchPane;
 import com.lgs.eden.views.profile.Profile;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -82,7 +81,7 @@ public class Messages {
         if (friendID == AppWindowHandler.currentUserID()) friendID = -1;
         FriendConversationView conv = API.imp.getMessageWithFriend(friendID, AppWindowHandler.currentUserID());
         // friends for new conversations search
-        this.friendList = API.imp.getFriendList(AppWindowHandler.currentUserID());
+        this.friendList = API.imp.getFriendList(AppWindowHandler.currentUserID(), -1);
         if (conv == null) {
             this.friendNameTag.getChildren().clear();
             this.friendNameTag.getChildren().add(new Label(Translate.getTranslation("no_conv")));

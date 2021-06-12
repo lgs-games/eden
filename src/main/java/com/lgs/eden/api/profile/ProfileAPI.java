@@ -1,6 +1,5 @@
 package com.lgs.eden.api.profile;
 
-import com.lgs.eden.api.APIResponseCode;
 import com.lgs.eden.api.profile.friends.FriendConversationView;
 import com.lgs.eden.api.profile.friends.FriendData;
 import com.lgs.eden.api.profile.friends.messages.MessageData;
@@ -18,7 +17,7 @@ public interface ProfileAPI {
     ArrayList<FriendData> searchUsers(String filter, int currentUserID);
 
     /** Returns complete friend list **/
-    ArrayList<FriendData> getFriendList(int userID);
+    ArrayList<FriendData> getFriendList(int userID, int count);
 
     /**
      * Returns profile Data for an user.

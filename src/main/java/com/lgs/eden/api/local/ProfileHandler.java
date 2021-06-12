@@ -38,14 +38,17 @@ class ProfileHandler implements ProfileAPI {
     }
 
     @Override
-    public ArrayList<FriendData> getFriendList(int userID) {
+    public ArrayList<FriendData> getFriendList(int userID, int count) {
         if (this.users.isEmpty()) init(userID);
+        if (count == -1) count = Integer.MAX_VALUE;
 
         ObservableList<FriendData> realFriendList = getRealFriendList(userID);
         ArrayList<FriendData> copy = new ArrayList<>();
+        int i = 0;
         for (FriendData d: realFriendList) {
-            if(d.friendShipStatus.equals(FriendShipStatus.FRIENDS))
+            if(i < count && d.friendShipStatus.equals(FriendShipStatus.FRIENDS))
                 copy.add(d);
+            i++;
         }
         return copy;
     }
@@ -54,7 +57,7 @@ class ProfileHandler implements ProfileAPI {
     public ProfileData getProfileData(int userID, int currentUserID) {
         init(currentUserID);
         ProfileData userProfile = getUserProfile(userID);
-        return new ProfileData(userProfile, FXCollections.observableArrayList(getFriendList(userID)));
+        return new ProfileData(userProfile, FXCollections.observableArrayList(getFriendList(userID, 7)));
     }
 
     @Override
