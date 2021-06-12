@@ -22,9 +22,9 @@ class GamesHandler implements GameAPI {
     public EdenVersionData getEdenVersion() {
         APIHelper.fakeDelay(1000);
         return new EdenVersionData(
-                "1.1.0",
-                "https://lgs-games.com/assets/exe/prim-setup-3.1.0.exe",
-                86.2
+                "1.0.0",
+                "https://lgs-games.com/assets/exe/eden-setup-1.0.0.exe",
+                113
         );
     }
 
