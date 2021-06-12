@@ -119,8 +119,8 @@ public class FriendCellController implements CellHandler<FriendData> {
                     case FRIENDS: add = true; friend = false; break;
                     case NONE: add = false; friend = true; break;
                     case USER: add = true; friend = true; break;
-                    case REQUESTED: cancelFR = true; break;
-                    case GOT_REQUESTED: acceptFR = true; refuseFR = true; break;
+                    case REQUESTED: acceptFR = true; refuseFR = true; break;
+                    case GOT_REQUESTED: cancelFR = true; break;
                 }
 
                 // disabled if not available

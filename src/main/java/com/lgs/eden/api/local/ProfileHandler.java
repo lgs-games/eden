@@ -30,6 +30,7 @@ class ProfileHandler implements ProfileAPI {
                 r.add(friendFromProfil(d));
             }
         }
+        System.out.println(r);
         return r;
     }
 
@@ -189,7 +190,7 @@ class ProfileHandler implements ProfileAPI {
     }
 
     private FriendData friendFromProfil(ProfileData p) {
-        return friendFromProfil(p, FriendShipStatus.NONE);
+        return friendFromProfil(p, p.statusWithLogged);
     }
 
     private FriendData friendFromProfil(ProfileData p, FriendShipStatus status) {
