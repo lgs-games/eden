@@ -29,6 +29,10 @@ public class FriendData {
         this.friendShipStatus = friendShipStatus;
     }
 
+    public FriendData(int id) {
+        this(null, null, false, id, null);
+    }
+
     public String getAvatarPath() { return path; }
 
     @Override

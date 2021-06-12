@@ -68,7 +68,32 @@ class ProfileHandler implements ProfileAPI {
 
     @Override
     public ArrayList<FriendData> getFriendList(int userID) {
-        if (friendList.containsKey(userID)) return friendList.get(userID);
+        if (friendList.containsKey(userID)) {
+            // invalidate cache
+            ArrayList<FriendData> friends = friendList.get(userID);
+            ArrayList<FriendData> copy = new ArrayList<>();
+            for (FriendData d:friends) {
+                ArrayList<FriendData> friendData = friendList.get(d.id);
+                if (friendData == null) friendData = getFriendList(d.id);
+                boolean two = friendData.contains(new FriendData(userID));
+
+                FriendShipStatus friendShipStatus;
+
+                if (two) friendShipStatus = FriendShipStatus.FRIENDS;
+                else friendShipStatus = FriendShipStatus.NONE;
+
+                if (!friendShipStatus.equals(FriendShipStatus.FRIENDS)) continue;
+                copy.add(new FriendData(
+                        d.getAvatarPath(),
+                        d.name,
+                        d.online,
+                        d.id,
+                        friendShipStatus
+                ));
+            }
+            friendList.put(userID, copy);
+            return copy;
+        }
 
         ArrayList<FriendData> friends = new ArrayList<>();
         if (userID == 23){
@@ -421,6 +446,6 @@ class ProfileHandler implements ProfileAPI {
 
     private boolean inFriendList(int userID, int loggedID){
         ArrayList<FriendData> friendList = getFriendList(userID);
-        return friendList.contains(new FriendData(null, null, false, loggedID, FriendShipStatus.NONE));
+        return friendList.contains(new FriendData(loggedID));
     }
 }
