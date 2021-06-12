@@ -58,7 +58,8 @@ idea {
 tasks.withType(JavaCompile) {
     options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
     options.encoding = "UTF-8"
-    // sourceCompatibility = 1.16
+//    sourceCompatibility = 1.16
+//    targetCompatibility = 1.16
     // sourceCompatibility = 11
     // targetCompatibility = 11
 }

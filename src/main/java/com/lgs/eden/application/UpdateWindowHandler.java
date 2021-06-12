@@ -178,7 +178,6 @@ public class UpdateWindowHandler {
                     // start download thread
                     ApplicationCloseHandler.startDownloadThread(d);
                 });
-                // ...
             } else {
                 Platform.runLater(() -> { if(controller != null) controller.setState(State.CLIENT_STARTING); });
                 // start

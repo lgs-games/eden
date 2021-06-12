@@ -3,13 +3,16 @@ package com.lgs.eden.utils.download;
 import com.lgs.eden.application.PopupUtils;
 import javafx.application.Platform;
 
+import javax.net.ssl.HttpsURLConnection;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.URI;
 import java.net.URL;
 import java.nio.ByteBuffer;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
+import java.nio.file.Paths;
 import java.util.Arrays;
 
 /**
@@ -69,15 +72,16 @@ public class DownloadManager extends Thread implements ReadableByteChannel {
 
             //reading
             try {
-//                HttpsURLConnection.setFollowRedirects(false);
-//                HttpsURLConnection connection = (HttpsURLConnection) new URL(url).openConnection();
-//                connection.setRequestMethod("HEAD");
+                HttpsURLConnection.setFollowRedirects(false);
+                HttpsURLConnection connection = (HttpsURLConnection) new URL(url).openConnection();
+                connection.setRequestMethod("HEAD");
 
-                // this.size = connection.getContentLength();
-                // this.fileName = this.location + File.separator + Paths.get(new URI(url).getPath()).getFileName().toString();
-                this.size = 0;
-                this.fileName =  this.location + File.separator + "eden-setup-1.1.0.exe";
-                this.readChannel = Channels.newChannel(new URL(url).openStream());
+                this.size = connection.getContentLength();
+                this.fileName = this.location + File.separator + Paths.get(new URI(url).getPath()).getFileName().toString();
+
+                connection = (HttpsURLConnection) new URL(url).openConnection();
+                connection.connect();
+                this.readChannel = Channels.newChannel(connection.getInputStream());
                 // call init callback with the values we have
                 if( this.initRunnable != null ) this.initRunnable.downloadCallBack( event = new DownloadEvent(
                         0, this.size, -1, -1,
