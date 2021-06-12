@@ -7,6 +7,9 @@ import com.lgs.eden.api.profile.friends.FriendData;
 import com.lgs.eden.api.profile.ProfileAPI;
 import com.lgs.eden.api.profile.ProfileData;
 import com.lgs.eden.api.profile.friends.FriendShipStatus;
+import com.lgs.eden.api.profile.friends.conversation.ConversationData;
+import com.lgs.eden.api.profile.friends.messages.MessageData;
+import com.lgs.eden.api.profile.friends.messages.MessageType;
 import com.lgs.eden.utils.Utility;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -14,6 +17,7 @@ import javafx.collections.ObservableList;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 
 /**
  * Implementation of ProfileAPI
@@ -144,23 +148,92 @@ class ProfileHandler implements ProfileAPI {
         removeFriend(friendID, currentUserID);
     }
 
-    public void initConversations(){
+    // ------------------------------ MESSAGES ----------------------------- \\
 
-    }
+    private final HashMap<Integer, ArrayList<MessageData>> messages = new HashMap<>();
+    private final HashMap<Integer, ConversationData> conv = new HashMap<>();
 
     @Override
     public FriendConversationView getMessageWithFriend(int friendID, int currentUserID) {
-        return null;
+        init(currentUserID);
+
+        if (friendID == -1 && conv.isEmpty()) return null;
+
+        if (conv.isEmpty() || !conv.containsKey(friendID)) {
+            newConversation(friendID, currentUserID);
+        }
+
+        ObservableList<ConversationData> allConv = FXCollections.observableArrayList(conv.values());
+
+        if (friendID == -1){
+            friendID = allConv.get(0).id;
+        }
+
+        return new FriendConversationView(
+                friendFromProfil(getUserProfile(friendID)),
+                friendFromProfil(getUserProfile(currentUserID)),
+                FXCollections.observableArrayList(getMessages(friendID)),
+                allConv
+        );
     }
 
     @Override
     public boolean newConversation(int friendID, int currentUserID) {
-        return false;
+        if (conv.containsKey(friendID)) return true;
+
+        ProfileData userProfile = getUserProfile(friendID);
+        conv.put(userProfile.userID, new ConversationData(
+                userProfile.avatarPath,
+                userProfile.username,
+                userProfile.online,
+                userProfile.userID,
+                getUnreadMessagesCount(friendID, currentUserID)
+        ));
+
+        return true;
+    }
+
+    private int getUnreadMessagesCount(int friendID, int currentUserID) {
+        ArrayList<MessageData> messages = getMessages(friendID);
+        int count = 0;
+        for (MessageData d: messages) {
+            if (currentUserID != d.senderID && !d.read) count++;
+        }
+        return count;
     }
 
     @Override
     public boolean closeConversation(int friendID, int currentUserID) {
-        return false;
+        if (!conv.containsKey(friendID)) return false;
+        conv.remove(friendID);
+        return true;
+    }
+
+    @Override
+    public MessageData sendMessage(int to, int from, String message) {
+        // we don't save "from" since we are in local
+        ArrayList<MessageData> messages = getMessages(to);
+        MessageData r = new MessageData(
+                from,
+                message,
+                MessageType.TEXT,
+                Date.from(Instant.now()),
+                false
+        );
+        messages.add(r);
+
+        // unread count of conversation change
+        closeConversation(to, from);
+        newConversation(to, from);
+
+        return r;
+    }
+
+    private ArrayList<MessageData> getMessages(int with) {
+        if (!messages.containsKey(with)) {
+            messages.put(with, new ArrayList<>());
+        }
+        return messages.get(with);
     }
 
     // ------------------------------ UTILS ----------------------------- \\
@@ -183,6 +256,7 @@ class ProfileHandler implements ProfileAPI {
                 desc,
                 new Date(), Date.from(Instant.parse(since)), friends,
                 games,
+                false,
                 fs,
                 status
         );
@@ -193,7 +267,7 @@ class ProfileHandler implements ProfileAPI {
     }
 
     private FriendData friendFromProfil(ProfileData p, FriendShipStatus status) {
-        return new FriendData(p.avatarPath, p.username, false, p.userID, status);
+        return new FriendData(p.avatarPath, p.username, p.online, p.userID, status);
     }
 
     private void init(int currentUserID){
@@ -277,7 +351,7 @@ class ProfileHandler implements ProfileAPI {
         for (ProfileData d: this.users) {
             if (d.userID == userID) return d;
         }
-        throw new IllegalArgumentException("not found");
+        throw new IllegalArgumentException("not found "+userID);
     }
 
     private ObservableList<FriendData> getRealFriendList(int userID) {

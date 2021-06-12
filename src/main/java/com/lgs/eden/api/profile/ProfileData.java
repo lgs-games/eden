@@ -35,6 +35,8 @@ public class ProfileData {
     // avatar path
     public final Image avatar;
     public final String avatarPath;
+    // online ?
+    public final boolean online;
 
     public final FriendShipStatus statusWithLogged;
     public final ReputationScore score;
@@ -43,6 +45,7 @@ public class ProfileData {
                        int friendNumber, int reputation, String biography, Date lastSeen,
                        Date memberSinceDate,
                        ObservableList<FriendData> friends, RecentGameData[] recentGames,
+                       boolean online,
                        FriendShipStatus statusWithLogged, ReputationScore score) {
         this.avatarPath = avatar;
         this.username = username;
@@ -55,6 +58,7 @@ public class ProfileData {
         this.biography = biography;
         this.lastSeen = lastSeen;
         this.memberSinceDate = memberSinceDate;
+        this.online = online;
         this.statusWithLogged = statusWithLogged;
         this.score = score;
     }
@@ -64,22 +68,22 @@ public class ProfileData {
      */
     public ProfileData(ProfileData data, int reputation, ReputationScore score) {
         this(data.username, data.userID, data.avatarPath, data.friendNumber, reputation, data.biography,
-                data.lastSeen, data.memberSinceDate, data.friends, data.recentGames, data.statusWithLogged, score);
+                data.lastSeen, data.memberSinceDate, data.friends, data.recentGames, data.online, data.statusWithLogged, score);
     }
 
     public ProfileData(ProfileData data, FriendShipStatus status) {
         this(data.username, data.userID, data.avatarPath, data.friends.size(), data.reputation, data.biography,
-                data.lastSeen, data.memberSinceDate, data.friends, data.recentGames, status, data.score);
+                data.lastSeen, data.memberSinceDate, data.friends, data.recentGames, data.online, status, data.score);
     }
 
     public ProfileData(int userID){
         this(null, userID, null, 0, 0, null, null,
-                null, null, null, null, null);
+                null, null, null, false, null, null);
     }
 
     public ProfileData(ProfileData data, ObservableList<FriendData> friendList) {
             this(data.username, data.userID, data.avatarPath, friendList.size(), data.reputation, data.biography,
-                    data.lastSeen, data.memberSinceDate, friendList, data.recentGames, data.statusWithLogged, data.score);
+                    data.lastSeen, data.memberSinceDate, friendList, data.recentGames, data.online, data.statusWithLogged, data.score);
         }
 
     @Override
@@ -112,6 +116,7 @@ public class ProfileData {
                 ", avatarPath='" + avatarPath + '\'' +
                 ", statusWithLogged=" + statusWithLogged +
                 ", score=" + score +
+                ", online=" + online +
                 '}';
     }
 }

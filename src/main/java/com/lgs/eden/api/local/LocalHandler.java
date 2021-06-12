@@ -8,6 +8,7 @@ import com.lgs.eden.api.news.BasicNewsData;
 import com.lgs.eden.api.profile.friends.FriendConversationView;
 import com.lgs.eden.api.profile.friends.FriendData;
 import com.lgs.eden.api.profile.ProfileData;
+import com.lgs.eden.api.profile.friends.messages.MessageData;
 import javafx.collections.ObservableList;
 
 import java.util.ArrayList;
@@ -134,4 +135,8 @@ public class LocalHandler implements API {
     @Override
     public boolean closeConversation(int friendID, int currentUserID) { return this.profile.closeConversation(friendID, currentUserID); }
 
+    @Override
+    public MessageData sendMessage(int to, int from, String message) {
+        return this.profile.sendMessage(to, from, message);
+    }
 }

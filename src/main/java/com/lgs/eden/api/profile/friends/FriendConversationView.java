@@ -23,4 +23,14 @@ public class FriendConversationView {
         this.messages = messages;
         this.conversations = conversations;
     }
+
+    @Override
+    public String toString() {
+        return "FriendConversationView{" +
+                "friend=" + friend +
+                ", user=" + user +
+                ", messages=" + messages +
+                ", conversations=" + conversations +
+                '}';
+    }
 }

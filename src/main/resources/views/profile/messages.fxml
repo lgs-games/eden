@@ -98,7 +98,7 @@
                            </font></TextArea>
                      </center>
                      <right>
-                        <Button fx:id="sendMessage" mnemonicParsing="false" text="Send" BorderPane.alignment="CENTER">
+                        <Button onAction="#onSendRequest" fx:id="sendMessage" mnemonicParsing="false" text="Send" BorderPane.alignment="CENTER">
                            <BorderPane.margin>
                               <Insets left="10.0" />
                            </BorderPane.margin>

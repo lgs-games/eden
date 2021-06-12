@@ -13,6 +13,7 @@ import com.lgs.eden.utils.ViewsPath;
 import com.lgs.eden.utils.cell.CustomCells;
 import com.lgs.eden.utils.helper.SearchPane;
 import com.lgs.eden.views.profile.Profile;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -80,6 +81,8 @@ public class Messages {
         // you cannot tchat with yourself
         if (friendID == AppWindowHandler.currentUserID()) friendID = -1;
         FriendConversationView conv = API.imp.getMessageWithFriend(friendID, AppWindowHandler.currentUserID());
+        // friends for new conversations search
+        this.friendList = API.imp.getFriendList(AppWindowHandler.currentUserID());
         if (conv == null) {
             this.friendNameTag.getChildren().clear();
             this.friendNameTag.getChildren().add(new Label(Translate.getTranslation("no_conv")));
@@ -111,8 +114,6 @@ public class Messages {
             this.messages.setCellFactory(cellView -> new CustomCells<>(MessageCell.load()));
 
             if (conv.messages.size() > 0) this.messages.scrollTo(conv.messages.size() - 1);
-
-            this.friendList = API.imp.getFriendList(AppWindowHandler.currentUserID());
         }
     }
 
@@ -134,5 +135,11 @@ public class Messages {
                     return selected;
                 }
         ));
+    }
+
+    public void onSendRequest() {
+        String text = this.inputMessage.getText();
+        MessageData m = API.imp.sendMessage(friend.id, user.id, text);
+        messages.getItems().add(m);
     }
 }

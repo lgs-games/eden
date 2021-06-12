@@ -3,6 +3,7 @@ package com.lgs.eden.api.profile;
 import com.lgs.eden.api.APIResponseCode;
 import com.lgs.eden.api.profile.friends.FriendConversationView;
 import com.lgs.eden.api.profile.friends.FriendData;
+import com.lgs.eden.api.profile.friends.messages.MessageData;
 
 import java.util.ArrayList;
 
@@ -76,4 +77,10 @@ public interface ProfileAPI {
      * in the list of conversation of this user.
      */
     boolean closeConversation(int friendID, int currentUserID);
+
+    /**
+     * Send a message to another user.
+     */
+    MessageData sendMessage(int to, int from, String message);
+
 }
