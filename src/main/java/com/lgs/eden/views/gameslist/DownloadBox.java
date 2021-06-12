@@ -38,6 +38,7 @@ public class DownloadBox {
     @FXML
     private Label size;
 
+    private DownloadManager d;
     private Runnable onCancel;
 
     public void init(GameViewData data, Runnable onCancel, Runnable onInstalled){
@@ -46,7 +47,7 @@ public class DownloadBox {
         // get the update information
         String url = data.update.getURL(Utility.getUserOS());
 
-        DownloadManager d = new DownloadManager(url, Config.getDownloadRepository());
+        d = new DownloadManager(url, Config.getDownloadRepository());
 
         DownloadListener l = (e) -> Platform.runLater(() -> {
             // init and show show
@@ -68,7 +69,13 @@ public class DownloadBox {
         ApplicationCloseHandler.startDownloadThread(d);
     }
 
+    @FXML
     public void onCancelRequest() {
+        // cancel download
+        d.cancel();
+        // close thread
+        ApplicationCloseHandler.closeDownloadThread();
+        // trigger cancel runnable
         onCancel.run();
     }
 }

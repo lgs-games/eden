@@ -244,7 +244,7 @@ public class GameList {
 
     @FXML
     public void showGameSettings() {
-        this.goToSubMenu(GameSettings.getScreen(this.data));
+        this.goToSubMenu(GameSettings.getScreen(this.gameData));
     }
 
     // ------------------------------ UPDATE GAME DATA ----------------------------- \\
@@ -296,7 +296,7 @@ public class GameList {
 
     // ------------------------------ DOWNLOAD ----------------------------- \\
 
-    public void launchGame(){
+    private void launchGame(){
         if (Config.isGameInstalled(gameData.id)) {
             if (gameRunning){
                 PopupUtils.showPopup(Translate.getTranslation("game_running"));
