@@ -1,218 +1,56 @@
 package com.lgs.eden.api.local;
 
-import com.lgs.eden.api.APIResponseCode;
+import com.lgs.eden.api.profile.RecentGameData;
 import com.lgs.eden.api.profile.ReputationScore;
 import com.lgs.eden.api.profile.friends.FriendConversationView;
 import com.lgs.eden.api.profile.friends.FriendData;
 import com.lgs.eden.api.profile.ProfileAPI;
 import com.lgs.eden.api.profile.ProfileData;
-import com.lgs.eden.api.profile.RecentGameData;
 import com.lgs.eden.api.profile.friends.FriendShipStatus;
-import com.lgs.eden.api.profile.friends.conversation.ConversationData;
-import com.lgs.eden.api.profile.friends.messages.MessageData;
-import com.lgs.eden.api.profile.friends.messages.MessageType;
 import com.lgs.eden.utils.Utility;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.geometry.Point2D;
 
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 
 /**
  * Implementation of ProfileAPI
  */
 class ProfileHandler implements ProfileAPI {
 
-    private final HashMap<Integer, ArrayList<FriendData>> friendList = new HashMap<>();
-
-    private final HashMap<String, ArrayList<FriendData>> cache = new HashMap<>();
-    private ArrayList<FriendData> users = null;
-
+    @Override
     public ArrayList<FriendData> searchUsers(String filter, int currentUserID) {
-        if (filter.isEmpty()) return new ArrayList<>();
-        // return cache
-        if (cache.containsKey(filter)) return cache.get(filter);
-
-        if (users == null){
-            users = new ArrayList<>();
-            users.add(getFriendData(23));
-            users.add(getFriendData(24));
-            users.add(getFriendData(25));
-            users.add(getFriendData(26));
-            users.add(getFriendData(27));
-            users.add(getFriendData(28));
-            users.add(getFriendData(29));
-        }
-
-        ArrayList<FriendData> selected = new ArrayList<>();
-        // apply filter
-        for (FriendData d: users) {
-            if (d.name.toLowerCase().contains(filter) || (d.id+"").equals(filter)){
-                selected.add(new FriendData(
-                        d.getAvatarPath(),
-                        d.name,
-                        d.online,
-                        d.id,
-                        evaluateRelationShip(currentUserID, d.id)
-                ));
+        init(currentUserID);
+        ArrayList<FriendData> r = new ArrayList<>();
+        if (filter.isEmpty()) return r;
+        for (ProfileData d: users) {
+            if (d.username.toLowerCase().contains(filter) || (d.userID+"").equals(filter)){
+                r.add(friendFromProfil(d));
             }
         }
-
-        // cache
-        cache.put(filter, selected);
-        return selected;
+        return r;
     }
 
     @Override
     public ArrayList<FriendData> getFriendList(int userID) {
-        if (friendList.containsKey(userID)) {
-            // invalidate cache
-            ArrayList<FriendData> friends = friendList.get(userID);
-            ArrayList<FriendData> copy = new ArrayList<>();
-            for (FriendData d:friends) {
-                ArrayList<FriendData> friendData = friendList.get(d.id);
-                if (friendData == null) friendData = getFriendList(d.id);
-                boolean two = friendData.contains(new FriendData(userID));
+        if (this.users.isEmpty()) init(userID);
 
-                FriendShipStatus friendShipStatus;
-
-                if (two) friendShipStatus = FriendShipStatus.FRIENDS;
-                else friendShipStatus = FriendShipStatus.NONE;
-
-                if (!friendShipStatus.equals(FriendShipStatus.FRIENDS)) continue;
-                copy.add(new FriendData(
-                        d.getAvatarPath(),
-                        d.name,
-                        d.online,
-                        d.id,
-                        friendShipStatus
-                ));
-            }
-            friendList.put(userID, copy);
-            return copy;
+        ObservableList<FriendData> realFriendList = getRealFriendList(userID);
+        ArrayList<FriendData> copy = new ArrayList<>();
+        for (FriendData d: realFriendList) {
+            if(d.friendShipStatus.equals(FriendShipStatus.FRIENDS))
+                copy.add(d);
         }
-
-        ArrayList<FriendData> friends = new ArrayList<>();
-        if (userID == 23){
-            friends.add(getFriendData(24));
-            friends.add(getFriendData(25));
-            friends.add(getFriendData(26));
-            friends.add(getFriendData(27));
-        } else if ( userID != 25 ){
-            if ( userID != 28 && userID != 29) friends.add(getFriendData(23));
-        } else {
-            friends.add(getFriendData(23));
-            friends.add(getFriendData(24));
-        }
-
-        friendList.put(userID, friends);
-        return friendList.get(userID);
+        return copy;
     }
-
-    private final HashMap<Integer, ProfileData> profiles = new HashMap<>();
 
     @Override
     public ProfileData getProfileData(int userID, int currentUserID) {
-        if (profiles.containsKey(userID)) return profiles.get(userID);
-
-        ObservableList<FriendData> friendDataObservableList = FXCollections.observableArrayList();
-        for (FriendData f:this.getFriendList(userID)) {
-            // only show friend with the profile shown
-            if(!evaluateRelationShip(userID, f.id).equals(FriendShipStatus.FRIENDS)) continue;
-            friendDataObservableList.add(
-                    new FriendData(
-                      f.getAvatarPath(),
-                      f.name,
-                      f.online,
-                      f.id,
-                      evaluateRelationShip(currentUserID, f.id)
-                    )
-            );
-        }
-
-        int friendNumber = friendDataObservableList.size(); // observable friend list may contains
-        // less user that friendNumber so that not the real value
-
-        RecentGameData[] recentGamesData = new RecentGameData[]{};
-
-        ProfileData r = null;
-
-        if (userID == 23){
-            recentGamesData = new RecentGameData[]{
-                    new RecentGameData(Utility.loadImage("/games/prim-icon.png"), "Prim", 0, 1),
-                    // new RecentGameData(Utility.loadImage("/games/enigma-icon.png"), "Enigma", 1020, 30)
-            };
-
-            r = new ProfileData("Raphik", 23, "/avatars/23.png",
-                    friendNumber, 9999,
-                    "Raphiki is a great programmer at ENSIIE engineering school.",
-                    new Date(), Date.from(Instant.parse("2020-12-03T10:15:30.00Z")), friendDataObservableList,
-                    recentGamesData,
-                    evaluateRelationShip(userID, currentUserID),
-                    ReputationScore.NONE
-            );
-        } else if (userID == 24){
-            r = new ProfileData("Raphik2",24, "/avatars/24.png", friendNumber, 0,
-                    "No description yet.",
-                    new Date(), Date.from(Instant.parse("2021-03-18T10:15:30.00Z")), friendDataObservableList,
-                    recentGamesData,
-                    evaluateRelationShip(userID, currentUserID),
-                    ReputationScore.NONE
-            );
-        } else if (userID == 25){
-            r = new ProfileData("Calistral",25, "/avatars/25.png", friendNumber, -1,
-                    "No description yet.",
-                    new Date(), Date.from(Instant.parse("2020-12-03T10:15:30.00Z")), friendDataObservableList,
-                    recentGamesData,
-                    evaluateRelationShip(userID, currentUserID),
-                    ReputationScore.DECREASED
-            );
-        } else if (userID == 26){
-            r = new ProfileData("Caliki", 26, "/avatars/26.png", friendNumber, 0,
-                    "This is a really"+"This is a really"+"This is a really"+"This is a really"+"This is a really"
-                            +"This is a really"+"This is a really"+"This is a really"+"This is a really"+"This is a really"
-                            +"This is a really"+"This is a really"+"This is a really"+"This is a really"+"This is a really"
-                            +"This is a really"+"This is a really"+"This is a really"+"This is a really"+"This is a really"
-                            +"This is a really"+"This is a really"+"This is a really"+"This is a really"+"This is a really"
-                            +"This is a really"+"This is a really"+"This is a really"+"This is a really"+"This is a really",
-                    new Date(), Date.from(Instant.parse("2020-12-03T10:15:30.00Z")), friendDataObservableList,
-                    recentGamesData,
-                    evaluateRelationShip(userID, currentUserID),
-                    ReputationScore.NONE
-            );
-        } else if (userID == 27){
-            r = new ProfileData("Raphistro",27, "/avatars/27.png", friendNumber, 17570,
-                    "No description yet.",
-                    new Date(), Date.from(Instant.parse("2020-03-09T10:15:30.00Z")), friendDataObservableList,
-                    recentGamesData,
-                    evaluateRelationShip(userID, currentUserID),
-                    ReputationScore.INCREASED
-            );
-        } else if (userID == 28){
-            r = new ProfileData("XXX",28, "/avatars/27.png", friendNumber, 0,
-                    "No description yet.",
-                    new Date(), Date.from(Instant.parse("2020-03-09T10:15:30.00Z")), friendDataObservableList,
-                    recentGamesData,
-                    evaluateRelationShip(userID, currentUserID),
-                    ReputationScore.NONE
-            );
-        } else if (userID == 29){
-            r = new ProfileData("YYY",29, "/avatars/25.png", friendNumber, 0,
-                    "No description yet.",
-                    new Date(), Date.from(Instant.parse("2020-03-09T10:15:30.00Z")), friendDataObservableList,
-                    recentGamesData,
-                    evaluateRelationShip(userID, currentUserID),
-                    ReputationScore.NONE
-            );
-        }
-
-        if (r == null ) throw new IllegalStateException("Not supported");
-
-        profiles.put(userID, r);
-        return r;
+        init(currentUserID);
+        ProfileData userProfile = getUserProfile(userID);
+        return new ProfileData(userProfile, FXCollections.observableArrayList(getFriendList(userID)));
     }
 
     @Override
@@ -249,30 +87,56 @@ class ProfileHandler implements ProfileAPI {
 
         ProfileData newProfileData = new ProfileData(p, newRep, newScore);
 
-        profiles.put(userID, newProfileData);
+        // remove old, add new one
+        users.remove(new ProfileData(userID));
+        users.add(newProfileData);
 
         return newProfileData;
     }
 
     @Override
-    public void addFriend(int friendID, int currentUserID){
-        ArrayList<FriendData> friendList = getFriendList(currentUserID);
-        friendList.add(getFriendData(friendID));
+    public void addFriend(int friendID, int currentUserID) {
+        ProfileData userProfile = getUserProfile(currentUserID);
+
+        if (!userProfile.friends.contains(new FriendData(friendID))) {
+            ProfileData friendProfile = getUserProfile(friendID);
+            // add to the current user friend list
+            userProfile.friends.add(friendFromProfil(friendProfile, FriendShipStatus.REQUESTED));
+            // update status
+            users.remove(new ProfileData(friendID));
+            users.add(new ProfileData(friendProfile, FriendShipStatus.REQUESTED));
+        }
     }
 
     @Override
-    public void removeFriend(int friendID, int currentUserID){
-        ArrayList<FriendData> friendList = getFriendList(friendID);
-        friendList.remove(getFriendData(currentUserID));
+    public void removeFriend(int friendID, int currentUserID) {
+        ProfileData friend = getUserProfile(friendID);
+        ProfileData user = getUserProfile(currentUserID);
 
-        friendList = getFriendList(currentUserID);
-        friendList.remove(getFriendData(friendID));
+        // remove from friend list
+        user.friends.remove(new FriendData(friendID));
+        friend.friends.remove(new FriendData(currentUserID));
+
+        // must reset the status of friend with user
+        users.remove(new ProfileData(friendID));
+        users.add(new ProfileData(friend, FriendShipStatus.NONE));
     }
 
     @Override
     public void acceptFriend(int friendID, int currentUserID) {
-        ArrayList<FriendData> friendList = getFriendList(currentUserID);
-        friendList.add(getFriendData(friendID));
+        ProfileData user = getUserProfile(currentUserID);
+        ProfileData friend = getUserProfile(friendID);
+
+        // remove from friend list
+        user.friends.remove(new FriendData(friendID));
+        friend.friends.remove(new FriendData(currentUserID));
+
+        user.friends.add(friendFromProfil(friend, FriendShipStatus.FRIENDS));
+        friend.friends.add(friendFromProfil(user, FriendShipStatus.FRIENDS));
+
+        // change status
+        users.remove(new ProfileData(friendID));
+        users.add(new ProfileData(friend, FriendShipStatus.FRIENDS));
     }
 
     @Override
@@ -280,172 +144,144 @@ class ProfileHandler implements ProfileAPI {
         removeFriend(friendID, currentUserID);
     }
 
-    // ------------------------------ Messages ----------------------------- \\
+    public void initConversations(){
+
+    }
 
     @Override
     public FriendConversationView getMessageWithFriend(int friendID, int currentUserID) {
-        ObservableList<MessageData> messages = FXCollections.observableArrayList();
-        ObservableList<ConversationData> conversations = FXCollections.observableArrayList();
-
-        // get conversations
-        conversations.addAll(getConversations(currentUserID));
-
-        // can't find one
-        if (friendID == -1 && conversations.isEmpty()) return null;
-
-        // take the first conversation id one
-        if (friendID == -1){
-            ConversationData conversationData = conversations.get(0);
-            friendID = conversationData.id;
-        }
-
-        if (conversations.isEmpty() || !conversations.contains(new ConversationData(friendID))){
-             // we add a new one
-            if (!newConversation(friendID, currentUserID)){
-               throw new IllegalStateException("error");
-            }
-        }
-
-        // load messages
-        messages.addAll(getUserMessagesWith(friendID, currentUserID));
-        messages.forEach(m -> m.read = true);
-
-        closeConversation(friendID, currentUserID);
-        if (!newConversation(friendID, currentUserID)){
-            throw new IllegalStateException("error");
-        }
-        conversations.clear();
-        conversations.addAll(getConversations(currentUserID));
-
-        return new FriendConversationView(getFriendData(friendID), getFriendData(currentUserID), messages,
-                conversations);
+        return null;
     }
 
     @Override
     public boolean newConversation(int friendID, int currentUserID) {
-        ArrayList<ConversationData> conversations = getConversations(currentUserID);
-        FriendData friendData = getFriendData(friendID);
-        ConversationData conv = new ConversationData("/avatars/"+friendID+".png",
-                friendData.name, friendData.online, friendID,
-                getUnreadMessagesCount(friendID, currentUserID)
-        );
-        conversations.add(0, conv);
-        return true;
+        return false;
     }
 
     @Override
     public boolean closeConversation(int friendID, int currentUserID) {
-        ArrayList<ConversationData> conversations = getConversations(currentUserID);
-        return conversations.remove(new ConversationData(friendID));
-    }
-
-    private final HashMap<Integer, ArrayList<ConversationData>> conversations = new HashMap<>();
-
-    private ArrayList<ConversationData> getConversations(int loggedID) {
-        if (this.conversations.containsKey(loggedID))
-            return this.conversations.get(loggedID);
-
-        ArrayList<ConversationData> conversations = new ArrayList<>();
-
-        if (loggedID == 23) {
-            FriendData friendData = getFriendData(24);
-            ConversationData conv = new ConversationData("/avatars/"+24+".png",
-                    friendData.name, friendData.online, 24,
-                    getUnreadMessagesCount(24, 23)
-            );
-            conversations.add(conv);
-            friendData = getFriendData(27);
-            conv = new ConversationData("/avatars/"+27+".png",
-                    friendData.name, friendData.online, 27,
-                    getUnreadMessagesCount(27, 23)
-            );
-            conversations.add(conv);
-        }
-
-        this.conversations.put(loggedID, conversations);
-        return this.conversations.get(loggedID);
-    }
-
-    private int getUnreadMessagesCount(int friendID, int loggedID) {
-        ArrayList<MessageData> messages = getUserMessagesWith(friendID, loggedID);
-        int count = 0;
-        for (MessageData d: messages) {
-            if (!d.read) count++;
-        }
-        // System.out.println("v ("+friendID+","+loggedID+")="+count);
-        return count;
-    }
-
-    private final HashMap<Point2D, ArrayList<MessageData>> messages = new HashMap<>();
-
-    private ArrayList<MessageData> getUserMessagesWith(int friendID, int loggedID) {
-        Point2D key = new Point2D(friendID, loggedID);
-        if (this.messages.containsKey(key))
-            return this.messages.get(key);
-
-        ArrayList<MessageData> messages = new ArrayList<>();
-
-        if (friendID == 24 && loggedID == 23) {
-            messages.add(
-                    new MessageData(
-                            23,
-                            "java.lang.NoSuchMethodException: com.lgs.eden.views.achievements.\nAchievements.<init>()",
-                            MessageType.TEXT,
-                            Date.from(Instant.now()),
-                            true
-                    )
-            );
-            messages.add(new MessageData(24, "new Achievements()", MessageType.TEXT, Date.from(Instant.now()), false));
-            messages.add(new MessageData(24, "new 2()", MessageType.TEXT, Date.from(Instant.now()), false));
-            messages.add(new MessageData(24, "new 3()", MessageType.TEXT, Date.from(Instant.now()), false));
-            messages.add(new MessageData(24, "new 4()", MessageType.TEXT, Date.from(Instant.now()), false));
-            messages.add(new MessageData(24, "new 5()", MessageType.TEXT, Date.from(Instant.now()), false));
-            messages.add(new MessageData(24, "new 6()", MessageType.TEXT, Date.from(Instant.now()), false));
-            messages.add(new MessageData(24, "new 7()", MessageType.TEXT, Date.from(Instant.now()), false));
-            messages.add(new MessageData(24, "new 8()", MessageType.TEXT, Date.from(Instant.now()), false));
-            messages.add(new MessageData(24, "new 9()", MessageType.TEXT, Date.from(Instant.now()), false));
-            messages.add(new MessageData(24, "new 10()", MessageType.TEXT, Date.from(Instant.now()), false));
-            messages.add(new MessageData(24, "new 11()", MessageType.TEXT, Date.from(Instant.now()), false));
-            messages.add(new MessageData(24, "new 12()", MessageType.TEXT, Date.from(Instant.now()), false));
-            messages.add(new MessageData(24, "new 13()", MessageType.TEXT, Date.from(Instant.now()), false));
-            messages.add(new MessageData(24, "new 14()", MessageType.TEXT, Date.from(Instant.now()), false));
-            messages.add(new MessageData(24, "new 215()", MessageType.TEXT, Date.from(Instant.now()), false));
-        }
-
-        this.messages.put(key, messages);
-        return this.messages.get(key);
+        return false;
     }
 
     // ------------------------------ UTILS ----------------------------- \\
 
-    private FriendData getFriendData(int userID) {
-        switch (userID){
-            case 23: return new FriendData("/avatars/23.png", "Raphik", true, 23, FriendShipStatus.FRIENDS);
-            case 24: return new FriendData("/avatars/24.png", "Raphik2", true, 24, FriendShipStatus.FRIENDS);
-            case 25: return new FriendData("/avatars/25.png", "Calistral", false, 25, FriendShipStatus.FRIENDS);
-            case 26: return new FriendData("/avatars/26.png", "Caliki", false, 26, FriendShipStatus.FRIENDS);
-            case 27: return new FriendData("/avatars/27.png", "Raphistro", false, 27, FriendShipStatus.FRIENDS);
-            case 28: return new FriendData("/avatars/27.png", "XXX", false, 28, FriendShipStatus.FRIENDS);
-            case 29: return new FriendData("/avatars/25.png", "YYY", false, 29, FriendShipStatus.FRIENDS);
+    private final ArrayList<ProfileData> users = new ArrayList<>();
+    private int loggedID = -1;
+
+    private ProfileData createFriend(String username, int id, int rep, String since, int nf,
+                                     String desc, FriendShipStatus fs,
+                                     ReputationScore status, RecentGameData[] games, ProfileData p) {
+        if (games == null) games = new RecentGameData[]{};
+
+        ObservableList<FriendData> friends = FXCollections.observableArrayList();
+        if (p != null){
+            friends.add(friendFromProfil(p, FriendShipStatus.FRIENDS));
         }
-        throw new IllegalArgumentException("not supported userID");
+
+        return  new ProfileData(username, id, "/avatars/"+id+".png",
+                nf, rep,
+                desc,
+                new Date(), Date.from(Instant.parse(since)), friends,
+                games,
+                fs,
+                status
+        );
     }
 
-    private FriendShipStatus evaluateRelationShip(int userID, int loggedID) {
-        if(loggedID == userID) return FriendShipStatus.USER;
-
-        boolean one = inFriendList(userID, loggedID);
-        boolean two = inFriendList(loggedID, userID);
-
-        if (one && two) return FriendShipStatus.FRIENDS;
-        if (one) return FriendShipStatus.GOT_REQUESTED;
-        if (two) return FriendShipStatus.REQUESTED;
-
-        return FriendShipStatus.NONE;
+    private FriendData friendFromProfil(ProfileData p) {
+        return friendFromProfil(p, FriendShipStatus.NONE);
     }
 
-    private boolean inFriendList(int userID, int loggedID){
-        ArrayList<FriendData> friendList = getFriendList(userID);
-        return friendList.contains(new FriendData(loggedID));
+    private FriendData friendFromProfil(ProfileData p, FriendShipStatus status) {
+        return new FriendData(p.avatarPath, p.username, false, p.userID, status);
     }
+
+    private void init(int currentUserID){
+        if (this.loggedID != -1 && currentUserID == this.loggedID) return;
+        loggedID = currentUserID;
+        users.clear();
+
+        ProfileData raphik = createFriend("Raphik", 23, 9999,
+                "2020-12-03T10:15:30.00Z", 4,
+                "Raphiki is a great programmer at ENSIIE engineering school.",
+                getFriendShipStatus(23, currentUserID),
+                ReputationScore.NONE, new RecentGameData[]{
+                        new RecentGameData(Utility.loadImage("/games/prim-icon.png"), "Prim", 0, 1),
+                        // new RecentGameData(Utility.loadImage("/games/enigma-icon.png"), "Enigma", 1020, 30)
+                },
+                null
+        );
+
+        ProfileData raphik2 = createFriend("Raphik2", 24, 0, "2021-03-18T10:15:30.00Z", 1,
+                "No description yet.", getFriendShipStatus(24, currentUserID),
+                ReputationScore.NONE, null, raphik
+        );
+
+        ProfileData calistral = createFriend("Calistral", 25, -1, "2020-12-03T10:15:30.00Z", 1,
+                "No description yet.", getFriendShipStatus(25, currentUserID),
+                ReputationScore.DECREASED, null, raphik
+        );
+
+        ProfileData caliki = createFriend("Caliki", 26, 0,
+                "2020-12-03T10:15:30.00Z", 1,
+                "This is a really" + "This is a really" + "This is a really" + "This is a really" + "This is a really"
+                        + "This is a really" + "This is a really" + "This is a really" + "This is a really" + "This is a really"
+                        + "This is a really" + "This is a really" + "This is a really" + "This is a really" + "This is a really"
+                        + "This is a really" + "This is a really" + "This is a really" + "This is a really" + "This is a really"
+                        + "This is a really" + "This is a really" + "This is a really" + "This is a really" + "This is a really"
+                        + "This is a really" + "This is a really" + "This is a really" + "This is a really" + "This is a really",
+                getFriendShipStatus(26, currentUserID), ReputationScore.NONE, null, raphik
+        );
+
+        ProfileData raphistro = createFriend("Raphistro", 27, 17570, "2020-03-09T10:15:30.00Z", 1,
+                "No description yet.", getFriendShipStatus(27, currentUserID), ReputationScore.INCREASED, null, raphik
+        );
+
+        users.add(raphik);
+        users.add(raphik2);
+        users.add(calistral);
+        users.add(caliki);
+        users.add(raphistro);
+
+        ProfileData xxx = createFriend("XXX", 28, 0,
+                "2020-03-09T10:15:30.00Z", 1,
+                "No description yet.",
+                getFriendShipStatus(28, currentUserID),
+                ReputationScore.NONE, null, null
+        );
+        xxx.friends.add(friendFromProfil(raphik, FriendShipStatus.REQUESTED));
+
+        users.add(xxx);
+        users.add(createFriend("YYY", 29, 0,
+                "2020-03-09T10:15:30.00Z", 0,
+                "No description yet.",
+                FriendShipStatus.NONE,
+                ReputationScore.NONE, null, null
+        ));
+
+        raphik.friends.add(friendFromProfil(raphik2, FriendShipStatus.FRIENDS));
+        raphik.friends.add(friendFromProfil(calistral, FriendShipStatus.FRIENDS));
+        raphik.friends.add(friendFromProfil(caliki, FriendShipStatus.FRIENDS));
+        raphik.friends.add(friendFromProfil(raphistro, FriendShipStatus.FRIENDS));
+    }
+
+    private FriendShipStatus getFriendShipStatus(int userID, int currentUserID) {
+        if (currentUserID == userID) return FriendShipStatus.USER;
+
+        if (currentUserID == 23 && userID == 28) return FriendShipStatus.GOT_REQUESTED;
+
+        return currentUserID == 23 ? FriendShipStatus.FRIENDS : FriendShipStatus.NONE;
+    }
+
+    private ProfileData getUserProfile(int userID) {
+        for (ProfileData d: this.users) {
+            if (d.userID == userID) return d;
+        }
+        throw new IllegalArgumentException("not found");
+    }
+
+    private ObservableList<FriendData> getRealFriendList(int userID) {
+        return getUserProfile(userID).friends;
+    }
+
 }

@@ -6,6 +6,8 @@ import com.lgs.eden.utils.Utility;
 import javafx.collections.ObservableList;
 import javafx.scene.image.Image;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 
 /**
@@ -44,7 +46,7 @@ public class ProfileData {
                        FriendShipStatus statusWithLogged, ReputationScore score) {
         this.avatarPath = avatar;
         this.username = username;
-        this.avatar = Utility.loadImage(avatar);
+        this.avatar = avatar == null ? null : Utility.loadImage(avatar);
         this.friends = friends;
         this.recentGames = recentGames;
         this.userID = userID;
@@ -65,10 +67,42 @@ public class ProfileData {
                 data.lastSeen, data.memberSinceDate, data.friends, data.recentGames, data.statusWithLogged, score);
     }
 
+    public ProfileData(ProfileData data, FriendShipStatus status) {
+        this(data.username, data.userID, data.avatarPath, data.friends.size(), data.reputation, data.biography,
+                data.lastSeen, data.memberSinceDate, data.friends, data.recentGames, status, data.score);
+    }
+
+    public ProfileData(int userID){
+        this(null, userID, null, 0, 0, null, null,
+                null, null, null, null, null);
+    }
+
+    public ProfileData(ProfileData data, ObservableList<FriendData> friendList) {
+            this(data.username, data.userID, data.avatarPath, friendList.size(), data.reputation, data.biography,
+                    data.lastSeen, data.memberSinceDate, friendList, data.recentGames, data.statusWithLogged, data.score);
+        }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof ProfileData)) return false;
+
+        ProfileData that = (ProfileData) o;
+
+        return userID == that.userID;
+    }
+
+    @Override
+    public int hashCode() {
+        return userID;
+    }
+
     @Override
     public String toString() {
         return "ProfileData{" +
                 "username='" + username + '\'' +
+                ", friends=" + friends +
+                ", recentGames=" + Arrays.toString(recentGames) +
                 ", userID=" + userID +
                 ", friendNumber=" + friendNumber +
                 ", reputation=" + reputation +
@@ -77,6 +111,7 @@ public class ProfileData {
                 ", memberSinceDate=" + memberSinceDate +
                 ", avatarPath='" + avatarPath + '\'' +
                 ", statusWithLogged=" + statusWithLogged +
+                ", score=" + score +
                 '}';
     }
 }
