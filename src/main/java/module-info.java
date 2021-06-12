@@ -9,7 +9,9 @@ module eden {
     requires javafx.graphics;
     requires javafx.base;
     requires javafx.web;
+
     requires java.desktop;
+    requires jdk.crypto.cryptoki;
     requires org.commonmark;
     requires org.commonmark.ext.gfm.tables;
 

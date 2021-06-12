@@ -73,6 +73,7 @@ jlink {
     launcher {
         name = 'eden'
     }
+    imageDir.set(file("$buildDir/../eden/myjre"))
 }
 
 // jar
