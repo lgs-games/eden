@@ -117,8 +117,8 @@ class ProfileHandler implements ProfileAPI {
 
         if (userID == 23){
             recentGamesData = new RecentGameData[]{
-                    new RecentGameData(Utility.loadImage("/games/prim-icon.png"), "Prim", 0, RecentGameData.PLAYING),
-                    new RecentGameData(Utility.loadImage("/games/enigma-icon.png"), "Enigma", 1020, 30)
+                    new RecentGameData(Utility.loadImage("/games/prim-icon.png"), "Prim", 0, 1),
+                    // new RecentGameData(Utility.loadImage("/games/enigma-icon.png"), "Enigma", 1020, 30)
             };
 
             r = new ProfileData("Raphik", 23, "/avatars/23.png",

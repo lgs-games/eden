@@ -14,7 +14,6 @@ public class BasicGameData {
     public final int id;
     public final String name;
     public final Image icon;
-
     private final String path;
 
     public BasicGameData(int id, String name, String icon) {

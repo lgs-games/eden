@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.TextFlow?>
+
+<BorderPane maxHeight="70.0" prefWidth="250.0" styleClass="app-background" stylesheets="@../../style/style.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lgs.eden.views.gameslist.DownloadBox">
+    <center>
+        <VBox maxHeight="70.0" BorderPane.alignment="CENTER">
+            <children>
+                <Label styleClass="yellow-text" text="Téléchargement en cours">
+                    <VBox.margin>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                    </VBox.margin>
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </Label>
+                <TextFlow>
+                    <children>
+                        <Label styleClass="blue-text" text="Speed">
+                            <padding>
+                                <Insets right="5.0" />
+                            </padding>
+                        </Label>
+                        <Label fx:id="speed" layoutX="10.0" layoutY="10.0" styleClass="white-text" text="6.3" />
+                        <Label styleClass="white-text" text="Mbs">
+                            <padding>
+                                <Insets left="2.0" />
+                            </padding>
+                        </Label>
+                    </children>
+                    <VBox.margin>
+                        <Insets bottom="5.0" left="10.0" right="5.0" />
+                    </VBox.margin>
+                </TextFlow>
+                <TextFlow layoutX="20.0" layoutY="51.0">
+                    <children>
+                        <Label layoutX="10.0" layoutY="10.0" styleClass="blue-text" text="Progress">
+                            <padding>
+                                <Insets right="5.0" />
+                            </padding>
+                        </Label>
+                        <Label fx:id="downloaded" layoutX="10.0" layoutY="10.0" styleClass="white-text" text="6.3" />
+                        <Label styleClass="white-text" text="/">
+                            <padding>
+                                <Insets left="2.0" />
+                            </padding>
+                        </Label>
+                        <Label fx:id="size" layoutX="26.0" layoutY="10.0" styleClass="white-text" text="88.0">
+                            <padding>
+                                <Insets left="2.0" />
+                            </padding>
+                        </Label>
+                        <Label layoutX="33.0" layoutY="10.0" styleClass="white-text" text="Mbs">
+                            <padding>
+                                <Insets left="2.0" />
+                            </padding>
+                        </Label>
+                    </children>
+                    <VBox.margin>
+                        <Insets bottom="5.0" left="10.0" right="5.0" />
+                    </VBox.margin>
+                </TextFlow>
+            </children>
+        </VBox>
+    </center>
+    <right>
+        <Button focusTraversable="false" mnemonicParsing="false" onAction="#onCancelRequest" text="x" BorderPane.alignment="CENTER">
+            <BorderPane.margin>
+                <Insets right="10.0" />
+            </BorderPane.margin>
+        </Button>
+    </right>
+</BorderPane>

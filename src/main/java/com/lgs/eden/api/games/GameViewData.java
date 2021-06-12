@@ -17,10 +17,11 @@ public class GameViewData extends BasicGameData {
     public final int numberOfAchievements;
     public final int friendsPlaying;
     public final int timePlayed;
+    public final GameUpdateData update;
 
     public GameViewData(int id, String name, String icon,
                         String version, BasicNewsData lastNews, String background, int playerAchievements,
-                        int numberOfAchievements, int friendsPlaying, int timePlayed) {
+                        int numberOfAchievements, int friendsPlaying, int timePlayed, GameUpdateData update) {
         super(id, name, icon);
         this.version = version;
         this.lastNews = lastNews;
@@ -29,5 +30,6 @@ public class GameViewData extends BasicGameData {
         this.numberOfAchievements = numberOfAchievements;
         this.friendsPlaying = friendsPlaying;
         this.timePlayed = timePlayed;
+        this.update = update;
     }
 }

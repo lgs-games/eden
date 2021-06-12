@@ -385,19 +385,23 @@
                                              </cursor>
                                           </VBox>
                                        </top>
-                                       <center>
-                                          <Button mnemonicParsing="false" styleClass="eden-button" text="%download" BorderPane.alignment="CENTER">
-                                             <padding>
-                                                <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
-                                             </padding>
-                                             <font>
-                                                <Font size="14.0" />
-                                             </font>
-                                          </Button>
-                                       </center>
                                        <BorderPane.margin>
                                           <Insets bottom="40.0" />
                                        </BorderPane.margin>
+                                       <center>
+                                          <StackPane fx:id="downloadBox" BorderPane.alignment="CENTER">
+                                             <children>
+                                                <Button fx:id="download" mnemonicParsing="false" styleClass="eden-button" text="%download">
+                                                   <padding>
+                                                      <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
+                                                   </padding>
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
+                                                </Button>
+                                             </children>
+                                          </StackPane>
+                                       </center>
                                     </BorderPane>
                                  </center>
                               </BorderPane>

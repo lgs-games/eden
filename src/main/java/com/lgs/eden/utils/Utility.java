@@ -141,4 +141,27 @@ public final class Utility {
             throw new UnsupportedOperationException("not yet");
         }
     }
+
+    /** install game **/
+    public static boolean installGame(String installer, int gameID) {
+        OperatingSystem os = getOS();
+
+        String location = Config.getGameFolder() + gameID + "/";
+
+        if (os.equals(OperatingSystem.WINDOWS)){
+            try {
+                // start exe
+                ProcessBuilder process = new ProcessBuilder(installer, "/SILENT", "/MERGETASKS=\"desktopicon\""
+                , "/DIR="+location);
+                process.directory(new File(new File(installer).getParent()));
+                Process start = process.start();
+                int r = start.waitFor();
+                return r == 0;
+            } catch (IOException|InterruptedException ex) {
+                return false;
+            }
+        } else {
+            throw new UnsupportedOperationException("not yet");
+        }
+    }
 }

@@ -83,7 +83,12 @@ class GamesHandler implements GameAPI {
             return new GameViewData(
                     0, "Prim", "/games/prim-icon.png", "3.1.0", prim,
                     "/games/prim-bg.png",
-                    0, 7, 0, 54
+                    0, 7, 0, 54,
+                    new GameUpdateData(
+                            "3.1.0",
+                            "https://lgs-games.com/assets/exe/prim-setup-3.1.0.exe",
+                            88
+                    )
             );
         } else {
             BasicNewsData enigma = new BasicNewsData(
@@ -96,8 +101,8 @@ class GamesHandler implements GameAPI {
             return new GameViewData(
                     1, "Enigma", "/games/enigma-icon.png", "2.0.0", enigma,
                     "/games/enigma-bg.jpg",
-                    0, 24, 3, 4500
-            );
+                    0, 24, 3, 4500,
+                    null);
         }
     }
 
@@ -141,7 +146,7 @@ class GamesHandler implements GameAPI {
         if (this.games != null) return;
         this.games = FXCollections.observableArrayList();
         if (userID == 23){
-            this.games.add(new BasicGameData(1, "Enigma", "/games/enigma-icon.png"));
+            // this.games.add(new BasicGameData(1, "Enigma", "/games/enigma-icon.png"));
             this.games.add(new BasicGameData(0, "Prim", "/games/prim-icon.png"));
         }
     }

@@ -29,7 +29,7 @@ import java.util.TimerTask;
 public class UpdateWindowHandler {
 
     // todo: temporary bypass
-    private static final boolean CHECK_UPDATES = true;
+    private static final boolean CHECK_UPDATES = false;
 
     // state of our installer
     enum State {
@@ -146,7 +146,7 @@ public class UpdateWindowHandler {
             }
             System.out.println(needUpdate ? "Client needs an update" : "Client is up to date");
 
-            if (needUpdate){
+            if (CHECK_UPDATES && needUpdate){
                 Platform.runLater(() -> {
                     controller.setState(State.DOWNLOAD_UPDATE);
 

@@ -6,8 +6,11 @@ import com.lgs.eden.api.games.GameViewData;
 import com.lgs.eden.api.games.ShortGameViewData;
 import com.lgs.eden.application.AppWindowHandler;
 import com.lgs.eden.application.ApplicationCloseHandler;
+import com.lgs.eden.application.UpdateWindowHandler;
 import com.lgs.eden.utils.Utility;
 import com.lgs.eden.utils.ViewsPath;
+import com.lgs.eden.utils.config.Config;
+import com.lgs.eden.utils.download.DownloadManager;
 import com.lgs.eden.views.gameslist.cell.GameListCell;
 import com.lgs.eden.views.gameslist.news.AllNews;
 import com.lgs.eden.views.gameslist.news.News;
@@ -27,6 +30,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.StackPane;
 
 import java.util.ArrayList;
 import java.util.Timer;
@@ -97,6 +101,11 @@ public class GameList {
     @FXML
     private ImageView gameBackground;
 
+    @FXML
+    private Button download;
+    @FXML
+    private StackPane downloadBox;
+
     // store game data
     private BasicGameData data; // basic
     private GameViewData gameData; // complete
@@ -135,6 +144,17 @@ public class GameList {
         // others
         this.friendsPlaying.setText(""+this.gameData.friendsPlaying);
         this.timePlayed.setText(""+this.gameData.timePlayed);
+
+        // ------------------------------ DOWNLOAD ----------------------------- \\
+
+        if (Config.isGameInstalled(gameData.id)) {
+            // todo: translation
+            this.download.setText("Play");
+            this.download.setOnAction((e) -> launchGame());
+        } else {
+            this.download.setText("Download");
+            this.download.setOnAction((e) -> downloadGame());
+        }
     }
 
     public void goToSubMenu(Parent view){
@@ -271,5 +291,24 @@ public class GameList {
 
         @Override
         public void run() { Platform.runLater(() -> image.setRotate(rotation += 50)); }
+    }
+
+    // ------------------------------ DOWNLOAD ----------------------------- \\
+
+    public void launchGame(){
+        System.out.println("start game");
+    }
+
+    private void downloadGame() {
+        this.downloadBox.getChildren().add(1, DownloadBox.getView(this.gameData,
+            () -> this.downloadBox.getChildren().remove(1),
+            () -> Platform.runLater(() -> {
+                    // todo: translation
+                    this.download.setText("Play");
+                    this.download.setOnAction((e) -> launchGame());
+                    this.downloadBox.getChildren().remove(1);
+                }
+            )
+        ));
     }
 }

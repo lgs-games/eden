@@ -70,7 +70,7 @@ public class Config {
         //  move all games in the old folder to the new one
     }
 
-    public static String getDefaultGameFolder() { return Utility.getCurrentDirectory()+"/games/"; }
+    private static String getDefaultGameFolder() { return Utility.getCurrentDirectory()+"/games/"; }
 
     // ------------------------------ LOAD CONFIG ----------------------------- \\
 
@@ -82,7 +82,7 @@ public class Config {
     public static void init() {
         storedUsername = "Raphik";
         setLocale(Language.EN);
-        gameFolder = "C:\\Program Files\\eden";
+        gameFolder = getDefaultGameFolder();
 
         // ensure that gameFolder is a valid folder
         File f = new File(gameFolder);
@@ -113,5 +113,11 @@ public class Config {
             }
         }
         return downloadRepository;
+    }
+
+    public static boolean isGameInstalled(int gameID) {
+        String gameFolder = getGameFolder() + gameID;
+        File folder = new File(gameFolder);
+        return folder.exists() && folder.isDirectory();
     }
 }
