@@ -13,6 +13,7 @@ import com.lgs.eden.utils.ViewsPath;
 import com.lgs.eden.utils.cell.CustomCells;
 import com.lgs.eden.utils.helper.SearchPane;
 import com.lgs.eden.views.profile.Profile;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -113,6 +114,15 @@ public class Messages {
             this.messages.setCellFactory(cellView -> new CustomCells<>(MessageCell.load()));
 
             if (conv.messages.size() > 0) this.messages.scrollTo(conv.messages.size() - 1);
+
+            // adding callback
+            API.imp.setMessagesCallBack((m) -> {
+                if (this.messages == null) return;
+                Platform.runLater(() -> {
+                    this.messages.getItems().add(m);
+                    this.messages.scrollTo(this.messages.getItems().size() - 1);
+                });
+            });
         }
     }
 
