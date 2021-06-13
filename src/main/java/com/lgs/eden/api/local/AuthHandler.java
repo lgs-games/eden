@@ -38,7 +38,7 @@ class AuthHandler implements AuthAPI {
     }
 
     @Override
-    public void logout() {
+    public void logout(int currentUserID) {
     }
 
     @Override

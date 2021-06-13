@@ -103,7 +103,7 @@ public class AppWindowHandler {
                                 box.setOpacity(1);
                                 StringBuilder message = new StringBuilder();
                                 for (APIResponseCode c: notifications) {
-                                    message.append(Translate.getTranslation(c));
+                                    message.append(Translate.getTranslation(c)).append('\n');
                                 }
                                 box.setOnAction((e) -> PopupUtils.showPopup(message.toString()));
                             } else {
@@ -150,7 +150,8 @@ public class AppWindowHandler {
 
     @FXML
     public void logout() {
-        API.imp.logout();
+        API.imp.logout(AppWindowHandler.currentUserID());
+        ApplicationCloseHandler.setLogged(false);
         Platform.runLater(AppWindowHandler::goBackToMainApp);
     }
 

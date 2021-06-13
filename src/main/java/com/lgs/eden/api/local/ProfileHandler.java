@@ -209,7 +209,7 @@ class ProfileHandler implements ProfileAPI {
 
         if (friendID == -1 && conv.isEmpty()) return null;
 
-        if (conv.isEmpty() || !conv.containsKey(friendID)) {
+        if (conv.isEmpty() || (friendID != -1 && !conv.containsKey(friendID))) {
             newConversation(friendID, currentUserID);
         }
 
@@ -219,10 +219,22 @@ class ProfileHandler implements ProfileAPI {
             friendID = allConv.get(0).id;
         }
 
+        ArrayList<MessageData> messages = new ArrayList<>();
+        for (MessageData d: getMessages(friendID)) {
+            if (!d.read){
+                messages.add(new MessageData(d, true));
+            } else {
+                messages.add(d);
+            }
+        }
+        this.messages.put(friendID, messages);
+
+        this.parent.triggerNotificationCallBack(currentUserID);
+
         return new FriendConversationView(
                 friendFromProfil(getUserProfile(friendID)),
                 friendFromProfil(getUserProfile(currentUserID)),
-                FXCollections.observableArrayList(getMessages(friendID)),
+                FXCollections.observableArrayList(messages),
                 allConv
         );
     }
@@ -279,6 +291,22 @@ class ProfileHandler implements ProfileAPI {
         return r;
     }
 
+    @SuppressWarnings("SameParameterValue")
+    void sendMessageAsOther(int current, int fake, String message) {
+        ArrayList<MessageData> messages = getMessages(fake);
+        MessageData r = new MessageData(
+                fake,
+                message,
+                MessageType.TEXT,
+                Date.from(Instant.now()),
+                false
+        );
+        messages.add(r);
+        closeConversation(fake, current);
+        newConversation(fake, current);
+        this.parent.triggerNotificationCallBack(current);
+    }
+
     private ArrayList<MessageData> getMessages(int with) {
         if (!messages.containsKey(with)) {
             messages.put(with, new ArrayList<>());
@@ -293,7 +321,8 @@ class ProfileHandler implements ProfileAPI {
 
     private ProfileData createFriend(String username, int id, int rep, String since, int nf,
                                      String desc, FriendShipStatus fs,
-                                     ReputationScore status, RecentGameData[] games, ProfileData p) {
+                                     ReputationScore status, RecentGameData[] games, ProfileData p,
+                                     boolean online) {
         if (games == null) games = new RecentGameData[]{};
 
         ObservableList<FriendData> friends = FXCollections.observableArrayList();
@@ -306,7 +335,7 @@ class ProfileHandler implements ProfileAPI {
                 desc,
                 new Date(), Date.from(Instant.parse(since)), friends,
                 games,
-                false,
+                online,
                 fs,
                 status
         );
@@ -333,17 +362,17 @@ class ProfileHandler implements ProfileAPI {
                         new RecentGameData(Utility.loadImage("/games/prim-icon.png"), "Prim", 0, 1),
                         // new RecentGameData(Utility.loadImage("/games/enigma-icon.png"), "Enigma", 1020, 30)
                 },
-                null
+                null, true
         );
 
         ProfileData raphik2 = createFriend("Raphik2", 24, 0, "2021-03-18T10:15:30.00Z", 1,
                 "No description yet.", getFriendShipStatus(24, currentUserID),
-                ReputationScore.NONE, null, raphik
+                ReputationScore.NONE, null, raphik, false
         );
 
         ProfileData calistral = createFriend("Calistral", 25, -1, "2020-12-03T10:15:30.00Z", 1,
                 "No description yet.", getFriendShipStatus(25, currentUserID),
-                ReputationScore.DECREASED, null, raphik
+                ReputationScore.DECREASED, null, raphik, false
         );
 
         ProfileData caliki = createFriend("Caliki", 26, 0,
@@ -354,11 +383,12 @@ class ProfileHandler implements ProfileAPI {
                         + "This is a really" + "This is a really" + "This is a really" + "This is a really" + "This is a really"
                         + "This is a really" + "This is a really" + "This is a really" + "This is a really" + "This is a really"
                         + "This is a really" + "This is a really" + "This is a really" + "This is a really" + "This is a really",
-                getFriendShipStatus(26, currentUserID), ReputationScore.NONE, null, raphik
+                getFriendShipStatus(26, currentUserID), ReputationScore.NONE, null, raphik, false
         );
 
         ProfileData raphistro = createFriend("Raphistro", 27, 17570, "2020-03-09T10:15:30.00Z", 1,
-                "No description yet.", getFriendShipStatus(27, currentUserID), ReputationScore.INCREASED, null, raphik
+                "No description yet.", getFriendShipStatus(27, currentUserID), ReputationScore.INCREASED,
+                null, raphik, false
         );
 
         users.add(raphik);
@@ -371,7 +401,7 @@ class ProfileHandler implements ProfileAPI {
                 "2020-03-09T10:15:30.00Z", 1,
                 "No description yet.",
                 getFriendShipStatus(28, currentUserID),
-                ReputationScore.NONE, null, null
+                ReputationScore.NONE, null, null, false
         );
         xxx.friends.add(friendFromProfil(raphik, FriendShipStatus.REQUESTED));
 
@@ -380,7 +410,7 @@ class ProfileHandler implements ProfileAPI {
                 "2020-03-09T10:15:30.00Z", 0,
                 "No description yet.",
                 FriendShipStatus.NONE,
-                ReputationScore.NONE, null, null
+                ReputationScore.NONE, null, null, false
         ));
 
         raphik.friends.add(friendFromProfil(raphik2, FriendShipStatus.FRIENDS));

@@ -1,6 +1,7 @@
 package com.lgs.eden.api.local;
 
 import com.lgs.eden.api.API;
+import com.lgs.eden.api.APIHelper;
 import com.lgs.eden.api.APIResponseCode;
 import com.lgs.eden.api.auth.LoginResponseData;
 import com.lgs.eden.api.callback.NotificationsCallBack;
@@ -14,6 +15,8 @@ import com.lgs.eden.utils.config.Language;
 import javafx.collections.ObservableList;
 
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * API Realisation
@@ -65,11 +68,33 @@ public class LocalHandler implements API {
 
     // ------------------------------ LOGIN ----------------------------- \\
 
-    @Override
-    public LoginResponseData login(String username, String pwd) { return this.login.login(username, pwd); }
+    private Timer checker;
 
     @Override
-    public void logout() { this.login.logout(); }
+    public LoginResponseData login(String username, String pwd) {
+        LoginResponseData login = this.login.login(username, pwd);
+        if (login.code.equals(APIResponseCode.LOGIN_OK)){
+            // starts fake message receiver
+            this.checker = new Timer();
+            this.checker.scheduleAtFixedRate(new TimerTask() {
+                @Override
+                public void run() {
+                    // fake some delay
+                    APIHelper.fakeDelay(1000);
+                    // init
+                    getMessageWithFriend(24, 23);
+                    profile.sendMessageAsOther(23, 24, "Okay!");
+                }
+            }, 0, 10000);
+        }
+        return login;
+    }
+
+    @Override
+    public void logout(int currentUserID) {
+        this.checker.cancel();
+        this.login.logout(currentUserID);
+    }
 
     @Override
     public APIResponseCode register(String username, String pwd, String email) { return this.login.register(username, pwd, email);   }

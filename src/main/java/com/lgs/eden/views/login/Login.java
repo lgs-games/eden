@@ -4,6 +4,7 @@ import com.lgs.eden.api.API;
 import com.lgs.eden.api.APIResponseCode;
 import com.lgs.eden.api.auth.LoginResponseData;
 import com.lgs.eden.application.AppWindowHandler;
+import com.lgs.eden.application.ApplicationCloseHandler;
 import com.lgs.eden.application.PopupUtils;
 import com.lgs.eden.utils.config.Config;
 import com.lgs.eden.utils.Utility;
@@ -67,6 +68,7 @@ public class Login extends LoginRegisterForm {
             if (response.code.equals(APIResponseCode.LOGIN_OK)){ // this is an user id
                 // so we are good
                 AppWindowHandler.changeToAppWindow(response);
+                ApplicationCloseHandler.setLogged(true);
             } else {
                 error.append("Invalid credentials\n");
             }

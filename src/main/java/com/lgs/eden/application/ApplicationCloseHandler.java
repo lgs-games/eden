@@ -1,6 +1,6 @@
 package com.lgs.eden.application;
 
-import com.lgs.eden.utils.download.DownloadManager;
+import com.lgs.eden.api.API;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.scene.web.WebEngine;
@@ -22,6 +22,9 @@ public class ApplicationCloseHandler implements EventHandler<WindowEvent> {
     private static Thread downloadManager = null;
     private static Thread gameThread = null;
     private static Thread notificationsThread = null;
+    private static boolean logged = false;
+
+    public static void setLogged(boolean logged) { ApplicationCloseHandler.logged = logged; }
 
     public static void startUpdateThread(Timer timer, Runnable r) {
         closeUpdateThread();
@@ -67,6 +70,9 @@ public class ApplicationCloseHandler implements EventHandler<WindowEvent> {
         closeWebEngine();
         closeDownloadThread();
         closeNotificationsThread();
+
+        if (logged) API.imp.logout(AppWindowHandler.currentUserID());
+
         // radical ends
         Platform.exit();
 

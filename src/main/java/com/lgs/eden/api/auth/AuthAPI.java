@@ -15,7 +15,7 @@ public interface AuthAPI {
     /**
      *
      */
-    void logout();
+    void logout(int currentUserID);
 
     /**
      *

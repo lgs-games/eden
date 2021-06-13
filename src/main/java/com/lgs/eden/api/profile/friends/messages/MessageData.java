@@ -22,6 +22,10 @@ public class MessageData {
         this.read = read;
     }
 
+    public MessageData(MessageData data, boolean read) {
+        this(data.senderID, data.messageContent, data.type, data.date, read);
+    }
+
     public String getMessageAsText(){ return messageContent.toString(); }
 
     @Override
