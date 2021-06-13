@@ -1,5 +1,6 @@
 package com.lgs.eden.api.profile;
 
+import com.lgs.eden.api.APIResponseCode;
 import com.lgs.eden.api.profile.friends.FriendConversationView;
 import com.lgs.eden.api.profile.friends.FriendData;
 import com.lgs.eden.api.profile.friends.messages.MessageData;
@@ -82,4 +83,10 @@ public interface ProfileAPI {
      */
     MessageData sendMessage(int to, int from, String message);
 
+    /**
+     * Returns code according to what kind
+     * of notifications got fired or simply returns null
+     * if none.
+     */
+    ArrayList<APIResponseCode> lookForNotifications(int currentUserID);
 }

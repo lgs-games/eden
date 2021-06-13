@@ -1,7 +1,9 @@
 package com.lgs.eden.application;
 
 import com.lgs.eden.api.API;
+import com.lgs.eden.api.APIResponseCode;
 import com.lgs.eden.api.auth.LoginResponseData;
+import com.lgs.eden.utils.Translate;
 import com.lgs.eden.utils.config.Config;
 import com.lgs.eden.utils.Utility;
 import com.lgs.eden.utils.ViewsPath;
@@ -17,12 +19,12 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.control.Label;
-import javafx.scene.control.Labeled;
-import javafx.scene.control.MenuButton;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
+
+import java.util.ArrayList;
 
 /**
  * App Window handler. Called when logged
@@ -84,10 +86,32 @@ public class AppWindowHandler {
     private Label games;
     @FXML
     private Label library;
+    @FXML
+    private Button box;
 
     private void init() {
         this.username.setText("      "+loggedUser.username);
         this.userAvatar.setImage(loggedUser.avatar);
+
+        box.setTooltip(new Tooltip("no_activity"));
+        box.setOnAction((e) -> PopupUtils.showPopup("no_activity"));
+
+        ApplicationCloseHandler.starNotificationsThread(
+                () -> {
+                    ArrayList<APIResponseCode> notifications = API.imp.lookForNotifications(AppWindowHandler.currentUserID());
+                    Platform.runLater(() -> {
+                        if (notifications != null) {
+                            box.setOpacity(1);
+                            StringBuilder message = new StringBuilder();
+                            for (APIResponseCode c: notifications) {
+                                message.append(Translate.getTranslation(c));
+                            }
+                            box.setOnAction((e) -> PopupUtils.showPopup(message.toString()));
+                        }
+
+                    });
+                }
+        );
     }
 
     /** set in red current menu **/

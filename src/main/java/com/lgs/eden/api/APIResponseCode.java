@@ -20,10 +20,14 @@ public enum APIResponseCode {
     REGISTER_FAILED_SIZE(24),
 
     CHANGE_REPUTATION_OK(272),
-    CHANGE_REPUTATION_KO(273)
+    CHANGE_REPUTATION_KO(273),
+
+    NO_NOTIFICATIONS(555),
+    FRIEND_REQUEST(556),
+    MESSAGE_RECEIVED(557),
     ;
 
-    private final int code;
+    public final int code;
 
     APIResponseCode(int code) {
         this.code = code;

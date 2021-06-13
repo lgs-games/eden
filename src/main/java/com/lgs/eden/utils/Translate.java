@@ -1,5 +1,6 @@
 package com.lgs.eden.utils;
 
+import com.lgs.eden.api.APIResponseCode;
 import com.lgs.eden.utils.config.Config;
 import com.lgs.eden.utils.config.Language;
 
@@ -52,5 +53,9 @@ public final class Translate {
         else key = String.valueOf(i);
 
         return Translate.getTranslation("date_day_modifier_"+key);
+    }
+
+    public static String getTranslation(APIResponseCode rc) {
+        return Translate.getTranslation("code_"+rc.code);
     }
 }

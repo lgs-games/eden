@@ -1,5 +1,6 @@
 package com.lgs.eden.api.local;
 
+import com.lgs.eden.api.APIResponseCode;
 import com.lgs.eden.api.profile.RecentGameData;
 import com.lgs.eden.api.profile.ReputationScore;
 import com.lgs.eden.api.profile.friends.FriendConversationView;
@@ -23,6 +24,30 @@ import java.util.HashMap;
  * Implementation of ProfileAPI
  */
 class ProfileHandler implements ProfileAPI {
+
+    @Override
+    public ArrayList<APIResponseCode> lookForNotifications(int currentUserID) {
+        init(currentUserID);
+        ArrayList<APIResponseCode> r = new ArrayList<>();
+        // messages
+        for (FriendData d: getFriendList(currentUserID, -1)) {
+            int unreadMessagesCount = getUnreadMessagesCount(d.id, currentUserID);
+            if (unreadMessagesCount > 0) {
+                r.add(APIResponseCode.MESSAGE_RECEIVED);
+                break;
+            }
+        }
+        // friends requests
+        for (ProfileData d: users) {
+            if ( d.statusWithLogged.equals(FriendShipStatus.GOT_REQUESTED)) {
+                r.add(APIResponseCode.FRIEND_REQUEST);
+                break;
+            }
+        }
+
+        if (r.isEmpty()) return null;
+        return r;
+    }
 
     @Override
     public ArrayList<FriendData> searchUsers(String filter, int currentUserID) {
@@ -57,7 +82,7 @@ class ProfileHandler implements ProfileAPI {
     public ProfileData getProfileData(int userID, int currentUserID) {
         init(currentUserID);
         ProfileData userProfile = getUserProfile(userID);
-        return new ProfileData(userProfile, FXCollections.observableArrayList(getFriendList(userID, 7)));
+        return new ProfileData(userProfile, FXCollections.observableArrayList(getFriendList(userID, 6)));
     }
 
     @Override

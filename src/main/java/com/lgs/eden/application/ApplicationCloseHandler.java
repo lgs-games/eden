@@ -21,6 +21,7 @@ public class ApplicationCloseHandler implements EventHandler<WindowEvent> {
     private static WebEngine engine = null;
     private static Thread downloadManager = null;
     private static Thread gameThread = null;
+    private static Thread notificationsThread = null;
 
     public static void startUpdateThread(Timer timer, Runnable r) {
         closeUpdateThread();
@@ -43,6 +44,7 @@ public class ApplicationCloseHandler implements EventHandler<WindowEvent> {
     public static void closeWebEngine() {
         if (engine != null){
             engine.load(null);
+            engine = null;
         }
     }
 
@@ -55,8 +57,8 @@ public class ApplicationCloseHandler implements EventHandler<WindowEvent> {
     public static void closeDownloadThread() {
         if (downloadManager != null) {
             downloadManager.interrupt();
+            downloadManager = null;
         }
-        downloadManager = null;
     }
 
     public static void close(boolean simpleExit) {
@@ -64,6 +66,7 @@ public class ApplicationCloseHandler implements EventHandler<WindowEvent> {
         closeUpdateThread();
         closeWebEngine();
         closeDownloadThread();
+        closeNotificationsThread();
         // radical ends
         Platform.exit();
 
@@ -81,9 +84,22 @@ public class ApplicationCloseHandler implements EventHandler<WindowEvent> {
     private static void closeGameThread() {
         if (gameThread != null){
             gameThread.interrupt();
+            gameThread = null;
         }
     }
 
+    public static void starNotificationsThread(Runnable notifications) {
+        closeNotificationsThread();
+        notificationsThread = new Thread(notifications);
+        notificationsThread.start();
+    }
+
+    private static void closeNotificationsThread() {
+        if (notificationsThread != null){
+            notificationsThread.interrupt();
+            notificationsThread = null;
+        }
+    }
 
     // ------------------------------ HANDLER ----------------------------- \\
 

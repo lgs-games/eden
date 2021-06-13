@@ -98,6 +98,9 @@ public class LocalHandler implements API {
     // ------------------------------ PROFILE ----------------------------- \\
 
     @Override
+    public ArrayList<APIResponseCode> lookForNotifications(int currentUserID) { return this.profile.lookForNotifications(currentUserID); }
+
+    @Override
     public ArrayList<FriendData> searchUsers(String filter, int currentUserID) { return this.profile.searchUsers(filter, currentUserID); }
 
     @Override
