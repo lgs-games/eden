@@ -26,6 +26,10 @@ public class PopupUtils {
     public static void showPopup(String text){
         showPopup(text, false);
     }
+    public static void showPopup(String text, boolean close) {
+        showPopup(text, closeCallBack(close));
+    }
+
 
     /**
      * Create and display to popup with a custom content
@@ -33,8 +37,36 @@ public class PopupUtils {
     public static void showPopup(Parent content){
         showPopup(content, false);
     }
-
     public static void showPopup(Parent content, boolean close) {
+        showPopup(content, closeCallBack(close));
+    }
+
+    /**
+     * Create and display to popup for an APIException
+     */
+    public static void showPopup(APIException e) {
+        showPopup(e, false);
+    }
+    public static void showPopup(APIException e, boolean close) {
+        showPopup(Translate.getTranslation(e.code)+"\n"+e.getMessage(), close);
+    }
+
+    // ------------------------------ CORE ----------------------------- \\
+
+    public static void showPopup(String text, Runnable r) {
+        // create a label, wrap it in a borderpane
+        Label textLabel = new Label(text);
+        textLabel.setWrapText(true);
+        textLabel.setPrefWidth(250);
+
+        BorderPane pane = new BorderPane();
+        pane.setCenter(textLabel);
+        pane.setPadding(new Insets(SPACE));
+
+        Platform.runLater(() -> showPopup(pane, r));
+    }
+
+    public static void showPopup(Parent content, Runnable r) {
         Stage popup = new Stage();
         // make it beautiful
         popup.getIcons().add(Config.appIcon());
@@ -49,32 +81,13 @@ public class PopupUtils {
         Scene dialogScene = new Scene(content, WIDTH, -1);
         popup.setScene(dialogScene);
         popup.show();
-        if (close) popup.setOnCloseRequest((e) -> ApplicationCloseHandler.close(true));
+        if (r != null) popup.setOnCloseRequest((e) -> r.run());
     }
 
-    public static void showPopup(String text, boolean close) {
-        // create a label, wrap it in a borderpane
-        Label textLabel = new Label(text);
-        textLabel.setWrapText(true);
+    // ------------------------------ UTILS ----------------------------- \\
 
-        BorderPane pane = new BorderPane();
-        pane.setCenter(textLabel);
-        pane.setPadding(new Insets(SPACE));
-
-        if (close){
-            Platform.runLater(() -> {
-                showPopup(pane, true);
-            });
-        } else {
-            showPopup(pane);
-        }
+    private static Runnable closeCallBack( boolean close) {
+        return close ? () -> ApplicationCloseHandler.close(true) : null;
     }
 
-    public static void showPopup(APIException e) {
-        showPopup(e, false);
-    }
-
-    public static void showPopup(APIException e, boolean close) {
-        showPopup(Translate.getTranslation(e.code)+"\n"+e.getMessage(), close);
-    }
 }

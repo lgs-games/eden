@@ -1,7 +1,9 @@
 package com.lgs.eden.views.register;
 
 import com.lgs.eden.api.API;
+import com.lgs.eden.api.APIException;
 import com.lgs.eden.api.APIResponseCode;
+import com.lgs.eden.utils.Translate;
 import com.lgs.eden.utils.ViewsPath;
 import com.lgs.eden.application.PopupUtils;
 import com.lgs.eden.utils.helper.LoginRegisterForm;
@@ -53,18 +55,26 @@ public class Register extends LoginRegisterForm {
         StringBuilder error = new StringBuilder(); // for error message
 
         // testing username, password compatibility with the API
-        if (checkUsername(username)) error.append("wrong username\n");
-        if (checkPassword(pwd)) error.append("wrong password\n");
+        if (checkUsername(username)) error.append("Username length must be in ["+API.LOGIN_MIN_LENGTH+","+API.LOGIN_MAX_LENGTH+"]\n");
+        if (checkUsername(pwd)) error.append("Username length must be in ["+API.PASSWORD_MIN_LENGTH+","+API.PASSWORD_MAX_LENGTH+"]\n");
 
         // testing email compatibility with the API
         if (!email.contains("@") || !email.contains(".")) {
-            error.append("wrong email");
+            error.append("Please enter a valid email, we will ask for a confirmation.\n");
         }
 
         if (error.toString().isEmpty()) { // no error
-            APIResponseCode response = API.imp.register(username, pwd, email);
-            // todo: show message
-            //  according to APIResponseCode and maybe go back to login
+            try {
+                APIResponseCode response = API.imp.register(username, pwd, email);
+                if (response.equals(APIResponseCode.REGISTER_OK)){
+                    // back to login
+                    PopupUtils.showPopup(Translate.getTranslation(response), this::onPressBack);
+                } else {
+                    PopupUtils.showPopup(Translate.getTranslation(response));
+                }
+            } catch (APIException e) {
+                PopupUtils.showPopup(e);
+            }
         }
 
         if (!error.toString().isBlank()){

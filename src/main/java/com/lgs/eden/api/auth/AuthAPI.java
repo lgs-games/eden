@@ -22,9 +22,13 @@ public interface AuthAPI {
     void logout(int currentUserID);
 
     /**
-     *
+     * @see APIResponseCode#REGISTER_OK
+     * @see APIResponseCode#REGISTER_FAILED
+     * @see APIResponseCode#REGISTER_FAILED_LOGIN
+     * @see APIResponseCode#REGISTER_FAILED_SIZE
+     * @see APIResponseCode#REGISTER_FAILED_EMAIL
      */
-    APIResponseCode register(String username, String pwd, String email);
+    APIResponseCode register(String username, String pwd, String email) throws APIException;
 
     /**
      * Returns the link to the password forget page
