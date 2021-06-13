@@ -6,8 +6,12 @@ import com.lgs.eden.api.games.GameViewData;
 import com.lgs.eden.api.games.ShortGameViewData;
 import com.lgs.eden.application.AppWindowHandler;
 import com.lgs.eden.application.ApplicationCloseHandler;
+import com.lgs.eden.application.PopupUtils;
+import com.lgs.eden.utils.Translate;
 import com.lgs.eden.utils.Utility;
 import com.lgs.eden.utils.ViewsPath;
+import com.lgs.eden.utils.config.Config;
+import com.lgs.eden.utils.config.InstallUtils;
 import com.lgs.eden.views.gameslist.cell.GameListCell;
 import com.lgs.eden.views.gameslist.news.AllNews;
 import com.lgs.eden.views.gameslist.news.News;
@@ -27,6 +31,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.StackPane;
 
 import java.util.ArrayList;
 import java.util.Timer;
@@ -38,6 +43,8 @@ import java.util.TimerTask;
  */
 public class GameList {
 
+    public static boolean gameRunning = false;
+
     // ------------------------------ STATIC ----------------------------- \\
 
     public static Parent getScreen() {
@@ -45,12 +52,16 @@ public class GameList {
     }
 
     public static Parent getScreen(BasicGameData data) {
-        FXMLLoader loader = Utility.loadView(ViewsPath.GAMES_LIST.path);
-        Parent parent = Utility.loadViewPane(loader);
-        controller = loader.getController();
-        controller.data = data;
-        controller.init();
-        return parent;
+        ObservableList<BasicGameData> userGames = API.imp.getUserGames(AppWindowHandler.currentUserID());
+        if (userGames.isEmpty()) {
+            return EmptyGameList.getScreen();
+        } else {
+            FXMLLoader loader = Utility.loadView(ViewsPath.GAMES_LIST.path);
+            Parent parent = Utility.loadViewPane(loader);
+            controller = loader.getController();
+            controller.init(userGames, data);
+            return parent;
+        }
     }
 
     // current game data
@@ -93,6 +104,11 @@ public class GameList {
     @FXML
     private ImageView gameBackground;
 
+    @FXML
+    private Button download;
+    @FXML
+    private StackPane downloadBox;
+
     // store game data
     private BasicGameData data; // basic
     private GameViewData gameData; // complete
@@ -102,43 +118,47 @@ public class GameList {
     // store old screen when changed
     private final ArrayList<Node> backupCenter = new ArrayList<>();
 
-    private void init() {
+    private void init(ObservableList<BasicGameData> myGames, BasicGameData data) {
         // fill game list
-        this.myGames = API.imp.getUserGames(AppWindowHandler.currentUserID());
+        this.myGames = myGames;
+        this.data = data = data == null ? myGames.get(0) : data;
         // set items
         this.games.setItems(FXCollections.observableArrayList());
-        search();
-        // try to find if we got a game
-        if (data == null && this.myGames.size() == 0) {
-            // todo: empty
-            System.out.println("no games");
+        this.games.getItems().addAll(this.myGames);
+
+        // change renderer
+        this.games.setCellFactory(item -> new GameListCell());
+
+        // ------------------------------ GAME VIEW ----------------------------- \\
+        // fetch game data
+        this.gameData = API.imp.getGameData(AppWindowHandler.currentUserID(), data.id);
+
+        // set view texts
+        this.gameName.setText(this.gameData.name);
+        this.gameVersion.setText(this.gameData.version);
+        this.gameBackground.setImage(this.gameData.background);
+        // news
+        this.lastNewsTitle.setText(this.gameData.lastNews.title);
+        this.lastNewsDesc.setText(this.gameData.lastNews.desc);
+        this.lastNewsImage.setImage(this.gameData.lastNews.image);
+        // achievements
+        this.achievementCount.setText("" + this.gameData.playerAchievements);
+        this.achievementMax.setText("" + this.gameData.numberOfAchievements);
+        // others
+        this.friendsPlaying.setText("" + this.gameData.friendsPlaying);
+        this.timePlayed.setText("" + this.gameData.timePlayed);
+
+        // ------------------------------ DOWNLOAD ----------------------------- \\
+
+        if (Config.isGameInstalled(gameData.id)) {
+            this.download.setText(Translate.getTranslation("play"));
+            this.download.setOnAction((e) -> launchGame());
         } else {
-            if (data == null) data = this.myGames.get(0);
-            // change renderer
-            this.games.setCellFactory(item -> new GameListCell());
-
-            // ------------------------------ GAME VIEW ----------------------------- \\
-            // fetch game data
-            this.gameData = API.imp.getGameData(AppWindowHandler.currentUserID(), data.id);
-
-            // set view texts
-            this.gameName.setText(this.gameData.name);
-            this.gameVersion.setText(this.gameData.version);
-            this.gameBackground.setImage(this.gameData.background);
-            // news
-            this.lastNewsTitle.setText(this.gameData.lastNews.title);
-            this.lastNewsDesc.setText(this.gameData.lastNews.desc);
-            this.lastNewsImage.setImage(this.gameData.lastNews.image);
-            // achievements
-            this.achievementCount.setText(""+this.gameData.playerAchievements);
-            this.achievementMax.setText(""+this.gameData.numberOfAchievements);
-            // others
-            this.friendsPlaying.setText(""+this.gameData.friendsPlaying);
-            this.timePlayed.setText(""+this.gameData.timePlayed);
+            this.download.setOnAction((e) -> downloadGame());
         }
     }
 
-    public void goToSubMenu(Parent view){
+    public void goToSubMenu(Parent view) {
         // backup
         this.backupCenter.add(this.gameViewPane.getCenter());
         // set view in center
@@ -152,8 +172,8 @@ public class GameList {
     // ------------------------------ Search ----------------------------- \\
 
     @FXML
-    public void searchKey(KeyEvent e){
-        if (e.getCode().equals(KeyCode.ESCAPE)){
+    public void searchKey(KeyEvent e) {
+        if (e.getCode().equals(KeyCode.ESCAPE)) {
             unFocusSearch();
         }
     }
@@ -164,7 +184,7 @@ public class GameList {
     }
 
     @FXML
-    public void search(){
+    public void search() {
         unFocusSearch();
         // get input
         String text = this.search.getText().trim().toLowerCase();
@@ -173,8 +193,7 @@ public class GameList {
             this.games.getItems().clear();
             this.games.getItems().addAll(this.myGames);
             fillWithBlanksSinceBug(myGames.size());
-        }
-        else {
+        } else {
             this.games.getItems().clear();
             FilteredList<BasicGameData> filtered = this.myGames.filtered((e) -> e.name.toLowerCase().contains(text));
             this.games.getItems().addAll(filtered);
@@ -197,7 +216,7 @@ public class GameList {
 
     // go back
     @FXML
-    public void backToMain(){
+    public void backToMain() {
         // get last and remove
         int last = this.backupCenter.size() - 1;
         Node node = this.backupCenter.get(last);
@@ -214,25 +233,26 @@ public class GameList {
 
     // all news
     @FXML
-    public void seeAllNews(){ this.goToSubMenu(AllNews.getScreen(this.data.id)); }
+    public void seeAllNews() { this.goToSubMenu(AllNews.getScreen(this.data.id)); }
 
     // one news
     @FXML
-    public void showLastNews(){
+    public void showLastNews() {
         this.goToSubMenu(News.getScreen(this.gameData.lastNews));
     }
 
     @FXML
     public void showGameSettings() {
-        this.goToSubMenu(GameSettings.getScreen(this.data.id));
+        this.goToSubMenu(GameSettings.getScreen(this.gameData));
     }
 
     // ------------------------------ UPDATE GAME DATA ----------------------------- \\
 
     // request game information update
     private volatile boolean calledUpdate = false;
+
     @FXML
-    public void onUpdateRequest(){
+    public void onUpdateRequest() {
         // get rid of focus
         this.updateButton.getParent().requestFocus();
         // only one per one
@@ -248,9 +268,9 @@ public class GameList {
             ShortGameViewData view = API.imp.getGameDateUpdate(AppWindowHandler.currentUserID(), this.gameData.id);
             // changes values
             Platform.runLater(() -> {
-                this.achievementCount.setText(""+view.playerAchievements);
-                this.friendsPlaying.setText(""+view.friendsPlaying);
-                this.timePlayed.setText(""+view.timePlayed);
+                this.achievementCount.setText("" + view.playerAchievements);
+                this.friendsPlaying.setText("" + view.friendsPlaying);
+                this.timePlayed.setText("" + view.timePlayed);
                 // done
                 this.calledUpdate = false;
                 image.setRotate(0); // reset
@@ -272,5 +292,37 @@ public class GameList {
 
         @Override
         public void run() { Platform.runLater(() -> image.setRotate(rotation += 50)); }
+    }
+
+    // ------------------------------ DOWNLOAD ----------------------------- \\
+
+    private void launchGame() {
+        if (Config.isGameInstalled(gameData.id)) {
+            if (gameRunning) {
+                PopupUtils.showPopup(Translate.getTranslation("game_running"));
+            } else {
+                InstallUtils.runGame(gameData, () -> {
+                    gameRunning = false;
+                    API.imp.setPlaying(AppWindowHandler.currentUserID(), -1);
+                });
+                gameRunning = true;
+                API.imp.setPlaying(AppWindowHandler.currentUserID(), this.gameData.id);
+            }
+        } else {
+            this.download.setText(Translate.getTranslation("download"));
+            this.download.setOnAction((e) -> downloadGame());
+        }
+    }
+
+    private void downloadGame() {
+        this.downloadBox.getChildren().add(1, DownloadBox.getView(this.gameData,
+                () -> this.downloadBox.getChildren().remove(1),
+                () -> Platform.runLater(() -> {
+                            this.download.setText(Translate.getTranslation("play"));
+                            this.download.setOnAction((e) -> launchGame());
+                            this.downloadBox.getChildren().remove(1);
+                        }
+                )
+        ));
     }
 }

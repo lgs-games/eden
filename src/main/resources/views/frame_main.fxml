@@ -1,137 +1,155 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.Cursor?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.MenuButton?>
-<?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
-
-<BorderPane styleClass="app-background" stylesheets="@../style/style.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lgs.eden.application.AppWindowHandler">
-   <top>
-      <HBox alignment="CENTER" spacing="50.0" styleClass="white-box" BorderPane.alignment="CENTER">
-         <children>
-            <HBox alignment="CENTER">
-               <children>
-                  <ImageView>
-                     <image>
-                        <Image url="@../icon32.png" />
-                     </image>
-                  </ImageView>
-                  <Label text="Legendary Games Studio">
-                     <HBox.margin>
-                        <Insets left="10.0" />
-                     </HBox.margin>
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </Label>
-               </children>
-            </HBox>
-            <Label fx:id="games" layoutX="10.0" layoutY="10.0" onMouseClicked="#goToGameList" text="%my_games">
-               <font>
-                  <Font size="14.0" />
-               </font>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor></Label>
-            <Label fx:id="library" layoutX="38.0" layoutY="10.0" onMouseClicked="#goToMarketPlace" text="%library">
-               <font>
-                  <Font size="14.0" />
-               </font>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor></Label>
-            <BorderPane HBox.hgrow="ALWAYS">
-               <right>
-                  <MenuButton fx:id="username" focusTraversable="false" mnemonicParsing="false" styleClass="bar-user-div" text="      username" BorderPane.alignment="CENTER">
-                    <items>
-                      <MenuItem mnemonicParsing="false" onAction="#goToProfile" text="%my_profil">
-                           <graphic>
-                              <ImageView>
-                                 <image>
-                                    <Image url="@../icons/16x16/profil.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                        </MenuItem>
-                        <MenuItem mnemonicParsing="false" onAction="#goToAllFriends" text="%my_friends">
-                           <graphic>
-                              <ImageView>
-                                 <image>
-                                    <Image url="@../icons/16x16/friends.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                        </MenuItem>
-                       <MenuItem mnemonicParsing="false" text="%messages">
-                           <graphic>
-                              <ImageView>
-                                 <image>
-                                    <Image url="@../icons/16x16/message.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                        </MenuItem>
-                        <MenuItem mnemonicParsing="false" onAction="#goToInventory" text="%my_items">
-                           <graphic>
-                              <ImageView>
-                                 <image>
-                                    <Image url="@../icons/16x16/inventory.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                        </MenuItem>
-                        <MenuItem mnemonicParsing="false" onAction="#openSettings" text="%settings">
-                           <graphic>
-                              <ImageView>
-                                 <image>
-                                    <Image url="@../icons/16x16/settings.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                        </MenuItem>
-                        <MenuItem mnemonicParsing="false" onAction="#logout" text="%logout">
-                           <graphic>
-                              <ImageView>
-                                 <image>
-                                    <Image url="@../icons/16x16/logout.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                        </MenuItem>
-                    </items>
-                     <graphic>
-                        <ImageView fx:id="userAvatar" fitHeight="32.0" fitWidth="32.0">
-                           <image>
-                              <Image url="@../avatars/avatar.png" />
-                           </image>
+<BorderPane styleClass="app-background" stylesheets="@../style/style.css" xmlns="http://javafx.com/javafx/16"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lgs.eden.application.AppWindowHandler">
+    <top>
+        <HBox alignment="CENTER" spacing="50.0" styleClass="white-box" BorderPane.alignment="CENTER">
+            <children>
+                <HBox alignment="CENTER">
+                    <children>
+                        <ImageView>
+                            <image>
+                                <Image url="@../icon32.png"/>
+                            </image>
                         </ImageView>
-                     </graphic>
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </MenuButton>
-               </right>
-               <HBox.margin>
-                  <Insets right="25.0" />
-               </HBox.margin>
-            </BorderPane>
-         </children>
-         <BorderPane.margin>
-            <Insets />
-         </BorderPane.margin>
-         <padding>
-            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-         </padding>
-      </HBox>
-   </top>
-   <center>
-      <Pane prefHeight="200.0" prefWidth="200.0" styleClass="app-background" BorderPane.alignment="CENTER" />
-   </center>
+                        <Label text="Legendary Games Studio">
+                            <HBox.margin>
+                                <Insets left="10.0"/>
+                            </HBox.margin>
+                            <font>
+                                <Font size="14.0"/>
+                            </font>
+                        </Label>
+                    </children>
+                </HBox>
+                <Label fx:id="games" layoutX="10.0" layoutY="10.0" onMouseClicked="#goToGameList" text="%my_games">
+                    <font>
+                        <Font size="14.0"/>
+                    </font>
+                    <cursor>
+                        <Cursor fx:constant="HAND"/>
+                    </cursor>
+                </Label>
+                <Label fx:id="library" layoutX="38.0" layoutY="10.0" onMouseClicked="#goToMarketPlace" text="%library">
+                    <font>
+                        <Font size="14.0"/>
+                    </font>
+                    <cursor>
+                        <Cursor fx:constant="HAND"/>
+                    </cursor>
+                </Label>
+                <BorderPane HBox.hgrow="ALWAYS">
+                    <HBox.margin>
+                        <Insets/>
+                    </HBox.margin>
+                    <right>
+                        <BorderPane BorderPane.alignment="CENTER">
+                            <right>
+                                <Button fx:id="box" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" opacity="0.5"
+                                        styleClass="eden-button" text="Button" BorderPane.alignment="CENTER">
+                                    <graphic>
+                                        <ImageView>
+                                            <image>
+                                                <Image url="@../icons/16x16/box.png"/>
+                                            </image>
+                                        </ImageView>
+                                    </graphic>
+                                </Button>
+                            </right>
+                            <center>
+                                <MenuButton fx:id="username" focusTraversable="false" mnemonicParsing="false"
+                                            styleClass="bar-user-div" text="      username"
+                                            BorderPane.alignment="CENTER">
+                                    <items>
+                                        <MenuItem mnemonicParsing="false" onAction="#goToProfile" text="%my_profil">
+                                            <graphic>
+                                                <ImageView>
+                                                    <image>
+                                                        <Image url="@../icons/16x16/profil.png"/>
+                                                    </image>
+                                                </ImageView>
+                                            </graphic>
+                                        </MenuItem>
+                                        <MenuItem mnemonicParsing="false" onAction="#goToAllFriends" text="%my_friends">
+                                            <graphic>
+                                                <ImageView>
+                                                    <image>
+                                                        <Image url="@../icons/16x16/friends.png"/>
+                                                    </image>
+                                                </ImageView>
+                                            </graphic>
+                                        </MenuItem>
+                                        <MenuItem mnemonicParsing="false" onAction="#goToMessages" text="%messages">
+                                            <graphic>
+                                                <ImageView>
+                                                    <image>
+                                                        <Image url="@../icons/16x16/message.png"/>
+                                                    </image>
+                                                </ImageView>
+                                            </graphic>
+                                        </MenuItem>
+                                        <MenuItem mnemonicParsing="false" onAction="#goToInventory" text="%my_items">
+                                            <graphic>
+                                                <ImageView>
+                                                    <image>
+                                                        <Image url="@../icons/16x16/inventory.png"/>
+                                                    </image>
+                                                </ImageView>
+                                            </graphic>
+                                        </MenuItem>
+                                        <MenuItem mnemonicParsing="false" onAction="#openSettings" text="%settings">
+                                            <graphic>
+                                                <ImageView>
+                                                    <image>
+                                                        <Image url="@../icons/16x16/settings.png"/>
+                                                    </image>
+                                                </ImageView>
+                                            </graphic>
+                                        </MenuItem>
+                                        <MenuItem mnemonicParsing="false" onAction="#logout" text="%logout">
+                                            <graphic>
+                                                <ImageView>
+                                                    <image>
+                                                        <Image url="@../icons/16x16/logout.png"/>
+                                                    </image>
+                                                </ImageView>
+                                            </graphic>
+                                        </MenuItem>
+                                    </items>
+                                    <graphic>
+                                        <ImageView fx:id="userAvatar" fitHeight="32.0" fitWidth="32.0">
+                                            <image>
+                                                <Image url="@../avatars/avatar.png"/>
+                                            </image>
+                                        </ImageView>
+                                    </graphic>
+                                    <font>
+                                        <Font size="14.0"/>
+                                    </font>
+                                    <BorderPane.margin>
+                                        <Insets right="10.0"/>
+                                    </BorderPane.margin>
+                                </MenuButton>
+                            </center>
+                        </BorderPane>
+                    </right>
+                </BorderPane>
+            </children>
+            <BorderPane.margin>
+                <Insets/>
+            </BorderPane.margin>
+            <padding>
+                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+            </padding>
+        </HBox>
+    </top>
+    <center>
+        <Pane prefHeight="200.0" prefWidth="200.0" styleClass="app-background" BorderPane.alignment="CENTER"/>
+    </center>
 </BorderPane>

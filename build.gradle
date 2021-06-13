@@ -15,13 +15,15 @@ repositories {
 dependencies {
     implementation 'uk.co.bithatch:FX-BorderlessScene:5.0.4'
     implementation 'org.jetbrains:annotations:21.0.1'
+    implementation 'org.commonmark:commonmark:0.17.2'
+    implementation 'org.commonmark:commonmark-ext-gfm-tables:0.17.2'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.2'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.2'
 }
 
 javafx {
     version = "16"
-    modules = [ 'javafx.controls', 'javafx.fxml', 'javafx.graphics', 'javafx.base' ]
+    modules = [ 'javafx.controls', 'javafx.fxml', 'javafx.graphics', 'javafx.base', 'javafx.web' ]
 }
 
 /////////////////////////////////
@@ -56,7 +58,8 @@ idea {
 tasks.withType(JavaCompile) {
     options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
     options.encoding = "UTF-8"
-    // sourceCompatibility = 1.16
+//    sourceCompatibility = 1.16
+//    targetCompatibility = 1.16
     // sourceCompatibility = 11
     // targetCompatibility = 11
 }
@@ -70,6 +73,7 @@ jlink {
     launcher {
         name = 'eden'
     }
+    imageDir.set(file("$buildDir/../eden/myjre"))
 }
 
 // jar

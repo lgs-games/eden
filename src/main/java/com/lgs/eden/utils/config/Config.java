@@ -1,12 +1,11 @@
-package com.lgs.eden.utils;
+package com.lgs.eden.utils.config;
 
-import com.lgs.eden.api.API;
-import com.lgs.eden.api.games.BasicGameData;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import com.lgs.eden.utils.Utility;
 import javafx.scene.image.Image;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.Locale;
 
 /**
@@ -28,15 +27,6 @@ public class Config {
     private static Locale locale;
 
     // ------------------------------ GENERAL METHODS ----------------------------- \\
-
-    /**
-     * Checks if there is a new version of the application
-     * @return true if the client needs an update, false instead
-     */
-    public static boolean checkClientVersion() {
-        System.out.println("Checking client version...");
-        return !VERSION.equals(API.imp.getEdenVersion().version);
-    }
 
     /**
      * Is used to call the app icon
@@ -63,7 +53,7 @@ public class Config {
     /** may store username or removed stored username **/
     public static void lastUsername(String username, boolean store) {
         storedUsername = store ? username : "";
-        System.out.println((store?"Storing username: ":"Removing username :") + storedUsername);
+        System.out.println((store ? "Storing username: " : "Removing username :") + storedUsername);
         // todo: store new username
     }
 
@@ -80,7 +70,7 @@ public class Config {
         //  move all games in the old folder to the new one
     }
 
-    public static String getDefaultGameFolder() { return Utility.getCurrentDirectory()+"/games/"; }
+    private static String getDefaultGameFolder() { return Utility.getCurrentDirectory()+"/games/"; }
 
     // ------------------------------ LOAD CONFIG ----------------------------- \\
 
@@ -92,20 +82,42 @@ public class Config {
     public static void init() {
         storedUsername = "Raphik";
         setLocale(Language.EN);
-        gameFolder = "C:\\Program Files\\eden";
+        gameFolder = getDefaultGameFolder();
 
         // ensure that gameFolder is a valid folder
         File f = new File(gameFolder);
         // the game folder don't exists
-        if (!f.exists()){ // we use default one
+        if (!f.exists()) { // we use default one
             gameFolder = Config.getDefaultGameFolder();
             f = new File(gameFolder); // no default one
-            if (!f.exists() || !f.isDirectory()){
+            if (!f.exists() || !f.isDirectory()) {
                 boolean mkdir = f.mkdir(); // we create it
-                if (!mkdir){ // can't create, use current directory
+                if (!mkdir) { // can't create, use current directory
                     gameFolder = Utility.getCurrentDirectory();
                 }
             }
         }
+    }
+
+    private static String downloadRepository = null;
+
+    /**
+     * Return download repository path
+     */
+    public static String getDownloadRepository() {
+        if (downloadRepository == null) {
+            try {
+                downloadRepository = Files.createTempDirectory("eden").toFile().getAbsolutePath();
+            } catch (IOException e) {
+                System.exit(0);
+            }
+        }
+        return downloadRepository;
+    }
+
+    public static boolean isGameInstalled(int gameID) {
+        String gameFolder = getGameFolder() + gameID;
+        File folder = new File(gameFolder);
+        return folder.exists() && folder.isDirectory();
     }
 }

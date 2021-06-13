@@ -1,25 +1,23 @@
 package com.lgs.eden.views.login;
 
 import com.lgs.eden.api.API;
+import com.lgs.eden.api.APIException;
 import com.lgs.eden.api.APIResponseCode;
 import com.lgs.eden.api.auth.LoginResponseData;
 import com.lgs.eden.application.AppWindowHandler;
+import com.lgs.eden.application.ApplicationCloseHandler;
 import com.lgs.eden.application.PopupUtils;
-import com.lgs.eden.utils.Config;
-import com.lgs.eden.utils.ViewsPath;
-import com.lgs.eden.utils.helper.LoginRegisterForm;
-
 import com.lgs.eden.application.WindowController;
+import com.lgs.eden.utils.Translate;
+import com.lgs.eden.utils.Utility;
+import com.lgs.eden.utils.ViewsPath;
+import com.lgs.eden.utils.config.Config;
+import com.lgs.eden.utils.helper.LoginRegisterForm;
 import com.lgs.eden.views.register.Register;
 import com.lgs.eden.views.settings.Settings;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.control.CheckBox;
-
-import java.awt.Desktop;
-import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
 
 /**
  * Controller for Login.
@@ -65,21 +63,26 @@ public class Login extends LoginRegisterForm {
         if (checkUsername(username)) error.append("wrong username\n");
         if (checkPassword(pwd)) error.append("wrong password\n");
 
-        if (error.toString().isEmpty()){ // no error
-            // add user
-            LoginResponseData response = API.imp.login(username, pwd);
-            if (response.code.equals(APIResponseCode.LOGIN_OK)){ // this is an user id
-                // so we are good
-                AppWindowHandler.changeToAppWindow(response);
-            } else {
-                error.append("Invalid credentials\n");
-            }
+        if (error.toString().isEmpty()) { // no error
+            try {
+                // add user
+                LoginResponseData response = API.imp.login(username, pwd);
+                if (response.code.equals(APIResponseCode.LOGIN_OK)) { // this is an user id
+                    // so we are good
+                    AppWindowHandler.changeToAppWindow(response);
+                    ApplicationCloseHandler.setLogged(true);
+                } else {
+                    PopupUtils.showPopup(Translate.getTranslation(response.code));
+                }
 
-            // store or not username
-            Config.lastUsername(username, rememberMe.isSelected());
+                // store or not username
+                Config.lastUsername(username, rememberMe.isSelected());
+            } catch (APIException e) {
+                PopupUtils.showPopup(e);
+            }
         }
 
-        if (!error.toString().isBlank()){
+        if (!error.toString().isBlank()) {
             PopupUtils.showPopup(error.toString());
         }
     }
@@ -89,14 +92,7 @@ public class Login extends LoginRegisterForm {
      */
     @FXML
     public void onForgotPassword() { // rename @ignore if you use it
-        if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
-            try {
-                Desktop.getDesktop().browse(new URI(API.imp.getPasswordForgotLink(Config.getCode())));
-            } catch (URISyntaxException | IOException ignoreMeTooBlink) {
-                // TODO: add popup related to these exceptions
-                System.out.println("exception has occurred");
-            }
-        }
+        Utility.openInBrowser(API.imp.getPasswordForgotLink(Config.getCode()));
     }
 
     @FXML

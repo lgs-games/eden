@@ -1,24 +1,26 @@
 package com.lgs.eden.application;
 
 import com.lgs.eden.api.API;
+import com.lgs.eden.api.APIResponseCode;
 import com.lgs.eden.api.auth.LoginResponseData;
-import com.lgs.eden.utils.Config;
+import com.lgs.eden.api.callback.NotificationsCallBack;
+import com.lgs.eden.utils.Translate;
 import com.lgs.eden.utils.Utility;
 import com.lgs.eden.utils.ViewsPath;
+import com.lgs.eden.utils.config.Config;
 import com.lgs.eden.views.friends.AllFriends;
 import com.lgs.eden.views.gameslist.GameList;
 import com.lgs.eden.views.inventory.Inventory;
 import com.lgs.eden.views.login.Login;
 import com.lgs.eden.views.marketplace.Marketplace;
 import com.lgs.eden.views.profile.Profile;
+import com.lgs.eden.views.profile.messages.Messages;
 import com.lgs.eden.views.settings.Settings;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.control.Label;
-import javafx.scene.control.Labeled;
-import javafx.scene.control.MenuButton;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
@@ -83,10 +85,38 @@ public class AppWindowHandler {
     private Label games;
     @FXML
     private Label library;
+    @FXML
+    private Button box;
 
     private void init() {
-        this.username.setText("      "+loggedUser.username);
+        this.username.setText("      " + loggedUser.username);
         this.userAvatar.setImage(loggedUser.avatar);
+
+        box.setTooltip(new Tooltip("no_activity"));
+        box.setOnAction((e) -> PopupUtils.showPopup("no_activity"));
+
+        NotificationsCallBack callback = (notifications) -> {
+            ApplicationCloseHandler.starNotificationsThread(
+                    () -> {
+                        Platform.runLater(() -> {
+                            if (notifications != null) {
+                                box.setOpacity(1);
+                                StringBuilder message = new StringBuilder();
+                                for (APIResponseCode c : notifications) {
+                                    message.append(Translate.getTranslation(c)).append('\n');
+                                }
+                                box.setOnAction((e) -> PopupUtils.showPopup(message.toString()));
+                            } else {
+                                box.setTooltip(new Tooltip("no_activity"));
+                                box.setOnAction((e) -> PopupUtils.showPopup("no_activity"));
+                                box.setOpacity(0.5);
+                            }
+                        });
+                    }
+            );
+        };
+
+        API.imp.setNotificationsCallBack(callback, AppWindowHandler.currentUserID());
     }
 
     /** set in red current menu **/
@@ -95,10 +125,11 @@ public class AppWindowHandler {
         Labeled o1 = library;
         Labeled o2 = username;
 
-        if (menu.equals(ViewsPath.PROFILE)){
+        if (menu.equals(ViewsPath.PROFILE)) {
             s = username;
             o2 = games;
-        } if (menu.equals(ViewsPath.MARKETPLACE)){
+        }
+        if (menu.equals(ViewsPath.MARKETPLACE)) {
             s = library;
             o1 = games;
         }
@@ -111,7 +142,9 @@ public class AppWindowHandler {
     // ------------------------------ LISTENERS ----------------------------- \\
 
     @FXML
-    public void goToInventory() { setScreen(Inventory.getScreen(), ViewsPath.PROFILE); }
+    public void goToInventory() {
+        setScreen(Inventory.getScreen(), ViewsPath.PROFILE);
+    }
 
     @FXML
     public void openSettings() {
@@ -120,17 +153,33 @@ public class AppWindowHandler {
 
     @FXML
     public void logout() {
-        API.imp.logout();
+        API.imp.logout(AppWindowHandler.currentUserID());
+        ApplicationCloseHandler.setLogged(false);
         Platform.runLater(AppWindowHandler::goBackToMainApp);
     }
 
-    public void goToProfile() { setScreen(Profile.getScreen(), ViewsPath.PROFILE); }
+    @FXML
+    public void goToProfile() {
+        setScreen(Profile.getScreen(), ViewsPath.PROFILE);
+    }
 
-    public void goToAllFriends() { setScreen(AllFriends.getScreen(loggedUser.userID), ViewsPath.PROFILE); }
+    @FXML
+    public void goToAllFriends() {
+        setScreen(AllFriends.getScreen(loggedUser.userID), ViewsPath.PROFILE);
+    }
 
+    @FXML
+    public void goToMessages() {
+        setScreen(Messages.getScreen(), ViewsPath.PROFILE);
+    }
+
+    @FXML
     public void goToMarketPlace() {
         setScreen(Marketplace.getScreen(), ViewsPath.MARKETPLACE);
     }
 
-    public void goToGameList() { setScreen(GameList.getScreen(), ViewsPath.GAMES); }
+    @FXML
+    public void goToGameList() {
+        setScreen(GameList.getScreen(), ViewsPath.GAMES);
+    }
 }

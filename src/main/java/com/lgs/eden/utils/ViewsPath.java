@@ -14,13 +14,20 @@ public enum ViewsPath {
     SETTINGS("/views/settings.fxml"),
 
     PROFILE("/views/profile.fxml"), // profile menu
-    FRIEND_CELL("/views/profile/friendcell.fxml"),
+    FRIEND_CELL("/views/profile/friend_cell.fxml"),
     PROFILE_CARD("/views/profile/card.fxml"),
     FRIENDS_LIST("/views/friends_list.fxml"),
     INVENTORY("/views/inventory.fxml"),
+    MESSAGES("/views/profile/messages.fxml"),
+    CONVERSATION_CELL("/views/profile/conversation_cell.fxml"),
+    MESSAGE_CELL("/views/profile/message_cell.fxml"),
+
+    SEARCH("/views/search.fxml"),
 
     GAMES(null), // games menu
     GAMES_LIST("/views/gameslist.fxml"), // games menu
+    GAMES_LIST_DDL_BOX("/views/game/download_box.fxml"), // games menu
+    GAMES_LIST_EMPTY("/views/game/gameslist_empty.fxml"), // games menu
     GAMES_LIST_CELL("/views/game/game_cell.fxml"), // games cell
     GAMES_A_NEWS("/views/game/a_news.fxml"), // all news
     GAMES_ALL_NEWS("/views/game/all_news.fxml"), // all news

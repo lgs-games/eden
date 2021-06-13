@@ -49,7 +49,7 @@ public class AllNewsCell {
     }
 
     @FXML
-    public void gotoNews(){
+    public void gotoNews() {
         GameList.getController().goToSubMenu(News.getScreen(this.news));
     }
 

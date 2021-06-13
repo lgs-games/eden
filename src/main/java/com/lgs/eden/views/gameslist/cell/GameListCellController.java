@@ -40,7 +40,7 @@ public class GameListCellController {
     // info about the game in the view
     private BasicGameData info;
 
-    public void init(BasicGameData data){
+    public void init(BasicGameData data) {
         this.gameName.setText(data.name);
         this.gameName.setMaxWidth(150);
         setSelected(data.equals(GameList.getCurrentGameData()));
@@ -50,8 +50,8 @@ public class GameListCellController {
         this.info = data;
     }
 
-    public void setSelected(boolean selected){
-        if (selected){
+    public void setSelected(boolean selected) {
+        if (selected) {
             this.gameName.getStyleClass().set(0, "yellow-text");
         } else {
             this.gameName.getStyleClass().set(0, "white-text");

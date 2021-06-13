@@ -1,4 +1,4 @@
-package com.lgs.eden.utils;
+package com.lgs.eden.utils.config;
 
 /**
  * Language

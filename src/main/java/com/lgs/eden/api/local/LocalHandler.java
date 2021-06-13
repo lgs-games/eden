@@ -1,15 +1,26 @@
 package com.lgs.eden.api.local;
 
 import com.lgs.eden.api.API;
+import com.lgs.eden.api.APIException;
+import com.lgs.eden.api.APIHelper;
 import com.lgs.eden.api.APIResponseCode;
 import com.lgs.eden.api.auth.LoginResponseData;
+import com.lgs.eden.api.callback.ConversationsCallback;
+import com.lgs.eden.api.callback.MessagesCallBack;
+import com.lgs.eden.api.callback.NotificationsCallBack;
 import com.lgs.eden.api.games.*;
 import com.lgs.eden.api.news.BasicNewsData;
-import com.lgs.eden.api.profile.FriendData;
 import com.lgs.eden.api.profile.ProfileData;
+import com.lgs.eden.api.profile.friends.FriendConversationView;
+import com.lgs.eden.api.profile.friends.FriendData;
+import com.lgs.eden.api.profile.friends.conversation.ConversationData;
+import com.lgs.eden.api.profile.friends.messages.MessageData;
+import com.lgs.eden.utils.config.Language;
 import javafx.collections.ObservableList;
 
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * API Realisation
@@ -21,7 +32,7 @@ public class LocalHandler implements API {
     private static API instance;
 
     public static API getInstance() {
-        if (instance == null){
+        if (instance == null) {
             instance = new LocalHandler();
         }
         return instance;
@@ -40,20 +51,88 @@ public class LocalHandler implements API {
     public LocalHandler() {
         this.login = new AuthHandler();
         this.games = new GamesHandler();
-        this.profile = new ProfileHandler();
+        this.profile = new ProfileHandler(this);
         this.news = new NewsHandler();
+    }
+
+    // ------------------------------ CALLBACKS ----------------------------- \\
+
+    private NotificationsCallBack newsCallback;
+    private MessagesCallBack messagesCallBack;
+    private ConversationsCallback conversationsCallback;
+    private FriendConversationView conv;
+
+    @Override
+    public void setNotificationsCallBack(NotificationsCallBack callBack, int currentUserID) {
+        this.newsCallback = callBack;
+        triggerNotificationCallBack(currentUserID);
+    }
+
+    void triggerNotificationCallBack(int currentUserID) {
+        ArrayList<APIResponseCode> apiResponseCodes = this.lookForNotifications(currentUserID);
+        if (newsCallback != null) newsCallback.onCall(apiResponseCodes);
+    }
+
+    @Override
+    public void setMessagesCallBack(MessagesCallBack mc, ConversationsCallback cc, FriendConversationView conv) {
+        this.messagesCallBack = mc;
+        this.conversationsCallback = cc;
+        this.conv = conv;
+    }
+
+    void triggerMessagesCallBack(MessageData m) {
+        if (messagesCallBack != null) {
+            // friend sent a message
+            if (m.senderID == conv.friend.id) messagesCallBack.onCall(m);
+        }
+    }
+
+    void triggerConversationCallBack(ConversationData m) {
+        if (conversationsCallback != null) {
+            if (m.id == conv.friend.id) m.unreadMessagesCount = 0;
+            // friend sent a message
+            conversationsCallback.onCall(m);
+        }
     }
 
     // ------------------------------ LOGIN ----------------------------- \\
 
-    @Override
-    public LoginResponseData login(String username, String pwd) { return this.login.login(username, pwd); }
+    private Timer checker;
 
     @Override
-    public void logout() { this.login.logout(); }
+    public LoginResponseData login(String username, String pwd) throws APIException {
+        LoginResponseData login = this.login.login(username, pwd);
+        if (login.code.equals(APIResponseCode.LOGIN_OK)) {
+
+            // init
+            getMessageWithFriend(24, 23);
+            getMessageWithFriend(25, 23);
+
+            // starts fake message receiver
+            this.checker = new Timer();
+            this.checker.scheduleAtFixedRate(new TimerTask() {
+                @Override
+                public void run() {
+                    // fake some delay
+                    APIHelper.fakeDelay(1000);
+                    profile.sendMessageAsOther(23, 24, "Okay!");
+                    profile.sendMessageAsOther(23, 25, "Salut");
+                }
+            }, 0, 10000);
+        }
+        return login;
+    }
 
     @Override
-    public APIResponseCode register(String username, String pwd, String email) { return this.login.register(username, pwd, email);   }
+    public void logout(int currentUserID) {
+        this.checker.cancel();
+        this.login.logout(currentUserID);
+    }
+
+    @Override
+    public APIResponseCode register(String username, String pwd, String email) {
+        return this.login.register(username, pwd, email);
+    }
 
     @Override
     public String getPasswordForgotLink(String languageCode) {
@@ -63,7 +142,9 @@ public class LocalHandler implements API {
     // ------------------------------ GAMES ----------------------------- \\
 
     @Override
-    public EdenVersionData getEdenVersion() { return this.games.getEdenVersion(); }
+    public EdenVersionData getEdenVersion() throws APIException {
+        return this.games.getEdenVersion();
+    }
 
     @Override
     public ArrayList<MarketplaceGameData> getMarketPlaceGames(int begin, int count, String code, int userID) {
@@ -71,27 +152,115 @@ public class LocalHandler implements API {
     }
 
     @Override
-    public GameViewData getGameData(int userID, int gameID) { return this.games.getGameData(userID, gameID); }
+    public GameViewData getGameData(int userID, int gameID) {
+        return this.games.getGameData(userID, gameID);
+    }
 
     @Override
-    public ObservableList<BasicGameData> getUserGames(int userID) { return this.games.getUserGames(userID); }
+    public ObservableList<BasicGameData> getUserGames(int userID) {
+        return this.games.getUserGames(userID);
+    }
 
     @Override
-    public ShortGameViewData getGameDateUpdate(int userID, int gameID) { return this.games.getGameDateUpdate(userID, gameID); }
+    public ShortGameViewData getGameDateUpdate(int userID, int gameID) {
+        return this.games.getGameDateUpdate(userID, gameID);
+    }
+
+    @Override
+    public boolean addToLibrary(int userID, BasicGameData game) {
+        return this.games.addToLibrary(userID, game);
+    }
+
+    @Override
+    public boolean removeFromLibrary(int userID, BasicGameData game) {
+        return this.games.removeFromLibrary(userID, game);
+    }
 
     // ------------------------------ NEWS ----------------------------- \\
 
     @Override
-    public ArrayList<BasicNewsData> getAllNews(int begin, int count, String code, int gameID) {
-        return this.news.getAllNews(begin, count, code, gameID);
+    public ArrayList<BasicNewsData> getAllNews(int begin, int count, String code, int gameID, Language l) {
+        return this.news.getAllNews(begin, count, code, gameID, l);
     }
 
     // ------------------------------ PROFILE ----------------------------- \\
 
     @Override
-    public ArrayList<FriendData> getFriendList(int userID) { return this.profile.getFriendList(userID); }
+    public ArrayList<APIResponseCode> lookForNotifications(int currentUserID) {
+        return this.profile.lookForNotifications(currentUserID);
+    }
 
     @Override
-    public ProfileData getProfileData(int userID) { return this.profile.getProfileData(userID); }
+    public ArrayList<FriendData> searchUsers(String filter, int currentUserID) {
+        return this.profile.searchUsers(filter, currentUserID);
+    }
 
+    @Override
+    public ArrayList<FriendData> getFriendList(int userID, int count) {
+        return this.profile.getFriendList(userID, count);
+    }
+
+    @Override
+    public ArrayList<FriendData> getRequests(int userID, int count) {
+        return this.profile.getRequests(userID, count);
+    }
+
+    @Override
+    public ProfileData getProfileData(int userID, int currentUserID) {
+        return this.profile.getProfileData(userID, currentUserID);
+    }
+
+    @Override
+    public ProfileData changeReputation(int userID, int currentUserID, boolean increase) {
+        return this.profile.changeReputation(userID, currentUserID, increase);
+    }
+
+    @Override
+    public void setPlaying(int currentUserID, int gameID) {
+        this.profile.setPlaying(currentUserID, gameID);
+    }
+
+    // friends
+
+    @Override
+    public void addFriend(int friendID, int currentUserID) {
+        this.profile.addFriend(friendID, currentUserID);
+    }
+
+    @Override
+    public void removeFriend(int friendID, int currentUserID) {
+        this.profile.removeFriend(friendID, currentUserID);
+    }
+
+    @Override
+    public void acceptFriend(int friendID, int currentUserID) {
+        this.profile.acceptFriend(friendID, currentUserID);
+    }
+
+    @Override
+    public void refuseFriend(int friendID, int currentUserID) {
+        this.profile.refuseFriend(friendID, currentUserID);
+    }
+
+    // conv
+
+    @Override
+    public FriendConversationView getMessageWithFriend(int friendID, int currentUserID) {
+        return this.profile.getMessageWithFriend(friendID, currentUserID);
+    }
+
+    @Override
+    public boolean newConversation(int friendID, int currentUserID) {
+        return this.profile.newConversation(friendID, currentUserID);
+    }
+
+    @Override
+    public boolean closeConversation(int friendID, int currentUserID) {
+        return this.profile.closeConversation(friendID, currentUserID);
+    }
+
+    @Override
+    public MessageData sendMessage(int to, int from, String message) {
+        return this.profile.sendMessage(to, from, message);
+    }
 }

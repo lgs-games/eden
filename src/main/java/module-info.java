@@ -8,7 +8,12 @@ module eden {
     requires javafx.controls;
     requires javafx.graphics;
     requires javafx.base;
+    requires javafx.web;
+
     requires java.desktop;
+    requires jdk.crypto.cryptoki;
+    requires org.commonmark;
+    requires org.commonmark.ext.gfm.tables;
 
     // our main module
     exports com.lgs.eden;
@@ -26,5 +31,5 @@ module eden {
     opens com.lgs.eden.views.gameslist.news;
     opens com.lgs.eden.views.friends;
     opens com.lgs.eden.views.profile;
-    opens com.lgs.eden.views.profile.listcells;
+    opens com.lgs.eden.views.profile.messages;
 }

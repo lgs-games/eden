@@ -5,9 +5,18 @@
     -fx-font-size: 12;
 }
 
-.no-button { -fx-background-color: inherit; }
-.link { -fx-text-fill: #2aa198; -fx-cursor: HAND; }
-.button { -fx-cursor: HAND; }
+.no-button {
+    -fx-background-color: inherit;
+}
+
+.link {
+    -fx-text-fill: #2aa198;
+    -fx-cursor: HAND;
+}
+
+.button {
+    -fx-cursor: HAND;
+}
 
 .empty_message {
     -fx-font-size: 20px;
@@ -15,19 +24,55 @@
     -fx-text-fill: #dd4411;
 }
 
+.empty-message-15 {
+    -fx-font-size: 17px;
+    -fx-text-fill: #2aa198;
+}
+
 .user-icon {
     -fx-fill-width: 32px;
     -fx-fill-height: 32px;
 }
 
-.red-text { -fx-text-fill: #dd4411; }
-.red-text-i { -fx-text-fill: #dd4411; }
-.green-text { -fx-text-fill: #00ac41; }
-.white-text { -fx-text-fill: white; }
-.yellow-text { -fx-text-fill: #FFCC33; }
-.grey-text { -fx-text-fill: #575757; }
-.grey-text-i { -fx-text-fill: #575757 !important; }
-.blue-text { -fx-text-fill: #2aa198; }
+.red-text {
+    -fx-text-fill: #dd4411;
+}
+
+.red-text-i {
+    -fx-text-fill: #dd4411;
+}
+
+.green-text {
+    -fx-text-fill: #00ac41;
+}
+
+.white-text {
+    -fx-text-fill: white;
+}
+
+.yellow-text {
+    -fx-text-fill: #FFCC33;
+}
+
+.grey-text {
+    -fx-text-fill: #575757;
+}
+
+.grey-text-i {
+    -fx-text-fill: #575757 !important;
+}
+
+.blue-text {
+    -fx-text-fill: #2aa198;
+}
+
+.grey-div {
+    -fx-background-color: #e0e0e0;
+}
+
+.black-text {
+    -fx-text-fill: #1e262c;
+}
 
 .red-border-bottom {
     -fx-border-color: transparent transparent #dd4411 transparent;
@@ -73,18 +118,23 @@
 }
 
 .eden-button {
-    -fx-background-color:  #FFCC33;
+    -fx-background-color: #FFCC33;
     -fx-background-radius: 5px;
-    -fx-border-color:  #1e262c;
+    -fx-border-color: #1e262c;
     -fx-border-radius: 5px;
 }
 
-.profile-game {
+.profile-game-playing {
     -fx-border-width: 1px;
     -fx-border-color: #00ac41;
 }
 
-.profile-game-playing {
+.profile-game {
+    -fx-border-width: 1px;
+    -fx-border-color: #1e262c;
+}
+
+.profile-game-playing-label {
     -fx-text-fill: #00ac41;
 }
 
@@ -93,7 +143,9 @@
     -fx-text-fill: #dd4411;
 }
 
-.bar-user-div { -fx-background-color: inherit; }
+.bar-user-div {
+    -fx-background-color: inherit;
+}
 
 .menu-item {
     -fx-background-color: rgb(244, 248, 249);
@@ -118,19 +170,45 @@
 REPUTATION
 **/
 
-.add-rep { -fx-text-fill: #00ac41; }
-.remove-rep { -fx-text-fill: #dd4441; }
+.add-rep {
+    -fx-text-fill: #00ac41;
+}
+
+.remove-rep {
+    -fx-text-fill: #dd4441;
+}
 
 /**
 GAMES
 **/
 
 .game-title-arrow {
-    -fx-background-color: rgba(237,241,242, 0.8);
+    -fx-background-color: rgba(237, 241, 242, 0.8);
     -fx-text-fill: #dd4441;
     -fx-background-radius: 0 500 500 0;
 }
 
 .news-bg {
     -fx-background-color: rgba(85, 90, 98, 0.9);
+}
+
+/**
+messages
+ */
+
+.messages-box {
+    -fx-background-color: rgba(237, 241, 242, 0.8);
+}
+
+.text-area-div .content {
+    -fx-background-color: rgba(237, 241, 242, 0.8);
+}
+
+.new-messages {
+    -fx-background-color: #fb3;
+    -fx-text-fill: #6c757d;
+}
+
+.conv-bg {
+    -fx-background-color: rgb(232, 229, 229);
 }

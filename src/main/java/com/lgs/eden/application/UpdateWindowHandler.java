@@ -1,12 +1,15 @@
 package com.lgs.eden.application;
 
 import com.goxr3plus.fxborderlessscene.borderless.BorderlessScene;
-import com.lgs.eden.api.auth.LoginResponseData;
-import com.lgs.eden.utils.Config;
+import com.lgs.eden.api.API;
+import com.lgs.eden.api.APIException;
+import com.lgs.eden.api.games.EdenVersionData;
 import com.lgs.eden.utils.Translate;
 import com.lgs.eden.utils.Utility;
 import com.lgs.eden.utils.ViewsPath;
-import com.lgs.eden.views.gameslist.GameList;
+import com.lgs.eden.utils.config.Config;
+import com.lgs.eden.utils.config.InstallUtils;
+import com.lgs.eden.utils.download.DownloadManager;
 import com.lgs.eden.views.login.Login;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -28,7 +31,7 @@ import java.util.TimerTask;
 public class UpdateWindowHandler {
 
     // todo: temporary bypass
-    private static final boolean CHECK_UPDATES = false;
+    private static final boolean CHECK_UPDATES = true;
 
     // state of our installer
     enum State {
@@ -48,14 +51,15 @@ public class UpdateWindowHandler {
     public static void start(Stage primaryStage){
         // save for later
         oldStage = primaryStage;
+        WindowController.setStage(oldStage);
 
-        if (CHECK_UPDATES){
+        if (CHECK_UPDATES) {
             // init installer
             FXMLLoader loader = Utility.loadView(ViewsPath.UPDATE.path);
             VBox parent = (VBox) Utility.loadViewPane(loader);
             controller = loader.getController();
             // make a borderless frame
-            BorderlessScene scene = new BorderlessScene(primaryStage, StageStyle.UNDECORATED, parent,0, 0);
+            BorderlessScene scene = new BorderlessScene(primaryStage, StageStyle.UNDECORATED, parent, 0, 0);
 
             // set background and fill as transparent
             scene.setFill(Color.TRANSPARENT);
@@ -68,7 +72,11 @@ public class UpdateWindowHandler {
             formalizeStage(primaryStage, scene);
 
             // we need that to close 3 dots thread
-            primaryStage.setOnCloseRequest(event -> oldStage = null);
+            primaryStage.setOnCloseRequest(event -> {
+                new ApplicationCloseHandler().handle(event);
+                // todo: move to close handler
+                oldStage = null;
+            });
         }
 
         // call check for update runnable
@@ -125,23 +133,62 @@ public class UpdateWindowHandler {
     // ------------------------------ CHECK VERSION RUNNABLE ----------------------------- \\
 
     private static class CheckForUpdateRunnable implements Runnable {
+
+        public CheckForUpdateRunnable() {
+        }
+
         @Override
         public void run() {
-            // todo: temporary
-            boolean needUpdate = CHECK_UPDATES ? Config.checkClientVersion() : false;
+            EdenVersionData edenVersion;
+            boolean needUpdate = false;
+            if (CHECK_UPDATES) {
+                System.out.println("Checking client version...");
+                try {
+                    edenVersion = API.imp.getEdenVersion();
+                } catch (APIException e) {
+                    PopupUtils.showPopup(e, true);
+                    return;
+                }
+                needUpdate = !Config.VERSION.equals(edenVersion.version);
+            }
             System.out.println(needUpdate ? "Client needs an update" : "Client is up to date");
 
-            if (needUpdate){
-                // todo: complete code
-                //  you can show current percent of download with percent label, but add a % at the end
-                //  the field is hidden by default
-                Platform.runLater(() -> controller.setState(State.DOWNLOAD_UPDATE));
-                // ...
+            if (CHECK_UPDATES && needUpdate) {
+                Platform.runLater(() -> {
+                    controller.setState(State.DOWNLOAD_UPDATE);
 
-                // Platform.runLater(() -> controller.setState(State.STARTING_INSTALLATION));
-                // ...
+                    // get the update information
+                    DownloadManager d = new DownloadManager(edenVersion.getURL(Utility.getUserOS()), Config.getDownloadRepository());
+
+                    // init
+                    d.onInitCalled((e) -> Platform.runLater(() -> {
+                        // init and show show
+                        controller.percent.setText("0%");
+                        controller.percent.setVisible(true);
+                    }));
+
+                    // start download thread
+                    d.onUpdateProgress((e) -> Platform.runLater(
+                            () -> controller.percent.setText(Math.round((float) e.downloaded / e.expectedSize * 100) + "%")
+                    ));
+
+                    // move to install
+                    d.onDownloadEnd((e) ->
+                            Platform.runLater(() -> {
+                                        controller.percent.setVisible(false);
+                                        controller.setState(State.STARTING_INSTALLATION);
+                                        // launch install process
+                                        InstallUtils.installEden(e.fileName);
+                                    }
+                            ));
+
+                    // start download thread
+                    ApplicationCloseHandler.startDownloadThread(d);
+                });
             } else {
-                Platform.runLater(() -> { if(controller != null) controller.setState(State.CLIENT_STARTING); });
+                Platform.runLater(() -> {
+                    if (controller != null) controller.setState(State.CLIENT_STARTING);
+                });
                 // start
                 Platform.runLater(new StartFrameRunnable());
             }
@@ -158,6 +205,7 @@ public class UpdateWindowHandler {
         @Override
         public void run() {
             // close old
+            oldStage.setOnCloseRequest((e) -> {});
             oldStage.close();
             oldStage = null;
 
@@ -188,7 +236,6 @@ public class UpdateWindowHandler {
      * text...
      * text.
      * etc.
-     *
      */
     private static class DotUpdateRunnable implements Runnable {
 
@@ -205,7 +252,7 @@ public class UpdateWindowHandler {
                 @Override
                 public void run() {
                     // cancel if we are leaving to another window
-                    if (oldStage == null){
+                    if (oldStage == null) {
                         t.cancel();
                         return;
                     }
@@ -214,8 +261,8 @@ public class UpdateWindowHandler {
                     int r = dot[0] % 3;
                     // find answer
                     String answer;
-                    if (r == 0)  answer = ONE_DOT;
-                    else if (r == 1)  answer = TWO_DOT;
+                    if (r == 0) answer = ONE_DOT;
+                    else if (r == 1) answer = TWO_DOT;
                     else answer = THREE_DOT;
 
                     Platform.runLater(() -> controller.dots.setText(answer));

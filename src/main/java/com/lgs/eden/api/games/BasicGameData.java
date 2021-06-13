@@ -14,7 +14,6 @@ public class BasicGameData {
     public final int id;
     public final String name;
     public final Image icon;
-
     private final String path;
 
     public BasicGameData(int id, String name, String icon) {
@@ -23,6 +22,8 @@ public class BasicGameData {
         this.icon = icon != null ? Utility.loadImage(icon) : null;
         this.path = icon;
     }
+
+    public String getIconPath() { return this.path; }
 
     @Override
     public boolean equals(Object o) {
@@ -51,5 +52,13 @@ public class BasicGameData {
                 this.name,
                 this.path
         );
+    }
+
+    @Override
+    public String toString() {
+        return "BasicGameData{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
     }
 }

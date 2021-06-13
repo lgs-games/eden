@@ -8,10 +8,12 @@
 
 ``Run 'make jar' gradle task``.
 
+Rename the jar to ``eden.jar``.
+
 ### Generate exe
 
 ```bash
-jpackage --name eden --type exe --input eden --dest eden\dist --main-jar eden.jar --icon docs\icon.ico --java-options -Dfile.encoding=UTF-8 --runtime-image eden\myjre --vendor "Legendary Games Studio" --app-version 1.0.0 --description "eden" --win-shortcut --win-menu
+jpackage --name eden --type exe --input eden --dest "eden\dist" --main-jar "eden.jar" --icon "docs\icon.ico" --java-options -Dfile.encoding=UTF-8 --runtime-image "eden\myjre" --vendor "Legendary Games Studio" --app-version "1.0.0" --description "eden" --win-shortcut --win-menu
 ```
 
 To write a linux version of this command, you should

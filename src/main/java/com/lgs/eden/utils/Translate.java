@@ -1,10 +1,13 @@
 package com.lgs.eden.utils;
 
+import com.lgs.eden.api.APIResponseCode;
+import com.lgs.eden.utils.config.Config;
+import com.lgs.eden.utils.config.Language;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.ResourceBundle;
 
 /**
@@ -29,10 +32,13 @@ public final class Translate {
 
     /** news format character %% will be replaced by st, nd, th in english for instance **/
     public static String getDate(Date date, String dateFormat) {
+        if (Config.getLanguage().equals(Language.FR)) { // hours from 0 to 24
+            dateFormat = dateFormat.replace("h:mm", "k:mm");
+        }
         DateFormat f = new SimpleDateFormat(dateFormat, Config.getLocale());
         String format = f.format(date);
         // if the user wants a 5th for instance
-        if (dateFormat.contains("%%")){
+        if (dateFormat.contains("%%")) {
             String modifier = getDateModifier(f);
             format = format.replace("%%", modifier);
         }
@@ -48,6 +54,10 @@ public final class Translate {
         if (i > 3) key = "n";
         else key = String.valueOf(i);
 
-        return Translate.getTranslation("date_day_modifier_"+key);
+        return Translate.getTranslation("date_day_modifier_" + key);
+    }
+
+    public static String getTranslation(APIResponseCode rc) {
+        return Translate.getTranslation("code_" + rc.code);
     }
 }

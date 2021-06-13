@@ -2,26 +2,25 @@ package com.lgs.eden.views.settings;
 
 import com.lgs.eden.application.AppWindowHandler;
 import com.lgs.eden.application.WindowController;
-import com.lgs.eden.utils.*;
+import com.lgs.eden.utils.Translate;
+import com.lgs.eden.utils.Utility;
+import com.lgs.eden.utils.ViewsPath;
+import com.lgs.eden.utils.config.Config;
+import com.lgs.eden.utils.config.Language;
 import com.lgs.eden.views.login.Login;
+import com.lgs.eden.views.register.Register;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.stage.DirectoryChooser;
-import javafx.stage.FileChooser;
 
 import java.io.File;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
 /**
  * Controller for settings.fxml
@@ -36,13 +35,7 @@ public class Settings implements ChangeListener<Language> {
      * Setter for the Parent of the screen that called settings
      * @param entry the Parent that called the settings screen
      */
-    public static void setBackScreen(ViewsPath entry) {backScreen = entry;}
-
-    /**
-     * Getter for the parent that called the settings screen
-     * @return the Parent stocked in backScreen
-     */
-    public static ViewsPath getBackScreen() {return backScreen;}
+    public static void setBackScreen(ViewsPath entry) { backScreen = entry; }
 
     /**
      * @return settings screen
@@ -58,7 +51,7 @@ public class Settings implements ChangeListener<Language> {
         controller.initScreen(inLogin);
 
         // in game background is dark by default so we add a white box
-        if (!inLogin){
+        if (!inLogin) {
             screen.getStyleClass().add("white-box");
         }
 
@@ -110,7 +103,7 @@ public class Settings implements ChangeListener<Language> {
             chooser.setInitialDirectory(new File(Config.getGameFolder()));
             File file = chooser.showDialog(WindowController.getStage());
             // save file chosen
-            if (file != null){
+            if (file != null) {
                 String path = file.getPath();
                 folder.setText(path);
                 Config.setGameFolder(path);
@@ -123,7 +116,7 @@ public class Settings implements ChangeListener<Language> {
         // set selected
         Config.setLocale(newValue);
         // redraw
-        if (inLogin){
+        if (inLogin) {
             WindowController.setScreen(Settings.getScreen());
         } else {
             AppWindowHandler.loadGameFrame();
@@ -138,10 +131,10 @@ public class Settings implements ChangeListener<Language> {
      */
     @FXML
     public void onBackIsPressed() {
-        try {
-            WindowController.setScreen(Utility.loadViewPane(backScreen.path));
-        } catch (IllegalStateException e) {
-            e.printStackTrace();
+        if (backScreen.equals(ViewsPath.LOGIN)) {
+            WindowController.setScreen(Login.getScreen());
+        } else {
+            WindowController.setScreen(Register.getScreen());
         }
     }
 

@@ -1,5 +1,7 @@
 package com.lgs.eden.api.news;
 
+import com.lgs.eden.utils.config.Language;
+
 import java.util.ArrayList;
 
 /**
@@ -12,6 +14,6 @@ public interface NewsAPI {
      * You can choose the lang and must submit a game ID. Result is sorted by the newest
      * first. {@link BasicNewsData#newsCount} is set with the total number of news for this game.
      */
-    ArrayList<BasicNewsData> getAllNews(int begin, int count, String code, int gameID);
+    ArrayList<BasicNewsData> getAllNews(int begin, int count, String code, int gameID, Language l);
 
 }

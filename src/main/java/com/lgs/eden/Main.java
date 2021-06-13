@@ -1,7 +1,7 @@
 package com.lgs.eden;
 
 import com.lgs.eden.application.UpdateWindowHandler;
-import com.lgs.eden.utils.Config;
+import com.lgs.eden.utils.config.Config;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
