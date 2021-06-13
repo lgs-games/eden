@@ -6,6 +6,7 @@ import java.util.NoSuchElementException;
  * List of all codes returned by the API
  */
 public enum APIResponseCode {
+    CONNECTION_FAILED(0),
     TOO_MANY_REQUESTS(1),
 
     LOGIN_OK(10),

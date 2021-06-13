@@ -2,6 +2,7 @@ package com.lgs.eden.application;
 
 import com.goxr3plus.fxborderlessscene.borderless.BorderlessScene;
 import com.lgs.eden.api.API;
+import com.lgs.eden.api.APIException;
 import com.lgs.eden.api.games.EdenVersionData;
 import com.lgs.eden.utils.config.Config;
 import com.lgs.eden.utils.Translate;
@@ -30,7 +31,7 @@ import java.util.TimerTask;
 public class UpdateWindowHandler {
 
     // todo: temporary bypass
-    private static final boolean CHECK_UPDATES = false;
+    private static final boolean CHECK_UPDATES = true;
 
     // state of our installer
     enum State {
@@ -142,7 +143,12 @@ public class UpdateWindowHandler {
             boolean needUpdate = false;
             if (CHECK_UPDATES){
                 System.out.println("Checking client version...");
-                edenVersion = API.imp.getEdenVersion();
+                try {
+                    edenVersion = API.imp.getEdenVersion();
+                } catch (APIException e){
+                    PopupUtils.showPopup(Translate.getTranslation(e.code)+"\n"+e.getMessage(), true);
+                    return;
+                }
                 needUpdate = !Config.VERSION.equals(edenVersion.version);
             }
             System.out.println(needUpdate ? "Client needs an update" : "Client is up to date");

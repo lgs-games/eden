@@ -1,5 +1,6 @@
 package com.lgs.eden.api.local;
 
+import com.lgs.eden.api.APIException;
 import com.lgs.eden.api.APIHelper;
 import com.lgs.eden.api.games.*;
 import com.lgs.eden.api.news.BasicNewsData;
@@ -19,7 +20,7 @@ class GamesHandler implements GameAPI {
     private ObservableList<BasicGameData> games = null;
 
     @Override
-    public EdenVersionData getEdenVersion() {
+    public EdenVersionData getEdenVersion() throws APIException {
         APIHelper.fakeDelay(1000);
         return new EdenVersionData(
                 "1.0.0",

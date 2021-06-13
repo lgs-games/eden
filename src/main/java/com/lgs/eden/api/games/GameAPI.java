@@ -1,5 +1,6 @@
 package com.lgs.eden.api.games;
 
+import com.lgs.eden.api.APIException;
 import javafx.collections.ObservableList;
 
 import java.util.ArrayList;
@@ -12,7 +13,7 @@ public interface GameAPI {
     /**
      * Simply check EdenVersionData
      */
-    EdenVersionData getEdenVersion();
+    EdenVersionData getEdenVersion() throws APIException;
 
     /**
      * Ask the API for all the game in the marketplace.

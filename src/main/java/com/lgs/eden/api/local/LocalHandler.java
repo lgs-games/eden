@@ -1,6 +1,7 @@
 package com.lgs.eden.api.local;
 
 import com.lgs.eden.api.API;
+import com.lgs.eden.api.APIException;
 import com.lgs.eden.api.APIHelper;
 import com.lgs.eden.api.APIResponseCode;
 import com.lgs.eden.api.auth.LoginResponseData;
@@ -139,7 +140,7 @@ public class LocalHandler implements API {
     // ------------------------------ GAMES ----------------------------- \\
 
     @Override
-    public EdenVersionData getEdenVersion() { return this.games.getEdenVersion(); }
+    public EdenVersionData getEdenVersion() throws APIException { return this.games.getEdenVersion(); }
 
     @Override
     public ArrayList<MarketplaceGameData> getMarketPlaceGames(int begin, int count, String code, int userID) {

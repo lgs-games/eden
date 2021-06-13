@@ -43,7 +43,7 @@ import java.util.TimerTask;
  */
 public class GameList {
 
-    private static boolean gameRunning = false;
+    public static boolean gameRunning = false;
 
     // ------------------------------ STATIC ----------------------------- \\
 
