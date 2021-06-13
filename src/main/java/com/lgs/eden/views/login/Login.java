@@ -7,13 +7,12 @@ import com.lgs.eden.api.auth.LoginResponseData;
 import com.lgs.eden.application.AppWindowHandler;
 import com.lgs.eden.application.ApplicationCloseHandler;
 import com.lgs.eden.application.PopupUtils;
+import com.lgs.eden.application.WindowController;
 import com.lgs.eden.utils.Translate;
-import com.lgs.eden.utils.config.Config;
 import com.lgs.eden.utils.Utility;
 import com.lgs.eden.utils.ViewsPath;
+import com.lgs.eden.utils.config.Config;
 import com.lgs.eden.utils.helper.LoginRegisterForm;
-
-import com.lgs.eden.application.WindowController;
 import com.lgs.eden.views.register.Register;
 import com.lgs.eden.views.settings.Settings;
 import javafx.fxml.FXML;
@@ -64,11 +63,11 @@ public class Login extends LoginRegisterForm {
         if (checkUsername(username)) error.append("wrong username\n");
         if (checkPassword(pwd)) error.append("wrong password\n");
 
-        if (error.toString().isEmpty()){ // no error
+        if (error.toString().isEmpty()) { // no error
             try {
                 // add user
                 LoginResponseData response = API.imp.login(username, pwd);
-                if (response.code.equals(APIResponseCode.LOGIN_OK)){ // this is an user id
+                if (response.code.equals(APIResponseCode.LOGIN_OK)) { // this is an user id
                     // so we are good
                     AppWindowHandler.changeToAppWindow(response);
                     ApplicationCloseHandler.setLogged(true);
@@ -83,7 +82,7 @@ public class Login extends LoginRegisterForm {
             }
         }
 
-        if (!error.toString().isBlank()){
+        if (!error.toString().isBlank()) {
             PopupUtils.showPopup(error.toString());
         }
     }

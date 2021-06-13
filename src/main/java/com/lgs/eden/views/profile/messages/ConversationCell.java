@@ -46,7 +46,7 @@ public class ConversationCell implements CellHandler<ConversationData> {
         this.friendStatus.getStyleClass().set(0, item.online ? "green-text" : "red-text");
         // unread messages
         if (item.unreadMessagesCount > 0) {
-            this.newMessages.setText(""+item.unreadMessagesCount);
+            this.newMessages.setText("" + item.unreadMessagesCount);
             this.newMessages.setVisible(true);
         } else {
             this.newMessages.setVisible(false);
@@ -56,10 +56,10 @@ public class ConversationCell implements CellHandler<ConversationData> {
         int size = this.view.getStyleClass().size();
         this.view.getStyleClass().remove(0, size);
 
-        if (Messages.isCurrentConv(item.id)){
+        if (Messages.isCurrentConv(item.id)) {
             this.view.getStyleClass().add("white-box");
         } else {
-           this.view.getStyleClass().add("conv-bg");
+            this.view.getStyleClass().add("conv-bg");
         }
     }
 
@@ -73,8 +73,8 @@ public class ConversationCell implements CellHandler<ConversationData> {
     }
 
     @FXML
-    private void onCloseRequest(){
-        if (API.imp.closeConversation(this.item.id, AppWindowHandler.currentUserID())){
+    private void onCloseRequest() {
+        if (API.imp.closeConversation(this.item.id, AppWindowHandler.currentUserID())) {
             AppWindowHandler.setScreen(Messages.getScreen(), ViewsPath.PROFILE);
         } else {
             // todo: show error

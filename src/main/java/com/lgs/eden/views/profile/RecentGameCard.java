@@ -49,8 +49,8 @@ public class RecentGameCard {
             this.lastPlayed.setVisible(true);
             this.lastPlayedUnit.setVisible(true);
             this.lastPlayedAgo.setVisible(true);
-            this.lastPlayed.setText(data.lastPlayed+"");
+            this.lastPlayed.setText(data.lastPlayed + "");
         }
-        this.time_played.setText(data.timePlayed+"");
+        this.time_played.setText(data.timePlayed + "");
     }
 }

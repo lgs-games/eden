@@ -24,7 +24,9 @@ public class ApplicationCloseHandler implements EventHandler<WindowEvent> {
     private static Thread notificationsThread = null;
     private static boolean logged = false;
 
-    public static void setLogged(boolean logged) { ApplicationCloseHandler.logged = logged; }
+    public static void setLogged(boolean logged) {
+        ApplicationCloseHandler.logged = logged;
+    }
 
     public static void startUpdateThread(Timer timer, Runnable r) {
         closeUpdateThread();
@@ -32,7 +34,8 @@ public class ApplicationCloseHandler implements EventHandler<WindowEvent> {
         gameDateUpdateThread = new Thread(r);
         gameDateUpdateThread.start();
     }
-    public static void closeUpdateThread(){
+
+    public static void closeUpdateThread() {
         if (gameDateUpdateTimer != null) gameDateUpdateTimer.cancel();
         if (gameDateUpdateThread != null) gameDateUpdateThread.interrupt();
         gameDateUpdateTimer = null;
@@ -45,7 +48,7 @@ public class ApplicationCloseHandler implements EventHandler<WindowEvent> {
     }
 
     public static void closeWebEngine() {
-        if (engine != null){
+        if (engine != null) {
             engine.load(null);
             engine = null;
         }
@@ -76,7 +79,7 @@ public class ApplicationCloseHandler implements EventHandler<WindowEvent> {
         // radical ends
         Platform.exit();
 
-        if (simpleExit){
+        if (simpleExit) {
             System.exit(0);
         }
     }
@@ -88,7 +91,7 @@ public class ApplicationCloseHandler implements EventHandler<WindowEvent> {
     }
 
     private static void closeGameThread() {
-        if (gameThread != null){
+        if (gameThread != null) {
             gameThread.interrupt();
             gameThread = null;
         }
@@ -101,7 +104,7 @@ public class ApplicationCloseHandler implements EventHandler<WindowEvent> {
     }
 
     private static void closeNotificationsThread() {
-        if (notificationsThread != null){
+        if (notificationsThread != null) {
             notificationsThread.interrupt();
             notificationsThread = null;
         }

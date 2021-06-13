@@ -1,36 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
-
-<BorderPane stylesheets="@../../style/style.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lgs.eden.views.gameslist.news.AllNewsCell">
+<BorderPane stylesheets="@../../style/style.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.lgs.eden.views.gameslist.news.AllNewsCell">
     <right>
-        <Button mnemonicParsing="false" onAction="#gotoNews" styleClass="eden-button" text="%see" BorderPane.alignment="CENTER" />
+        <Button mnemonicParsing="false" onAction="#gotoNews" styleClass="eden-button" text="%see"
+                BorderPane.alignment="CENTER"/>
     </right>
     <center>
         <VBox BorderPane.alignment="CENTER">
             <children>
                 <Label fx:id="newsTitle" alignment="CENTER" text="Eating chocolate">
                     <font>
-                        <Font name="System Bold" size="18.0" />
+                        <Font name="System Bold" size="18.0"/>
                     </font>
                 </Label>
-                <Label fx:id="newsDesc" text="This is a short description of the news where you can try to summarize the news." />
+                <Label fx:id="newsDesc"
+                       text="This is a short description of the news where you can try to summarize the news."/>
             </children>
         </VBox>
     </center>
     <left>
         <VBox alignment="CENTER" BorderPane.alignment="CENTER">
             <children>
-                <Label fx:id="newsDay" styleClass="blue-text" text="26" />
-                <Label fx:id="newsMonth" styleClass="blue-text" text="Mar." />
+                <Label fx:id="newsDay" styleClass="blue-text" text="26"/>
+                <Label fx:id="newsMonth" styleClass="blue-text" text="Mar."/>
             </children>
             <BorderPane.margin>
-                <Insets right="10.0" />
+                <Insets right="10.0"/>
             </BorderPane.margin>
         </VBox>
     </left>

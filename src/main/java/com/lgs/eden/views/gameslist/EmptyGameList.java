@@ -21,7 +21,7 @@ public class EmptyGameList {
     // ------------------------------ INSTANCE ----------------------------- \\
 
     @FXML
-    public void goToMarketplace(){
+    public void goToMarketplace() {
         AppWindowHandler.setScreen(Marketplace.getScreen(), ViewsPath.MARKETPLACE);
     }
 

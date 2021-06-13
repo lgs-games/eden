@@ -1,12 +1,12 @@
 package com.lgs.eden.api.local;
 
 import com.lgs.eden.api.APIResponseCode;
+import com.lgs.eden.api.profile.ProfileAPI;
+import com.lgs.eden.api.profile.ProfileData;
 import com.lgs.eden.api.profile.RecentGameData;
 import com.lgs.eden.api.profile.ReputationScore;
 import com.lgs.eden.api.profile.friends.FriendConversationView;
 import com.lgs.eden.api.profile.friends.FriendData;
-import com.lgs.eden.api.profile.ProfileAPI;
-import com.lgs.eden.api.profile.ProfileData;
 import com.lgs.eden.api.profile.friends.FriendShipStatus;
 import com.lgs.eden.api.profile.friends.conversation.ConversationData;
 import com.lgs.eden.api.profile.friends.messages.MessageData;
@@ -26,14 +26,17 @@ import java.util.HashMap;
 class ProfileHandler implements ProfileAPI {
 
     private final LocalHandler parent;
-    public ProfileHandler(LocalHandler parent) { this.parent = parent; }
+
+    public ProfileHandler(LocalHandler parent) {
+        this.parent = parent;
+    }
 
     @Override
     public ArrayList<APIResponseCode> lookForNotifications(int currentUserID) {
         init(currentUserID);
         ArrayList<APIResponseCode> r = new ArrayList<>();
         // messages
-        for (FriendData d: getFriendList(currentUserID, -1)) {
+        for (FriendData d : getFriendList(currentUserID, -1)) {
             int unreadMessagesCount = getUnreadMessagesCount(d.id, currentUserID);
             if (unreadMessagesCount > 0) {
                 r.add(APIResponseCode.MESSAGE_RECEIVED);
@@ -41,8 +44,8 @@ class ProfileHandler implements ProfileAPI {
             }
         }
         // friends requests
-        for (ProfileData d: users) {
-            if ( d.statusWithLogged.equals(FriendShipStatus.GOT_REQUESTED)) {
+        for (ProfileData d : users) {
+            if (d.statusWithLogged.equals(FriendShipStatus.GOT_REQUESTED)) {
                 r.add(APIResponseCode.FRIEND_REQUEST);
                 break;
             }
@@ -65,7 +68,7 @@ class ProfileHandler implements ProfileAPI {
         if (recentGames.length > 0) time = recentGames[0].timePlayed;
 
         recentGames = new RecentGameData[]{
-                makeEden(time+checkTime(), gameID != -1 ? -1 : 0)
+                makeEden(time + checkTime(), gameID != -1 ? -1 : 0)
         };
 
         // restart
@@ -85,8 +88,8 @@ class ProfileHandler implements ProfileAPI {
         init(currentUserID);
         ArrayList<FriendData> r = new ArrayList<>();
         if (filter.isEmpty()) return r;
-        for (ProfileData d: users) {
-            if (d.username.toLowerCase().contains(filter) || (d.userID+"").equals(filter)){
+        for (ProfileData d : users) {
+            if (d.username.toLowerCase().contains(filter) || (d.userID + "").equals(filter)) {
                 r.add(friendFromProfil(d));
             }
         }
@@ -101,8 +104,8 @@ class ProfileHandler implements ProfileAPI {
         ObservableList<FriendData> realFriendList = getRealFriendList(userID);
         ArrayList<FriendData> copy = new ArrayList<>();
         int i = 0;
-        for (FriendData d: realFriendList) {
-            if(i < count && d.friendShipStatus.equals(FriendShipStatus.FRIENDS))
+        for (FriendData d : realFriendList) {
+            if (i < count && d.friendShipStatus.equals(FriendShipStatus.FRIENDS))
                 copy.add(d);
             i++;
         }
@@ -138,9 +141,9 @@ class ProfileHandler implements ProfileAPI {
         // new values
         int newRep = p.reputation;
         ReputationScore newScore = ReputationScore.NONE;
-        switch (score){
+        switch (score) {
             case NONE:
-                if (increase){
+                if (increase) {
                     newRep++;
                     newScore = ReputationScore.INCREASED;
                 } else {
@@ -243,7 +246,7 @@ class ProfileHandler implements ProfileAPI {
 
         ObservableList<ConversationData> allConv = FXCollections.observableArrayList(conv.values());
 
-        if (friendID == -1){
+        if (friendID == -1) {
             friendID = allConv.get(0).id;
         }
 
@@ -281,7 +284,7 @@ class ProfileHandler implements ProfileAPI {
     private int getUnreadMessagesCount(int friendID, int currentUserID) {
         ArrayList<MessageData> messages = getMessages(friendID);
         int count = 0;
-        for (MessageData d: messages) {
+        for (MessageData d : messages) {
             if (currentUserID != d.senderID && !d.read) count++;
         }
         return count;
@@ -331,7 +334,7 @@ class ProfileHandler implements ProfileAPI {
         ConversationData conversationData = conv.get(fake);
         this.parent.triggerConversationCallBack(conversationData);
         // clear if everything got "read"
-        if (conversationData.unreadMessagesCount == 0){
+        if (conversationData.unreadMessagesCount == 0) {
             getMessages(fake).forEach(m -> m.read = true);
         }
         this.parent.triggerNotificationCallBack(current);
@@ -357,11 +360,11 @@ class ProfileHandler implements ProfileAPI {
         if (games == null) games = new RecentGameData[]{};
 
         ObservableList<FriendData> friends = FXCollections.observableArrayList();
-        if (p != null){
+        if (p != null) {
             friends.add(friendFromProfil(p, FriendShipStatus.FRIENDS));
         }
 
-        return  new ProfileData(username, id, "/avatars/"+id+".png",
+        return new ProfileData(username, id, "/avatars/" + id + ".png",
                 nf, rep,
                 desc,
                 new Date(), Date.from(Instant.parse(since)), friends,
@@ -380,7 +383,7 @@ class ProfileHandler implements ProfileAPI {
         return new FriendData(p.avatarPath, p.username, p.online, p.userID, status);
     }
 
-    private void init(int currentUserID){
+    private void init(int currentUserID) {
         if (this.loggedID != -1 && currentUserID == this.loggedID) return;
         loggedID = currentUserID;
         users.clear();
@@ -464,10 +467,10 @@ class ProfileHandler implements ProfileAPI {
     }
 
     private ProfileData getUserProfile(int userID) {
-        for (ProfileData d: this.users) {
+        for (ProfileData d : this.users) {
             if (d.userID == userID) return d;
         }
-        throw new IllegalArgumentException("not found "+userID);
+        throw new IllegalArgumentException("not found " + userID);
     }
 
     private ObservableList<FriendData> getRealFriendList(int userID) {

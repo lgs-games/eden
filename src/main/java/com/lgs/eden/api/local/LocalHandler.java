@@ -10,9 +10,9 @@ import com.lgs.eden.api.callback.MessagesCallBack;
 import com.lgs.eden.api.callback.NotificationsCallBack;
 import com.lgs.eden.api.games.*;
 import com.lgs.eden.api.news.BasicNewsData;
+import com.lgs.eden.api.profile.ProfileData;
 import com.lgs.eden.api.profile.friends.FriendConversationView;
 import com.lgs.eden.api.profile.friends.FriendData;
-import com.lgs.eden.api.profile.ProfileData;
 import com.lgs.eden.api.profile.friends.conversation.ConversationData;
 import com.lgs.eden.api.profile.friends.messages.MessageData;
 import com.lgs.eden.utils.config.Language;
@@ -32,7 +32,7 @@ public class LocalHandler implements API {
     private static API instance;
 
     public static API getInstance() {
-        if (instance == null){
+        if (instance == null) {
             instance = new LocalHandler();
         }
         return instance;
@@ -68,7 +68,7 @@ public class LocalHandler implements API {
         triggerNotificationCallBack(currentUserID);
     }
 
-    void triggerNotificationCallBack(int currentUserID){
+    void triggerNotificationCallBack(int currentUserID) {
         ArrayList<APIResponseCode> apiResponseCodes = this.lookForNotifications(currentUserID);
         if (newsCallback != null) newsCallback.onCall(apiResponseCodes);
     }
@@ -80,15 +80,15 @@ public class LocalHandler implements API {
         this.conv = conv;
     }
 
-    void triggerMessagesCallBack(MessageData m){
-        if (messagesCallBack != null){
+    void triggerMessagesCallBack(MessageData m) {
+        if (messagesCallBack != null) {
             // friend sent a message
             if (m.senderID == conv.friend.id) messagesCallBack.onCall(m);
         }
     }
 
-    void triggerConversationCallBack(ConversationData m){
-        if (conversationsCallback != null){
+    void triggerConversationCallBack(ConversationData m) {
+        if (conversationsCallback != null) {
             if (m.id == conv.friend.id) m.unreadMessagesCount = 0;
             // friend sent a message
             conversationsCallback.onCall(m);
@@ -102,7 +102,7 @@ public class LocalHandler implements API {
     @Override
     public LoginResponseData login(String username, String pwd) throws APIException {
         LoginResponseData login = this.login.login(username, pwd);
-        if (login.code.equals(APIResponseCode.LOGIN_OK)){
+        if (login.code.equals(APIResponseCode.LOGIN_OK)) {
 
             // init
             getMessageWithFriend(24, 23);
@@ -130,7 +130,9 @@ public class LocalHandler implements API {
     }
 
     @Override
-    public APIResponseCode register(String username, String pwd, String email) { return this.login.register(username, pwd, email);   }
+    public APIResponseCode register(String username, String pwd, String email) {
+        return this.login.register(username, pwd, email);
+    }
 
     @Override
     public String getPasswordForgotLink(String languageCode) {
@@ -140,7 +142,9 @@ public class LocalHandler implements API {
     // ------------------------------ GAMES ----------------------------- \\
 
     @Override
-    public EdenVersionData getEdenVersion() throws APIException { return this.games.getEdenVersion(); }
+    public EdenVersionData getEdenVersion() throws APIException {
+        return this.games.getEdenVersion();
+    }
 
     @Override
     public ArrayList<MarketplaceGameData> getMarketPlaceGames(int begin, int count, String code, int userID) {
@@ -148,19 +152,29 @@ public class LocalHandler implements API {
     }
 
     @Override
-    public GameViewData getGameData(int userID, int gameID) { return this.games.getGameData(userID, gameID); }
+    public GameViewData getGameData(int userID, int gameID) {
+        return this.games.getGameData(userID, gameID);
+    }
 
     @Override
-    public ObservableList<BasicGameData> getUserGames(int userID) { return this.games.getUserGames(userID); }
+    public ObservableList<BasicGameData> getUserGames(int userID) {
+        return this.games.getUserGames(userID);
+    }
 
     @Override
-    public ShortGameViewData getGameDateUpdate(int userID, int gameID) { return this.games.getGameDateUpdate(userID, gameID); }
+    public ShortGameViewData getGameDateUpdate(int userID, int gameID) {
+        return this.games.getGameDateUpdate(userID, gameID);
+    }
 
     @Override
-    public boolean addToLibrary(int userID, BasicGameData game) { return this.games.addToLibrary(userID, game); }
+    public boolean addToLibrary(int userID, BasicGameData game) {
+        return this.games.addToLibrary(userID, game);
+    }
 
     @Override
-    public boolean removeFromLibrary(int userID, BasicGameData game) { return this.games.removeFromLibrary(userID, game); }
+    public boolean removeFromLibrary(int userID, BasicGameData game) {
+        return this.games.removeFromLibrary(userID, game);
+    }
 
     // ------------------------------ NEWS ----------------------------- \\
 
@@ -172,13 +186,19 @@ public class LocalHandler implements API {
     // ------------------------------ PROFILE ----------------------------- \\
 
     @Override
-    public ArrayList<APIResponseCode> lookForNotifications(int currentUserID) { return this.profile.lookForNotifications(currentUserID); }
+    public ArrayList<APIResponseCode> lookForNotifications(int currentUserID) {
+        return this.profile.lookForNotifications(currentUserID);
+    }
 
     @Override
-    public ArrayList<FriendData> searchUsers(String filter, int currentUserID) { return this.profile.searchUsers(filter, currentUserID); }
+    public ArrayList<FriendData> searchUsers(String filter, int currentUserID) {
+        return this.profile.searchUsers(filter, currentUserID);
+    }
 
     @Override
-    public ArrayList<FriendData> getFriendList(int userID, int count) { return this.profile.getFriendList(userID, count); }
+    public ArrayList<FriendData> getFriendList(int userID, int count) {
+        return this.profile.getFriendList(userID, count);
+    }
 
     @Override
     public ArrayList<FriendData> getRequests(int userID, int count) {
@@ -186,7 +206,9 @@ public class LocalHandler implements API {
     }
 
     @Override
-    public ProfileData getProfileData(int userID, int currentUserID) { return this.profile.getProfileData(userID, currentUserID); }
+    public ProfileData getProfileData(int userID, int currentUserID) {
+        return this.profile.getProfileData(userID, currentUserID);
+    }
 
     @Override
     public ProfileData changeReputation(int userID, int currentUserID, boolean increase) {
@@ -201,27 +223,41 @@ public class LocalHandler implements API {
     // friends
 
     @Override
-    public void addFriend(int friendID, int currentUserID) { this.profile.addFriend(friendID, currentUserID); }
+    public void addFriend(int friendID, int currentUserID) {
+        this.profile.addFriend(friendID, currentUserID);
+    }
 
     @Override
-    public void removeFriend(int friendID, int currentUserID) { this.profile.removeFriend(friendID, currentUserID); }
+    public void removeFriend(int friendID, int currentUserID) {
+        this.profile.removeFriend(friendID, currentUserID);
+    }
 
     @Override
-    public void acceptFriend(int friendID, int currentUserID) { this.profile.acceptFriend(friendID, currentUserID); }
+    public void acceptFriend(int friendID, int currentUserID) {
+        this.profile.acceptFriend(friendID, currentUserID);
+    }
 
     @Override
-    public void refuseFriend(int friendID, int currentUserID) { this.profile.refuseFriend(friendID, currentUserID); }
+    public void refuseFriend(int friendID, int currentUserID) {
+        this.profile.refuseFriend(friendID, currentUserID);
+    }
 
     // conv
 
     @Override
-    public FriendConversationView getMessageWithFriend(int friendID, int currentUserID) { return this.profile.getMessageWithFriend(friendID, currentUserID); }
+    public FriendConversationView getMessageWithFriend(int friendID, int currentUserID) {
+        return this.profile.getMessageWithFriend(friendID, currentUserID);
+    }
 
     @Override
-    public boolean newConversation(int friendID, int currentUserID) { return this.profile.newConversation(friendID, currentUserID); }
+    public boolean newConversation(int friendID, int currentUserID) {
+        return this.profile.newConversation(friendID, currentUserID);
+    }
 
     @Override
-    public boolean closeConversation(int friendID, int currentUserID) { return this.profile.closeConversation(friendID, currentUserID); }
+    public boolean closeConversation(int friendID, int currentUserID) {
+        return this.profile.closeConversation(friendID, currentUserID);
+    }
 
     @Override
     public MessageData sendMessage(int to, int from, String message) {

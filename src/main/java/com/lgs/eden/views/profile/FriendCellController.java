@@ -26,12 +26,12 @@ public class FriendCellController implements CellHandler<FriendData> {
     /** called after each event **/
     private static Runnable afterEvent;
 
-    public static CellHandler<FriendData> load(){
+    public static CellHandler<FriendData> load() {
         afterEvent = () -> {};
         return CellHandler.load(ViewsPath.FRIEND_CELL);
     }
 
-    public static CellHandler<FriendData> load(Runnable r){
+    public static CellHandler<FriendData> load(Runnable r) {
         afterEvent = r;
         return CellHandler.load(ViewsPath.FRIEND_CELL);
     }
@@ -98,7 +98,7 @@ public class FriendCellController implements CellHandler<FriendData> {
     private boolean init = false;
 
     @FXML
-    public void init(FriendData d){
+    public void init(FriendData d) {
         if (init) return;
         this.data = d;
         this.friendName.setText(d.name);
@@ -134,7 +134,7 @@ public class FriendCellController implements CellHandler<FriendData> {
                 }
 
                 // disabled if not available
-                if (!acceptFR && !cancelFR){
+                if (!acceptFR && !cancelFR) {
                     acceptFriendRequest.setDisable(true);
                     refuseFriendRequest.setDisable(true);
                     cancelFriendRequest.setDisable(true);
@@ -171,8 +171,7 @@ public class FriendCellController implements CellHandler<FriendData> {
     @FXML
     public void onWantProfile(MouseEvent e) {
         // left click
-        if (e == null || e.getButton() == MouseButton.PRIMARY)
-        {
+        if (e == null || e.getButton() == MouseButton.PRIMARY) {
             // goto profile
             AppWindowHandler.setScreen(Profile.reloadWith(this.data.id), ViewsPath.PROFILE);
         }

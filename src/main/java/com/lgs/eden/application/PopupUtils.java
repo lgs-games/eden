@@ -23,9 +23,10 @@ public class PopupUtils {
     /**
      * Create and display to popup with some text
      */
-    public static void showPopup(String text){
+    public static void showPopup(String text) {
         showPopup(text, false);
     }
+
     public static void showPopup(String text, boolean close) {
         showPopup(text, closeCallBack(close));
     }
@@ -34,9 +35,10 @@ public class PopupUtils {
     /**
      * Create and display to popup with a custom content
      */
-    public static void showPopup(Parent content){
+    public static void showPopup(Parent content) {
         showPopup(content, false);
     }
+
     public static void showPopup(Parent content, boolean close) {
         showPopup(content, closeCallBack(close));
     }
@@ -47,8 +49,9 @@ public class PopupUtils {
     public static void showPopup(APIException e) {
         showPopup(e, false);
     }
+
     public static void showPopup(APIException e, boolean close) {
-        showPopup(Translate.getTranslation(e.code)+"\n"+e.getMessage(), close);
+        showPopup(Translate.getTranslation(e.code) + "\n" + e.getMessage(), close);
     }
 
     // ------------------------------ CORE ----------------------------- \\
@@ -86,7 +89,7 @@ public class PopupUtils {
 
     // ------------------------------ UTILS ----------------------------- \\
 
-    private static Runnable closeCallBack( boolean close) {
+    private static Runnable closeCallBack(boolean close) {
         return close ? () -> ApplicationCloseHandler.close(true) : null;
     }
 

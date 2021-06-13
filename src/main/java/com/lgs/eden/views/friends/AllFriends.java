@@ -9,8 +9,8 @@ import com.lgs.eden.utils.Translate;
 import com.lgs.eden.utils.Utility;
 import com.lgs.eden.utils.ViewsPath;
 import com.lgs.eden.utils.cell.CellHandler;
-import com.lgs.eden.views.profile.FriendCellController;
 import com.lgs.eden.utils.helper.SearchPane;
+import com.lgs.eden.views.profile.FriendCellController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -67,7 +67,7 @@ public class AllFriends {
     /**
      * Fill friend div
      */
-    private void make(ArrayList<FriendData> friendList, Predicate<FriendData> p, FlowPane div, DivName name){
+    private void make(ArrayList<FriendData> friendList, Predicate<FriendData> p, FlowPane div, DivName name) {
         boolean added = false;
         for (FriendData f : friendList) {
             if (!p.test(f)) continue;
@@ -99,7 +99,7 @@ public class AllFriends {
     // empty label
     private Node getEmpty(DivName name) {
         // get text
-        String text = Translate.getTranslation("no-friends-here") +" ";
+        String text = Translate.getTranslation("no-friends-here") + " ";
         text += name.toString();
         // create label
         Label label = new Label(text);

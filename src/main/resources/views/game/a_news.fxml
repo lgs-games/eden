@@ -2,38 +2,40 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.web.WebView?>
-
-<BorderPane prefHeight="500.0" prefWidth="800.0" stylesheets="@../../style/style.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lgs.eden.views.gameslist.news.News">
-   <top>
-      <VBox maxWidth="800.0" style="-fx-border-color: transparent transparent white transparent;" styleClass="app-background" BorderPane.alignment="CENTER">
-         <children>
-            <Label fx:id="newsTitle" styleClass="yellow-text" text="This is a news title">
-               <font>
-                  <Font name="System Bold" size="24.0" />
-               </font>
-               <VBox.margin>
-                  <Insets left="5.0" right="5.0" top="5.0" />
-               </VBox.margin>
-            </Label>
-            <Label fx:id="newsDate" styleClass="yellow-text" text="12/03/2020">
-               <VBox.margin>
-                  <Insets bottom="5.0" left="5.0" right="5.0" />
-               </VBox.margin>
-            </Label>
-         </children>
-      </VBox>
-   </top>
-   <center>
-      <WebView fx:id="newsContent" maxHeight="450.0" maxWidth="800.0" minHeight="-1.0" minWidth="-1.0" prefHeight="450.0" prefWidth="780.0" />
-   </center>
-   <opaqueInsets>
-      <Insets />
-   </opaqueInsets>
-   <padding>
-      <Insets top="10.0" />
-   </padding>
+<BorderPane prefHeight="500.0" prefWidth="800.0" stylesheets="@../../style/style.css"
+            xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.lgs.eden.views.gameslist.news.News">
+    <top>
+        <VBox maxWidth="800.0" style="-fx-border-color: transparent transparent white transparent;"
+              styleClass="app-background" BorderPane.alignment="CENTER">
+            <children>
+                <Label fx:id="newsTitle" styleClass="yellow-text" text="This is a news title">
+                    <font>
+                        <Font name="System Bold" size="24.0"/>
+                    </font>
+                    <VBox.margin>
+                        <Insets left="5.0" right="5.0" top="5.0"/>
+                    </VBox.margin>
+                </Label>
+                <Label fx:id="newsDate" styleClass="yellow-text" text="12/03/2020">
+                    <VBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0"/>
+                    </VBox.margin>
+                </Label>
+            </children>
+        </VBox>
+    </top>
+    <center>
+        <WebView fx:id="newsContent" maxHeight="450.0" maxWidth="800.0" minHeight="-1.0" minWidth="-1.0"
+                 prefHeight="450.0" prefWidth="780.0"/>
+    </center>
+    <opaqueInsets>
+        <Insets/>
+    </opaqueInsets>
+    <padding>
+        <Insets top="10.0"/>
+    </padding>
 </BorderPane>

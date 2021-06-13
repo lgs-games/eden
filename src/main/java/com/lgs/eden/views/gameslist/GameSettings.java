@@ -1,7 +1,6 @@
 package com.lgs.eden.views.gameslist;
 
 import com.lgs.eden.api.API;
-import com.lgs.eden.api.games.BasicGameData;
 import com.lgs.eden.api.games.GameViewData;
 import com.lgs.eden.application.AppWindowHandler;
 import com.lgs.eden.application.PopupUtils;
@@ -12,7 +11,6 @@ import com.lgs.eden.utils.config.InstallUtils;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.control.Button;
 
 /**
  * Game Settings controller
@@ -47,16 +45,16 @@ public class GameSettings {
     @FXML
     public void onUninstallAndRemoveGame() { processUninstallAndRemoveGame(true, true); }
 
-    private void processUninstallAndRemoveGame(boolean uninstall, boolean remove){
+    private void processUninstallAndRemoveGame(boolean uninstall, boolean remove) {
         if (uninstall) {
-            if (!InstallUtils.uninstallGame(this.game)){
+            if (!InstallUtils.uninstallGame(this.game)) {
                 PopupUtils.showPopup(Translate.getTranslation("uninstall_failed"));
                 return;
             }
         }
-        if (remove){
+        if (remove) {
             // remove from library
-            if (!API.imp.removeFromLibrary(AppWindowHandler.currentUserID(), game)){
+            if (!API.imp.removeFromLibrary(AppWindowHandler.currentUserID(), game)) {
                 PopupUtils.showPopup(Translate.getTranslation("remove_from_library_failed"));
                 return;
             }

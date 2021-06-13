@@ -2,10 +2,10 @@ package com.lgs.eden.views.gameslist.news;
 
 import com.lgs.eden.api.API;
 import com.lgs.eden.api.news.BasicNewsData;
-import com.lgs.eden.utils.config.Config;
 import com.lgs.eden.utils.Translate;
 import com.lgs.eden.utils.Utility;
 import com.lgs.eden.utils.ViewsPath;
+import com.lgs.eden.utils.config.Config;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -54,9 +54,9 @@ public class AllNews {
             // clear old view
             this.newsPanel.getChildren().clear();
             // fill up again
-            if (allNews.isEmpty()){
-                this.from.setText(""+0);
-                this.to.setText(""+0);
+            if (allNews.isEmpty()) {
+                this.from.setText("" + 0);
+                this.to.setText("" + 0);
                 // show empty message
                 Label emptyMessage = new Label(Translate.getTranslation("no_news"));
                 emptyMessage.getStyleClass().add("empty_message");
@@ -65,9 +65,9 @@ public class AllNews {
                 VBox.setVgrow(empty, Priority.ALWAYS);
                 this.newsPanel.getChildren().add(empty);
             } else {
-                int start = (pageIndex*COUNT_PER_PAGE)+1;
-                this.from.setText(""+start);
-                this.to.setText(""+(start+allNews.size()-1));
+                int start = (pageIndex * COUNT_PER_PAGE) + 1;
+                this.from.setText("" + start);
+                this.to.setText("" + (start + allNews.size() - 1));
                 for (BasicNewsData news : allNews) {
                     this.newsPanel.getChildren().add(AllNewsCell.getScreen(news));
                 }

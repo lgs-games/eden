@@ -1,18 +1,15 @@
 package com.lgs.eden.views.profile;
 
 import com.lgs.eden.api.API;
-import com.lgs.eden.api.APIResponseCode;
-import com.lgs.eden.api.profile.friends.FriendData;
 import com.lgs.eden.api.profile.ProfileData;
+import com.lgs.eden.api.profile.friends.FriendData;
 import com.lgs.eden.application.AppWindowHandler;
-import com.lgs.eden.application.PopupUtils;
 import com.lgs.eden.utils.Translate;
 import com.lgs.eden.utils.Utility;
+import com.lgs.eden.utils.ViewsPath;
 import com.lgs.eden.utils.cell.CustomCells;
 import com.lgs.eden.views.friends.AllFriends;
-import javafx.application.Platform;
 import javafx.fxml.FXML;
-import com.lgs.eden.utils.ViewsPath;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
@@ -52,7 +49,8 @@ public class Profile {
 
     public static Profile getController() {
         if (controller == null) getScreen();
-        return controller; }
+        return controller;
+    }
 
     // ------------------------------ INSTANCE ----------------------------- \\
 
@@ -103,7 +101,7 @@ public class Profile {
         // ------------------------------ FILL ATTRIBUTES ----------------------------- \\
         this.username.setText(this.data.username); // ex: Raphiki
         this.userID.setText(String.format("%06d", this.data.userID)); // ex: 000006
-        this.bio.setText(this.data.biography+""); // bio
+        this.bio.setText(this.data.biography + ""); // bio
         this.lastLogin.setText(Translate.getDate(this.data.lastSeen)); // getDate format
         this.since.setText(Translate.getDate(this.data.memberSinceDate)); // getDate format
         this.avatar.setImage(this.data.avatar); // set avatar
@@ -140,21 +138,21 @@ public class Profile {
         // ------------------------------ FILL RECENT GAMES ----------------------------- \\
 
         // show the last 3 games
-        if (this.data.recentGames.length > 0){
+        if (this.data.recentGames.length > 0) {
             for (int column = 0; column < 3 && column < this.data.recentGames.length; column++) {
                 // create
                 FXMLLoader loader = Utility.loadView(ViewsPath.PROFILE_CARD.path);
                 Parent card = Utility.loadViewPane(loader);
                 // fill
-                ((RecentGameCard)loader.getController()).init(this.data.recentGames[column]);
+                ((RecentGameCard) loader.getController()).init(this.data.recentGames[column]);
                 // add
-                this.recentGames.add(card, column,0);
+                this.recentGames.add(card, column, 0);
             }
         } else {
             // no recent games played
             Label l = new Label(Translate.getTranslation("game-recent-none"));
             l.getStyleClass().add("empty-message-15");
-            this.recentGames.add(l, 0,0, 3, 1);
+            this.recentGames.add(l, 0, 0, 3, 1);
         }
 
         // ------------------------------ FILL FRIEND LIST ----------------------------- \\
@@ -220,16 +218,16 @@ public class Profile {
         // reputation
         int rep = Integer.compare(data.reputation, 0);
         String repSigne = rep >= 0 ? "+" : "";
-        String repStyle = rep == -1 ? "red-text": rep == 1 ? "green-text" : "black-text";
-        this.reputation.setText(repSigne+data.reputation);
+        String repStyle = rep == -1 ? "red-text" : rep == 1 ? "green-text" : "black-text";
+        this.reputation.setText(repSigne + data.reputation);
         this.reputation.getStyleClass().set(0, repStyle);
 
         // disable +1 and -1 visually
-        if (AppWindowHandler.currentUserID() == this.data.userID){
+        if (AppWindowHandler.currentUserID() == this.data.userID) {
             this.addOne.setDisable(true);
             this.removeOne.setDisable(true);
         } else {
-            switch (data.score){
+            switch (data.score) {
                 case NONE:
                     this.addOne.setDisable(false);
                     this.removeOne.setDisable(false);

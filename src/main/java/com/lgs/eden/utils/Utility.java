@@ -41,7 +41,7 @@ public final class Utility {
             images.put(path, new Image(Objects.requireNonNull(Utility.class.getResourceAsStream(path))));
             return images.get(path);
         } catch (Exception e) {
-            throw new IllegalArgumentException("Image not found "+path);
+            throw new IllegalArgumentException("Image not found " + path);
         }
     }
 
@@ -61,7 +61,7 @@ public final class Utility {
     public static FXMLLoader loadView(String path) throws IllegalStateException {
         // get resource
         URL resource = Utility.class.getResource(path);
-        if(resource == null)
+        if (resource == null)
             throw new IllegalStateException();
 
         // get locale
@@ -109,7 +109,7 @@ public final class Utility {
             try {
                 Desktop.getDesktop().browse(new URI(link));
             } catch (URISyntaxException | IOException ignoreMeTooBlink) {
-                throw new IllegalStateException("Couldn't open link "+link);
+                throw new IllegalStateException("Couldn't open link " + link);
             }
         }
     }
@@ -126,12 +126,12 @@ public final class Utility {
         throw new UnsupportedOperationException("OS not supported");
     }
 
-    private static boolean isLink(String source){
+    private static boolean isLink(String source) {
         return source.startsWith("http") || source.startsWith("https");
     }
 
     public static String getFileAsString(String source) {
-        if (isLink(source)){
+        if (isLink(source)) {
             try {
                 HttpsURLConnection.setFollowRedirects(false);
                 HttpsURLConnection connection = (HttpsURLConnection) new URL(source).openConnection();
@@ -152,7 +152,7 @@ public final class Utility {
                 URL url = Utility.class.getResource(source);
                 if (url == null) throw new IOException();
                 return Files.readString(Path.of(url.toURI()), StandardCharsets.UTF_8);
-            } catch (URISyntaxException | IOException e){
+            } catch (URISyntaxException | IOException e) {
                 throw new IllegalStateException("Couldn't read remote file");
             }
         }

@@ -60,7 +60,7 @@ class GamesHandler implements GameAPI {
                 "Prim is a production line game request by Dimitri Watel, teacher at ENSIIE engineering school." +
                         " The main idea is that you will produce resources in order to close a gate. The folklore of " +
                         "the game is the ENSIIE so you will have a lot of ENSIIE-related content. Have fun !",
-                "/games/prim-icon.png","/games/prim-pic.png",
+                "/games/prim-icon.png", "/games/prim-pic.png",
                 tags,
                 languages,
                 updatePrim,
@@ -74,7 +74,7 @@ class GamesHandler implements GameAPI {
 
     @Override
     public GameViewData getGameData(int userID, int gameID) {
-        if (gameID == 0){
+        if (gameID == 0) {
             BasicNewsData prim = new BasicNewsData(
                     "Version 3.1.0 released",
                     "/news/news1.png",
@@ -137,9 +137,9 @@ class GamesHandler implements GameAPI {
     @Override
     public ShortGameViewData getGameDateUpdate(int userID, int gameID) {
         APIHelper.fakeDelay(3000);
-        if (gameID == 1){
+        if (gameID == 1) {
             return new ShortGameViewData(
-              2, 1, 4600
+                    2, 1, 4600
             );
         } else {
             return new ShortGameViewData(
@@ -153,7 +153,7 @@ class GamesHandler implements GameAPI {
     private void initGames(int userID) {
         if (this.games != null) return;
         this.games = FXCollections.observableArrayList();
-        if (userID == 23){
+        if (userID == 23) {
             // this.games.add(new BasicGameData(1, "Enigma", "/games/enigma-icon.png"));
             this.games.add(new BasicGameData(0, "Prim", "/games/prim-icon.png"));
         }

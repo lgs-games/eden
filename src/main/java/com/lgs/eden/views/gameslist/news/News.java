@@ -11,12 +11,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
-
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import org.commonmark.Extension;
 import org.commonmark.ext.gfm.tables.TablesExtension;
-import org.commonmark.node.*;
+import org.commonmark.node.Node;
 import org.commonmark.parser.Parser;
 import org.commonmark.renderer.html.HtmlRenderer;
 import org.w3c.dom.Element;
@@ -68,26 +67,26 @@ public class News {
 
         WebEngine engine = this.newsContent.getEngine();
         engine.loadContent("<html>" +
-                       "<style>" +
-                       "body {\n" +
-                       "    font-family: Segoe UI,Helvetica,Arial,sans-serif;\n" +
-                       "    font-size: 17px;\n" +
-                       "\n" +
-                       "    background : #1e262c;\n" +
-                       "    color:#FFFFFF;\n" +
-                       "\n" +
-                       "    padding: 0 20px 0 0;\n" +
-                       "}"+
-                       "a {\n" +
-                       "    color: #2aa198;\n" +
-                       "}"+
-                       "h1, h2, h3, h4, h5, h6 {\n" +
-                       "    color: #FFCC33;\n" +
-                       "}"+
-                       "</style>" +
-                       "<body>"
-                       +renderer.render(document)
-                       +"</body>"
+                "<style>" +
+                "body {\n" +
+                "    font-family: Segoe UI,Helvetica,Arial,sans-serif;\n" +
+                "    font-size: 17px;\n" +
+                "\n" +
+                "    background : #1e262c;\n" +
+                "    color:#FFFFFF;\n" +
+                "\n" +
+                "    padding: 0 20px 0 0;\n" +
+                "}" +
+                "a {\n" +
+                "    color: #2aa198;\n" +
+                "}" +
+                "h1, h2, h3, h4, h5, h6 {\n" +
+                "    color: #FFCC33;\n" +
+                "}" +
+                "</style>" +
+                "<body>"
+                + renderer.render(document)
+                + "</body>"
         );
 
         // disabled right-click
@@ -117,15 +116,15 @@ public class News {
                 // note next classes are from org.w3c.dom domain
                 EventListener listener = ev -> {
                     ev.preventDefault();
-                    String href = ((Element)ev.getTarget()).getAttribute("href");
+                    String href = ((Element) ev.getTarget()).getAttribute("href");
                     Utility.openInBrowser(href);
                 };
 
                 org.w3c.dom.Document doc = engine.getDocument();
                 // add listener to add links
                 NodeList links = doc.getElementsByTagName("a");
-                for (int i=0; i < links.getLength(); i++) {
-                    ((EventTarget)links.item(i))
+                for (int i = 0; i < links.getLength(); i++) {
+                    ((EventTarget) links.item(i))
                             .addEventListener("click", listener, false);
                 }
             }

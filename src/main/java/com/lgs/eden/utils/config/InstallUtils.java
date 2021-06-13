@@ -12,7 +12,7 @@ public class InstallUtils {
     /** install eden, close program **/
     public static void installEden(String installer) {
         OperatingSystem os = Utility.getUserOS();
-        if (os.equals(OperatingSystem.WINDOWS)){
+        if (os.equals(OperatingSystem.WINDOWS)) {
             try {
                 // and close
                 ApplicationCloseHandler.close(false);
@@ -39,16 +39,16 @@ public class InstallUtils {
 
         String location = Config.getGameFolder() + gameID + "/";
 
-        if (os.equals(OperatingSystem.WINDOWS)){
+        if (os.equals(OperatingSystem.WINDOWS)) {
             try {
                 // start exe
                 ProcessBuilder process = new ProcessBuilder(installer, "/SILENT", "/MERGETASKS=\"desktopicon\"",
-                        "/DIR="+location);
+                        "/DIR=" + location);
                 process.directory(new File(new File(installer).getParent()));
                 Process start = process.start();
                 int r = start.waitFor();
                 return r == 0;
-            } catch (IOException|InterruptedException ex) {
+            } catch (IOException | InterruptedException ex) {
                 return false;
             }
         } else {
@@ -64,7 +64,7 @@ public class InstallUtils {
 
         File file = new File(location);
         if (!file.exists()) {
-            throw new IllegalStateException("file not found "+location);
+            throw new IllegalStateException("file not found " + location);
         }
 
         ApplicationCloseHandler.startGameThread(() -> {
@@ -93,10 +93,8 @@ public class InstallUtils {
             process.directory(new File(file.getParent()));
             Process start = process.start();
             return start.waitFor() == 0;
-        } catch (IOException|InterruptedException e){
+        } catch (IOException | InterruptedException e) {
             return false;
         }
     }
-
-
 }

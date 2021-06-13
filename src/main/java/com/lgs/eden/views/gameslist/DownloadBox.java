@@ -41,7 +41,7 @@ public class DownloadBox {
     private DownloadManager d;
     private Runnable onCancel;
 
-    public void init(GameViewData data, Runnable onCancel, Runnable onInstalled){
+    public void init(GameViewData data, Runnable onCancel, Runnable onInstalled) {
         this.onCancel = onCancel;
 
         // get the update information
@@ -60,7 +60,7 @@ public class DownloadBox {
         d.onUpdateProgress(l);
         // move to install
         d.onDownloadEnd((e) -> {
-            if (InstallUtils.installGame(e.fileName, data.id)){
+            if (InstallUtils.installGame(e.fileName, data.id)) {
                 onInstalled.run();
             }
         });

@@ -3,11 +3,11 @@ package com.lgs.eden.views.register;
 import com.lgs.eden.api.API;
 import com.lgs.eden.api.APIException;
 import com.lgs.eden.api.APIResponseCode;
+import com.lgs.eden.application.PopupUtils;
+import com.lgs.eden.application.WindowController;
 import com.lgs.eden.utils.Translate;
 import com.lgs.eden.utils.ViewsPath;
-import com.lgs.eden.application.PopupUtils;
 import com.lgs.eden.utils.helper.LoginRegisterForm;
-import com.lgs.eden.application.WindowController;
 import com.lgs.eden.views.login.Login;
 import com.lgs.eden.views.settings.Settings;
 import javafx.fxml.FXML;
@@ -66,7 +66,7 @@ public class Register extends LoginRegisterForm {
         if (error.toString().isEmpty()) { // no error
             try {
                 APIResponseCode response = API.imp.register(username, pwd, email);
-                if (response.equals(APIResponseCode.REGISTER_OK)){
+                if (response.equals(APIResponseCode.REGISTER_OK)) {
                     // back to login
                     PopupUtils.showPopup(Translate.getTranslation(response), this::onPressBack);
                 } else {
@@ -77,7 +77,7 @@ public class Register extends LoginRegisterForm {
             }
         }
 
-        if (!error.toString().isBlank()){
+        if (!error.toString().isBlank()) {
             PopupUtils.showPopup(error.toString());
         }
     }

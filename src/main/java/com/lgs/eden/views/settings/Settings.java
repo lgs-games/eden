@@ -2,7 +2,9 @@ package com.lgs.eden.views.settings;
 
 import com.lgs.eden.application.AppWindowHandler;
 import com.lgs.eden.application.WindowController;
-import com.lgs.eden.utils.*;
+import com.lgs.eden.utils.Translate;
+import com.lgs.eden.utils.Utility;
+import com.lgs.eden.utils.ViewsPath;
 import com.lgs.eden.utils.config.Config;
 import com.lgs.eden.utils.config.Language;
 import com.lgs.eden.views.login.Login;
@@ -49,7 +51,7 @@ public class Settings implements ChangeListener<Language> {
         controller.initScreen(inLogin);
 
         // in game background is dark by default so we add a white box
-        if (!inLogin){
+        if (!inLogin) {
             screen.getStyleClass().add("white-box");
         }
 
@@ -101,7 +103,7 @@ public class Settings implements ChangeListener<Language> {
             chooser.setInitialDirectory(new File(Config.getGameFolder()));
             File file = chooser.showDialog(WindowController.getStage());
             // save file chosen
-            if (file != null){
+            if (file != null) {
                 String path = file.getPath();
                 folder.setText(path);
                 Config.setGameFolder(path);
@@ -114,7 +116,7 @@ public class Settings implements ChangeListener<Language> {
         // set selected
         Config.setLocale(newValue);
         // redraw
-        if (inLogin){
+        if (inLogin) {
             WindowController.setScreen(Settings.getScreen());
         } else {
             AppWindowHandler.loadGameFrame();
@@ -129,7 +131,7 @@ public class Settings implements ChangeListener<Language> {
      */
     @FXML
     public void onBackIsPressed() {
-        if (backScreen.equals(ViewsPath.LOGIN)){
+        if (backScreen.equals(ViewsPath.LOGIN)) {
             WindowController.setScreen(Login.getScreen());
         } else {
             WindowController.setScreen(Register.getScreen());

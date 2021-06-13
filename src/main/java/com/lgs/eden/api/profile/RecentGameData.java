@@ -25,5 +25,7 @@ public final class RecentGameData {
         this.lastPlayed = lastPlayed;
     }
 
-    public boolean isPlaying(){ return lastPlayed == PLAYING; }
+    public boolean isPlaying() {
+        return lastPlayed == PLAYING;
+    }
 }

@@ -121,8 +121,8 @@ public class Messages {
                 if (this.userList == null) return;
                 Platform.runLater(() -> {
                     int i = 0;
-                    for (ConversationData d:this.userList.getItems()) {
-                        if (d.id == c.id){
+                    for (ConversationData d : this.userList.getItems()) {
+                        if (d.id == c.id) {
                             // change this item
                             break;
                         }
@@ -140,8 +140,8 @@ public class Messages {
     }
 
     private void setSelected() {
-        for (ConversationData d: this.userList.getItems()) {
-            if (d.id == friend.id){
+        for (ConversationData d : this.userList.getItems()) {
+            if (d.id == friend.id) {
                 this.userList.scrollTo(d);
                 break;
             }
@@ -149,7 +149,7 @@ public class Messages {
     }
 
     @FXML
-    public void goToProfile(){
+    public void goToProfile() {
         AppWindowHandler.setScreen(Profile.reloadWith(this.friend.id), ViewsPath.PROFILE);
     }
 
@@ -159,7 +159,7 @@ public class Messages {
                 (s) -> {
                     ArrayList<FriendData> selected = new ArrayList<>();
                     this.friendList.forEach((d) -> {
-                        if (s.isEmpty() || d.name.toLowerCase().contains(s) || (d.id+"").equals(s)){
+                        if (s.isEmpty() || d.name.toLowerCase().contains(s) || (d.id + "").equals(s)) {
                             selected.add(d);
                         }
                     });

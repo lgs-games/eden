@@ -30,7 +30,7 @@ public interface CellHandler<T> {
 
     // ------------------------------ STATIC ----------------------------- \\
 
-    static <T> CellHandler<T> load(ViewsPath viewsPath){
+    static <T> CellHandler<T> load(ViewsPath viewsPath) {
         FXMLLoader loader = Utility.loadView(viewsPath.path);
         Parent view = Utility.loadViewPane(loader);
         CellHandler<T> controller = loader.getController();

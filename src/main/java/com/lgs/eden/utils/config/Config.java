@@ -53,7 +53,7 @@ public class Config {
     /** may store username or removed stored username **/
     public static void lastUsername(String username, boolean store) {
         storedUsername = store ? username : "";
-        System.out.println((store?"Storing username: ":"Removing username :") + storedUsername);
+        System.out.println((store ? "Storing username: " : "Removing username :") + storedUsername);
         // todo: store new username
     }
 
@@ -87,12 +87,12 @@ public class Config {
         // ensure that gameFolder is a valid folder
         File f = new File(gameFolder);
         // the game folder don't exists
-        if (!f.exists()){ // we use default one
+        if (!f.exists()) { // we use default one
             gameFolder = Config.getDefaultGameFolder();
             f = new File(gameFolder); // no default one
-            if (!f.exists() || !f.isDirectory()){
+            if (!f.exists() || !f.isDirectory()) {
                 boolean mkdir = f.mkdir(); // we create it
-                if (!mkdir){ // can't create, use current directory
+                if (!mkdir) { // can't create, use current directory
                     gameFolder = Utility.getCurrentDirectory();
                 }
             }
@@ -105,7 +105,7 @@ public class Config {
      * Return download repository path
      */
     public static String getDownloadRepository() {
-        if (downloadRepository == null){
+        if (downloadRepository == null) {
             try {
                 downloadRepository = Files.createTempDirectory("eden").toFile().getAbsolutePath();
             } catch (IOException e) {

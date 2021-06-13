@@ -13,7 +13,7 @@ import javafx.scene.layout.Pane;
 /**
  * View for a message cell
  */
-public class MessageCell implements CellHandler<MessageData>  {
+public class MessageCell implements CellHandler<MessageData> {
 
     // ------------------------------ STATIC ----------------------------- \\
 

@@ -1,44 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
-
-<Pane onMouseClicked="#onWantProfile" styleClass="white-box" stylesheets="@../../style/style.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lgs.eden.views.profile.FriendCellController">
-   <children>
-      <BorderPane layoutX="10.399999618530273" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" styleClass="white-box">
-         <center>
-            <Label fx:id="friendName" styleClass="black-text" text="friends_name" BorderPane.alignment="CENTER">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Label>
-         </center>
-         <left>
-            <BorderPane prefHeight="48.0" prefWidth="48.0" BorderPane.alignment="CENTER">
-               <BorderPane.margin>
-                  <Insets right="10.0" />
-               </BorderPane.margin>
-               <center>
-                  <ImageView fx:id="friendAvatar" fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" styleClass="user-icon" BorderPane.alignment="CENTER">
-                     <image>
-                        <Image url="@../../avatars/23.png" />
-                     </image>
-                  </ImageView>
-               </center>
-            </BorderPane>
-         </left>
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-      </BorderPane>
-   </children>
-   <cursor>
-      <Cursor fx:constant="HAND" />
-   </cursor>
+<Pane onMouseClicked="#onWantProfile" styleClass="white-box" stylesheets="@../../style/style.css"
+      xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.lgs.eden.views.profile.FriendCellController">
+    <children>
+        <BorderPane layoutX="10.399999618530273" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+                    minWidth="-Infinity" styleClass="white-box">
+            <center>
+                <Label fx:id="friendName" styleClass="black-text" text="friends_name" BorderPane.alignment="CENTER">
+                    <font>
+                        <Font size="14.0"/>
+                    </font>
+                </Label>
+            </center>
+            <left>
+                <BorderPane prefHeight="48.0" prefWidth="48.0" BorderPane.alignment="CENTER">
+                    <BorderPane.margin>
+                        <Insets right="10.0"/>
+                    </BorderPane.margin>
+                    <center>
+                        <ImageView fx:id="friendAvatar" fitHeight="48.0" fitWidth="48.0" pickOnBounds="true"
+                                   preserveRatio="true" styleClass="user-icon" BorderPane.alignment="CENTER">
+                            <image>
+                                <Image url="@../../avatars/23.png"/>
+                            </image>
+                        </ImageView>
+                    </center>
+                </BorderPane>
+            </left>
+            <cursor>
+                <Cursor fx:constant="HAND"/>
+            </cursor>
+        </BorderPane>
+    </children>
+    <cursor>
+        <Cursor fx:constant="HAND"/>
+    </cursor>
 </Pane>

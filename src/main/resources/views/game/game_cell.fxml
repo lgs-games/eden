@@ -4,34 +4,35 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
-
-<Pane styleClass="app-background" stylesheets="@../../style/style.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lgs.eden.views.gameslist.cell.GameListCellController">
-   <children>
-      <BorderPane>
-         <left>
-            <BorderPane prefHeight="48.0" prefWidth="48.0" BorderPane.alignment="CENTER">
-               <center>
-                  <ImageView fx:id="gameAvatar" fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" styleClass="user-icon" BorderPane.alignment="CENTER">
-                     <image>
-                        <Image url="@../../games/prim-icon.png" />
-                     </image>
-                  </ImageView>
-               </center>
-            </BorderPane>
-         </left>
-         <right>
-            <Label fx:id="gameName" styleClass="white-text" text="game_name" wrapText="true" BorderPane.alignment="CENTER">
-               <font>
-                  <Font size="18.0" />
-               </font>
-               <BorderPane.margin>
-                  <Insets left="10.0" />
-               </BorderPane.margin>
-            </Label>
-         </right>
-      </BorderPane>
-   </children>
+<Pane styleClass="app-background" stylesheets="@../../style/style.css" xmlns="http://javafx.com/javafx/16"
+      xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lgs.eden.views.gameslist.cell.GameListCellController">
+    <children>
+        <BorderPane>
+            <left>
+                <BorderPane prefHeight="48.0" prefWidth="48.0" BorderPane.alignment="CENTER">
+                    <center>
+                        <ImageView fx:id="gameAvatar" fitHeight="32.0" fitWidth="32.0" pickOnBounds="true"
+                                   preserveRatio="true" styleClass="user-icon" BorderPane.alignment="CENTER">
+                            <image>
+                                <Image url="@../../games/prim-icon.png"/>
+                            </image>
+                        </ImageView>
+                    </center>
+                </BorderPane>
+            </left>
+            <right>
+                <Label fx:id="gameName" styleClass="white-text" text="game_name" wrapText="true"
+                       BorderPane.alignment="CENTER">
+                    <font>
+                        <Font size="18.0"/>
+                    </font>
+                    <BorderPane.margin>
+                        <Insets left="10.0"/>
+                    </BorderPane.margin>
+                </Label>
+            </right>
+        </BorderPane>
+    </children>
 </Pane>

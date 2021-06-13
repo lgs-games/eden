@@ -1,7 +1,6 @@
 package com.lgs.eden.application;
 
 import com.goxr3plus.fxborderlessscene.borderless.BorderlessScene;
-import com.lgs.eden.Main;
 import com.lgs.eden.utils.Utility;
 import com.lgs.eden.utils.ViewsPath;
 import javafx.application.Platform;
@@ -11,9 +10,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-
-import java.io.IOException;
-import java.net.URL;
 
 /**
  * Handle window related methods, events, ...
@@ -57,12 +53,13 @@ public class WindowController {
     public static Stage getStage() { return instance != null ? instance.stage : oldStage; }
 
     private static Stage oldStage;
+
     public static void setStage(Stage oldStage) {
         WindowController.oldStage = oldStage;
     }
 
     /** change window size **/
-    public static void setSize(int width, int height){
+    public static void setSize(int width, int height) {
         window.setPrefSize(width, height);
         instance.stage.setWidth(width);
         instance.stage.setHeight(height);
@@ -85,7 +82,7 @@ public class WindowController {
     // ------------------------------ LISTENERS ----------------------------- \\
 
     @FXML
-    public void onCloseRequest(ActionEvent ignore) {
+    public void onCloseRequest() {
         // todo: maybe make a class
         Platform.runLater(() -> {
             this.stage.close();
@@ -95,7 +92,7 @@ public class WindowController {
     }
 
     @FXML
-    public void onMinimizeRequest(ActionEvent ignore) {
+    public void onMinimizeRequest() {
         // todo: maybe make a class
         Platform.runLater(() -> scene.minimizeStage());
     }

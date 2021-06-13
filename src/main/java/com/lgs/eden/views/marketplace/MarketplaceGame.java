@@ -60,7 +60,7 @@ public class MarketplaceGame {
         this.gameImage.setImage(data.image);
         this.gameIcon.setImage(data.icon);
         this.gameVersion.setText(data.updateData.version);
-        this.gameSize.setText(data.updateData.size+"");
+        this.gameSize.setText(data.updateData.size + "");
 
         this.tags.getChildren().clear();
         data.tags.forEach(s -> {
@@ -81,11 +81,11 @@ public class MarketplaceGame {
     }
 
     @FXML
-    public void onDownloadPressed(){
+    public void onDownloadPressed() {
         BasicGameData newGame = new BasicGameData(this.data.id, this.data.name, this.data.getIconPath());
         // add to library
-        if (!this.data.inLibrary){
-            if (!API.imp.addToLibrary(AppWindowHandler.currentUserID(), newGame)){
+        if (!this.data.inLibrary) {
+            if (!API.imp.addToLibrary(AppWindowHandler.currentUserID(), newGame)) {
                 PopupUtils.showPopup(Translate.getTranslation("add_library_failed"));
                 return;
             }

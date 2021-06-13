@@ -6,7 +6,6 @@ import com.lgs.eden.utils.Utility;
 import javafx.collections.ObservableList;
 import javafx.scene.image.Image;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 
@@ -76,15 +75,15 @@ public class ProfileData {
                 data.lastSeen, data.memberSinceDate, data.friends, data.recentGames, data.online, status, data.score);
     }
 
-    public ProfileData(int userID){
+    public ProfileData(int userID) {
         this(null, userID, null, 0, 0, null, null,
                 null, null, null, false, null, null);
     }
 
     public ProfileData(ProfileData data, ObservableList<FriendData> friendList) {
-            this(data.username, data.userID, data.avatarPath, friendList.size(), data.reputation, data.biography,
-                    data.lastSeen, data.memberSinceDate, friendList, data.recentGames, data.online, data.statusWithLogged, data.score);
-        }
+        this(data.username, data.userID, data.avatarPath, friendList.size(), data.reputation, data.biography,
+                data.lastSeen, data.memberSinceDate, friendList, data.recentGames, data.online, data.statusWithLogged, data.score);
+    }
 
     @Override
     public boolean equals(Object o) {

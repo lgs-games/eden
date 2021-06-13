@@ -56,7 +56,7 @@ public class SearchPane {
     }
 
     @FXML
-    public void onSearch(){
+    public void onSearch() {
         String text = this.search.getText().trim().toLowerCase();
         Platform.runLater(() -> {
             users = new ListView<>();

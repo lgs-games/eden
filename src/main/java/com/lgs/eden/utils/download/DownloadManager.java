@@ -60,11 +60,13 @@ public class DownloadManager extends Thread implements ReadableByteChannel {
             File out = new File(this.location);
 
             // try create dir
-            if( !out.exists() ){
+            if (!out.exists()) {
                 try {
-                    if (!out.mkdir()) { throw new IOException(); }
-                } catch (IOException|SecurityException e) {
-                    Platform.runLater(()-> PopupUtils.showPopup(
+                    if (!out.mkdir()) {
+                        throw new IOException();
+                    }
+                } catch (IOException | SecurityException e) {
+                    Platform.runLater(() -> PopupUtils.showPopup(
                             "Unable to create a directory to store the new version."
                     ));
                 }
@@ -83,7 +85,7 @@ public class DownloadManager extends Thread implements ReadableByteChannel {
                 connection.connect();
                 this.readChannel = Channels.newChannel(connection.getInputStream());
                 // call init callback with the values we have
-                if( this.initRunnable != null ) this.initRunnable.downloadCallBack( event = new DownloadEvent(
+                if (this.initRunnable != null) this.initRunnable.downloadCallBack(event = new DownloadEvent(
                         0, this.size, -1, -1,
                         fileName));
 
@@ -93,10 +95,10 @@ public class DownloadManager extends Thread implements ReadableByteChannel {
                 this.fileOutput.getChannel().transferFrom(this, 0, Long.MAX_VALUE);
                 this.fileOutput.close();
                 this.fileOutput = null;
-                if(this.fileName != null){
+                if (this.fileName != null) {
                     this.endRunnable.downloadCallBack(event);
                 } // else callDownloadCancel();
-            } catch (IOException e){
+            } catch (IOException e) {
                 /*
                  * causes may be
                  * - can't find URL
@@ -105,52 +107,56 @@ public class DownloadManager extends Thread implements ReadableByteChannel {
                 throw new IllegalStateException(e);
             }
         } catch (Exception e) {
-            Platform.runLater(()-> PopupUtils.showPopup(
-                    "Unable to download new version.\n"+
-                    e.getMessage()
-                    +"\n"+
-                    Arrays.toString(e.getStackTrace()))
+            Platform.runLater(() -> PopupUtils.showPopup(
+                    "Unable to download new version.\n" +
+                            e.getMessage()
+                            + "\n" +
+                            Arrays.toString(e.getStackTrace()))
             );
         }
     }
 
-    /** cancel download **/
-    public boolean cancel(){
+    /**
+     * cancel download
+     **/
+    public boolean cancel() {
         try {
-            if(this.fileOutput == null) return true;
+            if (this.fileOutput == null) return true;
             this.fileOutput.close();
             // delete remnant
             boolean delete = new File(this.fileName).delete();
-            if (!delete){ throw new IOException(); }
+            if (!delete) {
+                throw new IOException();
+            }
             this.fileName = null;
             return true;
-        } catch (IOException e){
+        } catch (IOException e) {
             return true;
         }
     }
 
     // ------------------------------ CHANNELS ----------------------------- \\
 
-    public int read( ByteBuffer bb ) throws IOException {
+    public int read(ByteBuffer bb) throws IOException {
         long downloaded, speed = this.event.speed, timeRemaining;
         int n;
         // first call
-        if( this.last == null ) {
+        if (this.last == null) {
             this.timeElapsed = System.currentTimeMillis();
             this.last = event;
         }
 
-        if(System.currentTimeMillis() - this.timeElapsed > 1000L){//= 1s
+        if (System.currentTimeMillis() - this.timeElapsed > 1000L) {//= 1s
             speed = this.event.downloaded - this.last.downloaded;
             //reset
             this.last = this.event;
             this.timeElapsed = System.currentTimeMillis();
         }
 
-        if ( ( n = this.readChannel.read(bb) ) > 0) {
+        if ((n = this.readChannel.read(bb)) > 0) {
             downloaded = n + this.event.downloaded;
-            if(speed < 0) speed = 0;
-            if(speed != 0){
+            if (speed < 0) speed = 0;
+            if (speed != 0) {
                 timeRemaining = (this.size - downloaded) / speed;
             } else timeRemaining = Long.MAX_VALUE;
             this.event = new DownloadEvent(downloaded, this.size, speed, timeRemaining, fileName);

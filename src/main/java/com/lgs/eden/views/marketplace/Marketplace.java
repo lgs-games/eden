@@ -3,9 +3,9 @@ package com.lgs.eden.views.marketplace;
 import com.lgs.eden.api.API;
 import com.lgs.eden.api.games.MarketplaceGameData;
 import com.lgs.eden.application.AppWindowHandler;
-import com.lgs.eden.utils.config.Config;
 import com.lgs.eden.utils.Utility;
 import com.lgs.eden.utils.ViewsPath;
+import com.lgs.eden.utils.config.Config;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -50,7 +50,7 @@ public class Marketplace {
             this.content.getChildren().clear();
             int i = 0;
             // set new view, meaning we are adding up to 4 games
-            for (MarketplaceGameData d: games) {
+            for (MarketplaceGameData d : games) {
                 this.content.add(MarketplaceGame.getScreen(d), i % 2, i / 2);
                 i++;
             }

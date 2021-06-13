@@ -1,10 +1,10 @@
 package com.lgs.eden.api.local;
 
 import com.lgs.eden.api.API;
+import com.lgs.eden.api.APIHelper;
 import com.lgs.eden.api.APIResponseCode;
 import com.lgs.eden.api.auth.AuthAPI;
 import com.lgs.eden.api.auth.LoginResponseData;
-import com.lgs.eden.api.APIHelper;
 
 /**
  * Implementation of LoginAPI
@@ -13,12 +13,12 @@ class AuthHandler implements AuthAPI {
 
     @Override
     public LoginResponseData login(String username, String pwd) {
-        if (username.equals("Raphiki")){
+        if (username.equals("Raphiki")) {
             // not activated
             return new LoginResponseData(12);
         }
 
-        if (username.equals("Raphikis")){
+        if (username.equals("Raphikis")) {
             // banned
             return new LoginResponseData(13);
         }
@@ -47,11 +47,11 @@ class AuthHandler implements AuthAPI {
             return APIResponseCode.REGISTER_OK;
         }
 
-        if (username.equals("Raphik")){
+        if (username.equals("Raphik")) {
             return APIResponseCode.REGISTER_FAILED_LOGIN;
         }
 
-        if (email.equals("a@b.d")){
+        if (email.equals("a@b.d")) {
             return APIResponseCode.REGISTER_FAILED_EMAIL;
         }
 
@@ -62,7 +62,7 @@ class AuthHandler implements AuthAPI {
     public String getPasswordForgotLink(String languageCode) {
         // website only supports en or fr
         languageCode = APIHelper.formatCode(languageCode);
-        return API.WEBSITE_URL+languageCode+"/password_forgot";
+        return API.WEBSITE_URL + languageCode + "/password_forgot";
     }
 
 }

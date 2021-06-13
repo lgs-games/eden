@@ -39,7 +39,7 @@ public enum APIResponseCode {
         for (APIResponseCode r : APIResponseCode.values()) {
             if (r.code == code) return r;
         }
-        throw new NoSuchElementException("No APIResponseCode for code '"+code+"'.");
+        throw new NoSuchElementException("No APIResponseCode for code '" + code + "'.");
     }
 
 }
