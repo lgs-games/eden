@@ -14,6 +14,7 @@ import com.lgs.eden.utils.cell.CustomCells;
 import com.lgs.eden.utils.helper.SearchPane;
 import com.lgs.eden.views.profile.Profile;
 import javafx.application.Platform;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -121,16 +122,17 @@ public class Messages {
                 if (this.userList == null) return;
                 Platform.runLater(() -> {
                     int i = 0;
-                    for (ConversationData d : this.userList.getItems()) {
-                        if (d.id == c.id) {
-                            // change this item
-                            break;
-                        }
+                    ObservableList<ConversationData> items = this.userList.getItems();
+
+                    for (ConversationData d : items) {
+                        // change this item
+                        if (d.id == c.id) break;
                         i++;
                     }
-
-                    this.userList.getItems().remove(i);
-                    this.userList.getItems().add(i, c);
+                    if (i != items.size()) {
+                        items.remove(i);
+                    }
+                    items.add(i, c);
 
                     // set again as current
                     if (c.id == friend.id) setSelected();
