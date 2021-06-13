@@ -20,7 +20,7 @@
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </VBox.margin>
                <children>
-                  <Button onAction="#searchForUser" mnemonicParsing="false" styleClass="eden-button" text="search for a player" />
+                  <Button mnemonicParsing="false" onAction="#searchForUser" styleClass="eden-button" text="%search_user" />
                </children>
             </FlowPane>
             <BorderPane styleClass="white-box">
@@ -80,6 +80,44 @@
                <VBox.margin>
                   <Insets right="10.0" />
                </VBox.margin>
+            </BorderPane>
+            <BorderPane layoutX="20.0" layoutY="164.0" styleClass="white-box">
+               <top>
+                  <Label graphicTextGap="10.0" text="%request" BorderPane.alignment="CENTER_LEFT">
+                     <BorderPane.margin>
+                        <Insets bottom="5.0" left="10.0" right="5.0" top="5.0" />
+                     </BorderPane.margin>
+                     <font>
+                        <Font name="System Bold" size="24.0" />
+                     </font>
+                  </Label>
+               </top>
+               <center>
+                  <FlowPane fx:id="request" hgap="5.0" vgap="5.0" BorderPane.alignment="CENTER">
+                     <BorderPane.margin>
+                        <Insets bottom="10.0" left="10.0" right="10.0" />
+                     </BorderPane.margin>
+                  </FlowPane>
+               </center>
+            </BorderPane>
+            <BorderPane layoutX="20.0" layoutY="239.0" styleClass="white-box">
+               <top>
+                  <Label graphicTextGap="10.0" text="%got_requested" BorderPane.alignment="CENTER_LEFT">
+                     <BorderPane.margin>
+                        <Insets bottom="5.0" left="10.0" right="5.0" top="5.0" />
+                     </BorderPane.margin>
+                     <font>
+                        <Font name="System Bold" size="24.0" />
+                     </font>
+                  </Label>
+               </top>
+               <center>
+                  <FlowPane fx:id="gotRequested" hgap="5.0" vgap="5.0" BorderPane.alignment="CENTER">
+                     <BorderPane.margin>
+                        <Insets bottom="10.0" left="10.0" right="10.0" />
+                     </BorderPane.margin>
+                  </FlowPane>
+               </center>
             </BorderPane>
          </children>
          <padding>

@@ -79,6 +79,20 @@ class ProfileHandler implements ProfileAPI {
     }
 
     @Override
+    public ArrayList<FriendData> getRequests(int userID, int count) {
+        if (this.users.isEmpty()) init(userID);
+        if (count == -1) count = Integer.MAX_VALUE;
+        ArrayList<FriendData> copy = new ArrayList<>();
+        for (int i = 0; i < count && i < users.size(); i++) {
+            ProfileData d = users.get(i);
+            if (d.statusWithLogged.equals(FriendShipStatus.REQUESTED) ||
+                    d.statusWithLogged.equals(FriendShipStatus.GOT_REQUESTED))
+                copy.add(friendFromProfil(d));
+        }
+        return copy;
+    }
+
+    @Override
     public ProfileData getProfileData(int userID, int currentUserID) {
         init(currentUserID);
         ProfileData userProfile = getUserProfile(userID);

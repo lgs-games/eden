@@ -20,6 +20,9 @@ public interface ProfileAPI {
     /** Returns complete friend list **/
     ArrayList<FriendData> getFriendList(int userID, int count);
 
+    /** friend request received or sent **/
+    ArrayList<FriendData> getRequests(int userID, int count);
+
     /**
      * Returns profile Data for an user.
      */
