@@ -227,6 +227,8 @@ class ProfileHandler implements ProfileAPI {
                 messages.add(d);
             }
         }
+        ConversationData conversationData = conv.get(friendID);
+        conversationData.unreadMessagesCount = 0;
         this.messages.put(friendID, messages);
 
         this.parent.triggerNotificationCallBack(currentUserID);

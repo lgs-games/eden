@@ -8,7 +8,7 @@ import com.lgs.eden.api.profile.friends.FriendShipStatus;
  */
 public class ConversationData extends FriendData {
 
-    public final int unreadMessagesCount;
+    public int unreadMessagesCount;
 
     public ConversationData(String avatar, String name, boolean online, int id, int unreadMessagesCount) {
         super(avatar, name, online, id, FriendShipStatus.NONE);

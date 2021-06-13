@@ -56,6 +56,7 @@ public class LocalHandler implements API {
 
     private NotificationsCallBack newsCallback;
     private MessagesCallBack messagesCallBack;
+    private FriendConversationView conv;
 
     @Override
     public void setNotificationsCallBack(NotificationsCallBack callBack, int currentUserID) {
@@ -69,12 +70,16 @@ public class LocalHandler implements API {
     }
 
     @Override
-    public void setMessagesCallBack(MessagesCallBack messagesCallBack) {
+    public void setMessagesCallBack(MessagesCallBack messagesCallBack, FriendConversationView conv) {
         this.messagesCallBack = messagesCallBack;
+        this.conv = conv;
     }
 
     void triggerMessagesCallBack(MessageData m){
-        if (messagesCallBack != null) messagesCallBack.onCall(m);
+        if (messagesCallBack != null){
+            // friend sent a message
+            if (m.senderID == conv.friend.id) messagesCallBack.onCall(m);
+        }
     }
 
     // ------------------------------ LOGIN ----------------------------- \\
@@ -95,6 +100,8 @@ public class LocalHandler implements API {
                     // init
                     getMessageWithFriend(24, 23);
                     profile.sendMessageAsOther(23, 24, "Okay!");
+                    getMessageWithFriend(25, 23);
+                    profile.sendMessageAsOther(23, 25, "Salut");
                 }
             }, 0, 10000);
         }

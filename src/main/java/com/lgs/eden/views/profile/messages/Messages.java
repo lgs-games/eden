@@ -122,7 +122,7 @@ public class Messages {
                     this.messages.getItems().add(m);
                     this.messages.scrollTo(this.messages.getItems().size() - 1);
                 });
-            });
+            }, conv);
         }
     }
 
