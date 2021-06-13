@@ -29,6 +29,16 @@ public class MessageData {
     public String getMessageAsText(){ return messageContent.toString(); }
 
     @Override
+    public String toString() {
+        return "MessageData{" +
+                "senderID=" + senderID +
+                ", messageContent=" + getMessageAsText() +
+                ", date=" + date +
+                ", read=" + read +
+                '}';
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof MessageData)) return false;

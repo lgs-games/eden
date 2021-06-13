@@ -47,11 +47,15 @@ public class ConversationCell implements CellHandler<ConversationData> {
         // unread messages
         if (item.unreadMessagesCount > 0) this.newMessages.setText(""+item.unreadMessagesCount);
         else this.newMessages.setVisible(false);
+
         // background
+        int size = this.view.getStyleClass().size();
+        this.view.getStyleClass().remove(0, size);
+
         if (Messages.isCurrentConv(item.id)){
             this.view.getStyleClass().add("white-box");
         } else {
-            this.view.getStyleClass().add("conv-bg");
+           this.view.getStyleClass().add("conv-bg");
         }
     }
 

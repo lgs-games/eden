@@ -309,6 +309,8 @@ class ProfileHandler implements ProfileAPI {
         // trigger
         this.parent.triggerNotificationCallBack(current);
         this.parent.triggerMessagesCallBack(r);
+        ConversationData conversationData = conv.get(fake);
+        this.parent.triggerConversationCallBack(conversationData);
     }
 
     private ArrayList<MessageData> getMessages(int with) {

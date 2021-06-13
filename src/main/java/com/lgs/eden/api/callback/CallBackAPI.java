@@ -7,7 +7,8 @@ public interface CallBackAPI {
     /** @see NotificationsCallBack **/
     void setNotificationsCallBack(NotificationsCallBack callBack, int currentUserID);
 
-    /** @see MessagesCallBack **/
-    void setMessagesCallBack(MessagesCallBack callBack, FriendConversationView conv);
+    /** @see MessagesCallBack
+     * @see ConversationsCallback **/
+    void setMessagesCallBack(MessagesCallBack callBack, ConversationsCallback c,  FriendConversationView conv);
 
 }

@@ -97,12 +97,7 @@ public class Messages {
             // ------------------------------ CONVERSATIONS ----------------------------- \\
             this.userList.setItems(conv.conversations);
             this.userList.setCellFactory(cellView -> new CustomCells<>(ConversationCell.load()));
-            for (ConversationData d:conv.conversations) {
-                if (d.id == conv.friend.id){
-                    this.userList.scrollTo(d);
-                    break;
-                }
-            }
+            setSelected();
 
             // ------------------------------ MAIN DATA ----------------------------- \\
             // set message values
@@ -122,7 +117,34 @@ public class Messages {
                     this.messages.getItems().add(m);
                     this.messages.scrollTo(this.messages.getItems().size() - 1);
                 });
+            }, (c) -> {
+                if (this.userList == null) return;
+                Platform.runLater(() -> {
+                    int i = 0;
+                    for (ConversationData d:this.userList.getItems()) {
+                        if (d.id == c.id){
+                            // change this item
+                            break;
+                        }
+                        i++;
+                    }
+
+                    this.userList.getItems().remove(i);
+                    this.userList.getItems().add(i, c);
+
+                    // set again as current
+                    if (c.id == friend.id) setSelected();
+                });
             }, conv);
+        }
+    }
+
+    private void setSelected() {
+        for (ConversationData d: this.userList.getItems()) {
+            if (d.id == friend.id){
+                this.userList.scrollTo(d);
+                break;
+            }
         }
     }
 

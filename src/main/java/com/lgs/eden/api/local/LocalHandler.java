@@ -4,6 +4,7 @@ import com.lgs.eden.api.API;
 import com.lgs.eden.api.APIHelper;
 import com.lgs.eden.api.APIResponseCode;
 import com.lgs.eden.api.auth.LoginResponseData;
+import com.lgs.eden.api.callback.ConversationsCallback;
 import com.lgs.eden.api.callback.MessagesCallBack;
 import com.lgs.eden.api.callback.NotificationsCallBack;
 import com.lgs.eden.api.games.*;
@@ -11,6 +12,7 @@ import com.lgs.eden.api.news.BasicNewsData;
 import com.lgs.eden.api.profile.friends.FriendConversationView;
 import com.lgs.eden.api.profile.friends.FriendData;
 import com.lgs.eden.api.profile.ProfileData;
+import com.lgs.eden.api.profile.friends.conversation.ConversationData;
 import com.lgs.eden.api.profile.friends.messages.MessageData;
 import com.lgs.eden.utils.config.Language;
 import javafx.collections.ObservableList;
@@ -56,6 +58,7 @@ public class LocalHandler implements API {
 
     private NotificationsCallBack newsCallback;
     private MessagesCallBack messagesCallBack;
+    private ConversationsCallback conversationsCallback;
     private FriendConversationView conv;
 
     @Override
@@ -70,8 +73,9 @@ public class LocalHandler implements API {
     }
 
     @Override
-    public void setMessagesCallBack(MessagesCallBack messagesCallBack, FriendConversationView conv) {
-        this.messagesCallBack = messagesCallBack;
+    public void setMessagesCallBack(MessagesCallBack mc, ConversationsCallback cc, FriendConversationView conv) {
+        this.messagesCallBack = mc;
+        this.conversationsCallback = cc;
         this.conv = conv;
     }
 
@@ -79,6 +83,14 @@ public class LocalHandler implements API {
         if (messagesCallBack != null){
             // friend sent a message
             if (m.senderID == conv.friend.id) messagesCallBack.onCall(m);
+        }
+    }
+
+    void triggerConversationCallBack(ConversationData m){
+        if (conversationsCallback != null){
+            if (m.id == conv.friend.id) m.unreadMessagesCount = 0;
+            // friend sent a message
+            conversationsCallback.onCall(m);
         }
     }
 
@@ -90,6 +102,11 @@ public class LocalHandler implements API {
     public LoginResponseData login(String username, String pwd) {
         LoginResponseData login = this.login.login(username, pwd);
         if (login.code.equals(APIResponseCode.LOGIN_OK)){
+
+            // init
+            getMessageWithFriend(24, 23);
+            getMessageWithFriend(25, 23);
+
             // starts fake message receiver
             this.checker = new Timer();
             this.checker.scheduleAtFixedRate(new TimerTask() {
@@ -97,13 +114,10 @@ public class LocalHandler implements API {
                 public void run() {
                     // fake some delay
                     APIHelper.fakeDelay(1000);
-                    // init
-                    getMessageWithFriend(24, 23);
                     profile.sendMessageAsOther(23, 24, "Okay!");
-                    getMessageWithFriend(25, 23);
                     profile.sendMessageAsOther(23, 25, "Salut");
                 }
-            }, 0, 10000);
+            }, 0, 5000);
         }
         return login;
     }
