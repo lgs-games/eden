@@ -100,7 +100,7 @@ public class LocalHandler implements API {
     private Timer checker;
 
     @Override
-    public LoginResponseData login(String username, String pwd) {
+    public LoginResponseData login(String username, String pwd) throws APIException {
         LoginResponseData login = this.login.login(username, pwd);
         if (login.code.equals(APIResponseCode.LOGIN_OK)){
 

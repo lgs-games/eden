@@ -1,5 +1,7 @@
 package com.lgs.eden.application;
 
+import com.lgs.eden.api.APIException;
+import com.lgs.eden.utils.Translate;
 import com.lgs.eden.utils.config.Config;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
@@ -66,5 +68,13 @@ public class PopupUtils {
         } else {
             showPopup(pane);
         }
+    }
+
+    public static void showPopup(APIException e) {
+        showPopup(e, false);
+    }
+
+    public static void showPopup(APIException e, boolean close) {
+        showPopup(Translate.getTranslation(e.code)+"\n"+e.getMessage(), close);
     }
 }

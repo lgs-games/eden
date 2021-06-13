@@ -1,11 +1,13 @@
 package com.lgs.eden.views.login;
 
 import com.lgs.eden.api.API;
+import com.lgs.eden.api.APIException;
 import com.lgs.eden.api.APIResponseCode;
 import com.lgs.eden.api.auth.LoginResponseData;
 import com.lgs.eden.application.AppWindowHandler;
 import com.lgs.eden.application.ApplicationCloseHandler;
 import com.lgs.eden.application.PopupUtils;
+import com.lgs.eden.utils.Translate;
 import com.lgs.eden.utils.config.Config;
 import com.lgs.eden.utils.Utility;
 import com.lgs.eden.utils.ViewsPath;
@@ -63,18 +65,22 @@ public class Login extends LoginRegisterForm {
         if (checkPassword(pwd)) error.append("wrong password\n");
 
         if (error.toString().isEmpty()){ // no error
-            // add user
-            LoginResponseData response = API.imp.login(username, pwd);
-            if (response.code.equals(APIResponseCode.LOGIN_OK)){ // this is an user id
-                // so we are good
-                AppWindowHandler.changeToAppWindow(response);
-                ApplicationCloseHandler.setLogged(true);
-            } else {
-                error.append("Invalid credentials\n");
-            }
+            try {
+                // add user
+                LoginResponseData response = API.imp.login(username, pwd);
+                if (response.code.equals(APIResponseCode.LOGIN_OK)){ // this is an user id
+                    // so we are good
+                    AppWindowHandler.changeToAppWindow(response);
+                    ApplicationCloseHandler.setLogged(true);
+                } else {
+                    PopupUtils.showPopup(Translate.getTranslation(response.code));
+                }
 
-            // store or not username
-            Config.lastUsername(username, rememberMe.isSelected());
+                // store or not username
+                Config.lastUsername(username, rememberMe.isSelected());
+            } catch (APIException e) {
+                PopupUtils.showPopup(e);
+            }
         }
 
         if (!error.toString().isBlank()){

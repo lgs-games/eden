@@ -146,7 +146,7 @@ public class UpdateWindowHandler {
                 try {
                     edenVersion = API.imp.getEdenVersion();
                 } catch (APIException e){
-                    PopupUtils.showPopup(Translate.getTranslation(e.code)+"\n"+e.getMessage(), true);
+                    PopupUtils.showPopup(e, true);
                     return;
                 }
                 needUpdate = !Config.VERSION.equals(edenVersion.version);

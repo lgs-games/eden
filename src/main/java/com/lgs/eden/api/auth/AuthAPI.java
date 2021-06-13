@@ -1,5 +1,6 @@
 package com.lgs.eden.api.auth;
 
+import com.lgs.eden.api.APIException;
 import com.lgs.eden.api.APIResponseCode;
 
 /**
@@ -8,9 +9,12 @@ import com.lgs.eden.api.APIResponseCode;
 public interface AuthAPI {
 
     /**
-     *
+     * @see APIResponseCode#LOGIN_OK
+     * @see APIResponseCode#LOGIN_BANNED
+     * @see APIResponseCode#LOGIN_INVALID
+     * @see APIResponseCode#LOGIN_NOT_ACTIVATED
      */
-    LoginResponseData login(String username, String pwd);
+    LoginResponseData login(String username, String pwd) throws APIException;
 
     /**
      *
