@@ -92,4 +92,9 @@ public interface ProfileAPI {
      * if none.
      */
     ArrayList<APIResponseCode> lookForNotifications(int currentUserID);
+
+    /**
+     * Set this game as played by the user
+     */
+    void setPlaying(int currentUserID, int gameID);
 }

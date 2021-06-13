@@ -301,8 +301,12 @@ public class GameList {
             if (gameRunning){
                 PopupUtils.showPopup(Translate.getTranslation("game_running"));
             } else {
-                InstallUtils.runGame(gameData, () -> gameRunning = false);
+                InstallUtils.runGame(gameData, () -> {
+                    gameRunning = false;
+                    API.imp.setPlaying(AppWindowHandler.currentUserID(), -1);
+                });
                 gameRunning = true;
+                API.imp.setPlaying(AppWindowHandler.currentUserID(), this.gameData.id);
             }
         } else {
             this.download.setText(Translate.getTranslation("download"));

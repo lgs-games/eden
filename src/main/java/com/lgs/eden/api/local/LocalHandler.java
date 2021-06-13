@@ -192,6 +192,11 @@ public class LocalHandler implements API {
         return this.profile.changeReputation(userID, currentUserID, increase);
     }
 
+    @Override
+    public void setPlaying(int currentUserID, int gameID) {
+        this.profile.setPlaying(currentUserID, gameID);
+    }
+
     // friends
 
     @Override

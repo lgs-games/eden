@@ -19,7 +19,7 @@ public class ProfileData {
     // list of friends
     public final ObservableList<FriendData> friends;
     // recent games, can be empty (size = 0), size <= 3
-    public final RecentGameData[] recentGames;
+    public RecentGameData[] recentGames;
     // id user
     public final int userID;
     // real number of friends, not necessarily the size of

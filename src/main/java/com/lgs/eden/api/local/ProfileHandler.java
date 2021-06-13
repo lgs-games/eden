@@ -52,6 +52,34 @@ class ProfileHandler implements ProfileAPI {
         return r;
     }
 
+    private long elapsed = -1;
+
+    @Override
+    public void setPlaying(int currentUserID, int gameID) {
+        if (elapsed == -1) elapsed = System.nanoTime();
+        // set game
+        ProfileData userProfile = getUserProfile(currentUserID);
+        RecentGameData[] recentGames = userProfile.recentGames;
+
+        int time = 0;
+        if (recentGames.length > 0) time = recentGames[0].timePlayed;
+
+        recentGames = new RecentGameData[]{
+                makeEden(time+checkTime(), gameID != -1 ? -1 : 0)
+        };
+
+        // restart
+        if (gameID == -1) elapsed = -1;
+
+        userProfile.recentGames = recentGames;
+    }
+
+    private int checkTime() {
+        long l = System.nanoTime();
+        int r = Math.round((l - elapsed) / 1000000000f);
+        return r;
+    }
+
     @Override
     public ArrayList<FriendData> searchUsers(String filter, int currentUserID) {
         init(currentUserID);
@@ -362,7 +390,7 @@ class ProfileHandler implements ProfileAPI {
                 "Raphiki is a great programmer at ENSIIE engineering school.",
                 getFriendShipStatus(23, currentUserID),
                 ReputationScore.NONE, new RecentGameData[]{
-                        new RecentGameData(Utility.loadImage("/games/prim-icon.png"), "Prim", 0, 1),
+                        makeEden(0, 1),
                         // new RecentGameData(Utility.loadImage("/games/enigma-icon.png"), "Enigma", 1020, 30)
                 },
                 null, true
@@ -420,6 +448,11 @@ class ProfileHandler implements ProfileAPI {
         raphik.friends.add(friendFromProfil(calistral, FriendShipStatus.FRIENDS));
         raphik.friends.add(friendFromProfil(caliki, FriendShipStatus.FRIENDS));
         raphik.friends.add(friendFromProfil(raphistro, FriendShipStatus.FRIENDS));
+    }
+
+    private RecentGameData makeEden(int timePlayed, int lastPlayed) {
+        return new RecentGameData(Utility.loadImage("/games/prim-icon.png"), "Prim",
+                timePlayed, lastPlayed);
     }
 
     private FriendShipStatus getFriendShipStatus(int userID, int currentUserID) {
