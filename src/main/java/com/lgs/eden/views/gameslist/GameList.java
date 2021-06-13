@@ -12,6 +12,7 @@ import com.lgs.eden.utils.Utility;
 import com.lgs.eden.utils.ViewsPath;
 import com.lgs.eden.utils.config.Config;
 import com.lgs.eden.utils.config.InstallUtils;
+import com.lgs.eden.views.achievements.Achievements;
 import com.lgs.eden.views.gameslist.cell.GameListCell;
 import com.lgs.eden.views.gameslist.news.AllNews;
 import com.lgs.eden.views.gameslist.news.News;
@@ -19,6 +20,7 @@ import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -244,6 +246,11 @@ public class GameList {
     @FXML
     public void showGameSettings() {
         this.goToSubMenu(GameSettings.getScreen(this.gameData));
+    }
+
+    @FXML
+    public void seeAllAchievements() {
+        this.goToSubMenu(Achievements.getScreen(this.gameData.id));
     }
 
     // ------------------------------ UPDATE GAME DATA ----------------------------- \\

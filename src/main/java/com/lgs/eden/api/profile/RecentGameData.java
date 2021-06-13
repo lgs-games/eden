@@ -9,7 +9,7 @@ public final class RecentGameData {
 
     public static final int PLAYING = -1;
 
-    /** game name **/
+    /** game icon **/
     public final Image gameIcon;
     /** game name **/
     public final String gameName;

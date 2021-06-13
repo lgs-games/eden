@@ -21,6 +21,7 @@ module eden {
     // for fxml
     opens com.lgs.eden.application;
     opens com.lgs.eden.utils.helper;
+    opens com.lgs.eden.views.achievements;
     opens com.lgs.eden.views.login;
     opens com.lgs.eden.views.settings;
     opens com.lgs.eden.views.register;
