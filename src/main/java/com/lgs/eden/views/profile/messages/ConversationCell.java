@@ -45,8 +45,12 @@ public class ConversationCell implements CellHandler<ConversationData> {
         this.friendStatus.setText(Translate.getTranslation(item.online ? "online" : "offline"));
         this.friendStatus.getStyleClass().set(0, item.online ? "green-text" : "red-text");
         // unread messages
-        if (item.unreadMessagesCount > 0) this.newMessages.setText(""+item.unreadMessagesCount);
-        else this.newMessages.setVisible(false);
+        if (item.unreadMessagesCount > 0) {
+            this.newMessages.setText(""+item.unreadMessagesCount);
+            this.newMessages.setVisible(true);
+        } else {
+            this.newMessages.setVisible(false);
+        }
 
         // background
         int size = this.view.getStyleClass().size();

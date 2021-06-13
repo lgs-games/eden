@@ -117,7 +117,7 @@ public class LocalHandler implements API {
                     profile.sendMessageAsOther(23, 24, "Okay!");
                     profile.sendMessageAsOther(23, 25, "Salut");
                 }
-            }, 0, 5000);
+            }, 0, 10000);
         }
         return login;
     }

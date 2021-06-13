@@ -219,24 +219,17 @@ class ProfileHandler implements ProfileAPI {
             friendID = allConv.get(0).id;
         }
 
-        ArrayList<MessageData> messages = new ArrayList<>();
-        for (MessageData d: getMessages(friendID)) {
-            if (!d.read){
-                messages.add(new MessageData(d, true));
-            } else {
-                messages.add(d);
-            }
-        }
+        getMessages(friendID).forEach(m -> m.read = true);
+
         ConversationData conversationData = conv.get(friendID);
         conversationData.unreadMessagesCount = 0;
-        this.messages.put(friendID, messages);
 
         this.parent.triggerNotificationCallBack(currentUserID);
 
         return new FriendConversationView(
                 friendFromProfil(getUserProfile(friendID)),
                 friendFromProfil(getUserProfile(currentUserID)),
-                FXCollections.observableArrayList(messages),
+                FXCollections.observableArrayList(getMessages(friendID)),
                 allConv
         );
     }
@@ -307,10 +300,14 @@ class ProfileHandler implements ProfileAPI {
         closeConversation(fake, current);
         newConversation(fake, current);
         // trigger
-        this.parent.triggerNotificationCallBack(current);
-        this.parent.triggerMessagesCallBack(r);
         ConversationData conversationData = conv.get(fake);
         this.parent.triggerConversationCallBack(conversationData);
+        // clear if everything got "read"
+        if (conversationData.unreadMessagesCount == 0){
+            getMessages(fake).forEach(m -> m.read = true);
+        }
+        this.parent.triggerNotificationCallBack(current);
+        this.parent.triggerMessagesCallBack(r);
     }
 
     private ArrayList<MessageData> getMessages(int with) {
