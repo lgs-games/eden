@@ -1,6 +1,7 @@
 package com.lgs.eden.api.profile;
 
 import com.lgs.eden.api.APIResponseCode;
+import com.lgs.eden.api.games.AchievementData;
 import com.lgs.eden.api.profile.friends.FriendConversationView;
 import com.lgs.eden.api.profile.friends.FriendData;
 import com.lgs.eden.api.profile.friends.messages.MessageData;
@@ -97,4 +98,9 @@ public interface ProfileAPI {
      * Set this game as played by the user
      */
     void setPlaying(int currentUserID, int gameID);
+
+    /**
+     * Return user achievements for a game
+     */
+    ArrayList<AchievementData> getUserAchievements(int gameID, int currentUserID);
 }

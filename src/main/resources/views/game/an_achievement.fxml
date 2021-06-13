@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane fx:id="achievementPane" maxWidth="400.0" styleClass="app-background" stylesheets="@../../style/style.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lgs.eden.views.achievements.AchievementsCard">
+   <center>
+      <BorderPane styleClass="app-background">
+          <left>
+              <ImageView fx:id="achievementImage" fitHeight="48.0" fitWidth="48.0" BorderPane.alignment="CENTER">
+                  <image>
+                      <Image url="@../../games/prim-achievement-1.png" />
+                  </image>
+                  <BorderPane.margin>
+                      <Insets left="10.0" right="10.0" />
+                  </BorderPane.margin>
+              </ImageView>
+          </left>
+          <center>
+            <BorderPane BorderPane.alignment="CENTER">
+               <BorderPane.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </BorderPane.margin>
+               <top>
+                      <Label fx:id="achievementTitle" styleClass="yellow-text" text="One a of kind" BorderPane.alignment="CENTER">
+                          <font>
+                              <Font size="18.0" />
+                          </font>
+                      </Label>
+               </top>
+               <bottom>
+                      <Label fx:id="achievementDesc" styleClass="white-text" text="You managed to win without buying any staffs. Great job! You managed to win without buying any staffs. Great job!" wrapText="true" BorderPane.alignment="CENTER">
+                          <font>
+                              <Font size="13.0" />
+                          </font>
+                      </Label>
+               </bottom>
+            </BorderPane>
+          </center>
+      </BorderPane>
+   </center>
+   <padding>
+      <Insets bottom="10.0" top="10.0" />
+   </padding>
+</BorderPane>

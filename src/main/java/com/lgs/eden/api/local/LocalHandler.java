@@ -191,6 +191,11 @@ public class LocalHandler implements API {
     }
 
     @Override
+    public ArrayList<AchievementData> getUserAchievements(int gameID, int currentUserID) {
+        return this.profile.getUserAchievements(gameID, currentUserID);
+    }
+
+    @Override
     public ArrayList<FriendData> searchUsers(String filter, int currentUserID) {
         return this.profile.searchUsers(filter, currentUserID);
     }

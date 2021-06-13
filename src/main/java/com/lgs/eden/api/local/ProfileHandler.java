@@ -1,6 +1,7 @@
 package com.lgs.eden.api.local;
 
 import com.lgs.eden.api.APIResponseCode;
+import com.lgs.eden.api.games.AchievementData;
 import com.lgs.eden.api.profile.ProfileAPI;
 import com.lgs.eden.api.profile.ProfileData;
 import com.lgs.eden.api.profile.RecentGameData;
@@ -29,6 +30,19 @@ class ProfileHandler implements ProfileAPI {
 
     public ProfileHandler(LocalHandler parent) {
         this.parent = parent;
+    }
+
+    @Override
+    public ArrayList<AchievementData> getUserAchievements(int gameID, int currentUserID) {
+        ArrayList<AchievementData> d = new ArrayList<>();
+        AchievementData hidden = new AchievementData("/games/hidden-achievement.png", "Hidden achievement", "???", false);
+        AchievementData a = new AchievementData("/games/prim-achievement-1.png", "Hero", "You won 10 times.", true);
+        d.add(a);
+        d.add(hidden);
+        d.add(hidden);
+        d.add(hidden);
+        d.add(hidden);
+        return d;
     }
 
     @Override
