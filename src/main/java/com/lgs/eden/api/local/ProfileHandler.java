@@ -25,6 +25,9 @@ import java.util.HashMap;
  */
 class ProfileHandler implements ProfileAPI {
 
+    private final LocalHandler parent;
+    public ProfileHandler(LocalHandler parent) { this.parent = parent; }
+
     @Override
     public ArrayList<APIResponseCode> lookForNotifications(int currentUserID) {
         init(currentUserID);
@@ -183,11 +186,16 @@ class ProfileHandler implements ProfileAPI {
         // change status
         users.remove(new ProfileData(friendID));
         users.add(new ProfileData(friend, FriendShipStatus.FRIENDS));
+
+        // trigger
+        parent.triggerNotificationCallBack(currentUserID);
     }
 
     @Override
     public void refuseFriend(int friendID, int currentUserID) {
         removeFriend(friendID, currentUserID);
+        // trigger
+        parent.triggerNotificationCallBack(currentUserID);
     }
 
     // ------------------------------ MESSAGES ----------------------------- \\

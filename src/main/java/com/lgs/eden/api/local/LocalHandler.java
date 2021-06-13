@@ -3,6 +3,7 @@ package com.lgs.eden.api.local;
 import com.lgs.eden.api.API;
 import com.lgs.eden.api.APIResponseCode;
 import com.lgs.eden.api.auth.LoginResponseData;
+import com.lgs.eden.api.callback.NotificationsCallBack;
 import com.lgs.eden.api.games.*;
 import com.lgs.eden.api.news.BasicNewsData;
 import com.lgs.eden.api.profile.friends.FriendConversationView;
@@ -43,8 +44,23 @@ public class LocalHandler implements API {
     public LocalHandler() {
         this.login = new AuthHandler();
         this.games = new GamesHandler();
-        this.profile = new ProfileHandler();
+        this.profile = new ProfileHandler(this);
         this.news = new NewsHandler();
+    }
+
+    // ------------------------------ CALLBACKS ----------------------------- \\
+
+    private NotificationsCallBack callBack;
+
+    @Override
+    public void setNotificationsCallBack(NotificationsCallBack callBack, int currentUserID) {
+        this.callBack = callBack;
+        triggerNotificationCallBack(currentUserID);
+    }
+
+    void triggerNotificationCallBack(int currentUserID){
+        ArrayList<APIResponseCode> apiResponseCodes = this.lookForNotifications(currentUserID);
+        if (callBack != null) callBack.onCall(apiResponseCodes);
     }
 
     // ------------------------------ LOGIN ----------------------------- \\
