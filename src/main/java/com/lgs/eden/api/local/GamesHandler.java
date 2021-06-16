@@ -47,23 +47,14 @@ class GamesHandler implements GameAPI {
         languages.add("English");
         languages.add("Français");
 
-        GameUpdateData updatePrim = new GameUpdateData(
-                "3.1.0",
-                "https://lgs-games.com/assets/exe/prim-setup-3.1.0.exe",
-                "prim.exe",
-                "unins000.exe",
-                88
-        );
-
         MarketplaceGameData prim = new MarketplaceGameData(
-                0, "Prim",
+                0, "Prim", "3.1.0", "88",
                 "Prim is a production line game request by Dimitri Watel, teacher at ENSIIE engineering school." +
                         " The main idea is that you will produce resources in order to close a gate. The folklore of " +
                         "the game is the ENSIIE so you will have a lot of ENSIIE-related content. Have fun !",
                 "/games/prim-icon.png", "/games/prim-pic.png",
                 tags,
                 languages,
-                updatePrim,
                 this.games.contains(new BasicGameData(0, "Prim", null))
         );
 

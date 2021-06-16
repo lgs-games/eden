@@ -13,21 +13,24 @@ public class MarketplaceGameData extends BasicGameData {
     public static int gameCount;
 
     public final String desc;
+    public final String version;
+    public final String size;
     public final Image image;
     public final ArrayList<String> tags;
     public final ArrayList<String> languages;
-    public final GameUpdateData updateData;
 
     public final boolean inLibrary;
 
-    public MarketplaceGameData(int id, String name, String desc, String icon, String image, ArrayList<String> tags,
-                               ArrayList<String> languages, GameUpdateData updateData, boolean inLibrary) {
+    public MarketplaceGameData(int id, String name, String version, String size,
+                               String desc, String icon, String image, ArrayList<String> tags,
+                               ArrayList<String> languages, boolean inLibrary) {
         super(id, name, icon);
         this.desc = desc;
         this.image = Utility.loadImage(image);
         this.tags = tags;
         this.languages = languages;
-        this.updateData = updateData;
+        this.version = version;
+        this.size = size;
         this.inLibrary = inLibrary;
     }
 }

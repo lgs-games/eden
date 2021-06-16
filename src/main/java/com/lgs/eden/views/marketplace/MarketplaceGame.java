@@ -59,8 +59,8 @@ public class MarketplaceGame {
         this.gameDesc.setText(data.desc);
         this.gameImage.setImage(data.image);
         this.gameIcon.setImage(data.icon);
-        this.gameVersion.setText(data.updateData.version);
-        this.gameSize.setText(data.updateData.size + "");
+        this.gameVersion.setText(data.version);
+        this.gameSize.setText(data.size + "");
 
         this.tags.getChildren().clear();
         data.tags.forEach(s -> {
