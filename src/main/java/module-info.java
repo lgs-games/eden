@@ -9,6 +9,9 @@ module eden {
     requires javafx.graphics;
     requires javafx.base;
     requires javafx.web;
+    requires socket.io.client;
+    requires org.junit.jupiter.engine;
+    requires org.junit.jupiter.api;
 
     requires java.desktop;
     requires jdk.crypto.cryptoki;
