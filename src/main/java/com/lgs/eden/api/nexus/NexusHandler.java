@@ -1,6 +1,8 @@
 package com.lgs.eden.api.nexus;
 
+import com.lgs.eden.api.APIException;
 import com.lgs.eden.api.APIHandler;
+import com.lgs.eden.api.APIResponseCode;
 import com.lgs.eden.api.callback.ConversationsCallback;
 import com.lgs.eden.api.callback.MessagesCallBack;
 import com.lgs.eden.api.callback.NotificationsCallBack;
@@ -56,5 +58,14 @@ public class NexusHandler extends APIHandler {
     @Override
     public void setMessagesCallBack(MessagesCallBack callBack, ConversationsCallback c, FriendConversationView conv) {
 
+    }
+
+    // ------------------------------ HELP ----------------------------- \\
+
+    /**
+     * Raise Exception is SERVER_UNREACHABLE
+     */
+    public static void checkNetwork(ImpSocket imp) throws APIException {
+        if (!imp.socket.connected()){ throw new APIException(APIResponseCode.SERVER_UNREACHABLE); }
     }
 }

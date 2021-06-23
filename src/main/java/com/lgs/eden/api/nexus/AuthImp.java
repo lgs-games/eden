@@ -23,8 +23,10 @@ class AuthImp extends ImpSocket implements AuthAPI {
 
     @Override
     public LoginResponseData login(String username, String pwd) throws APIException {
-        MonitorIO<LoginResponseData> monitor = MonitorIO.createMonitor(this);
+        // no connection
+        NexusHandler.checkNetwork(this);
 
+        MonitorIO<LoginResponseData> monitor = MonitorIO.createMonitor(this);
         // ask for login
         socket.emit("login", username, pwd, (Ack) args -> {
             if (monitor.isEmpty()) {
@@ -68,6 +70,9 @@ class AuthImp extends ImpSocket implements AuthAPI {
 
     @Override
     public void logout(int currentUserID) throws APIException {
+        // no connection
+        NexusHandler.checkNetwork(this);
+        // logout
         MonitorIO<Object> monitor = MonitorIO.createMonitor(this);
         socket.emit("logout", (Ack) args -> monitor.set(new Object()));
         monitor.response();
@@ -75,7 +80,27 @@ class AuthImp extends ImpSocket implements AuthAPI {
 
     @Override
     public APIResponseCode register(String username, String pwd, String email) throws APIException {
-        return null;
+        // no connection
+        NexusHandler.checkNetwork(this);
+
+        // register
+        MonitorIO<APIResponseCode> monitor = MonitorIO.createMonitor(this);
+        socket.emit("register", username, pwd, email, (Ack) args -> {
+            APIResponseCode rep = null;
+            if (args.length > 0 && args[0] instanceof JSONObject) {
+                   try {
+                       JSONObject o = (JSONObject) args[0];
+                       int code = o.getInt("code");
+                       rep = APIResponseCode.fromCode(code);
+                   } catch (JSONException e) {
+                       rep = APIResponseCode.REGISTER_FAILED;
+                   }
+            }
+            monitor.set(rep);
+        });
+
+        // ask for response, can raise Exception
+        return monitor.response();
     }
 
 }
