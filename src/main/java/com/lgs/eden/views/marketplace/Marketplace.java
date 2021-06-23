@@ -1,8 +1,10 @@
 package com.lgs.eden.views.marketplace;
 
 import com.lgs.eden.api.API;
+import com.lgs.eden.api.APIException;
 import com.lgs.eden.api.games.MarketplaceGameData;
 import com.lgs.eden.application.AppWindowHandler;
+import com.lgs.eden.application.PopupUtils;
 import com.lgs.eden.utils.Utility;
 import com.lgs.eden.utils.ViewsPath;
 import com.lgs.eden.utils.config.Config;
@@ -42,8 +44,16 @@ public class Marketplace {
     private void init() {
         this.pagination.setPageFactory(pageIndex -> {
             // get game for our page
-            ArrayList<MarketplaceGameData> games = API.imp.getMarketPlaceGames(pageIndex, COUNT_PER_PAGE,
-                    Config.getCode(), AppWindowHandler.currentUserID());
+            ArrayList<MarketplaceGameData> games;
+            try {
+                games = API.imp.getMarketPlaceGames(pageIndex, COUNT_PER_PAGE,
+                        Config.getCode(), AppWindowHandler.currentUserID());
+            } catch (APIException e) {
+                // handle error
+                PopupUtils.showPopup(e);
+                games = new ArrayList<>();
+                MarketplaceGameData.gameCount = 0;
+            }
             // set max page
             this.pagination.setPageCount((int) Math.ceil((double) MarketplaceGameData.gameCount / COUNT_PER_PAGE));
             // clear old view

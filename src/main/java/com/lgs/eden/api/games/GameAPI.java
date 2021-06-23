@@ -26,7 +26,7 @@ public interface GameAPI {
      * one indicating when the result was last modified. The API should return something like
      * null if no changes or the usual result that we will need to cache.
      */
-    ArrayList<MarketplaceGameData> getMarketPlaceGames(int begin, int count, String code, int userID);
+    ArrayList<MarketplaceGameData> getMarketPlaceGames(int begin, int count, String code, int userID) throws APIException;
 
     /**
      * Returns information such as the name of the game, the version, ...

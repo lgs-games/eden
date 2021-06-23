@@ -9,8 +9,11 @@ import com.lgs.eden.api.callback.NotificationsCallBack;
 import com.lgs.eden.api.profile.friends.FriendConversationView;
 import io.socket.client.IO;
 import io.socket.client.Socket;
+import org.json.JSONArray;
+import org.json.JSONException;
 
 import java.net.URI;
+import java.util.ArrayList;
 
 /**
  * Handler for Nexus API
@@ -61,6 +64,15 @@ public class NexusHandler extends APIHandler {
     }
 
     // ------------------------------ HELP ----------------------------- \\
+
+    public static ArrayList<String> toArrayList(JSONArray array) throws JSONException {
+        ArrayList<String> r = new ArrayList<>();
+        int length = array.length();
+        for (int i = 0; i < length; i++) {
+            r.add((String) array.get(i));
+        }
+        return r;
+    }
 
     /**
      * Raise Exception is SERVER_UNREACHABLE
