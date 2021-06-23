@@ -156,10 +156,12 @@ public class AppWindowHandler {
     public void logout() {
         try {
             API.imp.logout(AppWindowHandler.currentUserID());
-            ApplicationCloseHandler.setLogged(false);
-            Platform.runLater(AppWindowHandler::goBackToMainApp);
         } catch (APIException e) {
             PopupUtils.showPopup(e);
+        } finally {
+            // still logout
+            ApplicationCloseHandler.setLogged(false);
+            Platform.runLater(AppWindowHandler::goBackToMainApp);
         }
     }
 
