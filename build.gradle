@@ -81,7 +81,7 @@ jlink {
 task makeJar(type: Jar) {
     manifest {
         attributes(
-                'Main-Class': application.mainClassName
+                'Main-Class': 'com.lgs.eden.Main'
         )
     }
     from {

@@ -9,6 +9,7 @@ import com.lgs.eden.api.APIResponseCode;
 public interface AuthAPI {
 
     /**
+     * Process login
      * @see APIResponseCode#LOGIN_OK
      * @see APIResponseCode#LOGIN_BANNED
      * @see APIResponseCode#LOGIN_INVALID
@@ -17,11 +18,12 @@ public interface AuthAPI {
     LoginResponseData login(String username, String pwd) throws APIException;
 
     /**
-     *
+     * Process logout
      */
     void logout(int currentUserID);
 
     /**
+     * Process register
      * @see APIResponseCode#REGISTER_OK
      * @see APIResponseCode#REGISTER_FAILED
      * @see APIResponseCode#REGISTER_FAILED_LOGIN
