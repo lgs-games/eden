@@ -5,6 +5,7 @@ import com.lgs.eden.api.callback.CallBackAPI;
 import com.lgs.eden.api.games.GameAPI;
 import com.lgs.eden.api.local.LocalHandler;
 import com.lgs.eden.api.news.NewsAPI;
+import com.lgs.eden.api.nexus.NexusHandler;
 import com.lgs.eden.api.profile.ProfileAPI;
 
 /**
@@ -17,7 +18,7 @@ public interface API extends AuthAPI, GameAPI, ProfileAPI, NewsAPI, CallBackAPI 
     // and because we may want some sort of factory pattern.
     //
     // Using that, we can have a local API for tests and our server API.
-    API imp = LocalHandler.getInstance();
+    API imp = NexusHandler.getInstance();
 
     // ------------------------------ CONSTANTS ----------------------------- \\
 

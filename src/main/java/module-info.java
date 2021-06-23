@@ -17,6 +17,7 @@ module eden {
     requires jdk.crypto.cryptoki;
     requires org.commonmark;
     requires org.commonmark.ext.gfm.tables;
+    requires engine.io.client;
 
     // our main module
     exports com.lgs.eden;

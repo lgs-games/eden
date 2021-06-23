@@ -26,11 +26,8 @@ import java.util.HashMap;
  */
 class ProfileHandler implements ProfileAPI {
 
-    private final LocalHandler parent;
-
-    public ProfileHandler(LocalHandler parent) {
-        this.parent = parent;
-    }
+    private LocalHandler parent;
+    public void setParent(LocalHandler parent) { this.parent = parent; }
 
     @Override
     public ArrayList<AchievementData> getUserAchievements(int gameID, int currentUserID) {
