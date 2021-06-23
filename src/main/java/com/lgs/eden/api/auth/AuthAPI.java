@@ -34,9 +34,15 @@ public interface AuthAPI {
 
     /**
      * Returns the link to the password forget page
+     *
+     * Implemented by the APIHandler so that's not required
+     * by the API since the handler may never call it.
+     *
      * @param languageCode "en" or "fr", ... We will try to return
      *                     a page in this language.
      */
-    String getPasswordForgotLink(String languageCode);
+    default String getPasswordForgotLink(String languageCode) {
+        throw new UnsupportedOperationException("not implemented");
+    }
 
 }

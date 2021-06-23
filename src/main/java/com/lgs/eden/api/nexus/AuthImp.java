@@ -66,8 +66,4 @@ class AuthImp extends ImpSocket implements AuthAPI {
         return null;
     }
 
-    @Override
-    public String getPasswordForgotLink(String languageCode) {
-        return null;
-    }
 }

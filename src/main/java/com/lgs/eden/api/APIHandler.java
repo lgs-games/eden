@@ -54,7 +54,9 @@ public abstract class APIHandler implements API {
 
     @Override
     public String getPasswordForgotLink(String languageCode) {
-        return this.login.getPasswordForgotLink(languageCode);
+        // website only supports en or fr
+        languageCode = APIHelper.formatCode(languageCode);
+        return API.WEBSITE_URL + languageCode + "/password_forgot";
     }
 
     // ------------------------------ GAMES ----------------------------- \\

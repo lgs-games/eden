@@ -1,7 +1,5 @@
 package com.lgs.eden.api.local;
 
-import com.lgs.eden.api.API;
-import com.lgs.eden.api.APIHelper;
 import com.lgs.eden.api.APIResponseCode;
 import com.lgs.eden.api.auth.AuthAPI;
 import com.lgs.eden.api.auth.LoginResponseData;
@@ -56,13 +54,6 @@ class AuthHandler implements AuthAPI {
         }
 
         return APIResponseCode.REGISTER_FAILED;
-    }
-
-    @Override
-    public String getPasswordForgotLink(String languageCode) {
-        // website only supports en or fr
-        languageCode = APIHelper.formatCode(languageCode);
-        return API.WEBSITE_URL + languageCode + "/password_forgot";
     }
 
 }
