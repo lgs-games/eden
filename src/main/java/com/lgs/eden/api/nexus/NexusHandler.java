@@ -1,6 +1,5 @@
 package com.lgs.eden.api.nexus;
 
-import com.lgs.eden.api.API;
 import com.lgs.eden.api.APIHandler;
 import com.lgs.eden.api.callback.ConversationsCallback;
 import com.lgs.eden.api.callback.MessagesCallBack;
@@ -8,7 +7,6 @@ import com.lgs.eden.api.callback.NotificationsCallBack;
 import com.lgs.eden.api.profile.friends.FriendConversationView;
 import io.socket.client.IO;
 import io.socket.client.Socket;
-import io.socket.thread.EventThread;
 
 import java.net.URI;
 

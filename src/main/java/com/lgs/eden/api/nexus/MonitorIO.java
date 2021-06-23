@@ -3,6 +3,7 @@ package com.lgs.eden.api.nexus;
 import com.lgs.eden.api.APIException;
 import com.lgs.eden.api.APIResponseCode;
 import io.socket.client.Socket;
+import io.socket.emitter.Emitter;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicReference;
@@ -58,15 +59,18 @@ public class MonitorIO<T> {
         CountDownLatch latch = new CountDownLatch(1);
         AtomicReference<T> ref = new AtomicReference<>();
 
-        s.socket.once(Socket.EVENT_CONNECT_ERROR, args -> {
+        Emitter.Listener listener = args -> {
             ref.set(null);
             latch.countDown();
-        });
-        s.socket.once(Socket.EVENT_DISCONNECT, args -> {
-            ref.set(null);
-            latch.countDown();
-        });
+        };
+
+        s.socket.once(Socket.EVENT_CONNECT_ERROR, listener);
+        s.socket.once(Socket.EVENT_DISCONNECT, listener);
 
         return new MonitorIO<>(latch, ref);
+    }
+
+    public boolean isEmpty() {
+        return latch.getCount() <= 0;
     }
 }

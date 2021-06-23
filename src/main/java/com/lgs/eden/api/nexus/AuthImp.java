@@ -15,15 +15,29 @@ import org.json.JSONObject;
 class AuthImp extends ImpSocket implements AuthAPI {
 
     // constructor
-    public AuthImp(Socket socket) { super(socket); }
+    public AuthImp(Socket socket) {
+        super(socket);
+    }
 
     // ------------------------------ METHODS ----------------------------- \\
 
     @Override
-    public synchronized LoginResponseData login(String username, String pwd) throws APIException {
+    public LoginResponseData login(String username, String pwd) throws APIException {
         MonitorIO<LoginResponseData> monitor = MonitorIO.createMonitor(this);
 
+        // ask for login
         socket.emit("login", username, pwd, (Ack) args -> {
+            if (monitor.isEmpty()) {
+                new Thread(() -> {
+                    try {
+                        logout(-1);
+                    } catch (APIException e) {
+                        e.printStackTrace();
+                    }
+                }).start();
+                return;
+            }
+
             if (args.length > 0 && args[0] instanceof JSONObject){
                 try {
                     JSONObject o = (JSONObject) args[0];
@@ -46,12 +60,10 @@ class AuthImp extends ImpSocket implements AuthAPI {
                 } catch (JSONException e) {
                     monitor.set(null);
                 }
-
             }
         });
 
         return monitor.response();
-
     }
 
     @Override

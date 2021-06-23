@@ -3,6 +3,7 @@ package com.lgs.eden.api.nexus;
 import com.lgs.eden.api.APIException;
 import com.lgs.eden.api.games.*;
 import io.socket.client.Socket;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.util.ArrayList;
@@ -23,17 +24,17 @@ public class GameImp extends ImpSocket implements GameAPI {
     }
 
     @Override
-    public ArrayList<MarketplaceGameData> getMarketPlaceGames(int begin, int count, String code, int userID) {
-        return null;
-    }
-
-    @Override
     public GameViewData getGameData(int userID, int gameID) {
         return null;
     }
 
     @Override
     public ObservableList<BasicGameData> getUserGames(int userID) {
+        return FXCollections.observableArrayList();
+    }
+
+    @Override
+    public ArrayList<MarketplaceGameData> getMarketPlaceGames(int begin, int count, String code, int userID) {
         return null;
     }
 
