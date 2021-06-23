@@ -6,16 +6,13 @@ import com.lgs.eden.api.auth.AuthAPI;
 import com.lgs.eden.api.auth.LoginResponseData;
 import io.socket.client.Ack;
 import io.socket.client.Socket;
-import io.socket.emitter.Emitter;
-
-import java.util.Arrays;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.atomic.AtomicReference;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * Nexus imp of Auth
  */
-public class AuthImp extends ImpSocket implements AuthAPI {
+class AuthImp extends ImpSocket implements AuthAPI {
 
     // constructor
     public AuthImp(Socket socket) { super(socket); }
@@ -24,39 +21,44 @@ public class AuthImp extends ImpSocket implements AuthAPI {
 
     @Override
     public synchronized LoginResponseData login(String username, String pwd) throws APIException {
-        CountDownLatch latch = new CountDownLatch(1);
-        AtomicReference<LoginResponseData> ref = new AtomicReference<>();
-
-        socket.once(Socket.EVENT_CONNECT_ERROR, new Emitter.Listener() {
-            @Override
-            public void call(Object... args) {
-
-            }
-        });
-
-        socket.once(Socket.EVENT_DISCONNECT, new Emitter.Listener() {
-            @Override
-            public void call(Object... args) {
-
-            }
-        });
+        MonitorIO<LoginResponseData> monitor = MonitorIO.createMonitor(this);
 
         socket.emit("login", username, pwd, (Ack) args -> {
-            System.out.println(Arrays.toString(args));
-//            Object json = args[0];
-//            ref.set(new LoginResponseData(
-//                    10, 23, username, "/avatars/23.png"
-//            ));
-//            latch.countDown();
+            if (args.length > 0 && args[0] instanceof JSONObject){
+                try {
+                    JSONObject o = (JSONObject) args[0];
+                    LoginResponseData rep; // store the response
+                    // get the code
+                    int code = o.getInt("code");
+                    // since ok, get the new rest of the response
+                    if (code == APIResponseCode.LOGIN_OK.code){
+                        rep = new LoginResponseData(
+                                code,
+                                o.getInt("user_id"),
+                                o.getString("username"),
+                                o.getString("avatar")
+                        );
+                    } else {
+                        rep = new LoginResponseData(code);
+                    }
+                    // resume execution
+                    monitor.set(rep);
+                } catch (JSONException e) {
+                    monitor.set(null);
+                }
+
+            }
         });
 
-        return NexusUtils.response(latch, ref);
+        return monitor.response();
 
     }
 
     @Override
-    public void logout(int currentUserID) {
-
+    public void logout(int currentUserID) throws APIException {
+        MonitorIO<Object> monitor = MonitorIO.createMonitor(this);
+        socket.emit("logout", (Ack) args -> monitor.set(new Object()));
+        monitor.response();
     }
 
     @Override

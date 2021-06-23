@@ -20,9 +20,9 @@ public class LocalHandler extends APIHandler {
 
     // ------------------------------ SINGLETON ----------------------------- \\
 
-    private static API instance;
+    private static APIHandler instance;
 
-    public static API getInstance() {
+    public static APIHandler getInstance() {
         if (instance == null) {
             instance = new LocalHandler();
         }
@@ -104,7 +104,7 @@ public class LocalHandler extends APIHandler {
     }
 
     @Override
-    public void logout(int currentUserID) {
+    public void logout(int currentUserID)  throws APIException {
         this.checker.cancel();
         this.login.logout(currentUserID);
     }

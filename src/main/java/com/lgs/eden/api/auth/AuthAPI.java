@@ -20,7 +20,7 @@ public interface AuthAPI {
     /**
      * Process logout
      */
-    void logout(int currentUserID);
+    void logout(int currentUserID) throws APIException;
 
     /**
      * Process register

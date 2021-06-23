@@ -1,6 +1,7 @@
 package com.lgs.eden.application;
 
 import com.lgs.eden.api.API;
+import com.lgs.eden.api.APIException;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.scene.web.WebEngine;
@@ -74,7 +75,16 @@ public class ApplicationCloseHandler implements EventHandler<WindowEvent> {
         closeDownloadThread();
         closeNotificationsThread();
 
-        if (logged) API.imp.logout(AppWindowHandler.currentUserID());
+        if (logged) {
+            try {
+                API.imp.logout(AppWindowHandler.currentUserID());
+            } catch (APIException e) {
+                System.out.println("Logout failed");
+            }
+        }
+
+        // close handler
+        API.imp.close();
 
         // radical ends
         Platform.exit();

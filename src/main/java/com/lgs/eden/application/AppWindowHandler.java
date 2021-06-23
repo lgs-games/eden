@@ -1,6 +1,7 @@
 package com.lgs.eden.application;
 
 import com.lgs.eden.api.API;
+import com.lgs.eden.api.APIException;
 import com.lgs.eden.api.APIResponseCode;
 import com.lgs.eden.api.auth.LoginResponseData;
 import com.lgs.eden.api.callback.NotificationsCallBack;
@@ -153,9 +154,13 @@ public class AppWindowHandler {
 
     @FXML
     public void logout() {
-        API.imp.logout(AppWindowHandler.currentUserID());
-        ApplicationCloseHandler.setLogged(false);
-        Platform.runLater(AppWindowHandler::goBackToMainApp);
+        try {
+            API.imp.logout(AppWindowHandler.currentUserID());
+            ApplicationCloseHandler.setLogged(false);
+            Platform.runLater(AppWindowHandler::goBackToMainApp);
+        } catch (APIException e) {
+            PopupUtils.showPopup(e);
+        }
     }
 
     @FXML

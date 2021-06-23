@@ -34,6 +34,9 @@ public abstract class APIHandler implements API {
         this.news = news;
     }
 
+    public void init(){}
+    public void close(){}
+
     // ------------------------------ LOGIN ----------------------------- \\
 
     @Override
@@ -42,7 +45,7 @@ public abstract class APIHandler implements API {
     }
 
     @Override
-    public void logout(int currentUserID) { this.login.logout(currentUserID); }
+    public void logout(int currentUserID) throws APIException { this.login.logout(currentUserID); }
 
     @Override
     public APIResponseCode register(String username, String pwd, String email) throws APIException {

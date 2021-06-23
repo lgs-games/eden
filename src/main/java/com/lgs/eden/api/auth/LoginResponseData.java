@@ -32,4 +32,14 @@ public class LoginResponseData {
         this.username = "";
         this.avatar = null;
     }
+
+    @Override
+    public String toString() {
+        return "LoginResponseData{" +
+                "code=" + code +
+                ", userID=" + userID +
+                ", username='" + username + '\'' +
+                ", avatar=" + avatar +
+                '}';
+    }
 }

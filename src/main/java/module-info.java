@@ -18,6 +18,7 @@ module eden {
     requires org.commonmark;
     requires org.commonmark.ext.gfm.tables;
     requires engine.io.client;
+    requires json;
 
     // our main module
     exports com.lgs.eden;

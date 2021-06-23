@@ -8,6 +8,7 @@ import com.lgs.eden.api.callback.NotificationsCallBack;
 import com.lgs.eden.api.profile.friends.FriendConversationView;
 import io.socket.client.IO;
 import io.socket.client.Socket;
+import io.socket.thread.EventThread;
 
 import java.net.URI;
 
@@ -16,10 +17,10 @@ import java.net.URI;
  */
 public class NexusHandler extends APIHandler {
 
-    private static API instance;
+    private static APIHandler instance;
     private final Socket socket;
 
-    public static API getInstance() {
+    public static APIHandler getInstance() {
         if (instance == null) {
             URI uri = URI.create("http://localhost:3000");
             IO.Options options = IO.Options.builder()
@@ -37,6 +38,14 @@ public class NexusHandler extends APIHandler {
     private NexusHandler(Socket socket) {
         super(new AuthImp(socket), new GameImp(socket), new ProfileImp(socket), new NewsImp(socket));
         this.socket = socket;
+    }
+
+    @Override
+    public void close() {
+        super.close();
+
+        socket.close();
+        socket.disconnect();
     }
 
     // ------------------------------ CALLBACKS ----------------------------- \\

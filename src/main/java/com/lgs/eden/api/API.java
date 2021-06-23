@@ -18,7 +18,8 @@ public interface API extends AuthAPI, GameAPI, ProfileAPI, NewsAPI, CallBackAPI 
     // and because we may want some sort of factory pattern.
     //
     // Using that, we can have a local API for tests and our server API.
-    API imp = NexusHandler.getInstance();
+    boolean USE_LOCAL = false;
+    APIHandler imp = USE_LOCAL ? LocalHandler.getInstance() : NexusHandler.getInstance();
 
     // ------------------------------ CONSTANTS ----------------------------- \\
 
