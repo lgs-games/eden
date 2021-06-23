@@ -1,32 +1,29 @@
-import io.socket.client.Ack;
-import io.socket.client.IO;
-import io.socket.client.Socket;
+import com.lgs.eden.api.API;
+import com.lgs.eden.api.APIException;
+import com.lgs.eden.api.auth.LoginResponseData;
 
-import java.net.URI;
-import java.util.Arrays;
-
+/**
+ * Test IO methods
+ */
 public class TestIO {
-
-    // https://socketio.github.io/socket.io-client-java/installation.html
     public static void main(String[] args) {
-        URI uri = URI.create("http://localhost:3000");
-        IO.Options options = IO.Options.builder()
-                .setForceNew(false)
-                .build();
+        try {
+            LoginResponseData login = API.imp.login("john", "doe");
+            System.out.println(login);
 
-        Socket socket = IO.socket(uri, options);
-        socket.on("connect", (e) -> {
-            System.out.println("socket "+socket.id()+" "+Arrays.toString(e));
+            try {
+                API.imp.logout(login.userID);
+            } catch (APIException e) {
+                System.out.println("logout failed");
+                e.printStackTrace();
+            }
 
-            socket.emit("whoami", new Ack() {
-                @Override
-                public void call(Object... args) {
-                    System.out.println(Arrays.toString(args));
-                }
-            });
-        });
-
-        socket.connect();
+            API.imp.close();
+            System.exit(0);
+        } catch (APIException e) {
+            System.out.println("login failed");
+            e.printStackTrace();
+        }
     }
 
 }
