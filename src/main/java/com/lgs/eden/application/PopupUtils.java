@@ -12,6 +12,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import java.util.Arrays;
+
 /**
  * Utilities to create popups
  */
@@ -51,7 +53,13 @@ public class PopupUtils {
     }
 
     public static void showPopup(APIException e, boolean close) {
-        showPopup(Translate.getTranslation(e.code) + "\n" + e.getMessage(), close);
+        StackTraceElement[] stackTrace = e.getStackTrace();
+        StringBuilder b = new StringBuilder("\nStacktrace:\n");
+        for (int i = 0; i < stackTrace.length && i < 5; i++) {
+            b.append(stackTrace[i]).append('\n');
+        }
+
+        showPopup(Translate.getTranslation(e.code) + "\n" + e.getMessage() +"\n"+ b, close);
     }
 
     // ------------------------------ CORE ----------------------------- \\

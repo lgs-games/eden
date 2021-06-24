@@ -46,11 +46,11 @@ public class GameImp extends ImpSocket implements GameAPI {
                             o.getString("icon"),
                             o.getString("version"),
                             parent.getNews(o.getString("last_news_id")),
-                            o.getString("player_achievements"),
+                            o.getString("background"),
+                            o.getInt("player_achievements"),
                             o.getInt("number_of_achievements"),
                             o.getInt("friends_playing"),
                             o.getInt("time_played"),
-                            o.getInt("version"),
                             new GameUpdateData(
                                     o.getString("latest"),
                                     o.getString("new_version_url"),
