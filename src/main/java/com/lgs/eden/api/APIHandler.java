@@ -104,8 +104,8 @@ public abstract class APIHandler implements API {
     }
 
     @Override
-    public BasicNewsData getNews(String id) {
-        return this.news.getNews(id);
+    public BasicNewsData getNews(String newsID) throws APIException {
+        return this.news.getNews(newsID);
     }
 
     // ------------------------------ PROFILE ----------------------------- \\

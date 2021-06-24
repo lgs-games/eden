@@ -10,6 +10,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 
 /**
@@ -45,7 +46,7 @@ public class GameImp extends ImpSocket implements GameAPI {
                             o.getString("name"),
                             o.getString("icon"),
                             o.getString("version"),
-                            parent.getNews(o.getString("last_news_id")),
+                            ((NexusHandler)parent).parseNews(o.getJSONObject("last_news_id")),
                             o.getString("background"),
                             o.getInt("player_achievements"),
                             o.getInt("number_of_achievements"),
@@ -60,7 +61,7 @@ public class GameImp extends ImpSocket implements GameAPI {
                             )
 
                     );
-                } catch (JSONException e) {
+                } catch (JSONException | ParseException e) {
                     rep = null;
                 }
             }

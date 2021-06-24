@@ -71,8 +71,7 @@ class GamesHandler implements GameAPI {
                     "We patched a lot of things and tried to improve" +
                             "the game to make it less easy and more fun to play.",
                     "https://lgs-games.com/api/news/test.md",
-                    Date.from(Instant.now()),
-                    0
+                    Date.from(Instant.now())
             );
             return new GameViewData(
                     "0", "Prim", "/games/prim-icon.png", "3.1.1", prim,
@@ -92,8 +91,7 @@ class GamesHandler implements GameAPI {
                     "/news/news2.png",
                     "Enigma will come back, full remade! New UI, new functionalities, multiplayer...",
                     "https://lgs-games.com/api/news/test.md",
-                    Date.from(Instant.now()),
-                    1
+                    Date.from(Instant.now())
             );
             return new GameViewData(
                     "1", "Enigma", "/games/enigma-icon.png", "2.0.0", enigma,

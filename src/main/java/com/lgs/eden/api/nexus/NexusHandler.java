@@ -6,13 +6,16 @@ import com.lgs.eden.api.APIResponseCode;
 import com.lgs.eden.api.callback.ConversationsCallback;
 import com.lgs.eden.api.callback.MessagesCallBack;
 import com.lgs.eden.api.callback.NotificationsCallBack;
+import com.lgs.eden.api.news.BasicNewsData;
 import com.lgs.eden.api.profile.friends.FriendConversationView;
 import io.socket.client.IO;
 import io.socket.client.Socket;
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.net.URI;
+import java.text.ParseException;
 import java.util.ArrayList;
 
 /**
@@ -52,6 +55,12 @@ public class NexusHandler extends APIHandler {
 
         socket.close();
         socket.disconnect();
+    }
+
+    // ------------------------------ UTILS ----------------------------- \\
+
+    BasicNewsData parseNews(JSONObject news) throws JSONException, ParseException {
+        return ((NewsImp)this.news).parseNews(news);
     }
 
     // ------------------------------ CALLBACKS ----------------------------- \\

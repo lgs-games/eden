@@ -1,10 +1,18 @@
 package com.lgs.eden.api.nexus;
 
+import com.lgs.eden.api.APIException;
+import com.lgs.eden.api.games.GameUpdateData;
+import com.lgs.eden.api.games.GameViewData;
 import com.lgs.eden.api.news.BasicNewsData;
 import com.lgs.eden.api.news.NewsAPI;
 import com.lgs.eden.utils.config.Language;
+import io.socket.client.Ack;
 import io.socket.client.Socket;
+import org.json.JSONException;
+import org.json.JSONObject;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
@@ -22,21 +30,44 @@ public class NewsImp extends ImpSocket implements NewsAPI {
 
 
     @Override
-    public BasicNewsData getNews(String id) {
-        BasicNewsData prim = new BasicNewsData(
-                "Version 3.1.0 released",
-                "/news/news1.png",
-                "We patched a lot of things and tried to improve" +
-                        "the game to make it less easy and more fun to play.",
-                "https://lgs-games.com/api/news/test.md",
-                Date.from(Instant.now()),
-                0
-        );
-        return prim;
+    public BasicNewsData getNews(String newsID) throws APIException {
+        // no connection
+        NexusHandler.checkNetwork(this);
+
+        // register
+        MonitorIO<BasicNewsData> monitor = MonitorIO.createMonitor(this);
+        socket.emit("news", newsID, (Ack) args -> {
+            BasicNewsData rep = null;
+
+            if (args.length > 0 && args[0] instanceof JSONObject) {
+                try {
+                    JSONObject o = (JSONObject) args[0];
+                    rep = parseNews(o);
+                } catch (JSONException | ParseException e) {
+                    e.printStackTrace();
+                    rep = null;
+                }
+            }
+
+            monitor.set(rep);
+        });
+
+        // ask for response, can raise Exception
+        return monitor.response();
     }
 
     @Override
     public ArrayList<BasicNewsData> getAllNews(int begin, int count, String code, String gameID, Language l) {
         return null;
+    }
+
+    public BasicNewsData parseNews(JSONObject o) throws JSONException, ParseException {
+        return new BasicNewsData(
+                o.getString("title"),
+                o.getString("image"),
+                o.getString("catch-phrase"),
+                o.getString("link"),
+                new SimpleDateFormat("yyyy-MM-dd").parse(o.getString("date"))
+        );
     }
 }

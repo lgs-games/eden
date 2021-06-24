@@ -27,8 +27,7 @@ public class NewsHandler implements NewsAPI {
                 "We patched a lot of things and tried to improve" +
                         "the game to make it less easy and more fun to play.",
                 "https://lgs-games.com/api/news/test.md",
-                Date.from(Instant.now()),
-                0
+                Date.from(Instant.now())
         );
         BasicNewsData.newsCount = 1;
         news.add(prim);

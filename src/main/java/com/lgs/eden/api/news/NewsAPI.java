@@ -1,5 +1,6 @@
 package com.lgs.eden.api.news;
 
+import com.lgs.eden.api.APIException;
 import com.lgs.eden.utils.config.Language;
 
 import java.util.ArrayList;
@@ -12,7 +13,7 @@ public interface NewsAPI {
     /**
      * Returns a news by ID
      */
-    BasicNewsData getNews(String id);
+    BasicNewsData getNews(String newsID) throws APIException;
 
     /**
      * Return all news, begin from an index, and up to count views.
