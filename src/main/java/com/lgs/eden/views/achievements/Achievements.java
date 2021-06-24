@@ -21,7 +21,7 @@ public class Achievements {
 
     // ------------------------------ STATIC ----------------------------- \\
 
-    public static Parent getScreen(int gameID) {
+    public static Parent getScreen(String gameID) {
         FXMLLoader loader = Utility.loadView(ViewsPath.ACHIEVEMENTS.path);
         Parent parent = Utility.loadViewPane(loader);
         Achievements controller = loader.getController();
@@ -34,7 +34,7 @@ public class Achievements {
     @FXML
     private VBox achievements;
 
-    private void init(int gameID) {
+    private void init(String gameID) {
         ArrayList<AchievementData> achievements = API.imp.getUserAchievements(gameID, AppWindowHandler.currentUserID());
 
         int size = achievements.size();

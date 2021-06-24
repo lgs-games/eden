@@ -36,9 +36,9 @@ public class Messages {
     private static Messages controller;
 
     // no friend in particular
-    public static Parent getScreen() { return getScreen(-1); }
+    public static Parent getScreen() { return getScreen("-1"); }
     // open "friendID" conv
-    public static Parent getScreen(int friendID) {
+    public static Parent getScreen(String friendID) {
         FXMLLoader loader = Utility.loadView(ViewsPath.MESSAGES.path);
         Parent view = Utility.loadViewPane(loader);
         controller = loader.getController();
@@ -47,11 +47,11 @@ public class Messages {
     }
 
     /** true if this user is the one we are chatting with **/
-    public static boolean isCurrentConv(int userID) { return controller.friend.id == userID; }
+    public static boolean isCurrentConv(String userID) { return controller.friend.id.equals(userID); }
 
     /** returns the sender **/
-    public static FriendData getSender(int senderID) {
-        return controller.friend.id == senderID ? controller.friend : controller.user;
+    public static FriendData getSender(String senderID) {
+        return controller.friend.id.equals(senderID) ? controller.friend : controller.user;
     }
 
     // ------------------------------ INSTANCE ----------------------------- \\
@@ -78,9 +78,9 @@ public class Messages {
     private FriendData user;
     private ArrayList<FriendData> friendList;
 
-    private void init(int friendID) {
+    private void init(String friendID) {
         // you cannot tchat with yourself
-        if (friendID == AppWindowHandler.currentUserID()) friendID = -1;
+        if (friendID.equals(AppWindowHandler.currentUserID())) friendID = "-1";
         FriendConversationView conv = API.imp.getMessageWithFriend(friendID, AppWindowHandler.currentUserID());
         // friends for new conversations search
         this.friendList = API.imp.getFriendList(AppWindowHandler.currentUserID(), -1);
@@ -103,7 +103,7 @@ public class Messages {
             // ------------------------------ MAIN DATA ----------------------------- \\
             // set message values
             this.userName.setText(conv.friend.name);
-            this.userID.setText(String.format("%06d", conv.friend.id));
+            this.userID.setText(String.format("%.6s", conv.friend.id));
 
             // ------------------------------ MESSAGES ----------------------------- \\
             this.messages.setItems(conv.messages);
@@ -126,7 +126,7 @@ public class Messages {
 
                     for (ConversationData d : items) {
                         // change this item
-                        if (d.id == c.id) break;
+                        if (d.id.equals(c.id)) break;
                         i++;
                     }
                     if (i != items.size()) {
@@ -135,7 +135,7 @@ public class Messages {
                     items.add(i, c);
 
                     // set again as current
-                    if (c.id == friend.id) setSelected();
+                    if (c.id.equals(friend.id)) setSelected();
                 });
             }, conv);
         }
@@ -143,7 +143,7 @@ public class Messages {
 
     private void setSelected() {
         for (ConversationData d : this.userList.getItems()) {
-            if (d.id == friend.id) {
+            if (d.id.equals(friend.id)) {
                 this.userList.scrollTo(d);
                 break;
             }

@@ -24,7 +24,7 @@ public class AllNews {
 
     // ------------------------------ STATIC ----------------------------- \\
 
-    public static Parent getScreen(int gameID) {
+    public static Parent getScreen(String gameID) {
         FXMLLoader loader = Utility.loadView(ViewsPath.GAMES_ALL_NEWS.path);
         Parent parent = Utility.loadViewPane(loader);
         AllNews controller = loader.getController();
@@ -45,7 +45,7 @@ public class AllNews {
     @FXML
     private Label to;
 
-    private void init(int gameID) {
+    private void init(String gameID) {
         this.pagination.setPageFactory(pageIndex -> {
             // get the news for our page
             ArrayList<BasicNewsData> allNews = API.imp.getAllNews(pageIndex, COUNT_PER_PAGE, Config.getCode(), gameID, Config.getLanguage());

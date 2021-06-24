@@ -74,7 +74,7 @@ public class AppWindowHandler {
     }
 
     /** convenience method, return userID **/
-    public static int currentUserID() { return loggedUser.userID; }
+    public static String currentUserID() { return loggedUser.userID; }
 
     // ------------------------------ INSTANCE ----------------------------- \\
 

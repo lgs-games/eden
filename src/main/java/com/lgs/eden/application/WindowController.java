@@ -4,7 +4,6 @@ import com.goxr3plus.fxborderlessscene.borderless.BorderlessScene;
 import com.lgs.eden.utils.Utility;
 import com.lgs.eden.utils.ViewsPath;
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -83,7 +82,6 @@ public class WindowController {
 
     @FXML
     public void onCloseRequest() {
-        // todo: maybe make a class
         Platform.runLater(() -> {
             this.stage.close();
             // call handler
@@ -93,7 +91,6 @@ public class WindowController {
 
     @FXML
     public void onMinimizeRequest() {
-        // todo: maybe make a class
         Platform.runLater(() -> scene.minimizeStage());
     }
 }

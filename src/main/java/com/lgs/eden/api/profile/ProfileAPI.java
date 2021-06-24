@@ -16,18 +16,18 @@ public interface ProfileAPI {
     /**
      * Returns a list of users from a filter.
      */
-    ArrayList<FriendData> searchUsers(String filter, int currentUserID);
+    ArrayList<FriendData> searchUsers(String filter, String currentUserID);
 
     /** Returns complete friend list **/
-    ArrayList<FriendData> getFriendList(int userID, int count);
+    ArrayList<FriendData> getFriendList(String userID, int count);
 
     /** friend request received or sent **/
-    ArrayList<FriendData> getRequests(int userID, int count);
+    ArrayList<FriendData> getRequests(String userID, int count);
 
     /**
      * Returns profile Data for an user.
      */
-    ProfileData getProfileData(int userID, int currentUserID);
+    ProfileData getProfileData(String userID, String currentUserID);
 
     /**
      * Change reputation value from currentUserID to
@@ -35,30 +35,30 @@ public interface ProfileAPI {
      *
      * Return CHANGE_REPUTATION_OK or CHANGE_REPUTATION_KO
      */
-    ProfileData changeReputation(int userID, int currentUserID, boolean increase);
+    ProfileData changeReputation(String userID, String currentUserID, boolean increase);
 
     // ------------------------------ FRIENDS ----------------------------- \\
 
     /**
      * Request (from current to user) or accept friendship (from user)
      */
-    void addFriend(int friendID, int currentUserID);
+    void addFriend(String friendID, String currentUserID);
 
     /**
      * Cancel friendship
      */
-    void removeFriend(int friendID, int currentUserID);
+    void removeFriend(String friendID, String currentUserID);
 
     /**
      * Accept friend request
      */
-    void acceptFriend(int friendID, int currentUserID);
+    void acceptFriend(String friendID, String currentUserID);
 
     /**
      * Cancel friend request or refuse
      * friend request.
      */
-    void refuseFriend(int friendID, int currentUserID);
+    void refuseFriend(String friendID, String currentUserID);
 
     // ------------------------------ CONVERSATIONS ----------------------------- \\
 
@@ -69,38 +69,38 @@ public interface ProfileAPI {
      *
      * Returns null if no conversations at all.
      */
-    FriendConversationView getMessageWithFriend(int friendID, int currentUserID);
+    FriendConversationView getMessageWithFriend(String friendID, String currentUserID);
 
     /**
      * Create a new conversation in the list of conversation of this user.
      */
-    boolean newConversation(int friendID, int currentUserID);
+    boolean newConversation(String friendID, String currentUserID);
 
     /**
      * Close (don't delete message but don't show again) a conversation
      * in the list of conversation of this user.
      */
-    boolean closeConversation(int friendID, int currentUserID);
+    boolean closeConversation(String friendID, String currentUserID);
 
     /**
      * Send a message to another user.
      */
-    MessageData sendMessage(int to, int from, String message);
+    MessageData sendMessage(String to, String from, String message);
 
     /**
      * Returns code according to what kind
      * of notifications got fired or simply returns null
      * if none.
      */
-    ArrayList<APIResponseCode> lookForNotifications(int currentUserID);
+    ArrayList<APIResponseCode> lookForNotifications(String currentUserID);
 
     /**
      * Set this game as played by the user
      */
-    void setPlaying(int currentUserID, int gameID);
+    void setPlaying(String currentUserID, String gameID);
 
     /**
      * Return user achievements for a game
      */
-    ArrayList<AchievementData> getUserAchievements(int gameID, int currentUserID);
+    ArrayList<AchievementData> getUserAchievements(String gameID, String currentUserID);
 }

@@ -11,12 +11,12 @@ import javafx.scene.image.Image;
  */
 public class BasicGameData {
 
-    public final int id;
+    public final String id;
     public final String name;
     public final Image icon;
     private final String path;
 
-    public BasicGameData(int id, String name, String icon) {
+    public BasicGameData(String id, String name, String icon) {
         this.id = id;
         this.name = name;
         this.icon = icon != null ? Utility.loadImage(icon) : null;
@@ -32,14 +32,14 @@ public class BasicGameData {
 
         BasicGameData that = (BasicGameData) o;
 
-        if (this.id != that.id) return false;
+        if (!this.id.equals(that.id)) return false;
         return this.name.equals(that.name);
     }
 
     @Override
     public int hashCode() {
-        int result = this.id;
-        result = 31 * result + this.name.hashCode();
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
         return result;
     }
 

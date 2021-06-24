@@ -20,7 +20,7 @@ public class ProfileData {
     // recent games, can be empty (size = 0), size <= 3
     public RecentGameData[] recentGames;
     // id user
-    public final int userID;
+    public final String userID;
     // real number of friends, not necessarily the size of
     public final int friendNumber;
     // reputation
@@ -40,7 +40,7 @@ public class ProfileData {
     public final FriendShipStatus statusWithLogged;
     public final ReputationScore score;
 
-    public ProfileData(String username, int userID, String avatar,
+    public ProfileData(String username, String userID, String avatar,
                        int friendNumber, int reputation, String biography, Date lastSeen,
                        Date memberSinceDate,
                        ObservableList<FriendData> friends, RecentGameData[] recentGames,
@@ -75,7 +75,7 @@ public class ProfileData {
                 data.lastSeen, data.memberSinceDate, data.friends, data.recentGames, data.online, status, data.score);
     }
 
-    public ProfileData(int userID) {
+    public ProfileData(String userID) {
         this(null, userID, null, 0, 0, null, null,
                 null, null, null, false, null, null);
     }
@@ -92,12 +92,12 @@ public class ProfileData {
 
         ProfileData that = (ProfileData) o;
 
-        return userID == that.userID;
+        return userID.equals(that.userID);
     }
 
     @Override
     public int hashCode() {
-        return userID;
+        return userID != null ? userID.hashCode() : 0;
     }
 
     @Override

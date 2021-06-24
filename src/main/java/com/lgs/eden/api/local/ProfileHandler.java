@@ -30,7 +30,7 @@ class ProfileHandler implements ProfileAPI {
     public void setParent(LocalHandler parent) { this.parent = parent; }
 
     @Override
-    public ArrayList<AchievementData> getUserAchievements(int gameID, int currentUserID) {
+    public ArrayList<AchievementData> getUserAchievements(String gameID, String currentUserID) {
         ArrayList<AchievementData> d = new ArrayList<>();
         AchievementData hidden = new AchievementData("/games/hidden-achievement.png", "Hidden achievement", "???", false);
         AchievementData a = new AchievementData("/games/prim-achievement-1.png", "Hero", "You won 10 times.", true);
@@ -43,7 +43,7 @@ class ProfileHandler implements ProfileAPI {
     }
 
     @Override
-    public ArrayList<APIResponseCode> lookForNotifications(int currentUserID) {
+    public ArrayList<APIResponseCode> lookForNotifications(String currentUserID) {
         init(currentUserID);
         ArrayList<APIResponseCode> r = new ArrayList<>();
         // messages
@@ -69,7 +69,7 @@ class ProfileHandler implements ProfileAPI {
     private long elapsed = -1;
 
     @Override
-    public void setPlaying(int currentUserID, int gameID) {
+    public void setPlaying(String currentUserID, String gameID) {
         if (elapsed == -1) elapsed = System.nanoTime();
         // set game
         ProfileData userProfile = getUserProfile(currentUserID);
@@ -79,23 +79,22 @@ class ProfileHandler implements ProfileAPI {
         if (recentGames.length > 0) time = recentGames[0].timePlayed;
 
         recentGames = new RecentGameData[]{
-                makeEden(time + checkTime(), gameID != -1 ? -1 : 0)
+                makeEden(time + checkTime(), !gameID.equals("-1") ? -1 : 0)
         };
 
         // restart
-        if (gameID == -1) elapsed = -1;
+        if (gameID.equals("-1")) elapsed = -1;
 
         userProfile.recentGames = recentGames;
     }
 
     private int checkTime() {
         long l = System.nanoTime();
-        int r = Math.round((l - elapsed) / 1000000000f);
-        return r;
+        return Math.round((l - elapsed) / 1000000000f);
     }
 
     @Override
-    public ArrayList<FriendData> searchUsers(String filter, int currentUserID) {
+    public ArrayList<FriendData> searchUsers(String filter, String currentUserID) {
         init(currentUserID);
         ArrayList<FriendData> r = new ArrayList<>();
         if (filter.isEmpty()) return r;
@@ -108,7 +107,7 @@ class ProfileHandler implements ProfileAPI {
     }
 
     @Override
-    public ArrayList<FriendData> getFriendList(int userID, int count) {
+    public ArrayList<FriendData> getFriendList(String userID, int count) {
         if (this.users.isEmpty()) init(userID);
         if (count == -1) count = Integer.MAX_VALUE;
 
@@ -124,7 +123,7 @@ class ProfileHandler implements ProfileAPI {
     }
 
     @Override
-    public ArrayList<FriendData> getRequests(int userID, int count) {
+    public ArrayList<FriendData> getRequests(String userID, int count) {
         if (this.users.isEmpty()) init(userID);
         if (count == -1) count = Integer.MAX_VALUE;
         ArrayList<FriendData> copy = new ArrayList<>();
@@ -138,14 +137,14 @@ class ProfileHandler implements ProfileAPI {
     }
 
     @Override
-    public ProfileData getProfileData(int userID, int currentUserID) {
+    public ProfileData getProfileData(String userID, String currentUserID) {
         init(currentUserID);
         ProfileData userProfile = getUserProfile(userID);
         return new ProfileData(userProfile, FXCollections.observableArrayList(getFriendList(userID, 6)));
     }
 
     @Override
-    public ProfileData changeReputation(int userID, int currentUserID, boolean increase) {
+    public ProfileData changeReputation(String userID, String currentUserID, boolean increase) {
         ProfileData p = getProfileData(userID, currentUserID);
 
         ReputationScore score = p.score;
@@ -186,7 +185,7 @@ class ProfileHandler implements ProfileAPI {
     }
 
     @Override
-    public void addFriend(int friendID, int currentUserID) {
+    public void addFriend(String friendID, String currentUserID) {
         ProfileData userProfile = getUserProfile(currentUserID);
 
         if (!userProfile.friends.contains(new FriendData(friendID))) {
@@ -200,7 +199,7 @@ class ProfileHandler implements ProfileAPI {
     }
 
     @Override
-    public void removeFriend(int friendID, int currentUserID) {
+    public void removeFriend(String friendID, String currentUserID) {
         ProfileData friend = getUserProfile(friendID);
         ProfileData user = getUserProfile(currentUserID);
 
@@ -214,7 +213,7 @@ class ProfileHandler implements ProfileAPI {
     }
 
     @Override
-    public void acceptFriend(int friendID, int currentUserID) {
+    public void acceptFriend(String friendID, String currentUserID) {
         ProfileData user = getUserProfile(currentUserID);
         ProfileData friend = getUserProfile(friendID);
 
@@ -234,7 +233,7 @@ class ProfileHandler implements ProfileAPI {
     }
 
     @Override
-    public void refuseFriend(int friendID, int currentUserID) {
+    public void refuseFriend(String friendID, String currentUserID) {
         removeFriend(friendID, currentUserID);
         // trigger
         parent.triggerNotificationCallBack(currentUserID);
@@ -242,22 +241,22 @@ class ProfileHandler implements ProfileAPI {
 
     // ------------------------------ MESSAGES ----------------------------- \\
 
-    private final HashMap<Integer, ArrayList<MessageData>> messages = new HashMap<>();
-    private final HashMap<Integer, ConversationData> conv = new HashMap<>();
+    private final HashMap<String, ArrayList<MessageData>> messages = new HashMap<>();
+    private final HashMap<String, ConversationData> conv = new HashMap<>();
 
     @Override
-    public FriendConversationView getMessageWithFriend(int friendID, int currentUserID) {
+    public FriendConversationView getMessageWithFriend(String friendID, String currentUserID) {
         init(currentUserID);
 
-        if (friendID == -1 && conv.isEmpty()) return null;
+        if (friendID.equals("-1") && conv.isEmpty()) return null;
 
-        if (conv.isEmpty() || (friendID != -1 && !conv.containsKey(friendID))) {
+        if (conv.isEmpty() || (!friendID.equals("-1") && !conv.containsKey(friendID))) {
             newConversation(friendID, currentUserID);
         }
 
         ObservableList<ConversationData> allConv = FXCollections.observableArrayList(conv.values());
 
-        if (friendID == -1) {
+        if (friendID.equals("-1")) {
             friendID = allConv.get(0).id;
         }
 
@@ -277,7 +276,7 @@ class ProfileHandler implements ProfileAPI {
     }
 
     @Override
-    public boolean newConversation(int friendID, int currentUserID) {
+    public boolean newConversation(String friendID, String currentUserID) {
         if (conv.containsKey(friendID)) return true;
 
         ProfileData userProfile = getUserProfile(friendID);
@@ -292,24 +291,24 @@ class ProfileHandler implements ProfileAPI {
         return true;
     }
 
-    private int getUnreadMessagesCount(int friendID, int currentUserID) {
+    private int getUnreadMessagesCount(String friendID, String currentUserID) {
         ArrayList<MessageData> messages = getMessages(friendID);
         int count = 0;
         for (MessageData d : messages) {
-            if (currentUserID != d.senderID && !d.read) count++;
+            if (!currentUserID.equals(d.senderID) && !d.read) count++;
         }
         return count;
     }
 
     @Override
-    public boolean closeConversation(int friendID, int currentUserID) {
+    public boolean closeConversation(String friendID, String currentUserID) {
         if (!conv.containsKey(friendID)) return false;
         conv.remove(friendID);
         return true;
     }
 
     @Override
-    public MessageData sendMessage(int to, int from, String message) {
+    public MessageData sendMessage(String to, String from, String message) {
         // we don't save "from" since we are in local
         ArrayList<MessageData> messages = getMessages(to);
         MessageData r = new MessageData(
@@ -329,7 +328,7 @@ class ProfileHandler implements ProfileAPI {
     }
 
     @SuppressWarnings("SameParameterValue")
-    void sendMessageAsOther(int current, int fake, String message) {
+    void sendMessageAsOther(String current, String fake, String message) {
         ArrayList<MessageData> messages = getMessages(fake);
         MessageData r = new MessageData(
                 fake,
@@ -352,7 +351,7 @@ class ProfileHandler implements ProfileAPI {
         this.parent.triggerMessagesCallBack(r);
     }
 
-    private ArrayList<MessageData> getMessages(int with) {
+    private ArrayList<MessageData> getMessages(String with) {
         if (!messages.containsKey(with)) {
             messages.put(with, new ArrayList<>());
         }
@@ -362,9 +361,9 @@ class ProfileHandler implements ProfileAPI {
     // ------------------------------ UTILS ----------------------------- \\
 
     private final ArrayList<ProfileData> users = new ArrayList<>();
-    private int loggedID = -1;
+    private String loggedID = "-1";
 
-    private ProfileData createFriend(String username, int id, int rep, String since, int nf,
+    private ProfileData createFriend(String username, String id, int rep, String since, int nf,
                                      String desc, FriendShipStatus fs,
                                      ReputationScore status, RecentGameData[] games, ProfileData p,
                                      boolean online) {
@@ -394,15 +393,15 @@ class ProfileHandler implements ProfileAPI {
         return new FriendData(p.avatarPath, p.username, p.online, p.userID, status);
     }
 
-    private void init(int currentUserID) {
-        if (this.loggedID != -1 && currentUserID == this.loggedID) return;
+    private void init(String currentUserID) {
+        if (!this.loggedID.equals("-1") && currentUserID.equals(this.loggedID)) return;
         loggedID = currentUserID;
         users.clear();
 
-        ProfileData raphik = createFriend("Raphik", 23, 9999,
+        ProfileData raphik = createFriend("Raphik", "23", 9999,
                 "2020-12-03T10:15:30.00Z", 4,
                 "Raphiki is a great programmer at ENSIIE engineering school.",
-                getFriendShipStatus(23, currentUserID),
+                getFriendShipStatus("23", currentUserID),
                 ReputationScore.NONE, new RecentGameData[]{
                         makeEden(0, 1),
                         // new RecentGameData(Utility.loadImage("/games/enigma-icon.png"), "Enigma", 1020, 30)
@@ -410,17 +409,17 @@ class ProfileHandler implements ProfileAPI {
                 null, true
         );
 
-        ProfileData raphik2 = createFriend("Raphik2", 24, 0, "2021-03-18T10:15:30.00Z", 1,
-                "No description yet.", getFriendShipStatus(24, currentUserID),
+        ProfileData raphik2 = createFriend("Raphik2", "24", 0, "2021-03-18T10:15:30.00Z", 1,
+                "No description yet.", getFriendShipStatus("24", currentUserID),
                 ReputationScore.NONE, null, raphik, false
         );
 
-        ProfileData calistral = createFriend("Calistral", 25, -1, "2020-12-03T10:15:30.00Z", 1,
-                "No description yet.", getFriendShipStatus(25, currentUserID),
+        ProfileData calistral = createFriend("Calistral", "25", -1, "2020-12-03T10:15:30.00Z", 1,
+                "No description yet.", getFriendShipStatus("25", currentUserID),
                 ReputationScore.DECREASED, null, raphik, false
         );
 
-        ProfileData caliki = createFriend("Caliki", 26, 0,
+        ProfileData caliki = createFriend("Caliki", "26", 0,
                 "2020-12-03T10:15:30.00Z", 1,
                 "This is a really" + "This is a really" + "This is a really" + "This is a really" + "This is a really"
                         + "This is a really" + "This is a really" + "This is a really" + "This is a really" + "This is a really"
@@ -428,11 +427,11 @@ class ProfileHandler implements ProfileAPI {
                         + "This is a really" + "This is a really" + "This is a really" + "This is a really" + "This is a really"
                         + "This is a really" + "This is a really" + "This is a really" + "This is a really" + "This is a really"
                         + "This is a really" + "This is a really" + "This is a really" + "This is a really" + "This is a really",
-                getFriendShipStatus(26, currentUserID), ReputationScore.NONE, null, raphik, false
+                getFriendShipStatus("26", currentUserID), ReputationScore.NONE, null, raphik, false
         );
 
-        ProfileData raphistro = createFriend("Raphistro", 27, 17570, "2020-03-09T10:15:30.00Z", 1,
-                "No description yet.", getFriendShipStatus(27, currentUserID), ReputationScore.INCREASED,
+        ProfileData raphistro = createFriend("Raphistro", "27", 17570, "2020-03-09T10:15:30.00Z", 1,
+                "No description yet.", getFriendShipStatus("27", currentUserID), ReputationScore.INCREASED,
                 null, raphik, false
         );
 
@@ -442,16 +441,16 @@ class ProfileHandler implements ProfileAPI {
         users.add(caliki);
         users.add(raphistro);
 
-        ProfileData xxx = createFriend("XXX", 28, 0,
+        ProfileData xxx = createFriend("XXX", "28", 0,
                 "2020-03-09T10:15:30.00Z", 1,
                 "No description yet.",
-                getFriendShipStatus(28, currentUserID),
+                getFriendShipStatus("28", currentUserID),
                 ReputationScore.NONE, null, null, false
         );
         xxx.friends.add(friendFromProfil(raphik, FriendShipStatus.REQUESTED));
 
         users.add(xxx);
-        users.add(createFriend("YYY", 29, 0,
+        users.add(createFriend("YYY", "29", 0,
                 "2020-03-09T10:15:30.00Z", 0,
                 "No description yet.",
                 FriendShipStatus.NONE,
@@ -469,22 +468,22 @@ class ProfileHandler implements ProfileAPI {
                 timePlayed, lastPlayed);
     }
 
-    private FriendShipStatus getFriendShipStatus(int userID, int currentUserID) {
-        if (currentUserID == userID) return FriendShipStatus.USER;
+    private FriendShipStatus getFriendShipStatus(String userID, String currentUserID) {
+        if (currentUserID.equals(userID)) return FriendShipStatus.USER;
 
-        if (currentUserID == 23 && userID == 28) return FriendShipStatus.GOT_REQUESTED;
+        if (currentUserID.equals("23") && userID.equals("28")) return FriendShipStatus.GOT_REQUESTED;
 
-        return currentUserID == 23 ? FriendShipStatus.FRIENDS : FriendShipStatus.NONE;
+        return currentUserID.equals("23") ? FriendShipStatus.FRIENDS : FriendShipStatus.NONE;
     }
 
-    private ProfileData getUserProfile(int userID) {
+    private ProfileData getUserProfile(String userID) {
         for (ProfileData d : this.users) {
-            if (d.userID == userID) return d;
+            if (d.userID.equals(userID)) return d;
         }
         throw new IllegalArgumentException("not found " + userID);
     }
 
-    private ObservableList<FriendData> getRealFriendList(int userID) {
+    private ObservableList<FriendData> getRealFriendList(String userID) {
         return getUserProfile(userID).friends;
     }
 

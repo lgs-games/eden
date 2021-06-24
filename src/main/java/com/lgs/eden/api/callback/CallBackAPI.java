@@ -5,7 +5,7 @@ import com.lgs.eden.api.profile.friends.FriendConversationView;
 public interface CallBackAPI {
 
     /** @see NotificationsCallBack **/
-    void setNotificationsCallBack(NotificationsCallBack callBack, int currentUserID);
+    void setNotificationsCallBack(NotificationsCallBack callBack, String currentUserID);
 
     /** @see MessagesCallBack
      * @see ConversationsCallback **/

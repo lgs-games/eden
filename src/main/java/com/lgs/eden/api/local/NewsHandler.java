@@ -14,7 +14,12 @@ import java.util.Date;
 public class NewsHandler implements NewsAPI {
 
     @Override
-    public ArrayList<BasicNewsData> getAllNews(int begin, int count, String code, int gameID, Language language) {
+    public BasicNewsData getNews(String id) {
+        return null;
+    }
+
+    @Override
+    public ArrayList<BasicNewsData> getAllNews(int begin, int count, String code, String gameID, Language language) {
         ArrayList<BasicNewsData> news = new ArrayList<>();
         BasicNewsData prim = new BasicNewsData(
                 "Version 3.1.0 released",

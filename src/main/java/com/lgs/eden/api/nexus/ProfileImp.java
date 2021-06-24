@@ -22,82 +22,82 @@ public class ProfileImp extends ImpSocket implements ProfileAPI {
     // ------------------------------ METHODS ----------------------------- \\
 
     @Override
-    public ArrayList<FriendData> searchUsers(String filter, int currentUserID) {
+    public ArrayList<FriendData> searchUsers(String filter, String currentUserID) {
         return null;
     }
 
     @Override
-    public ArrayList<FriendData> getFriendList(int userID, int count) {
+    public ArrayList<FriendData> getFriendList(String userID, int count) {
         return null;
     }
 
     @Override
-    public ArrayList<FriendData> getRequests(int userID, int count) {
+    public ArrayList<FriendData> getRequests(String userID, int count) {
         return null;
     }
 
     @Override
-    public ProfileData getProfileData(int userID, int currentUserID) {
+    public ProfileData getProfileData(String userID, String currentUserID) {
         return null;
     }
 
     @Override
-    public ProfileData changeReputation(int userID, int currentUserID, boolean increase) {
+    public ProfileData changeReputation(String userID, String currentUserID, boolean increase) {
         return null;
     }
 
     @Override
-    public void addFriend(int friendID, int currentUserID) {
+    public void addFriend(String friendID, String currentUserID) {
 
     }
 
     @Override
-    public void removeFriend(int friendID, int currentUserID) {
+    public void removeFriend(String friendID, String currentUserID) {
 
     }
 
     @Override
-    public void acceptFriend(int friendID, int currentUserID) {
+    public void acceptFriend(String friendID, String currentUserID) {
 
     }
 
     @Override
-    public void refuseFriend(int friendID, int currentUserID) {
+    public void refuseFriend(String friendID, String currentUserID) {
 
     }
 
     @Override
-    public FriendConversationView getMessageWithFriend(int friendID, int currentUserID) {
+    public FriendConversationView getMessageWithFriend(String friendID, String currentUserID) {
         return null;
     }
 
     @Override
-    public boolean newConversation(int friendID, int currentUserID) {
+    public boolean newConversation(String friendID, String currentUserID) {
         return false;
     }
 
     @Override
-    public boolean closeConversation(int friendID, int currentUserID) {
+    public boolean closeConversation(String friendID, String currentUserID) {
         return false;
     }
 
     @Override
-    public MessageData sendMessage(int to, int from, String message) {
+    public MessageData sendMessage(String to, String from, String message) {
         return null;
     }
 
     @Override
-    public ArrayList<APIResponseCode> lookForNotifications(int currentUserID) {
+    public ArrayList<APIResponseCode> lookForNotifications(String currentUserID) {
         return null;
     }
 
     @Override
-    public void setPlaying(int currentUserID, int gameID) {
+    public void setPlaying(String currentUserID, String gameID) {
 
     }
 
     @Override
-    public ArrayList<AchievementData> getUserAchievements(int gameID, int currentUserID) {
+    public ArrayList<AchievementData> getUserAchievements(String gameID, String currentUserID) {
         return null;
     }
 }

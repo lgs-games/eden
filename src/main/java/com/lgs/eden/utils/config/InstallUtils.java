@@ -34,7 +34,7 @@ public class InstallUtils {
     }
 
     /** install game **/
-    public static boolean installGame(String installer, int gameID) {
+    public static boolean installGame(String installer, String gameID) {
         OperatingSystem os = Utility.getUserOS();
 
         String location = Config.getGameFolder() + gameID + "/";

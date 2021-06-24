@@ -43,12 +43,12 @@ public class LocalHandler extends APIHandler {
     private FriendConversationView conv;
 
     @Override
-    public void setNotificationsCallBack(NotificationsCallBack callBack, int currentUserID) {
+    public void setNotificationsCallBack(NotificationsCallBack callBack, String currentUserID) {
         this.newsCallback = callBack;
         triggerNotificationCallBack(currentUserID);
     }
 
-    void triggerNotificationCallBack(int currentUserID) {
+    void triggerNotificationCallBack(String currentUserID) {
         ArrayList<APIResponseCode> apiResponseCodes = this.lookForNotifications(currentUserID);
         if (newsCallback != null) newsCallback.onCall(apiResponseCodes);
     }
@@ -63,13 +63,13 @@ public class LocalHandler extends APIHandler {
     void triggerMessagesCallBack(MessageData m) {
         if (messagesCallBack != null) {
             // friend sent a message
-            if (m.senderID == conv.friend.id) messagesCallBack.onCall(m);
+            if (m.senderID.equals(conv.friend.id)) messagesCallBack.onCall(m);
         }
     }
 
     void triggerConversationCallBack(ConversationData m) {
         if (conversationsCallback != null) {
-            if (m.id == conv.friend.id) m.unreadMessagesCount = 0;
+            if (m.id.equals(conv.friend.id)) m.unreadMessagesCount = 0;
             // friend sent a message
             conversationsCallback.onCall(m);
         }
@@ -85,8 +85,8 @@ public class LocalHandler extends APIHandler {
         if (login.code.equals(APIResponseCode.LOGIN_OK)) {
 
             // init
-            getMessageWithFriend(24, 23);
-            getMessageWithFriend(25, 23);
+            getMessageWithFriend("24", "23");
+            getMessageWithFriend("25", "23");
 
             // starts fake message receiver
             this.checker = new Timer();
@@ -95,8 +95,8 @@ public class LocalHandler extends APIHandler {
                 public void run() {
                     // fake some delay
                     APIHelper.fakeDelay(1000);
-                    ((ProfileHandler) profile).sendMessageAsOther(23, 24, "Okay!");
-                    ((ProfileHandler) profile).sendMessageAsOther(23, 25, "Salut");
+                    ((ProfileHandler) profile).sendMessageAsOther("23", "24", "Okay!");
+                    ((ProfileHandler) profile).sendMessageAsOther("23", "25", "Salut");
                 }
             }, 0, 10000);
         }
@@ -104,7 +104,7 @@ public class LocalHandler extends APIHandler {
     }
 
     @Override
-    public void logout(int currentUserID)  throws APIException {
+    public void logout(String currentUserID)  throws APIException {
         this.checker.cancel();
         this.login.logout(currentUserID);
     }

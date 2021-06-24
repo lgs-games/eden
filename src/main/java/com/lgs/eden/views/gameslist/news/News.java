@@ -133,6 +133,7 @@ public class News {
 
     // ------------------------------ TEST ----------------------------- \\
 
+    @SuppressWarnings("unused")
     private static final String MARKDOWN_TEST = "Legendary Games Studio is honoured to present our new application : Tyrn.\n" +
             "\n" +
             "The software is open-source (meaning you can read/edit the source code)\n" +

@@ -115,7 +115,7 @@ public class Config {
         return downloadRepository;
     }
 
-    public static boolean isGameInstalled(int gameID) {
+    public static boolean isGameInstalled(String gameID) {
         String gameFolder = getGameFolder() + gameID;
         File folder = new File(gameFolder);
         return folder.exists() && folder.isDirectory();

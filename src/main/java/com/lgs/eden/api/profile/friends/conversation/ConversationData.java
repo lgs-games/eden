@@ -10,7 +10,7 @@ public class ConversationData extends FriendData {
 
     public int unreadMessagesCount;
 
-    public ConversationData(String avatar, String name, boolean online, int id, int unreadMessagesCount) {
+    public ConversationData(String avatar, String name, boolean online, String id, int unreadMessagesCount) {
         super(avatar, name, online, id, FriendShipStatus.NONE);
         this.unreadMessagesCount = unreadMessagesCount;
     }

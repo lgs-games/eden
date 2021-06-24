@@ -39,7 +39,7 @@ public class Profile {
      * @return reloaded profile screen with profile data for userID
      * Should only be called if user is not currentUserID
      */
-    public static Parent reloadWith(int userID) {
+    public static Parent reloadWith(String userID) {
         FXMLLoader loader = Utility.loadView(ViewsPath.PROFILE.path);
         Parent parent = Utility.loadViewPane(loader);
         controller = loader.getController();
@@ -95,12 +95,12 @@ public class Profile {
     private ProfileData data;
 
     /** set up profile view **/
-    private void init(int userID) {
+    private void init(String userID) {
         this.data = API.imp.getProfileData(userID, AppWindowHandler.currentUserID());
 
         // ------------------------------ FILL ATTRIBUTES ----------------------------- \\
         this.username.setText(this.data.username); // ex: Raphiki
-        this.userID.setText(String.format("%06d", this.data.userID)); // ex: 000006
+        this.userID.setText(String.format("%.6s", this.data.userID)); // ex: 000006
         this.bio.setText(this.data.biography + ""); // bio
         this.lastLogin.setText(Translate.getDate(this.data.lastSeen)); // getDate format
         this.since.setText(Translate.getDate(this.data.memberSinceDate)); // getDate format
@@ -180,7 +180,7 @@ public class Profile {
     private void onAddFriend() {
         onAddFriend(this.data.userID);
     }
-    public void onAddFriend(int friendID) {
+    public void onAddFriend(String friendID) {
         API.imp.addFriend(friendID, AppWindowHandler.currentUserID());
         reload(friendID);
     }
@@ -190,7 +190,7 @@ public class Profile {
     private void onRemoveFriend() {
         onRemoveFriend(this.data.userID);
     }
-    public void onRemoveFriend(int friendID) {
+    public void onRemoveFriend(String friendID) {
         API.imp.removeFriend(friendID, AppWindowHandler.currentUserID());
         reload(friendID);
     }
@@ -199,7 +199,7 @@ public class Profile {
     @FXML
     private void onPlusOneRep() {
         // api won't allow it
-        if (AppWindowHandler.currentUserID() == data.userID) return;
+        if (AppWindowHandler.currentUserID().equals(data.userID)) return;
         ProfileData r = API.imp.changeReputation(data.userID, AppWindowHandler.currentUserID(), true);
         if (r != null) this.setReputation(this.data = r);
     }
@@ -208,7 +208,7 @@ public class Profile {
     @FXML
     private void onMinusOneRep() {
         // api won't allow it
-        if (AppWindowHandler.currentUserID() == data.userID) return;
+        if (AppWindowHandler.currentUserID().equals(data.userID)) return;
 
         ProfileData r = API.imp.changeReputation(data.userID, AppWindowHandler.currentUserID(), false);
         if (r != null) this.setReputation(this.data = r);
@@ -223,7 +223,7 @@ public class Profile {
         this.reputation.getStyleClass().set(0, repStyle);
 
         // disable +1 and -1 visually
-        if (AppWindowHandler.currentUserID() == this.data.userID) {
+        if (AppWindowHandler.currentUserID().equals(this.data.userID)) {
             this.addOne.setDisable(true);
             this.removeOne.setDisable(true);
         } else {
@@ -249,7 +249,7 @@ public class Profile {
     private void onAcceptFriend() {
         onAcceptFriend(this.data.userID);
     }
-    public void onAcceptFriend(int friendID) {
+    public void onAcceptFriend(String friendID) {
         API.imp.acceptFriend(friendID, AppWindowHandler.currentUserID());
         reload(friendID);
     }
@@ -259,7 +259,7 @@ public class Profile {
     private void onRefuseFriend() {
         onRefuseFriend(this.data.userID);
     }
-    public void onRefuseFriend(int friendID) {
+    public void onRefuseFriend(String friendID) {
         API.imp.refuseFriend(friendID, AppWindowHandler.currentUserID());
         reload(friendID);
     }
@@ -267,7 +267,7 @@ public class Profile {
     // ------------------------------ UTILS ----------------------------- \\
 
     /** reload view **/
-    public void reload(int friendID) {
+    public void reload(String friendID) {
         AppWindowHandler.setScreen(Profile.reloadWith(friendID), ViewsPath.PROFILE);
     }
 

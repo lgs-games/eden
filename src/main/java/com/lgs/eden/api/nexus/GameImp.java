@@ -23,22 +23,62 @@ public class GameImp extends ImpSocket implements GameAPI {
     // ------------------------------ METHODS ----------------------------- \\
 
     @Override
-    public EdenVersionData getEdenVersion() throws APIException {
+    public EdenVersionData getEdenVersion() {
         return null;
     }
 
     @Override
-    public GameViewData getGameData(int userID, int gameID) {
-        return null;
+    public GameViewData getGameData(String userID, String gameID) throws APIException {
+        // no connection
+        NexusHandler.checkNetwork(this);
+
+        // register
+        MonitorIO<GameViewData> monitor = MonitorIO.createMonitor(this);
+        socket.emit("game", gameID, (Ack) args -> {
+            GameViewData rep = null;
+
+            if (args.length > 0 && args[0] instanceof JSONObject) {
+                try {
+                    JSONObject o = (JSONObject) args[0];
+                    rep = new GameViewData(
+                            o.getString("game_id"),
+                            o.getString("name"),
+                            o.getString("icon"),
+                            o.getString("version"),
+                            parent.getNews(o.getString("last_news_id")),
+                            o.getString("player_achievements"),
+                            o.getInt("number_of_achievements"),
+                            o.getInt("friends_playing"),
+                            o.getInt("time_played"),
+                            o.getInt("version"),
+                            new GameUpdateData(
+                                    o.getString("latest"),
+                                    o.getString("new_version_url"),
+                                    o.getString("game_run"),
+                                    o.getString("game_uninstall"),
+                                    -1
+                            )
+
+                    );
+                } catch (JSONException e) {
+                    rep = null;
+                }
+            }
+
+            monitor.set(rep);
+        });
+
+        // ask for response, can raise Exception
+        return monitor.response();
     }
 
     @Override
-    public ObservableList<BasicGameData> getUserGames(int userID) {
+    public ObservableList<BasicGameData> getUserGames(String userID) {
         return FXCollections.observableArrayList();
     }
 
     @Override
-    public ArrayList<MarketplaceGameData> getMarketPlaceGames(int begin, int count, String code, int userID) throws APIException {
+    public ArrayList<MarketplaceGameData> getMarketPlaceGames(int begin, int count, String code, String userID) throws APIException {
         // no connection
         NexusHandler.checkNetwork(this);
 
@@ -54,7 +94,7 @@ public class GameImp extends ImpSocket implements GameAPI {
                     for (int i = 0; i < array.length(); i++) {
                         JSONObject o = (JSONObject) array.get(i);
                         rep.add(new MarketplaceGameData(
-                                o.getInt("game_id"),
+                                o.getString("game_id"),
                                 o.getString("name"),
                                 o.getString("version"),
                                 o.getString("size"),
@@ -78,17 +118,17 @@ public class GameImp extends ImpSocket implements GameAPI {
     }
 
     @Override
-    public boolean addToLibrary(int userID, BasicGameData game) {
+    public boolean addToLibrary(String userID, BasicGameData game) {
         return false;
     }
 
     @Override
-    public boolean removeFromLibrary(int userID, BasicGameData game) {
+    public boolean removeFromLibrary(String userID, BasicGameData game) {
         return false;
     }
 
     @Override
-    public ShortGameViewData getGameDateUpdate(int userID, int gameID) {
+    public ShortGameViewData getGameDateUpdate(String userID, String gameID) {
         return null;
     }
 }

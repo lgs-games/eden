@@ -41,6 +41,9 @@ public class NexusHandler extends APIHandler {
     private NexusHandler(Socket socket) {
         super(new AuthImp(socket), new GameImp(socket), new ProfileImp(socket), new NewsImp(socket));
         this.socket = socket;
+
+        // set parent
+        ((ImpSocket)this.games).setParent(this);
     }
 
     @Override
@@ -54,7 +57,7 @@ public class NexusHandler extends APIHandler {
     // ------------------------------ CALLBACKS ----------------------------- \\
 
     @Override
-    public void setNotificationsCallBack(NotificationsCallBack callBack, int currentUserID) {
+    public void setNotificationsCallBack(NotificationsCallBack callBack, String currentUserID) {
 
     }
 

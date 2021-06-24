@@ -45,7 +45,7 @@ public abstract class APIHandler implements API {
     }
 
     @Override
-    public void logout(int currentUserID) throws APIException { this.login.logout(currentUserID); }
+    public void logout(String currentUserID) throws APIException { this.login.logout(currentUserID); }
 
     @Override
     public APIResponseCode register(String username, String pwd, String email) throws APIException {
@@ -67,125 +67,130 @@ public abstract class APIHandler implements API {
     }
 
     @Override
-    public ArrayList<MarketplaceGameData> getMarketPlaceGames(int begin, int count, String code, int userID) throws APIException {
+    public ArrayList<MarketplaceGameData> getMarketPlaceGames(int begin, int count, String code, String userID) throws APIException {
         return this.games.getMarketPlaceGames(begin, count, code, userID);
     }
 
     @Override
-    public GameViewData getGameData(int userID, int gameID) {
+    public GameViewData getGameData(String userID, String gameID) throws APIException {
         return this.games.getGameData(userID, gameID);
     }
 
     @Override
-    public ObservableList<BasicGameData> getUserGames(int userID) {
+    public ObservableList<BasicGameData> getUserGames(String userID) {
         return this.games.getUserGames(userID);
     }
 
     @Override
-    public ShortGameViewData getGameDateUpdate(int userID, int gameID) {
+    public ShortGameViewData getGameDateUpdate(String userID, String gameID) {
         return this.games.getGameDateUpdate(userID, gameID);
     }
 
     @Override
-    public boolean addToLibrary(int userID, BasicGameData game) {
+    public boolean addToLibrary(String userID, BasicGameData game) {
         return this.games.addToLibrary(userID, game);
     }
 
     @Override
-    public boolean removeFromLibrary(int userID, BasicGameData game) {
+    public boolean removeFromLibrary(String userID, BasicGameData game) {
         return this.games.removeFromLibrary(userID, game);
     }
 
     // ------------------------------ NEWS ----------------------------- \\
 
     @Override
-    public ArrayList<BasicNewsData> getAllNews(int begin, int count, String code, int gameID, Language l) {
+    public ArrayList<BasicNewsData> getAllNews(int begin, int count, String code, String gameID, Language l) {
         return this.news.getAllNews(begin, count, code, gameID, l);
+    }
+
+    @Override
+    public BasicNewsData getNews(String id) {
+        return this.news.getNews(id);
     }
 
     // ------------------------------ PROFILE ----------------------------- \\
 
     @Override
-    public ArrayList<APIResponseCode> lookForNotifications(int currentUserID) {
+    public ArrayList<APIResponseCode> lookForNotifications(String currentUserID) {
         return this.profile.lookForNotifications(currentUserID);
     }
 
     @Override
-    public ArrayList<AchievementData> getUserAchievements(int gameID, int currentUserID) {
+    public ArrayList<AchievementData> getUserAchievements(String gameID, String currentUserID) {
         return this.profile.getUserAchievements(gameID, currentUserID);
     }
 
     @Override
-    public ArrayList<FriendData> searchUsers(String filter, int currentUserID) {
+    public ArrayList<FriendData> searchUsers(String filter, String currentUserID) {
         return this.profile.searchUsers(filter, currentUserID);
     }
 
     @Override
-    public ArrayList<FriendData> getFriendList(int userID, int count) {
-        return this.profile.getFriendList(userID, count);
+    public ArrayList<FriendData> getFriendList(String currentUserID, int count) {
+        return this.profile.getFriendList(currentUserID, count);
     }
 
     @Override
-    public ArrayList<FriendData> getRequests(int userID, int count) {
+    public ArrayList<FriendData> getRequests(String userID, int count) {
         return this.profile.getRequests(userID, count);
     }
 
     @Override
-    public ProfileData getProfileData(int userID, int currentUserID) {
+    public ProfileData getProfileData(String userID, String currentUserID) {
         return this.profile.getProfileData(userID, currentUserID);
     }
 
     @Override
-    public ProfileData changeReputation(int userID, int currentUserID, boolean increase) {
+    public ProfileData changeReputation(String userID, String currentUserID, boolean increase) {
         return this.profile.changeReputation(userID, currentUserID, increase);
     }
 
     @Override
-    public void setPlaying(int currentUserID, int gameID) {
+    public void setPlaying(String currentUserID, String gameID) {
         this.profile.setPlaying(currentUserID, gameID);
     }
 
     // friends
 
     @Override
-    public void addFriend(int friendID, int currentUserID) {
+    public void addFriend(String friendID, String currentUserID) {
         this.profile.addFriend(friendID, currentUserID);
     }
 
     @Override
-    public void removeFriend(int friendID, int currentUserID) {
+    public void removeFriend(String friendID, String currentUserID) {
         this.profile.removeFriend(friendID, currentUserID);
     }
 
     @Override
-    public void acceptFriend(int friendID, int currentUserID) {
+    public void acceptFriend(String friendID, String currentUserID) {
         this.profile.acceptFriend(friendID, currentUserID);
     }
 
     @Override
-    public void refuseFriend(int friendID, int currentUserID) {
+    public void refuseFriend(String friendID, String currentUserID) {
         this.profile.refuseFriend(friendID, currentUserID);
     }
 
     // conv
 
     @Override
-    public FriendConversationView getMessageWithFriend(int friendID, int currentUserID) {
+    public FriendConversationView getMessageWithFriend(String friendID, String currentUserID) {
         return this.profile.getMessageWithFriend(friendID, currentUserID);
     }
 
     @Override
-    public boolean newConversation(int friendID, int currentUserID) {
+    public boolean newConversation(String friendID, String currentUserID) {
         return this.profile.newConversation(friendID, currentUserID);
     }
 
     @Override
-    public boolean closeConversation(int friendID, int currentUserID) {
+    public boolean closeConversation(String friendID, String currentUserID) {
         return this.profile.closeConversation(friendID, currentUserID);
     }
 
     @Override
-    public MessageData sendMessage(int to, int from, String message) {
+    public MessageData sendMessage(String to, String from, String message) {
         return this.profile.sendMessage(to, from, message);
     }
 }

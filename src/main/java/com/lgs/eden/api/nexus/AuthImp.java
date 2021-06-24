@@ -32,7 +32,7 @@ class AuthImp extends ImpSocket implements AuthAPI {
             if (monitor.isEmpty()) {
                 new Thread(() -> {
                     try {
-                        logout(-1);
+                        logout("-1");
                     } catch (APIException e) {
                         e.printStackTrace();
                     }
@@ -50,7 +50,7 @@ class AuthImp extends ImpSocket implements AuthAPI {
                     if (code == APIResponseCode.LOGIN_OK.code){
                         rep = new LoginResponseData(
                                 code,
-                                o.getInt("user_id"),
+                                o.getString("user_id"),
                                 o.getString("username"),
                                 o.getString("avatar")
                         );
@@ -69,7 +69,7 @@ class AuthImp extends ImpSocket implements AuthAPI {
     }
 
     @Override
-    public void logout(int currentUserID) throws APIException {
+    public void logout(String currentUserID) throws APIException {
         // no connection
         NexusHandler.checkNetwork(this);
         // logout

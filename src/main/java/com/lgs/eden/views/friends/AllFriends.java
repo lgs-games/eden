@@ -28,7 +28,7 @@ public class AllFriends {
 
     // ------------------------------ STATIC ----------------------------- \\
 
-    public static Parent getScreen(int userID) {
+    public static Parent getScreen(String userID) {
         FXMLLoader loader = Utility.loadView(ViewsPath.FRIENDS_LIST.path);
         Parent parent = Utility.loadViewPane(loader);
         AllFriends controller = loader.getController();
@@ -49,7 +49,7 @@ public class AllFriends {
     private FlowPane gotRequested;
 
     /** Init view with user ID */
-    private void init(int userID) {
+    private void init(String userID) {
         ArrayList<FriendData> friendList = API.imp.getFriendList(userID, -1);
 
         // online only

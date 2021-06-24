@@ -1,6 +1,7 @@
 package com.lgs.eden.views.gameslist;
 
 import com.lgs.eden.api.API;
+import com.lgs.eden.api.APIException;
 import com.lgs.eden.api.games.BasicGameData;
 import com.lgs.eden.api.games.GameViewData;
 import com.lgs.eden.api.games.ShortGameViewData;
@@ -20,7 +21,6 @@ import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -132,8 +132,13 @@ public class GameList {
         this.games.setCellFactory(item -> new GameListCell());
 
         // ------------------------------ GAME VIEW ----------------------------- \\
-        // fetch game data
-        this.gameData = API.imp.getGameData(AppWindowHandler.currentUserID(), data.id);
+        try {
+            // fetch game data
+            this.gameData = API.imp.getGameData(AppWindowHandler.currentUserID(), data.id);
+        } catch (APIException e) {
+            PopupUtils.showPopup(e);
+            return;
+        }
 
         // set view texts
         this.gameName.setText(this.gameData.name);
@@ -310,7 +315,7 @@ public class GameList {
             } else {
                 InstallUtils.runGame(gameData, () -> {
                     gameRunning = false;
-                    API.imp.setPlaying(AppWindowHandler.currentUserID(), -1);
+                    API.imp.setPlaying(AppWindowHandler.currentUserID(), "-1");
                 });
                 gameRunning = true;
                 API.imp.setPlaying(AppWindowHandler.currentUserID(), this.gameData.id);

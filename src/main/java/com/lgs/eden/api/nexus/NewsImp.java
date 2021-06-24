@@ -18,8 +18,14 @@ public class NewsImp extends ImpSocket implements NewsAPI {
 
     // ------------------------------ METHODS ----------------------------- \\
 
+
     @Override
-    public ArrayList<BasicNewsData> getAllNews(int begin, int count, String code, int gameID, Language l) {
+    public BasicNewsData getNews(String id) {
+        return null;
+    }
+
+    @Override
+    public ArrayList<BasicNewsData> getAllNews(int begin, int count, String code, String gameID, Language l) {
         return null;
     }
 }

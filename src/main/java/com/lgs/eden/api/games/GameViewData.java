@@ -19,7 +19,7 @@ public class GameViewData extends BasicGameData {
     public final int timePlayed;
     public final GameUpdateData update;
 
-    public GameViewData(int id, String name, String icon,
+    public GameViewData(String id, String name, String icon,
                         String version, BasicNewsData lastNews, String background, int playerAchievements,
                         int numberOfAchievements, int friendsPlaying, int timePlayed, GameUpdateData update) {
         super(id, name, icon);
