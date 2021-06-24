@@ -54,15 +54,21 @@ public class GameList {
     }
 
     public static Parent getScreen(BasicGameData data) {
-        ObservableList<BasicGameData> userGames = API.imp.getUserGames(AppWindowHandler.currentUserID());
-        if (userGames.isEmpty()) {
+        ObservableList<BasicGameData> userGames;
+        try {
+            userGames = API.imp.getUserGames(AppWindowHandler.currentUserID());
+            if (userGames.isEmpty()) {
+                return EmptyGameList.getScreen();
+            } else {
+                FXMLLoader loader = Utility.loadView(ViewsPath.GAMES_LIST.path);
+                Parent parent = Utility.loadViewPane(loader);
+                controller = loader.getController();
+                controller.init(userGames, data);
+                return parent;
+            }
+        } catch (APIException e) {
+            PopupUtils.showPopup(e);
             return EmptyGameList.getScreen();
-        } else {
-            FXMLLoader loader = Utility.loadView(ViewsPath.GAMES_LIST.path);
-            Parent parent = Utility.loadViewPane(loader);
-            controller = loader.getController();
-            controller.init(userGames, data);
-            return parent;
         }
     }
 

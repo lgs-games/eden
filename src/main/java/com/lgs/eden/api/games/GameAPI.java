@@ -38,7 +38,7 @@ public interface GameAPI {
     /**
      * Returns basic data about the game that the user add to his library.
      */
-    ObservableList<BasicGameData> getUserGames(String userID);
+    ObservableList<BasicGameData> getUserGames(String userID) throws APIException;
 
     /**
      * Add a game to the user library. Return false if could not add

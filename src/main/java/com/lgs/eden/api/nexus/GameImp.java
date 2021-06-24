@@ -73,8 +73,39 @@ public class GameImp extends ImpSocket implements GameAPI {
     }
 
     @Override
-    public ObservableList<BasicGameData> getUserGames(String userID) {
-        return FXCollections.observableArrayList();
+    public ObservableList<BasicGameData> getUserGames(String userID) throws APIException {
+        // no connection
+        NexusHandler.checkNetwork(this);
+
+        // register
+        MonitorIO<ObservableList<BasicGameData>> monitor = MonitorIO.createMonitor(this);
+        socket.emit("user-games", (Ack) args -> {
+            ObservableList<BasicGameData> rep = null;
+
+            if (args.length > 0 && args[0] instanceof JSONArray) {
+                try {
+                    JSONArray a = (JSONArray) args[0];
+                    rep = FXCollections.observableArrayList();
+                    for (int i = 0; i < a.length(); i++) {
+                        JSONObject o = (JSONObject) a.get(i);
+                        rep.add(
+                              new BasicGameData(
+                                      o.getString("game_id"),
+                                      o.getString("name"),
+                                      o.getString("icon")
+                              )
+                        );
+                    }
+                } catch (JSONException e) {
+                    rep = null;
+                }
+            }
+
+            monitor.set(rep);
+        });
+
+        // ask for response, can raise Exception
+        return monitor.response();
     }
 
     @Override

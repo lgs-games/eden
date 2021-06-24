@@ -77,7 +77,7 @@ public abstract class APIHandler implements API {
     }
 
     @Override
-    public ObservableList<BasicGameData> getUserGames(String userID) {
+    public ObservableList<BasicGameData> getUserGames(String userID) throws APIException {
         return this.games.getUserGames(userID);
     }
 
