@@ -31,7 +31,7 @@ import java.util.TimerTask;
 public class UpdateWindowHandler {
 
     // todo: temporary bypass
-    private static final boolean CHECK_UPDATES = false;
+    private static final boolean CHECK_UPDATES = true;
 
     // state of our installer
     enum State {

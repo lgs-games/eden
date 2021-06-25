@@ -1,5 +1,6 @@
 package com.lgs.eden.api.nexus;
 
+import com.lgs.eden.api.API;
 import com.lgs.eden.api.APIException;
 import com.lgs.eden.api.games.*;
 import io.socket.client.Ack;
@@ -25,8 +26,20 @@ public class GameImp extends ImpSocket implements GameAPI {
 
     @Override
     public EdenVersionData getEdenVersion(String code, String os) throws APIException {
-        // no connection
-        NexusHandler.checkNetwork(this);
+        // check a bit more times
+        int cumule = 0;
+        while (cumule < 1000){
+            try {
+                Thread.sleep(100);
+                cumule += 100;
+            } catch (InterruptedException ignored){}
+
+            try {
+                // no connection
+                NexusHandler.checkNetwork(this);
+                break;
+            } catch (APIException ignore){}
+        }
 
         MonitorIO<EdenVersionData> monitor = MonitorIO.createMonitor(this);
 
