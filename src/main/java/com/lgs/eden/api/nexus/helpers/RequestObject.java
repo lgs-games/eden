@@ -21,6 +21,13 @@ public interface RequestObject<T> {
     T parse(JSONObject o) throws JSONException, ParseException;
 
     /**
+     * You may call a function when the event
+     * is fired
+     * Return true if cancel
+     */
+    default boolean recall(MonitorIO<T> monitor) { return false; }
+
+    /**
      * We wait for an event, and once we have the result, we parse it using
      * RequestObject and return it.
      *
@@ -35,6 +42,8 @@ public interface RequestObject<T> {
         // register
         MonitorIO<T> monitor = MonitorIO.createMonitor(i);
         i.socket.emit(event, params, args -> {
+            if (r.recall(monitor)) return;
+
             T rep = null;
 
             if (args.length > 0 && args[0] instanceof JSONObject) {

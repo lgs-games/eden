@@ -6,7 +6,7 @@ import com.lgs.eden.api.auth.AuthAPI;
 import com.lgs.eden.api.auth.LoginResponseData;
 import com.lgs.eden.api.nexus.helpers.ImpSocket;
 import com.lgs.eden.api.nexus.helpers.MonitorIO;
-import io.socket.client.Ack;
+import com.lgs.eden.api.nexus.helpers.RequestObject;
 import io.socket.client.Socket;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -25,84 +25,55 @@ class AuthImp extends ImpSocket implements AuthAPI {
 
     @Override
     public LoginResponseData login(String username, String pwd) throws APIException {
-        // no connection
-        NexusHandler.checkNetwork(this);
-
-        MonitorIO<LoginResponseData> monitor = MonitorIO.createMonitor(this);
-        // ask for login
-        socket.emit("login", username, pwd, (Ack) args -> {
-            if (monitor.isEmpty()) {
-                new Thread(() -> {
-                    try {
-                        logout("-1");
-                    } catch (APIException e) {
-                        e.printStackTrace();
-                    }
-                }).start();
-                return;
-            }
-
-            if (args.length > 0 && args[0] instanceof JSONObject){
-                try {
-                    JSONObject o = (JSONObject) args[0];
-                    LoginResponseData rep; // store the response
-                    // get the code
-                    int code = o.getInt("code");
-                    // since ok, get the new rest of the response
-                    if (code == APIResponseCode.LOGIN_OK.code){
-                        rep = new LoginResponseData(
-                                code,
-                                o.getString("user_id"),
-                                o.getString("username"),
-                                o.getString("avatar")
-                        );
-                    } else {
-                        rep = new LoginResponseData(code);
-                    }
-                    // resume execution
-                    monitor.set(rep);
-                } catch (JSONException e) {
-                    monitor.set(null);
+        return RequestObject.requestObject(this, new RequestObject<>() {
+            @Override
+            public LoginResponseData parse(JSONObject o) throws JSONException {
+                // get the code
+                int code = o.getInt("code");
+                // since ok, get the new rest of the response
+                if (code == APIResponseCode.LOGIN_OK.code) {
+                    return new LoginResponseData(
+                            code,
+                            o.getString("user_id"),
+                            o.getString("username"),
+                            o.getString("avatar")
+                    );
                 }
+                return new LoginResponseData(code);
             }
-        });
 
-        return monitor.response();
+            @Override
+            public boolean recall(MonitorIO<LoginResponseData> monitor) {
+                if (monitor.isEmpty()) {
+                    new Thread(() -> {
+                        try {
+                            logout("-1");
+                        } catch (APIException e) {
+                            e.printStackTrace();
+                        }
+                    }).start();
+                    return true;
+                }
+                return false;
+            }
+        }, "login", username, pwd);
     }
 
     @Override
     public void logout(String currentUserID) throws APIException {
-        // no connection
-        NexusHandler.checkNetwork(this);
-        // logout
-        MonitorIO<Object> monitor = MonitorIO.createMonitor(this);
-        socket.emit("logout", (Ack) args -> monitor.set(new Object()));
-        monitor.response();
+        RequestObject.requestObject(this, o -> new Object(), "logout");
     }
 
     @Override
     public APIResponseCode register(String username, String pwd, String email) throws APIException {
-        // no connection
-        NexusHandler.checkNetwork(this);
-
-        // register
-        MonitorIO<APIResponseCode> monitor = MonitorIO.createMonitor(this);
-        socket.emit("register", username, pwd, email, (Ack) args -> {
-            APIResponseCode rep = null;
-            if (args.length > 0 && args[0] instanceof JSONObject) {
-                   try {
-                       JSONObject o = (JSONObject) args[0];
-                       int code = o.getInt("code");
-                       rep = APIResponseCode.fromCode(code);
-                   } catch (JSONException e) {
-                       rep = APIResponseCode.REGISTER_FAILED;
-                   }
+        return RequestObject.requestObject(this, o -> {
+            try {
+                int code = o.getInt("code");
+                return APIResponseCode.fromCode(code);
+            } catch (JSONException e) {
+                return APIResponseCode.REGISTER_FAILED;
             }
-            monitor.set(rep);
-        });
-
-        // ask for response, can raise Exception
-        return monitor.response();
+        }, "register", username, pwd, email);
     }
 
 }
