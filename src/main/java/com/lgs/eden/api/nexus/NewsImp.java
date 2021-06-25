@@ -3,6 +3,8 @@ package com.lgs.eden.api.nexus;
 import com.lgs.eden.api.APIException;
 import com.lgs.eden.api.news.BasicNewsData;
 import com.lgs.eden.api.news.NewsAPI;
+import com.lgs.eden.api.nexus.helpers.ImpSocket;
+import com.lgs.eden.api.nexus.helpers.MonitorIO;
 import io.socket.client.Ack;
 import io.socket.client.Socket;
 import org.json.JSONArray;

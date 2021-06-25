@@ -1,4 +1,4 @@
-package com.lgs.eden.api.nexus;
+package com.lgs.eden.api.nexus.helpers;
 
 import com.lgs.eden.api.APIException;
 import com.lgs.eden.api.APIResponseCode;

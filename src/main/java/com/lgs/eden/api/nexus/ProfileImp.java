@@ -2,6 +2,7 @@ package com.lgs.eden.api.nexus;
 
 import com.lgs.eden.api.APIResponseCode;
 import com.lgs.eden.api.games.AchievementData;
+import com.lgs.eden.api.nexus.helpers.ImpSocket;
 import com.lgs.eden.api.profile.ProfileAPI;
 import com.lgs.eden.api.profile.ProfileData;
 import com.lgs.eden.api.profile.friends.FriendConversationView;

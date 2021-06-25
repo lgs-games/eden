@@ -7,11 +7,11 @@ import com.lgs.eden.api.callback.ConversationsCallback;
 import com.lgs.eden.api.callback.MessagesCallBack;
 import com.lgs.eden.api.callback.NotificationsCallBack;
 import com.lgs.eden.api.news.BasicNewsData;
+import com.lgs.eden.api.nexus.helpers.ImpSocket;
 import com.lgs.eden.api.profile.friends.FriendConversationView;
 import io.socket.client.Ack;
 import io.socket.client.IO;
 import io.socket.client.Socket;
-import io.socket.emitter.Emitter;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -19,7 +19,6 @@ import org.json.JSONObject;
 import java.net.URI;
 import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
@@ -111,7 +110,7 @@ public class NexusHandler extends APIHandler {
      */
     public static void checkNetwork(ImpSocket imp) throws APIException {
         // no connection
-        if (!imp.socket.connected()){
+        if (imp.notConnected()){
             // check a bit more times
             int cumule = 0;
             while (cumule < 2000){
@@ -122,7 +121,7 @@ public class NexusHandler extends APIHandler {
 
                 try {
                     // check again
-                    if (!imp.socket.connected()){ throw new APIException(APIResponseCode.SERVER_UNREACHABLE); }
+                    if (imp.notConnected()){ throw new APIException(APIResponseCode.SERVER_UNREACHABLE); }
                     return;
                 } catch (APIException ignore){}
             }
@@ -133,17 +132,11 @@ public class NexusHandler extends APIHandler {
     /**
      * Convenience method to check for JOB_DONE response code
      */
-    public static Boolean isJobDone(Object[] args) {
-        boolean rep = false;
-
-        if (args.length > 0 && args[0] instanceof JSONObject) {
-            try {
-                JSONObject o = (JSONObject) args[0];
-                rep = APIResponseCode.fromCode(o.getInt("code")).equals(APIResponseCode.JOB_DONE);
-            } catch (JSONException e) {
-                rep = false;
-            }
+    public static Boolean isJobDone(JSONObject o) {
+        try {
+            return APIResponseCode.fromCode(o.getInt("code")).equals(APIResponseCode.JOB_DONE);
+        } catch (JSONException e) {
+            return false;
         }
-        return rep;
     }
 }
