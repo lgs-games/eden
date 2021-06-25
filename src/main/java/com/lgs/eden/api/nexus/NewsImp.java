@@ -1,21 +1,17 @@
 package com.lgs.eden.api.nexus;
 
 import com.lgs.eden.api.APIException;
-import com.lgs.eden.api.games.GameUpdateData;
-import com.lgs.eden.api.games.GameViewData;
 import com.lgs.eden.api.news.BasicNewsData;
 import com.lgs.eden.api.news.NewsAPI;
-import com.lgs.eden.utils.config.Language;
 import io.socket.client.Ack;
 import io.socket.client.Socket;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.Instant;
 import java.util.ArrayList;
-import java.util.Date;
 
 /**
  * Nexus imp of News
@@ -57,8 +53,36 @@ public class NewsImp extends ImpSocket implements NewsAPI {
     }
 
     @Override
-    public ArrayList<BasicNewsData> getAllNews(int begin, int count, String code, String gameID, Language l) {
-        return null;
+    public ArrayList<BasicNewsData> getAllNews(int begin, int count, String gameID, String lang, String os) throws APIException {
+        // no connection
+        NexusHandler.checkNetwork(this);
+
+        // register
+        MonitorIO<ArrayList<BasicNewsData>> monitor = MonitorIO.createMonitor(this);
+        socket.emit("all-news", begin, count, gameID, lang, os, (Ack) args -> {
+            ArrayList<BasicNewsData> rep = null;
+
+            if (args.length > 0 && args[0] instanceof JSONObject) {
+                try {
+                    rep = new ArrayList<>();
+
+                    JSONObject pack = (JSONObject) args[0];
+                    JSONArray a = pack.getJSONArray("entries");
+                    for (int i = 0; i < a.length(); i++) {
+                        JSONObject o = (JSONObject) a.get(i);
+                        rep.add(parseNews(o));
+                    }
+                    BasicNewsData.newsCount = pack.getInt("total");
+                } catch (JSONException | ParseException e){
+                    rep = null;
+                }
+            }
+
+            monitor.set(rep);
+        });
+
+        // ask for response, can raise Exception
+        return monitor.response();
     }
 
     public BasicNewsData parseNews(JSONObject o) throws JSONException, ParseException {

@@ -19,7 +19,7 @@ public class NewsHandler implements NewsAPI {
     }
 
     @Override
-    public ArrayList<BasicNewsData> getAllNews(int begin, int count, String code, String gameID, Language language) {
+    public ArrayList<BasicNewsData> getAllNews(int begin, int count, String gameID, String lang, String os) {
         ArrayList<BasicNewsData> news = new ArrayList<>();
         BasicNewsData prim = new BasicNewsData(
                 "Version 3.1.0 released",

@@ -141,8 +141,8 @@ public class GameList {
         try {
             // fetch game data
             this.gameData = API.imp.getGameData(AppWindowHandler.currentUserID(), data.id,
-                    Config.getLanguage().code,
-                    Utility.getUserOS().toString());
+                    Config.getCode(),
+                    Config.getOS());
         } catch (APIException e) {
             PopupUtils.showPopup(e);
             return;

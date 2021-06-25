@@ -20,6 +20,6 @@ public interface NewsAPI {
      * You can choose the lang and must submit a game ID. Result is sorted by the newest
      * first. {@link BasicNewsData#newsCount} is set with the total number of news for this game.
      */
-    ArrayList<BasicNewsData> getAllNews(int begin, int count, String code, String gameID, Language l);
+    ArrayList<BasicNewsData> getAllNews(int begin, int count, String gameID, String lang, String os) throws APIException;
 
 }

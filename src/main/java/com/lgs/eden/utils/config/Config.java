@@ -34,6 +34,8 @@ public class Config {
      */
     public static Image appIcon() {return Utility.loadImage("/icon64.png");}
 
+    public static String getOS() { return Utility.getUserOS().toString(); }
+
     // ------------------------------ LANGUAGE RELATED ----------------------------- \\
 
     // return locale

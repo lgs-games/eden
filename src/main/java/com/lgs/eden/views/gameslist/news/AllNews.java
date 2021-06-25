@@ -1,7 +1,9 @@
 package com.lgs.eden.views.gameslist.news;
 
 import com.lgs.eden.api.API;
+import com.lgs.eden.api.APIException;
 import com.lgs.eden.api.news.BasicNewsData;
+import com.lgs.eden.application.PopupUtils;
 import com.lgs.eden.utils.Translate;
 import com.lgs.eden.utils.Utility;
 import com.lgs.eden.utils.ViewsPath;
@@ -48,7 +50,13 @@ public class AllNews {
     private void init(String gameID) {
         this.pagination.setPageFactory(pageIndex -> {
             // get the news for our page
-            ArrayList<BasicNewsData> allNews = API.imp.getAllNews(pageIndex, COUNT_PER_PAGE, Config.getCode(), gameID, Config.getLanguage());
+            ArrayList<BasicNewsData> allNews = null;
+            try {
+                allNews = API.imp.getAllNews(pageIndex, COUNT_PER_PAGE, gameID, Config.getCode(), Config.getOS());
+            } catch (APIException e) {
+                PopupUtils.showPopup(e);
+                allNews = new ArrayList<>();
+            }
             // set max page
             this.pagination.setPageCount((int) Math.ceil((double) BasicNewsData.newsCount / COUNT_PER_PAGE));
             // clear old view

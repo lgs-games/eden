@@ -99,8 +99,8 @@ public abstract class APIHandler implements API {
     // ------------------------------ NEWS ----------------------------- \\
 
     @Override
-    public ArrayList<BasicNewsData> getAllNews(int begin, int count, String code, String gameID, Language l) {
-        return this.news.getAllNews(begin, count, code, gameID, l);
+    public ArrayList<BasicNewsData> getAllNews(int begin, int count, String gameID, String lang, String os) throws APIException {
+        return this.news.getAllNews(begin, count, gameID, lang, os);
     }
 
     @Override
