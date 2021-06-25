@@ -66,7 +66,10 @@ public class News {
                 .build();
 
         WebEngine engine = this.newsContent.getEngine();
-        engine.loadContent("<html>" +
+        engine.loadContent("<html lang='fr'>" +
+                "<head>" +
+                "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" />" +
+                "<meta charset='UTF-8'>" +
                 "<style>" +
                 "body {\n" +
                 "    font-family: Segoe UI,Helvetica,Arial,sans-serif;\n" +
@@ -84,10 +87,11 @@ public class News {
                 "    color: #FFCC33;\n" +
                 "}" +
                 "</style>" +
+                "</head>"+
                 "<body>"
                 + renderer.render(document)
                 + "</body>"
-        );
+                + "</html>");
 
         // disabled right-click
         newsContent.setContextMenuEnabled(false);

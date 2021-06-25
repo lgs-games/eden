@@ -9,6 +9,7 @@ import javafx.scene.image.Image;
 import javax.net.ssl.HttpsURLConnection;
 import java.awt.*;
 import java.io.BufferedReader;
+import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URI;
@@ -136,7 +137,9 @@ public final class Utility {
                 HttpsURLConnection.setFollowRedirects(false);
                 HttpsURLConnection connection = (HttpsURLConnection) new URL(source).openConnection();
                 // open
-                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                BufferedReader bufferedReader = new BufferedReader(
+                        new InputStreamReader(connection.getInputStream(), StandardCharsets.UTF_8)
+                );
                 // read
                 StringBuilder buffer = new StringBuilder();
                 String line;
