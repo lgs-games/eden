@@ -144,7 +144,7 @@ public class UpdateWindowHandler {
             if (CHECK_UPDATES) {
                 System.out.println("Checking client version...");
                 try {
-                    edenVersion = API.imp.getEdenVersion();
+                    edenVersion = API.imp.getEdenVersion(Config.getCode(), Config.getOS());
                 } catch (APIException e) {
                     PopupUtils.showPopup(e, true);
                     return;

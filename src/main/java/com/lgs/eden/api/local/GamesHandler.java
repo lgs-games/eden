@@ -19,7 +19,7 @@ class GamesHandler implements GameAPI {
     private ObservableList<BasicGameData> games = null;
 
     @Override
-    public EdenVersionData getEdenVersion() {
+    public EdenVersionData getEdenVersion(String code, String os) {
         APIHelper.fakeDelay(1000);
         return new EdenVersionData(
                 "1.0.0",

@@ -93,6 +93,9 @@ public class NexusHandler extends APIHandler {
         if (!imp.socket.connected()){ throw new APIException(APIResponseCode.SERVER_UNREACHABLE); }
     }
 
+    /**
+     * Convenience method to check for JOB_DONE response code
+     */
     public static Boolean isJobDone(Object[] args) {
         boolean rep = false;
 

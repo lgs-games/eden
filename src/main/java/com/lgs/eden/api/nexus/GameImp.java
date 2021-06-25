@@ -1,7 +1,6 @@
 package com.lgs.eden.api.nexus;
 
 import com.lgs.eden.api.APIException;
-import com.lgs.eden.api.APIResponseCode;
 import com.lgs.eden.api.games.*;
 import io.socket.client.Ack;
 import io.socket.client.Socket;
@@ -25,8 +24,34 @@ public class GameImp extends ImpSocket implements GameAPI {
     // ------------------------------ METHODS ----------------------------- \\
 
     @Override
-    public EdenVersionData getEdenVersion() {
-        return null;
+    public EdenVersionData getEdenVersion(String code, String os) throws APIException {
+        // no connection
+        NexusHandler.checkNetwork(this);
+
+        MonitorIO<EdenVersionData> monitor = MonitorIO.createMonitor(this);
+
+        socket.emit("eden", code, os, (Ack) args -> {
+            EdenVersionData rep = null;
+
+            if (args.length > 0 && args[0] instanceof JSONObject) {
+                try {
+                    JSONObject o = (JSONObject) args[0];
+                    rep = new EdenVersionData(
+                            o.getString("version"),
+                            o.getString("url"),
+                            -1
+                    );
+
+                } catch (JSONException e) {
+                    rep = null;
+                }
+            }
+
+            monitor.set(rep);
+        });
+
+        // ask for response, can raise Exception
+        return monitor.response();
     }
 
     @Override

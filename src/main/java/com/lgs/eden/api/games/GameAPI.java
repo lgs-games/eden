@@ -13,7 +13,7 @@ public interface GameAPI {
     /**
      * Simply check EdenVersionData
      */
-    EdenVersionData getEdenVersion() throws APIException;
+    EdenVersionData getEdenVersion(String code, String os) throws APIException;
 
     /**
      * Ask the API for all the game in the marketplace.
