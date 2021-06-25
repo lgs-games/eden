@@ -3,6 +3,7 @@ package com.lgs.eden.api.nexus;
 import com.lgs.eden.api.APIException;
 import com.lgs.eden.api.APIHandler;
 import com.lgs.eden.api.APIResponseCode;
+import com.lgs.eden.api.callback.CallBackAPI;
 import com.lgs.eden.api.callback.ConversationsCallback;
 import com.lgs.eden.api.callback.MessagesCallBack;
 import com.lgs.eden.api.callback.NotificationsCallBack;
@@ -28,7 +29,6 @@ public class NexusHandler extends APIHandler {
 
     private static final AtomicReference<String> oldID = new AtomicReference<>();
     private static APIHandler instance;
-    private final Socket socket;
 
     public static APIHandler getInstance() {
         if (instance == null) {
@@ -47,9 +47,7 @@ public class NexusHandler extends APIHandler {
                 synchronized (oldID){
                     String id = oldID.get();
                     if (id != null){ // first
-                        socket.emit("resume", id, (Ack) args1 -> {
-                            oldID.set(socket.id()+"");
-                        });
+                        socket.emit("resume", id, (Ack) args1 -> oldID.set(socket.id()+""));
                     } else {
                         oldID.set(socket.id()+"");
                     }
@@ -60,9 +58,15 @@ public class NexusHandler extends APIHandler {
         return instance;
     }
 
+    // ------------------------------ INSTANCE ----------------------------- \\
+
+    private final Socket socket;
+    private final CallBackAPI callback;
+
     private NexusHandler(Socket socket) {
         super(new AuthImp(socket), new GameImp(socket), new ProfileImp(socket), new NewsImp(socket));
         this.socket = socket;
+        this.callback = new CallBackImp(socket);
 
         // set parent
         ((ImpSocket)this.games).setParent(this);
@@ -86,12 +90,12 @@ public class NexusHandler extends APIHandler {
 
     @Override
     public void setNotificationsCallBack(NotificationsCallBack callBack, String currentUserID) {
-
+        this.callback.setNotificationsCallBack(callBack, currentUserID);
     }
 
     @Override
     public void setMessagesCallBack(MessagesCallBack callBack, ConversationsCallback c, FriendConversationView conv) {
-
+        this.callback.setMessagesCallBack(callBack, c, conv);
     }
 
     // ------------------------------ HELP ----------------------------- \\
