@@ -8,8 +8,10 @@ import com.lgs.eden.api.callback.MessagesCallBack;
 import com.lgs.eden.api.callback.NotificationsCallBack;
 import com.lgs.eden.api.news.BasicNewsData;
 import com.lgs.eden.api.profile.friends.FriendConversationView;
+import io.socket.client.Ack;
 import io.socket.client.IO;
 import io.socket.client.Socket;
+import io.socket.emitter.Emitter;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -17,18 +19,22 @@ import org.json.JSONObject;
 import java.net.URI;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * Handler for Nexus API
  */
 public class NexusHandler extends APIHandler {
 
+    private static final AtomicReference<String> oldID = new AtomicReference<>();
     private static APIHandler instance;
     private final Socket socket;
 
     public static APIHandler getInstance() {
         if (instance == null) {
-            URI uri = URI.create("http://localhost:3000");
+            // URI uri = URI.create("http://localhost:3000");
+            URI uri = URI.create("https://lgs-games.com:3000/");
             IO.Options options = IO.Options.builder()
                     .setForceNew(false)
                     .setTimeout(-1)
@@ -36,6 +42,18 @@ public class NexusHandler extends APIHandler {
 
             Socket socket = IO.socket(uri, options);
             socket.open();
+             socket.on(Socket.EVENT_CONNECT, args -> {
+                synchronized (oldID){
+                    String id = oldID.get();
+                    if (id != null){ // first
+                        socket.emit("resume", id, (Ack) args1 -> {
+                            oldID.set(socket.id()+"");
+                        });
+                    } else {
+                        oldID.set(socket.id()+"");
+                    }
+                }
+             });
             instance = new NexusHandler(socket);
         }
         return instance;
@@ -90,7 +108,24 @@ public class NexusHandler extends APIHandler {
      * Raise Exception is SERVER_UNREACHABLE
      */
     public static void checkNetwork(ImpSocket imp) throws APIException {
-        if (!imp.socket.connected()){ throw new APIException(APIResponseCode.SERVER_UNREACHABLE); }
+        // no connection
+        if (!imp.socket.connected()){
+            // check a bit more times
+            int cumule = 0;
+            while (cumule < 2000){
+                try {
+                    Thread.sleep(100);
+                    cumule += 100;
+                } catch (InterruptedException ignored){}
+
+                try {
+                    // check again
+                    if (!imp.socket.connected()){ throw new APIException(APIResponseCode.SERVER_UNREACHABLE); }
+                    return;
+                } catch (APIException ignore){}
+            }
+            throw new APIException(APIResponseCode.SERVER_UNREACHABLE);
+        }
     }
 
     /**
