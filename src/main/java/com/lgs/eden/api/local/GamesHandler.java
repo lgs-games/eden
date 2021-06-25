@@ -63,7 +63,7 @@ class GamesHandler implements GameAPI {
     }
 
     @Override
-    public GameViewData getGameData(String userID, String gameID) {
+    public GameViewData getGameData(String userID, String gameID, String lang, String os) {
         if (gameID.equals("0")) {
             BasicNewsData prim = new BasicNewsData(
                     "Version 3.1.0 released",

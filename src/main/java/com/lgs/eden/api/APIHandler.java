@@ -72,8 +72,8 @@ public abstract class APIHandler implements API {
     }
 
     @Override
-    public GameViewData getGameData(String userID, String gameID) throws APIException {
-        return this.games.getGameData(userID, gameID);
+    public GameViewData getGameData(String userID, String gameID, String lang, String os) throws APIException {
+        return this.games.getGameData(userID, gameID, lang, os);
     }
 
     @Override

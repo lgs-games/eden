@@ -140,7 +140,9 @@ public class GameList {
         // ------------------------------ GAME VIEW ----------------------------- \\
         try {
             // fetch game data
-            this.gameData = API.imp.getGameData(AppWindowHandler.currentUserID(), data.id);
+            this.gameData = API.imp.getGameData(AppWindowHandler.currentUserID(), data.id,
+                    Config.getLanguage().code,
+                    Utility.getUserOS().toString());
         } catch (APIException e) {
             PopupUtils.showPopup(e);
             return;

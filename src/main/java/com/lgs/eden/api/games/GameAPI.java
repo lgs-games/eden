@@ -33,7 +33,7 @@ public interface GameAPI {
      * and information such as the number of friends playing, the achievement-related information, ...
      * Mainly used to render for an user, the information about one game.
      */
-    GameViewData getGameData(String userID, String gameID) throws APIException;
+    GameViewData getGameData(String userID, String gameID, String lang, String os) throws APIException;
 
     /**
      * Returns basic data about the game that the user add to his library.

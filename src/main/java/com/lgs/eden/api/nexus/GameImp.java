@@ -29,13 +29,13 @@ public class GameImp extends ImpSocket implements GameAPI {
     }
 
     @Override
-    public GameViewData getGameData(String userID, String gameID) throws APIException {
+    public GameViewData getGameData(String userID, String gameID, String lang, String os) throws APIException {
         // no connection
         NexusHandler.checkNetwork(this);
 
         // register
         MonitorIO<GameViewData> monitor = MonitorIO.createMonitor(this);
-        socket.emit("game", gameID, (Ack) args -> {
+        socket.emit("game", gameID, lang, os, (Ack) args -> {
             GameViewData rep = null;
 
             if (args.length > 0 && args[0] instanceof JSONObject) {
