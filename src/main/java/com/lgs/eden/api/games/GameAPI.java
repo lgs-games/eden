@@ -55,5 +55,5 @@ public interface GameAPI {
     /**
      * Returns some part of the view that will be updated when update is requested.
      */
-    ShortGameViewData getGameDateUpdate(String userID, String gameID);
+    ShortGameViewData getGameDateUpdate(String userID, String gameID) throws APIException;
 }

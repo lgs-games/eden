@@ -81,7 +81,7 @@ public abstract class APIHandler implements API {
     }
 
     @Override
-    public ShortGameViewData getGameDateUpdate(String userID, String gameID) {
+    public ShortGameViewData getGameDateUpdate(String userID, String gameID) throws APIException {
         return this.games.getGameDateUpdate(userID, gameID);
     }
 

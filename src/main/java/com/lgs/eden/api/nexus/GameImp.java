@@ -202,7 +202,32 @@ public class GameImp extends ImpSocket implements GameAPI {
     }
 
     @Override
-    public ShortGameViewData getGameDateUpdate(String userID, String gameID) {
-        return null;
+    public ShortGameViewData getGameDateUpdate(String userID, String gameID) throws APIException {
+        // no connection
+        NexusHandler.checkNetwork(this);
+
+        // register
+        MonitorIO<ShortGameViewData> monitor = MonitorIO.createMonitor(this);
+        socket.emit("update-data", gameID, (Ack) args -> {
+            ShortGameViewData rep = null;
+
+            if (args.length > 0 && args[0] instanceof JSONObject) {
+                try {
+                    JSONObject o = (JSONObject) args[0];
+                    rep = new ShortGameViewData(
+                            o.getInt("player_achievements"),
+                            o.getInt("friends_playing"),
+                            o.getInt("time_played")
+                    );
+                } catch (JSONException e){
+                    rep = null;
+                }
+            }
+
+            monitor.set(rep);
+        });
+
+        // ask for response, can raise Exception
+        return monitor.response();
     }
 }

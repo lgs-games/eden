@@ -285,18 +285,22 @@ public class GameList {
         Timer timer = new Timer();
         timer.scheduleAtFixedRate(new RotateUpdate(image), 0, 150);
         ApplicationCloseHandler.startUpdateThread(timer, () -> {
-            ShortGameViewData view = API.imp.getGameDateUpdate(AppWindowHandler.currentUserID(), this.gameData.id);
-            // changes values
-            Platform.runLater(() -> {
-                this.achievementCount.setText("" + view.playerAchievements);
-                this.friendsPlaying.setText("" + view.friendsPlaying);
-                this.timePlayed.setText("" + view.timePlayed);
-                // done
-                this.calledUpdate = false;
-                image.setRotate(0); // reset
-                // close
-                ApplicationCloseHandler.closeUpdateThread();
-            });
+            try {
+                ShortGameViewData view = API.imp.getGameDateUpdate(AppWindowHandler.currentUserID(), this.gameData.id);
+                // changes values
+                Platform.runLater(() -> {
+                    this.achievementCount.setText("" + view.playerAchievements);
+                    this.friendsPlaying.setText("" + view.friendsPlaying);
+                    this.timePlayed.setText("" + view.timePlayed);
+                    // done
+                    this.calledUpdate = false;
+                    image.setRotate(0); // reset
+                    // close
+                    ApplicationCloseHandler.closeUpdateThread();
+                });
+            } catch (APIException e) {
+                PopupUtils.showPopup(e);
+            }
         });
     }
 
