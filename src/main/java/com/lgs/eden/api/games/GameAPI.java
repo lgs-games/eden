@@ -44,13 +44,13 @@ public interface GameAPI {
      * Add a game to the user library. Return false if could not add
      * this game.
      */
-    boolean addToLibrary(String userID, BasicGameData game);
+    boolean addToLibrary(String userID, BasicGameData game) throws APIException;
 
     /**
      * Remove a game to the user library. Return false if could not remove
      * this game.
      */
-    boolean removeFromLibrary(String userID, BasicGameData game);
+    boolean removeFromLibrary(String userID, BasicGameData game) throws APIException;
 
     /**
      * Returns some part of the view that will be updated when update is requested.

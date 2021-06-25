@@ -92,4 +92,18 @@ public class NexusHandler extends APIHandler {
     public static void checkNetwork(ImpSocket imp) throws APIException {
         if (!imp.socket.connected()){ throw new APIException(APIResponseCode.SERVER_UNREACHABLE); }
     }
+
+    public static Boolean isJobDone(Object[] args) {
+        boolean rep = false;
+
+        if (args.length > 0 && args[0] instanceof JSONObject) {
+            try {
+                JSONObject o = (JSONObject) args[0];
+                rep = APIResponseCode.fromCode(o.getInt("code")).equals(APIResponseCode.JOB_DONE);
+            } catch (JSONException e) {
+                rep = false;
+            }
+        }
+        return rep;
+    }
 }

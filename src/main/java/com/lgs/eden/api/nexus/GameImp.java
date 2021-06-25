@@ -1,6 +1,7 @@
 package com.lgs.eden.api.nexus;
 
 import com.lgs.eden.api.APIException;
+import com.lgs.eden.api.APIResponseCode;
 import com.lgs.eden.api.games.*;
 import io.socket.client.Ack;
 import io.socket.client.Socket;
@@ -150,13 +151,29 @@ public class GameImp extends ImpSocket implements GameAPI {
     }
 
     @Override
-    public boolean addToLibrary(String userID, BasicGameData game) {
-        return false;
+    public boolean addToLibrary(String userID, BasicGameData game) throws APIException {
+        // no connection
+        NexusHandler.checkNetwork(this);
+
+        // register
+        MonitorIO<Boolean> monitor = MonitorIO.createMonitor(this);
+        socket.emit("library-add", (Ack) args -> monitor.set(NexusHandler.isJobDone(args)));
+
+        // ask for response, can raise Exception
+        return monitor.response();
     }
 
     @Override
-    public boolean removeFromLibrary(String userID, BasicGameData game) {
-        return false;
+    public boolean removeFromLibrary(String userID, BasicGameData game) throws APIException {
+        // no connection
+        NexusHandler.checkNetwork(this);
+
+        // register
+        MonitorIO<Boolean> monitor = MonitorIO.createMonitor(this);
+        socket.emit("library-remove", (Ack) args -> monitor.set(NexusHandler.isJobDone(args)));
+
+        // ask for response, can raise Exception
+        return monitor.response();
     }
 
     @Override

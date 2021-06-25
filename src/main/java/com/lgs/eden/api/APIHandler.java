@@ -87,12 +87,12 @@ public abstract class APIHandler implements API {
     }
 
     @Override
-    public boolean addToLibrary(String userID, BasicGameData game) {
+    public boolean addToLibrary(String userID, BasicGameData game) throws APIException {
         return this.games.addToLibrary(userID, game);
     }
 
     @Override
-    public boolean removeFromLibrary(String userID, BasicGameData game) {
+    public boolean removeFromLibrary(String userID, BasicGameData game) throws APIException {
         return this.games.removeFromLibrary(userID, game);
     }
 
