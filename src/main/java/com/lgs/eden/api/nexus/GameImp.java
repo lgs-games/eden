@@ -1,17 +1,14 @@
 package com.lgs.eden.api.nexus;
 
-import com.lgs.eden.api.API;
 import com.lgs.eden.api.APIException;
 import com.lgs.eden.api.games.*;
-import io.socket.client.Ack;
+import com.lgs.eden.api.nexus.helpers.ImpSocket;
+import com.lgs.eden.api.nexus.helpers.RequestArray;
+import com.lgs.eden.api.nexus.helpers.RequestObject;
 import io.socket.client.Socket;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
-import java.text.ParseException;
 import java.util.ArrayList;
 
 /**
@@ -26,208 +23,80 @@ public class GameImp extends ImpSocket implements GameAPI {
 
     @Override
     public EdenVersionData getEdenVersion(String code, String os) throws APIException {
-        NexusHandler.checkNetwork(this);
-
-        MonitorIO<EdenVersionData> monitor = MonitorIO.createMonitor(this);
-
-        socket.emit("eden", code, os, (Ack) args -> {
-            EdenVersionData rep = null;
-
-            if (args.length > 0 && args[0] instanceof JSONObject) {
-                try {
-                    JSONObject o = (JSONObject) args[0];
-                    rep = new EdenVersionData(
-                            o.getString("version"),
-                            o.getString("url"),
-                            -1
-                    );
-
-                } catch (JSONException e) {
-                    rep = null;
-                }
-            }
-
-            monitor.set(rep);
-        });
-
-        // ask for response, can raise Exception
-        return monitor.response();
+        return RequestObject.requestObject(this, o -> new EdenVersionData(
+                o.getString("version"),
+                o.getString("url"),
+                -1
+        ), "eden", code, os);
     }
 
     @Override
     public GameViewData getGameData(String userID, String gameID, String lang, String os) throws APIException {
-        // no connection
-        NexusHandler.checkNetwork(this);
+        return RequestObject.requestObject(this, o -> new GameViewData(
+                o.getString("game_id"),
+                o.getString("name"),
+                o.getString("icon"),
+                o.getString("version"),
+                ((NexusHandler)parent).parseNews(o.getJSONObject("last_news_id")),
+                o.getString("background"),
+                o.getInt("player_achievements"),
+                o.getInt("number_of_achievements"),
+                o.getInt("friends_playing"),
+                o.getInt("time_played"),
+                new GameUpdateData(
+                        o.getString("latest"),
+                        o.getString("new_version_url"),
+                        o.getString("game_run"),
+                        o.getString("game_uninstall"),
+                        -1
+                )
 
-        // register
-        MonitorIO<GameViewData> monitor = MonitorIO.createMonitor(this);
-        socket.emit("game", gameID, lang, os, (Ack) args -> {
-            GameViewData rep = null;
-
-            if (args.length > 0 && args[0] instanceof JSONObject) {
-                try {
-                    JSONObject o = (JSONObject) args[0];
-                    rep = new GameViewData(
-                            o.getString("game_id"),
-                            o.getString("name"),
-                            o.getString("icon"),
-                            o.getString("version"),
-                            ((NexusHandler)parent).parseNews(o.getJSONObject("last_news_id")),
-                            o.getString("background"),
-                            o.getInt("player_achievements"),
-                            o.getInt("number_of_achievements"),
-                            o.getInt("friends_playing"),
-                            o.getInt("time_played"),
-                            new GameUpdateData(
-                                    o.getString("latest"),
-                                    o.getString("new_version_url"),
-                                    o.getString("game_run"),
-                                    o.getString("game_uninstall"),
-                                    -1
-                            )
-
-                    );
-                } catch (JSONException | ParseException e) {
-                    rep = null;
-                }
-            }
-
-            monitor.set(rep);
-        });
-
-        // ask for response, can raise Exception
-        return monitor.response();
+        ), "game", gameID, lang, os);
     }
 
     @Override
     public ObservableList<BasicGameData> getUserGames(String userID) throws APIException {
-        // no connection
-        NexusHandler.checkNetwork(this);
-
-        // register
-        MonitorIO<ObservableList<BasicGameData>> monitor = MonitorIO.createMonitor(this);
-        socket.emit("user-games", (Ack) args -> {
-            ObservableList<BasicGameData> rep = null;
-
-            if (args.length > 0 && args[0] instanceof JSONArray) {
-                try {
-                    JSONArray a = (JSONArray) args[0];
-                    rep = FXCollections.observableArrayList();
-                    for (int i = 0; i < a.length(); i++) {
-                        JSONObject o = (JSONObject) a.get(i);
-                        rep.add(
-                              new BasicGameData(
-                                      o.getString("game_id"),
-                                      o.getString("name"),
-                                      o.getString("icon")
-                              )
-                        );
-                    }
-                } catch (JSONException e) {
-                    rep = null;
-                }
-            }
-
-            monitor.set(rep);
-        });
-
-        // ask for response, can raise Exception
-        return monitor.response();
+        return FXCollections.observableArrayList(
+                RequestArray.requestArray(this, o -> new BasicGameData(
+                        o.getString("game_id"),
+                        o.getString("name"),
+                        o.getString("icon")
+                ), "user-games")
+        );
     }
 
     @Override
     public ArrayList<MarketplaceGameData> getMarketPlaceGames(int begin, int count, String code, String userID, String os) throws APIException {
-        // no connection
-        NexusHandler.checkNetwork(this);
-
-        // register
-        MonitorIO<ArrayList<MarketplaceGameData>> monitor = MonitorIO.createMonitor(this);
-        socket.emit("marketplace", begin, count, code, os, (Ack) args -> {
-            ArrayList<MarketplaceGameData> rep = null;
-            if (args.length > 0 && args[0] instanceof JSONArray) {
-                try {
-                    JSONArray array = (JSONArray) args[0];
-                    rep = new ArrayList<>();
-                    // valid
-                    for (int i = 0; i < array.length(); i++) {
-                        JSONObject o = (JSONObject) array.get(i);
-                        rep.add(new MarketplaceGameData(
-                                o.getString("game_id"),
-                                o.getString("name"),
-                                o.getString("version"),
-                                o.getString("size"),
-                                o.getString("desc"),
-                                o.getString("icon"),
-                                o.getString("image"),
-                                NexusHandler.toArrayList(o.getJSONArray("tags")),
-                                NexusHandler.toArrayList(o.getJSONArray("languages")),
-                                o.getBoolean("in_library")
-                        ));
-                    }
-                } catch (JSONException e) {
-                    rep = null;
-                }
-            }
-            monitor.set(rep);
-        });
-
-        // ask for response, can raise Exception
-        return monitor.response();
+        return RequestArray.requestArray(this, o -> new MarketplaceGameData(
+                o.getString("game_id"),
+                o.getString("name"),
+                o.getString("version"),
+                o.getString("size"),
+                o.getString("desc"),
+                o.getString("icon"),
+                o.getString("image"),
+                NexusHandler.toArrayList(o.getJSONArray("tags")),
+                NexusHandler.toArrayList(o.getJSONArray("languages")),
+                o.getBoolean("in_library")
+        ), "marketplace", begin, count, code, os);
     }
 
     @Override
     public boolean addToLibrary(String userID, BasicGameData game) throws APIException {
-        // no connection
-        NexusHandler.checkNetwork(this);
-
-        // register
-        MonitorIO<Boolean> monitor = MonitorIO.createMonitor(this);
-        socket.emit("library-add", (Ack) args -> monitor.set(NexusHandler.isJobDone(args)));
-
-        // ask for response, can raise Exception
-        return monitor.response();
+        return RequestObject.requestObject(this, NexusHandler::isJobDone, "library-add");
     }
 
     @Override
     public boolean removeFromLibrary(String userID, BasicGameData game) throws APIException {
-        // no connection
-        NexusHandler.checkNetwork(this);
-
-        // register
-        MonitorIO<Boolean> monitor = MonitorIO.createMonitor(this);
-        socket.emit("library-remove", (Ack) args -> monitor.set(NexusHandler.isJobDone(args)));
-
-        // ask for response, can raise Exception
-        return monitor.response();
+        return RequestObject.requestObject(this, NexusHandler::isJobDone, "library-remove");
     }
 
     @Override
     public ShortGameViewData getGameDateUpdate(String userID, String gameID) throws APIException {
-        // no connection
-        NexusHandler.checkNetwork(this);
-
-        // register
-        MonitorIO<ShortGameViewData> monitor = MonitorIO.createMonitor(this);
-        socket.emit("update-data", gameID, (Ack) args -> {
-            ShortGameViewData rep = null;
-
-            if (args.length > 0 && args[0] instanceof JSONObject) {
-                try {
-                    JSONObject o = (JSONObject) args[0];
-                    rep = new ShortGameViewData(
-                            o.getInt("player_achievements"),
-                            o.getInt("friends_playing"),
-                            o.getInt("time_played")
-                    );
-                } catch (JSONException e){
-                    rep = null;
-                }
-            }
-
-            monitor.set(rep);
-        });
-
-        // ask for response, can raise Exception
-        return monitor.response();
+        return RequestObject.requestObject(this, o -> new ShortGameViewData(
+                o.getInt("player_achievements"),
+                o.getInt("friends_playing"),
+                o.getInt("time_played")
+        ), "update-data", gameID);
     }
 }
