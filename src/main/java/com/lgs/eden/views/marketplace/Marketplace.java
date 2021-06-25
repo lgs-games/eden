@@ -47,7 +47,7 @@ public class Marketplace {
             ArrayList<MarketplaceGameData> games;
             try {
                 games = API.imp.getMarketPlaceGames(pageIndex, COUNT_PER_PAGE,
-                        Config.getCode(), AppWindowHandler.currentUserID());
+                        Config.getCode(), AppWindowHandler.currentUserID(), Utility.getUserOS().toString());
             } catch (APIException e) {
                 // handle error
                 PopupUtils.showPopup(e);

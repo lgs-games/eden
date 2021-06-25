@@ -2,6 +2,7 @@ import com.lgs.eden.api.API;
 import com.lgs.eden.api.APIException;
 import com.lgs.eden.api.auth.LoginResponseData;
 import com.lgs.eden.api.games.MarketplaceGameData;
+import com.lgs.eden.utils.config.OperatingSystem;
 
 import java.util.ArrayList;
 
@@ -18,7 +19,8 @@ public class TestIO {
             LoginResponseData login = API.imp.login("Raphik", "tester");
             System.out.println(login);
 
-            ArrayList<MarketplaceGameData> games = API.imp.getMarketPlaceGames(0, 4, "en", login.userID);
+            ArrayList<MarketplaceGameData> games = API.imp.getMarketPlaceGames(0, 4, "en", login.userID,
+                    OperatingSystem.WINDOWS.toString());
             System.out.println(games);
 
             Thread.sleep(5000);

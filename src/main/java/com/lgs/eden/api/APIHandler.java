@@ -67,8 +67,8 @@ public abstract class APIHandler implements API {
     }
 
     @Override
-    public ArrayList<MarketplaceGameData> getMarketPlaceGames(int begin, int count, String code, String userID) throws APIException {
-        return this.games.getMarketPlaceGames(begin, count, code, userID);
+    public ArrayList<MarketplaceGameData> getMarketPlaceGames(int begin, int count, String code, String userID, String os) throws APIException {
+        return this.games.getMarketPlaceGames(begin, count, code, userID, os);
     }
 
     @Override

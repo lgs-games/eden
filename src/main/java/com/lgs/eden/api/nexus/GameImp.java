@@ -110,13 +110,13 @@ public class GameImp extends ImpSocket implements GameAPI {
     }
 
     @Override
-    public ArrayList<MarketplaceGameData> getMarketPlaceGames(int begin, int count, String code, String userID) throws APIException {
+    public ArrayList<MarketplaceGameData> getMarketPlaceGames(int begin, int count, String code, String userID, String os) throws APIException {
         // no connection
         NexusHandler.checkNetwork(this);
 
         // register
         MonitorIO<ArrayList<MarketplaceGameData>> monitor = MonitorIO.createMonitor(this);
-        socket.emit("marketplace", begin, count, (Ack) args -> {
+        socket.emit("marketplace", begin, count, code, os, (Ack) args -> {
             ArrayList<MarketplaceGameData> rep = null;
             if (args.length > 0 && args[0] instanceof JSONArray) {
                 try {
