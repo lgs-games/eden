@@ -11,6 +11,7 @@ public enum APIResponseCode {
     TOO_MANY_REQUESTS(1),
     INVALID_API_USAGE(5),
     JOB_DONE(7),
+    JOB_NOT_DONE(8),
 
     LOGIN_OK(10),
     LOGIN_INVALID(11),
