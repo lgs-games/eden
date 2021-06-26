@@ -41,6 +41,9 @@ public class CallBackImp extends ImpSocket implements CallBackAPI {
             // fire callback
             callBack.onCall(list);
         });
+
+        // tell server we are ready
+        socket.emit("new-event");
     }
 
     @Override
