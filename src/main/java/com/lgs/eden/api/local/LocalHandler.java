@@ -43,6 +43,11 @@ public class LocalHandler extends APIHandler {
     private FriendConversationView conv;
 
     @Override
+    public ArrayList<APIResponseCode> lookForNotifications(String currentUserID) {
+        return ((ProfileHandler)this.profile).lookForNotifications(currentUserID);
+    }
+
+    @Override
     public void setNotificationsCallBack(NotificationsCallBack callBack, String currentUserID) {
         this.newsCallback = callBack;
         triggerNotificationCallBack(currentUserID);

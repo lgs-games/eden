@@ -92,6 +92,11 @@ public class NexusHandler extends APIHandler {
     // ------------------------------ CALLBACKS ----------------------------- \\
 
     @Override
+    public ArrayList<APIResponseCode> lookForNotifications(String currentUserID) {
+        return this.callback.lookForNotifications(currentUserID);
+    }
+
+    @Override
     public void setNotificationsCallBack(NotificationsCallBack callBack, String currentUserID) {
         this.callback.setNotificationsCallBack(callBack, currentUserID);
     }

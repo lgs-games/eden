@@ -38,8 +38,7 @@ class ProfileHandler implements ProfileAPI {
         return d;
     }
 
-    @Override
-    public ArrayList<APIResponseCode> lookForNotifications(String currentUserID) {
+    ArrayList<APIResponseCode> lookForNotifications(String currentUserID) {
         init(currentUserID);
         ArrayList<APIResponseCode> r = new ArrayList<>();
         // messages

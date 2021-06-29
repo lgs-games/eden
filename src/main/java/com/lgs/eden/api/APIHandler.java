@@ -114,11 +114,6 @@ public abstract class APIHandler implements API {
     // ------------------------------ PROFILE ----------------------------- \\
 
     @Override
-    public ArrayList<APIResponseCode> lookForNotifications(String currentUserID) {
-        return this.profile.lookForNotifications(currentUserID);
-    }
-
-    @Override
     public ArrayList<AchievementData> getUserAchievements(String gameID, String currentUserID) {
         return this.profile.getUserAchievements(gameID, currentUserID);
     }

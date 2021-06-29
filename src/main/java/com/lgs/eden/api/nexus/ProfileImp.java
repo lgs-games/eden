@@ -128,11 +128,6 @@ public class ProfileImp extends ImpSocket implements ProfileAPI {
     }
 
     @Override
-    public ArrayList<APIResponseCode> lookForNotifications(String currentUserID) {
-        return null;
-    }
-
-    @Override
     public void setPlaying(String currentUserID, String gameID) {
 
     }

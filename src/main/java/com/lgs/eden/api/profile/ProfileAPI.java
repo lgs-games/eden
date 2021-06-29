@@ -90,13 +90,6 @@ public interface ProfileAPI {
     MessageData sendMessage(String to, String from, String message) throws APIException;
 
     /**
-     * Returns code according to what kind
-     * of notifications got fired or simply returns null
-     * if none.
-     */
-    ArrayList<APIResponseCode> lookForNotifications(String currentUserID);
-
-    /**
      * Set this game as played by the user
      */
     void setPlaying(String currentUserID, String gameID);
