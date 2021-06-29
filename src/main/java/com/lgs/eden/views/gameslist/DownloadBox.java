@@ -45,7 +45,7 @@ public class DownloadBox {
         this.onCancel = onCancel;
 
         // get the update information
-        String url = data.update.downloadURL;
+        String url = data.update.downloadURL();
 
         d = new DownloadManager(url, Config.getDownloadRepository());
 

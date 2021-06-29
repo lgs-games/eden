@@ -60,7 +60,7 @@ public class InstallUtils {
         if (!Utility.getUserOS().equals(OperatingSystem.WINDOWS))
             throw new UnsupportedOperationException("not yet");
 
-        String location = Config.getGameFolder() + gameData.id + "/" + gameData.update.getRunnable(Utility.getUserOS());
+        String location = Config.getGameFolder() + gameData.id + "/" + gameData.update.runnableURL();
 
         File file = new File(location);
         if (!file.exists()) {
@@ -84,7 +84,7 @@ public class InstallUtils {
             throw new UnsupportedOperationException("not yet");
 
         try {
-            String location = Config.getGameFolder() + gameData.id + "/" + gameData.update.getUninstall(Utility.getUserOS());
+            String location = Config.getGameFolder() + gameData.id + "/" + gameData.update.uninstallURL();
 
             File file = new File(location);
             if (!file.exists()) { throw new IOException(); }

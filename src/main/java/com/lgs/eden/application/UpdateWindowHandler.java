@@ -149,7 +149,7 @@ public class UpdateWindowHandler {
                     PopupUtils.showPopup(e, true);
                     return;
                 }
-                needUpdate = !Config.VERSION.equals(edenVersion.version);
+                needUpdate = !Config.VERSION.equals(edenVersion.version());
             }
             System.out.println(needUpdate ? "Client needs an update" : "Client is up to date");
 
@@ -158,7 +158,7 @@ public class UpdateWindowHandler {
                     controller.setState(State.DOWNLOAD_UPDATE);
 
                     // get the update information
-                    DownloadManager d = new DownloadManager(edenVersion.getURL(Utility.getUserOS()), Config.getDownloadRepository());
+                    DownloadManager d = new DownloadManager(edenVersion.downloadURL(), Config.getDownloadRepository());
 
                     // init
                     d.onInitCalled((e) -> Platform.runLater(() -> {
