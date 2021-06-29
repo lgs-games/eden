@@ -51,6 +51,7 @@ public interface RequestObject<T> {
                     JSONObject o = (JSONObject) args[0];
                     rep = r.parse(o);
                 } catch (JSONException | ParseException e){
+                    e.printStackTrace();
                     rep = null;
                 }
             }

@@ -104,6 +104,7 @@ public class Profile {
         } catch (APIException e) {
             PopupUtils.showPopup(e);
             AppWindowHandler.setScreen(GameList.getScreen(), ViewsPath.GAMES);
+            return;
         }
 
         // ------------------------------ FILL ATTRIBUTES ----------------------------- \\
@@ -166,7 +167,7 @@ public class Profile {
         // ------------------------------ FILL FRIEND LIST ----------------------------- \\
 
         // add friends in the list
-        if (this.data.friendNumber > 0) {
+        if (this.data.friends.size() > 0) {
             this.friendDataListView.setItems(this.data.friends);
             this.friendDataListView.setCellFactory(friendDataListView -> new CustomCells<>(FriendCellController.load()));
         } else {

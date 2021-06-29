@@ -3,16 +3,23 @@ package com.lgs.eden.api.nexus;
 import com.lgs.eden.api.APIException;
 import com.lgs.eden.api.APIResponseCode;
 import com.lgs.eden.api.games.AchievementData;
+import com.lgs.eden.api.games.BasicGameData;
 import com.lgs.eden.api.nexus.helpers.ImpSocket;
 import com.lgs.eden.api.nexus.helpers.RequestArray;
 import com.lgs.eden.api.nexus.helpers.RequestObject;
 import com.lgs.eden.api.profile.ProfileAPI;
 import com.lgs.eden.api.profile.ProfileData;
+import com.lgs.eden.api.profile.RecentGameData;
+import com.lgs.eden.api.profile.ReputationScore;
 import com.lgs.eden.api.profile.friends.FriendConversationView;
 import com.lgs.eden.api.profile.friends.FriendData;
 import com.lgs.eden.api.profile.friends.FriendShipStatus;
 import com.lgs.eden.api.profile.friends.messages.MessageData;
 import io.socket.client.Socket;
+import javafx.collections.FXCollections;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -25,13 +32,17 @@ public class ProfileImp extends ImpSocket implements ProfileAPI {
     public ProfileImp(Socket socket) { super(socket); }
 
     private ArrayList<FriendData> getList(String query, Object ... args) throws APIException {
-        return RequestArray.requestArray(this, (o) -> new FriendData(
+        return RequestArray.requestArray(this, this::parseFriendData, query, args);
+    }
+
+    private FriendData parseFriendData(JSONObject o) throws JSONException {
+        return new FriendData(
                 o.getString("avatar"),
                 o.getString("name"),
                 o.getBoolean("online"),
                 o.getString("user_id"),
                 FriendShipStatus.parse(o.getInt("status"))
-        ), query, args);
+        );
     }
 
     // ------------------------------ METHODS ----------------------------- \\
@@ -53,11 +64,42 @@ public class ProfileImp extends ImpSocket implements ProfileAPI {
 
     @Override
     public ProfileData getProfileData(String userID, String currentUserID) throws APIException {
-        return RequestObject.requestObject(this,
-                (o) -> new ProfileData(
-                  ""
-                ), "get-profile", userID
-        );
+        return RequestObject.requestObject(this, (o) -> {
+            // recent games
+            JSONArray a = o.getJSONArray("recent-games");
+            RecentGameData[] recent = new RecentGameData[a.length()];
+            for (int i = 0; i < a.length() && i < 3; i++) {
+                JSONObject g = (JSONObject) a.get(i);
+                recent[i] = new RecentGameData(
+                        g.getString("icon"),
+                        g.getString("name"),
+                        g.getInt("time_played"),
+                        g.getInt("last_played")
+                );
+            }
+
+            // friends
+            a = o.getJSONArray("friends");
+            ArrayList<FriendData> friends = new ArrayList<>();
+            for (int i = 0; i < a.length(); i++) {
+                friends.add(parseFriendData((JSONObject) a.get(i)));
+            }
+
+            return new ProfileData(
+                    o.getString("username"),
+                    o.getString("id_user"),
+                    o.getString("avatar"),
+                    o.getInt("reputation"),
+                    o.getString("biography"),
+                    NexusHandler.parseSQLDate(o.getString("last_seen")),
+                    NexusHandler.parseSQLDate(o.getString("member_since")),
+                    FXCollections.observableArrayList(friends),
+                    recent,
+                    o.getBoolean("online"),
+                    FriendShipStatus.parse(o.getInt("status")),
+                    ReputationScore.parse(o.getInt("reputation-score"))
+            );
+        }, "get-profile", userID);
     }
 
     @Override

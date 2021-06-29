@@ -19,7 +19,9 @@ import org.json.JSONObject;
 
 import java.net.URI;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
@@ -107,6 +109,13 @@ public class NexusHandler extends APIHandler {
             r.add((String) array.get(i));
         }
         return r;
+    }
+
+    /**
+     * Parse yyyy-mm-dd date to Java Date object
+     */
+    public static Date parseSQLDate(String date) throws ParseException {
+        return new SimpleDateFormat("yyyy-MM-dd").parse(date);
     }
 
     /**

@@ -50,7 +50,7 @@ public class NewsImp extends ImpSocket implements NewsAPI {
                 o.getString("image"),
                 o.getString("catch-phrase"),
                 o.getString("link"),
-                new SimpleDateFormat("yyyy-MM-dd").parse(o.getString("date"))
+                NexusHandler.parseSQLDate(o.getString("date"))
         );
     }
 }

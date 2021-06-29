@@ -19,6 +19,6 @@ public enum FriendShipStatus {
         for (FriendShipStatus s: values()) {
             if (s.value == value) return s;
         }
-        return NONE;
+        throw new IllegalArgumentException("no such value");
     }
 }
