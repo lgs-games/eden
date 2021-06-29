@@ -63,13 +63,13 @@ public class LocalHandler extends APIHandler {
     void triggerMessagesCallBack(MessageData m) {
         if (messagesCallBack != null) {
             // friend sent a message
-            if (m.senderID.equals(conv.friend.id)) messagesCallBack.onCall(m);
+            if (m.senderID.equals(conv.friend().id)) messagesCallBack.onCall(m);
         }
     }
 
     void triggerConversationCallBack(ConversationData m) {
         if (conversationsCallback != null) {
-            if (m.id.equals(conv.friend.id)) m.unreadMessagesCount = 0;
+            if (m.id.equals(conv.friend().id)) m.unreadMessagesCount = 0;
             // friend sent a message
             conversationsCallback.onCall(m);
         }

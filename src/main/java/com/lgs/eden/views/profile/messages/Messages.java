@@ -92,24 +92,24 @@ public class Messages {
             this.inputMessage.setDisable(true);
             this.profileButton.setDisable(true);
         } else {
-            this.friend = conv.friend;
-            this.user = conv.user;
+            this.friend = conv.friend();
+            this.user = conv.user();
 
             // ------------------------------ CONVERSATIONS ----------------------------- \\
-            this.userList.setItems(conv.conversations);
+            this.userList.setItems(conv.conversations());
             this.userList.setCellFactory(cellView -> new CustomCells<>(ConversationCell.load()));
             setSelected();
 
             // ------------------------------ MAIN DATA ----------------------------- \\
             // set message values
-            this.userName.setText(conv.friend.name);
-            this.userID.setText(String.format("%.6s", conv.friend.id));
+            this.userName.setText(conv.friend().name);
+            this.userID.setText(String.format("%.6s", conv.friend().id));
 
             // ------------------------------ MESSAGES ----------------------------- \\
-            this.messages.setItems(conv.messages);
+            this.messages.setItems(conv.messages());
             this.messages.setCellFactory(cellView -> new CustomCells<>(MessageCell.load()));
 
-            if (conv.messages.size() > 0) this.messages.scrollTo(conv.messages.size() - 1);
+            if (conv.messages().size() > 0) this.messages.scrollTo(conv.messages().size() - 1);
 
             // adding callback
             API.imp.setMessagesCallBack((m) -> {
