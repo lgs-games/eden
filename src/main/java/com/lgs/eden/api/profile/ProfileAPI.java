@@ -1,5 +1,6 @@
 package com.lgs.eden.api.profile;
 
+import com.lgs.eden.api.API;
 import com.lgs.eden.api.APIException;
 import com.lgs.eden.api.APIResponseCode;
 import com.lgs.eden.api.games.AchievementData;
@@ -36,30 +37,30 @@ public interface ProfileAPI {
      *
      * Return CHANGE_REPUTATION_OK or CHANGE_REPUTATION_KO
      */
-    ProfileData changeReputation(String userID, String currentUserID, boolean increase);
+    ReputationChangeData changeReputation(String userID, String currentUserID, boolean increase) throws APIException;
 
     // ------------------------------ FRIENDS ----------------------------- \\
 
     /**
      * Request (from current to user) or accept friendship (from user)
      */
-    void addFriend(String friendID, String currentUserID);
+    void addFriend(String friendID, String currentUserID) throws APIException;
 
     /**
      * Cancel friendship
      */
-    void removeFriend(String friendID, String currentUserID);
+    void removeFriend(String friendID, String currentUserID) throws APIException;
 
     /**
      * Accept friend request
      */
-    void acceptFriend(String friendID, String currentUserID);
+    void acceptFriend(String friendID, String currentUserID) throws APIException;
 
     /**
      * Cancel friend request or refuse
      * friend request.
      */
-    void refuseFriend(String friendID, String currentUserID);
+    void refuseFriend(String friendID, String currentUserID) throws APIException;
 
     // ------------------------------ CONVERSATIONS ----------------------------- \\
 

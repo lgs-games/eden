@@ -111,4 +111,8 @@ public class ProfileData {
                 ", online=" + online +
                 '}';
     }
+
+    public ProfileData change(ReputationChangeData r) {
+        return new ProfileData(this, r.rep(), r.score());
+    }
 }

@@ -2,10 +2,7 @@ package com.lgs.eden.api.local;
 
 import com.lgs.eden.api.APIResponseCode;
 import com.lgs.eden.api.games.AchievementData;
-import com.lgs.eden.api.profile.ProfileAPI;
-import com.lgs.eden.api.profile.ProfileData;
-import com.lgs.eden.api.profile.RecentGameData;
-import com.lgs.eden.api.profile.ReputationScore;
+import com.lgs.eden.api.profile.*;
 import com.lgs.eden.api.profile.friends.FriendConversationView;
 import com.lgs.eden.api.profile.friends.FriendData;
 import com.lgs.eden.api.profile.friends.FriendShipStatus;
@@ -143,7 +140,7 @@ class ProfileHandler implements ProfileAPI {
     }
 
     @Override
-    public ProfileData changeReputation(String userID, String currentUserID, boolean increase) {
+    public ReputationChangeData changeReputation(String userID, String currentUserID, boolean increase) {
         ProfileData p = getProfileData(userID, currentUserID);
 
         ReputationScore score = p.score;
@@ -180,7 +177,7 @@ class ProfileHandler implements ProfileAPI {
         users.remove(new ProfileData(userID));
         users.add(newProfileData);
 
-        return newProfileData;
+        return new ReputationChangeData(newRep, newScore);
     }
 
     @Override

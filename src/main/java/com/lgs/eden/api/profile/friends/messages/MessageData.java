@@ -37,10 +37,7 @@ public class MessageData {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof MessageData)) return false;
-
-        MessageData that = (MessageData) o;
-
+        if (!(o instanceof MessageData that)) return false;
         if (!senderID.equals(that.senderID)) return false;
         if (read != that.read) return false;
         if (!Objects.equals(messageContent, that.messageContent))

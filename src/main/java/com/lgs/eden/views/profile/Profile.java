@@ -3,6 +3,7 @@ package com.lgs.eden.views.profile;
 import com.lgs.eden.api.API;
 import com.lgs.eden.api.APIException;
 import com.lgs.eden.api.profile.ProfileData;
+import com.lgs.eden.api.profile.ReputationChangeData;
 import com.lgs.eden.api.profile.friends.FriendData;
 import com.lgs.eden.application.AppWindowHandler;
 import com.lgs.eden.application.PopupUtils;
@@ -187,8 +188,12 @@ public class Profile {
         onAddFriend(this.data.userID);
     }
     public void onAddFriend(String friendID) {
-        API.imp.addFriend(friendID, AppWindowHandler.currentUserID());
-        reload(friendID);
+        try {
+            API.imp.addFriend(friendID, AppWindowHandler.currentUserID());
+            reload(friendID);
+        } catch (APIException e) {
+            PopupUtils.showPopup(e);
+        }
     }
 
     /** Listener of the remove friend button **/
@@ -197,27 +202,37 @@ public class Profile {
         onRemoveFriend(this.data.userID);
     }
     public void onRemoveFriend(String friendID) {
-        API.imp.removeFriend(friendID, AppWindowHandler.currentUserID());
-        reload(friendID);
+        try {
+            API.imp.removeFriend(friendID, AppWindowHandler.currentUserID());
+            reload(friendID);
+        } catch (APIException e) {
+            PopupUtils.showPopup(e);
+        }
     }
 
     /** Listener of the +1 rep label **/
     @FXML
     private void onPlusOneRep() {
-        // api won't allow it
-        if (AppWindowHandler.currentUserID().equals(data.userID)) return;
-        ProfileData r = API.imp.changeReputation(data.userID, AppWindowHandler.currentUserID(), true);
-        if (r != null) this.setReputation(this.data = r);
+        changeReputation(true);
     }
 
     /** Listener of the -1 rep label **/
     @FXML
     private void onMinusOneRep() {
+        changeReputation(false);
+    }
+
+    private void changeReputation(boolean increase) {
         // api won't allow it
         if (AppWindowHandler.currentUserID().equals(data.userID)) return;
-
-        ProfileData r = API.imp.changeReputation(data.userID, AppWindowHandler.currentUserID(), false);
-        if (r != null) this.setReputation(this.data = r);
+        try {
+            ReputationChangeData r = API.imp.changeReputation(data.userID, AppWindowHandler.currentUserID(), increase);
+            if (r != null) {
+                this.setReputation(this.data = this.data.change(r));
+            }
+        } catch (APIException e) {
+            PopupUtils.showPopup(e);
+        }
     }
 
     private void setReputation(ProfileData data) {
@@ -256,8 +271,12 @@ public class Profile {
         onAcceptFriend(this.data.userID);
     }
     public void onAcceptFriend(String friendID) {
-        API.imp.acceptFriend(friendID, AppWindowHandler.currentUserID());
-        reload(friendID);
+        try {
+            API.imp.acceptFriend(friendID, AppWindowHandler.currentUserID());
+            reload(friendID);
+        } catch (APIException e) {
+            PopupUtils.showPopup(e);
+        }
     }
 
     /** Listener of the accept friend button **/
@@ -266,8 +285,12 @@ public class Profile {
         onRefuseFriend(this.data.userID);
     }
     public void onRefuseFriend(String friendID) {
-        API.imp.refuseFriend(friendID, AppWindowHandler.currentUserID());
-        reload(friendID);
+        try {
+            API.imp.refuseFriend(friendID, AppWindowHandler.currentUserID());
+            reload(friendID);
+        } catch (APIException e) {
+            PopupUtils.showPopup(e);
+        }
     }
 
     // ------------------------------ UTILS ----------------------------- \\

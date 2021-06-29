@@ -3,18 +3,16 @@ package com.lgs.eden.api.nexus;
 import com.lgs.eden.api.APIException;
 import com.lgs.eden.api.APIResponseCode;
 import com.lgs.eden.api.games.AchievementData;
-import com.lgs.eden.api.games.BasicGameData;
 import com.lgs.eden.api.nexus.helpers.ImpSocket;
 import com.lgs.eden.api.nexus.helpers.RequestArray;
 import com.lgs.eden.api.nexus.helpers.RequestObject;
-import com.lgs.eden.api.profile.ProfileAPI;
-import com.lgs.eden.api.profile.ProfileData;
-import com.lgs.eden.api.profile.RecentGameData;
-import com.lgs.eden.api.profile.ReputationScore;
+import com.lgs.eden.api.profile.*;
 import com.lgs.eden.api.profile.friends.FriendConversationView;
 import com.lgs.eden.api.profile.friends.FriendData;
 import com.lgs.eden.api.profile.friends.FriendShipStatus;
+import com.lgs.eden.api.profile.friends.conversation.ConversationData;
 import com.lgs.eden.api.profile.friends.messages.MessageData;
+import com.lgs.eden.api.profile.friends.messages.MessageType;
 import io.socket.client.Socket;
 import javafx.collections.FXCollections;
 import org.json.JSONArray;
@@ -103,28 +101,30 @@ public class ProfileImp extends ImpSocket implements ProfileAPI {
     }
 
     @Override
-    public ProfileData changeReputation(String userID, String currentUserID, boolean increase) {
-        return null;
+    public ReputationChangeData changeReputation(String userID, String currentUserID, boolean increase) throws APIException {
+        return RequestObject.requestObject(this,
+                (o) -> new ReputationChangeData(o.getInt("reputation"), ReputationScore.parse(o.getInt("reputation-score"))),
+                "reputation-set", userID, increase);
     }
 
     @Override
-    public void addFriend(String friendID, String currentUserID) {
-
+    public void addFriend(String friendID, String currentUserID) throws APIException {
+        RequestObject.requestObject(this, NexusHandler::isJobDone, "add-friend");
     }
 
     @Override
-    public void removeFriend(String friendID, String currentUserID) {
-
+    public void removeFriend(String friendID, String currentUserID) throws APIException {
+        RequestObject.requestObject(this, NexusHandler::isJobDone, "remove-friend");
     }
 
     @Override
-    public void acceptFriend(String friendID, String currentUserID) {
-
+    public void acceptFriend(String friendID, String currentUserID) throws APIException {
+        RequestObject.requestObject(this, NexusHandler::isJobDone, "accept-friend");
     }
 
     @Override
-    public void refuseFriend(String friendID, String currentUserID) {
-
+    public void refuseFriend(String friendID, String currentUserID) throws APIException {
+        RequestObject.requestObject(this, NexusHandler::isJobDone, "refuse-friend");
     }
 
     @Override
@@ -145,8 +145,31 @@ public class ProfileImp extends ImpSocket implements ProfileAPI {
     // ------------------------------ MESSAGES ----------------------------- \\
 
     @Override
-    public FriendConversationView getMessageWithFriend(String friendID, String currentUserID) {
-        return null;
+    public FriendConversationView getMessageWithFriend(String friendID, String currentUserID) throws APIException {
+        return RequestObject.requestObject(this, (o) -> new FriendConversationView(
+                parseFriendData(o.getJSONObject("user")),
+                parseFriendData(o.getJSONObject("friend")),
+                FXCollections.observableArrayList(NexusHandler.toArrayList(
+                        o.getJSONArray("messages"),
+                        (m) -> new MessageData(
+                                m.getString("sender"),
+                                m.get("message"),
+                                MessageType.parse(m.getInt("type")),
+                                NexusHandler.parseSQLDate(m.getString("date")),
+                                m.getBoolean("read")
+                        )
+                )),
+                FXCollections.observableArrayList(NexusHandler.toArrayList(
+                        o.getJSONArray("conversations"),
+                        (c) -> new ConversationData(
+                                c.getString("avatar"),
+                                c.getString("name"),
+                                c.getBoolean("online"),
+                                c.getString("user_id"),
+                                c.getInt("unread")
+                        )
+                ))
+        ),"messages-with", friendID);
     }
 
     @Override
@@ -160,7 +183,14 @@ public class ProfileImp extends ImpSocket implements ProfileAPI {
     }
 
     @Override
-    public MessageData sendMessage(String to, String from, String message) {
-        return null;
+    public MessageData sendMessage(String to, String from, String message) throws APIException {
+        return RequestObject.requestObject(this,
+                (m) -> new MessageData(
+                        m.getString("sender"),
+                        m.get("message"),
+                        MessageType.parse(m.getInt("type")),
+                        NexusHandler.parseSQLDate(m.getString("date")),
+                        m.getBoolean("read")
+                ), "message-send", to, message);
     }
 }

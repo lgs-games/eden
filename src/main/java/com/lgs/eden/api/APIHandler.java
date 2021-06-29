@@ -7,6 +7,7 @@ import com.lgs.eden.api.news.BasicNewsData;
 import com.lgs.eden.api.news.NewsAPI;
 import com.lgs.eden.api.profile.ProfileAPI;
 import com.lgs.eden.api.profile.ProfileData;
+import com.lgs.eden.api.profile.ReputationChangeData;
 import com.lgs.eden.api.profile.friends.FriendConversationView;
 import com.lgs.eden.api.profile.friends.FriendData;
 import com.lgs.eden.api.profile.friends.messages.MessageData;
@@ -143,7 +144,7 @@ public abstract class APIHandler implements API {
     }
 
     @Override
-    public ProfileData changeReputation(String userID, String currentUserID, boolean increase) {
+    public ReputationChangeData changeReputation(String userID, String currentUserID, boolean increase) throws APIException {
         return this.profile.changeReputation(userID, currentUserID, increase);
     }
 
@@ -155,22 +156,22 @@ public abstract class APIHandler implements API {
     // friends
 
     @Override
-    public void addFriend(String friendID, String currentUserID) {
+    public void addFriend(String friendID, String currentUserID) throws APIException {
         this.profile.addFriend(friendID, currentUserID);
     }
 
     @Override
-    public void removeFriend(String friendID, String currentUserID) {
+    public void removeFriend(String friendID, String currentUserID) throws APIException {
         this.profile.removeFriend(friendID, currentUserID);
     }
 
     @Override
-    public void acceptFriend(String friendID, String currentUserID) {
+    public void acceptFriend(String friendID, String currentUserID) throws APIException {
         this.profile.acceptFriend(friendID, currentUserID);
     }
 
     @Override
-    public void refuseFriend(String friendID, String currentUserID) {
+    public void refuseFriend(String friendID, String currentUserID) throws APIException {
         this.profile.refuseFriend(friendID, currentUserID);
     }
 

@@ -9,6 +9,7 @@ import com.lgs.eden.api.callback.MessagesCallBack;
 import com.lgs.eden.api.callback.NotificationsCallBack;
 import com.lgs.eden.api.news.BasicNewsData;
 import com.lgs.eden.api.nexus.helpers.ImpSocket;
+import com.lgs.eden.api.nexus.helpers.RequestObject;
 import com.lgs.eden.api.profile.friends.FriendConversationView;
 import io.socket.client.Ack;
 import io.socket.client.IO;
@@ -107,6 +108,15 @@ public class NexusHandler extends APIHandler {
         int length = array.length();
         for (int i = 0; i < length; i++) {
             r.add((String) array.get(i));
+        }
+        return r;
+    }
+
+    public static <T> ArrayList<T> toArrayList(JSONArray array, RequestObject<T> builder) throws JSONException, ParseException {
+        ArrayList<T> r = new ArrayList<>();
+        int length = array.length();
+        for (int i = 0; i < length; i++) {
+            r.add(builder.parse((JSONObject) array.get(i)));
         }
         return r;
     }
