@@ -123,22 +123,22 @@ public abstract class APIHandler implements API {
     }
 
     @Override
-    public ArrayList<FriendData> searchUsers(String filter, String currentUserID) {
+    public ArrayList<FriendData> searchUsers(String filter, String currentUserID) throws APIException {
         return this.profile.searchUsers(filter, currentUserID);
     }
 
     @Override
-    public ArrayList<FriendData> getFriendList(String currentUserID, int count) {
+    public ArrayList<FriendData> getFriendList(String currentUserID, int count) throws APIException {
         return this.profile.getFriendList(currentUserID, count);
     }
 
     @Override
-    public ArrayList<FriendData> getRequests(String userID, int count) {
+    public ArrayList<FriendData> getRequests(String userID, int count) throws APIException {
         return this.profile.getRequests(userID, count);
     }
 
     @Override
-    public ProfileData getProfileData(String userID, String currentUserID) {
+    public ProfileData getProfileData(String userID, String currentUserID) throws APIException {
         return this.profile.getProfileData(userID, currentUserID);
     }
 

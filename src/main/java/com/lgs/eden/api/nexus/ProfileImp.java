@@ -4,11 +4,13 @@ import com.lgs.eden.api.APIException;
 import com.lgs.eden.api.APIResponseCode;
 import com.lgs.eden.api.games.AchievementData;
 import com.lgs.eden.api.nexus.helpers.ImpSocket;
+import com.lgs.eden.api.nexus.helpers.RequestArray;
 import com.lgs.eden.api.nexus.helpers.RequestObject;
 import com.lgs.eden.api.profile.ProfileAPI;
 import com.lgs.eden.api.profile.ProfileData;
 import com.lgs.eden.api.profile.friends.FriendConversationView;
 import com.lgs.eden.api.profile.friends.FriendData;
+import com.lgs.eden.api.profile.friends.FriendShipStatus;
 import com.lgs.eden.api.profile.friends.messages.MessageData;
 import io.socket.client.Socket;
 
@@ -22,26 +24,40 @@ public class ProfileImp extends ImpSocket implements ProfileAPI {
     // constructor
     public ProfileImp(Socket socket) { super(socket); }
 
+    private ArrayList<FriendData> getList(String query, Object ... args) throws APIException {
+        return RequestArray.requestArray(this, (o) -> new FriendData(
+                o.getString("avatar"),
+                o.getString("name"),
+                o.getBoolean("online"),
+                o.getString("user_id"),
+                FriendShipStatus.parse(o.getInt("avatar"))
+        ), query, args);
+    }
+
     // ------------------------------ METHODS ----------------------------- \\
 
     @Override
-    public ArrayList<FriendData> searchUsers(String filter, String currentUserID) {
-        return null;
+    public ArrayList<FriendData> searchUsers(String filter, String currentUserID) throws APIException {
+        return getList("search-user", filter);
     }
 
     @Override
-    public ArrayList<FriendData> getFriendList(String userID, int count) {
-        return null;
+    public ArrayList<FriendData> getFriendList(String userID, int count) throws APIException {
+        return getList("friend-list", userID, count);
     }
 
     @Override
-    public ArrayList<FriendData> getRequests(String userID, int count) {
-        return null;
+    public ArrayList<FriendData> getRequests(String userID, int count) throws APIException {
+        return getList("friend-requests-list", userID, count);
     }
 
     @Override
-    public ProfileData getProfileData(String userID, String currentUserID) {
-        return null;
+    public ProfileData getProfileData(String userID, String currentUserID) throws APIException {
+        return RequestObject.requestObject(this,
+                (o) -> new ProfileData(
+                  ""
+                ), "get-profile", userID
+        );
     }
 
     @Override

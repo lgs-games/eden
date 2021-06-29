@@ -17,18 +17,18 @@ public interface ProfileAPI {
     /**
      * Returns a list of users from a filter.
      */
-    ArrayList<FriendData> searchUsers(String filter, String currentUserID);
+    ArrayList<FriendData> searchUsers(String filter, String currentUserID) throws APIException;
 
     /** Returns complete friend list **/
-    ArrayList<FriendData> getFriendList(String userID, int count);
+    ArrayList<FriendData> getFriendList(String userID, int count) throws APIException;
 
     /** friend request received or sent **/
-    ArrayList<FriendData> getRequests(String userID, int count);
+    ArrayList<FriendData> getRequests(String userID, int count) throws APIException;
 
     /**
      * Returns profile Data for an user.
      */
-    ProfileData getProfileData(String userID, String currentUserID);
+    ProfileData getProfileData(String userID, String currentUserID) throws APIException;
 
     /**
      * Change reputation value from currentUserID to

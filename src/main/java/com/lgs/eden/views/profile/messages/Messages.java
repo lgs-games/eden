@@ -90,7 +90,12 @@ public class Messages {
             conv = null;
         }
         // friends for new conversations search
-        this.friendList = API.imp.getFriendList(AppWindowHandler.currentUserID(), -1);
+        try {
+            this.friendList = API.imp.getFriendList(AppWindowHandler.currentUserID(), -1);
+        } catch (APIException e) {
+            PopupUtils.showPopup(e);
+            this.friendList = new ArrayList<>();
+        }
         if (conv == null) {
             this.friendNameTag.getChildren().clear();
             this.friendNameTag.getChildren().add(new Label(Translate.getTranslation("no_conv")));

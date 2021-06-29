@@ -1,6 +1,7 @@
 package com.lgs.eden.views.friends;
 
 import com.lgs.eden.api.API;
+import com.lgs.eden.api.APIException;
 import com.lgs.eden.api.profile.friends.FriendData;
 import com.lgs.eden.api.profile.friends.FriendShipStatus;
 import com.lgs.eden.application.AppWindowHandler;
@@ -50,7 +51,13 @@ public class AllFriends {
 
     /** Init view with user ID */
     private void init(String userID) {
-        ArrayList<FriendData> friendList = API.imp.getFriendList(userID, -1);
+        ArrayList<FriendData> friendList;
+        try {
+            friendList = API.imp.getFriendList(userID, -1);
+        } catch (APIException e) {
+            PopupUtils.showPopup(e);
+            friendList = new ArrayList<>();
+        }
 
         // online only
         make(friendList, (f) -> f.online, this.online, DivName.ONLINE);
@@ -59,7 +66,12 @@ public class AllFriends {
         make(friendList, (f) -> !f.online, this.offline, DivName.OFFLINE);
 
         // get requests
-        friendList = API.imp.getRequests(userID, -1);
+        try {
+            friendList = API.imp.getRequests(userID, -1);
+        } catch (APIException e) {
+            PopupUtils.showPopup(e);
+            friendList = new ArrayList<>();
+        }
         make(friendList, (f) -> f.friendShipStatus.equals(FriendShipStatus.REQUESTED), this.request, DivName.REQUEST_DIV);
         make(friendList, (f) -> f.friendShipStatus.equals(FriendShipStatus.GOT_REQUESTED), this.gotRequested, DivName.GOT_REQUESTED_DIV);
     }
@@ -82,7 +94,14 @@ public class AllFriends {
 
     @FXML
     public void searchForUser() {
-        PopupUtils.showPopup(SearchPane.getScreen((s) -> API.imp.searchUsers(s, AppWindowHandler.currentUserID())));
+        PopupUtils.showPopup(SearchPane.getScreen((s) -> {
+            try {
+                return API.imp.searchUsers(s, AppWindowHandler.currentUserID());
+            } catch (APIException e) {
+                PopupUtils.showPopup(e);
+                return new ArrayList<>();
+            }
+        }));
     }
 
     // ------------------------------ UTILS ----------------------------- \\
