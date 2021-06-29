@@ -11,6 +11,7 @@ import com.lgs.eden.application.PopupUtils;
 import com.lgs.eden.utils.Translate;
 import com.lgs.eden.utils.Utility;
 import com.lgs.eden.utils.ViewsPath;
+import com.lgs.eden.utils.cell.CustomCells;
 import com.lgs.eden.utils.config.Config;
 import com.lgs.eden.utils.config.InstallUtils;
 import com.lgs.eden.views.achievements.Achievements;
@@ -131,11 +132,9 @@ public class GameList {
         this.myGames = myGames;
         this.data = data = data == null ? myGames.get(0) : data;
         // set items
+        this.games.setCellFactory(item -> new CustomCells<>(GameListCell.load()));
         this.games.setItems(FXCollections.observableArrayList());
         this.games.getItems().addAll(this.myGames);
-
-        // change renderer
-        this.games.setCellFactory(item -> new GameListCell());
 
         // ------------------------------ GAME VIEW ----------------------------- \\
         try {
@@ -207,23 +206,10 @@ public class GameList {
         if (text.isEmpty()) {
             this.games.getItems().clear();
             this.games.getItems().addAll(this.myGames);
-            fillWithBlanksSinceBug(myGames.size());
         } else {
             this.games.getItems().clear();
             FilteredList<BasicGameData> filtered = this.myGames.filtered((e) -> e.name.toLowerCase().contains(text));
             this.games.getItems().addAll(filtered);
-            fillWithBlanksSinceBug(filtered.size());
-        }
-    }
-
-    //todo: first JavaFX bug :(
-    // the list seems to show old rendering when the size
-    // just to two from one or go back to two.
-    private void fillWithBlanksSinceBug(int size) {
-        if (size == 1) size = 18;
-        else if (size == 2) size = 15;
-        for (int i = 0; i < size; i++) {
-            this.games.getItems().add(null);
         }
     }
 

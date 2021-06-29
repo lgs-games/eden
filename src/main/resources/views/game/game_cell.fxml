@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
 <Pane styleClass="app-background" stylesheets="@../../style/style.css" xmlns="http://javafx.com/javafx/16"
-      xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lgs.eden.views.gameslist.cell.GameListCellController">
+      xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lgs.eden.views.gameslist.cell.GameListCell">
     <children>
         <BorderPane>
             <left>

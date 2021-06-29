@@ -9,7 +9,6 @@ import javafx.scene.image.Image;
 import javax.net.ssl.HttpsURLConnection;
 import java.awt.*;
 import java.io.BufferedReader;
-import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URI;
@@ -49,6 +48,7 @@ public final class Utility {
     /**
      * Return file URL path
      */
+    @SuppressWarnings("unused")
     public static String getURL(String path) {
         return Objects.requireNonNull(Utility.class.getResource(path)).getPath();
     }

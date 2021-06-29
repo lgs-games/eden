@@ -27,6 +27,7 @@ public final class Translate {
 
     /** return the date as day (int) month (string) year (ex: 1 June 2021 in english) **/
     public static String getDate(Date date) {
+        //noinspection SpellCheckingInspection
         return getDate(date, "d%% LLLL yyy");
     }
 
