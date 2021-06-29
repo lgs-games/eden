@@ -26,7 +26,7 @@ class ProfileHandler implements ProfileAPI {
     public void setParent(LocalHandler parent) { this.parent = parent; }
 
     @Override
-    public ArrayList<AchievementData> getUserAchievements(String gameID, String currentUserID) {
+    public ArrayList<AchievementData> getUserAchievements(String gameID, String currentUserID, String lang, String os) {
         ArrayList<AchievementData> d = new ArrayList<>();
         AchievementData hidden = new AchievementData("/games/hidden-achievement.png", "Hidden achievement", "???", false);
         AchievementData a = new AchievementData("/games/prim-achievement-1.png", "Hero", "You won 10 times.", true);

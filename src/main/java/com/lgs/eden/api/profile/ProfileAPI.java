@@ -100,5 +100,5 @@ public interface ProfileAPI {
     /**
      * Return user achievements for a game
      */
-    ArrayList<AchievementData> getUserAchievements(String gameID, String currentUserID);
+    ArrayList<AchievementData> getUserAchievements(String gameID, String currentUserID, String lang, String os) throws APIException;
 }

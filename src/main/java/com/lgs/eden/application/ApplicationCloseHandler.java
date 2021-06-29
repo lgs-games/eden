@@ -51,6 +51,7 @@ public class ApplicationCloseHandler implements EventHandler<WindowEvent> {
     public static void closeWebEngine() {
         if (engine != null) {
             engine.load(null);
+            engine.getLoadWorker().cancel();
             engine = null;
         }
     }

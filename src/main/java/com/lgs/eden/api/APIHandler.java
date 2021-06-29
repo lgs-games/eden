@@ -2,7 +2,6 @@ package com.lgs.eden.api;
 
 import com.lgs.eden.api.auth.AuthAPI;
 import com.lgs.eden.api.auth.LoginResponseData;
-import com.lgs.eden.api.callback.ConversationsCallback;
 import com.lgs.eden.api.games.*;
 import com.lgs.eden.api.news.BasicNewsData;
 import com.lgs.eden.api.news.NewsAPI;
@@ -115,8 +114,8 @@ public abstract class APIHandler implements API {
     // ------------------------------ PROFILE ----------------------------- \\
 
     @Override
-    public ArrayList<AchievementData> getUserAchievements(String gameID, String currentUserID) {
-        return this.profile.getUserAchievements(gameID, currentUserID);
+    public ArrayList<AchievementData> getUserAchievements(String gameID, String currentUserID, String lang, String os) throws APIException {
+        return this.profile.getUserAchievements(gameID, currentUserID, lang, os);
     }
 
     @Override

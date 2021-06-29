@@ -128,12 +128,17 @@ public class ProfileImp extends ImpSocket implements ProfileAPI {
 
     @Override
     public void setPlaying(String currentUserID, String gameID) {
-
+        // notify that we started (or stopped) playing
+        socket.emit("playing", gameID);
     }
 
     @Override
-    public ArrayList<AchievementData> getUserAchievements(String gameID, String currentUserID) {
-        return null;
+    public ArrayList<AchievementData> getUserAchievements(String gameID, String currentUserID, String lang, String os) throws APIException {
+        return RequestArray.requestArray(this,
+                (o) -> new AchievementData(
+                        o.getString("icon"), o.getString("name"), o.getString("desc"),
+                        o.getBoolean("unlocked")
+                ),"achievements", gameID, lang, os);
     }
 
     // ------------------------------ MESSAGES ----------------------------- \\

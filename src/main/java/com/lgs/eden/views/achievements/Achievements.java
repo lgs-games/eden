@@ -1,10 +1,13 @@
 package com.lgs.eden.views.achievements;
 
 import com.lgs.eden.api.API;
+import com.lgs.eden.api.APIException;
 import com.lgs.eden.api.games.AchievementData;
 import com.lgs.eden.application.AppWindowHandler;
+import com.lgs.eden.application.PopupUtils;
 import com.lgs.eden.utils.Utility;
 import com.lgs.eden.utils.ViewsPath;
+import com.lgs.eden.utils.config.Config;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
@@ -35,7 +38,14 @@ public class Achievements {
     private VBox achievements;
 
     private void init(String gameID) {
-        ArrayList<AchievementData> achievements = API.imp.getUserAchievements(gameID, AppWindowHandler.currentUserID());
+        ArrayList<AchievementData> achievements;
+        try {
+            achievements = API.imp.getUserAchievements(gameID, AppWindowHandler.currentUserID(),
+                    Config.getCode(), Config.getOS());
+        } catch (APIException e) {
+            PopupUtils.showPopup(e);
+            achievements = new ArrayList<>();
+        }
 
         int size = achievements.size();
         for (int i = 0; i < size; i+=2) {
@@ -52,7 +62,6 @@ public class Achievements {
             // add to view
             this.achievements.getChildren().add(box);
         }
-
     }
 
 }
