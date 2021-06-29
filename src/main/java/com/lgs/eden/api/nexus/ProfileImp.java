@@ -1,8 +1,10 @@
 package com.lgs.eden.api.nexus;
 
+import com.lgs.eden.api.APIException;
 import com.lgs.eden.api.APIResponseCode;
 import com.lgs.eden.api.games.AchievementData;
 import com.lgs.eden.api.nexus.helpers.ImpSocket;
+import com.lgs.eden.api.nexus.helpers.RequestObject;
 import com.lgs.eden.api.profile.ProfileAPI;
 import com.lgs.eden.api.profile.ProfileData;
 import com.lgs.eden.api.profile.friends.FriendConversationView;
@@ -68,26 +70,6 @@ public class ProfileImp extends ImpSocket implements ProfileAPI {
     }
 
     @Override
-    public FriendConversationView getMessageWithFriend(String friendID, String currentUserID) {
-        return null;
-    }
-
-    @Override
-    public boolean newConversation(String friendID, String currentUserID) {
-        return false;
-    }
-
-    @Override
-    public boolean closeConversation(String friendID, String currentUserID) {
-        return false;
-    }
-
-    @Override
-    public MessageData sendMessage(String to, String from, String message) {
-        return null;
-    }
-
-    @Override
     public ArrayList<APIResponseCode> lookForNotifications(String currentUserID) {
         return null;
     }
@@ -99,6 +81,28 @@ public class ProfileImp extends ImpSocket implements ProfileAPI {
 
     @Override
     public ArrayList<AchievementData> getUserAchievements(String gameID, String currentUserID) {
+        return null;
+    }
+
+    // ------------------------------ MESSAGES ----------------------------- \\
+
+    @Override
+    public FriendConversationView getMessageWithFriend(String friendID, String currentUserID) {
+        return null;
+    }
+
+    @Override
+    public boolean newConversation(String friendID, String currentUserID) throws APIException {
+        return RequestObject.requestObject(this, NexusHandler::isJobDone, "conv-open");
+    }
+
+    @Override
+    public boolean closeConversation(String friendID, String currentUserID) throws APIException {
+        return RequestObject.requestObject(this, NexusHandler::isJobDone, "conv-open");
+    }
+
+    @Override
+    public MessageData sendMessage(String to, String from, String message) {
         return null;
     }
 }

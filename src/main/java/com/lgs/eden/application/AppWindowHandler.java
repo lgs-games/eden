@@ -47,7 +47,7 @@ public class AppWindowHandler {
         // load
         WindowController.setSize(Config.SCREEN_WIDTH_APP, Config.SCREEN_HEIGHT_APP);
         loadGameFrame();
-        setScreen(GameList.getScreen(), ViewsPath.GAMES);
+        setScreen(Messages.getScreen(), ViewsPath.PROFILE);
     }
 
     /** load game menu bar with login, ... and menu **/

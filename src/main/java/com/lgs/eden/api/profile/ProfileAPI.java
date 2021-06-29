@@ -1,5 +1,6 @@
 package com.lgs.eden.api.profile;
 
+import com.lgs.eden.api.APIException;
 import com.lgs.eden.api.APIResponseCode;
 import com.lgs.eden.api.games.AchievementData;
 import com.lgs.eden.api.profile.friends.FriendConversationView;
@@ -69,23 +70,23 @@ public interface ProfileAPI {
      *
      * Returns null if no conversations at all.
      */
-    FriendConversationView getMessageWithFriend(String friendID, String currentUserID);
+    FriendConversationView getMessageWithFriend(String friendID, String currentUserID) throws APIException;
 
     /**
      * Create a new conversation in the list of conversation of this user.
      */
-    boolean newConversation(String friendID, String currentUserID);
+    boolean newConversation(String friendID, String currentUserID) throws APIException;
 
     /**
      * Close (don't delete message but don't show again) a conversation
      * in the list of conversation of this user.
      */
-    boolean closeConversation(String friendID, String currentUserID);
+    boolean closeConversation(String friendID, String currentUserID) throws APIException;
 
     /**
      * Send a message to another user.
      */
-    MessageData sendMessage(String to, String from, String message);
+    MessageData sendMessage(String to, String from, String message) throws APIException;
 
     /**
      * Returns code according to what kind

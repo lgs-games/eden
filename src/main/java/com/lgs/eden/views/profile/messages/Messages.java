@@ -1,6 +1,7 @@
 package com.lgs.eden.views.profile.messages;
 
 import com.lgs.eden.api.API;
+import com.lgs.eden.api.APIException;
 import com.lgs.eden.api.profile.friends.FriendConversationView;
 import com.lgs.eden.api.profile.friends.FriendData;
 import com.lgs.eden.api.profile.friends.conversation.ConversationData;
@@ -81,7 +82,13 @@ public class Messages {
     private void init(String friendID) {
         // you cannot tchat with yourself
         if (friendID.equals(AppWindowHandler.currentUserID())) friendID = "-1";
-        FriendConversationView conv = API.imp.getMessageWithFriend(friendID, AppWindowHandler.currentUserID());
+        FriendConversationView conv;
+        try {
+            conv = API.imp.getMessageWithFriend(friendID, AppWindowHandler.currentUserID());
+        } catch (APIException e) {
+            PopupUtils.showPopup(e);
+            conv = null;
+        }
         // friends for new conversations search
         this.friendList = API.imp.getFriendList(AppWindowHandler.currentUserID(), -1);
         if (conv == null) {
@@ -172,7 +179,11 @@ public class Messages {
 
     public void onSendRequest() {
         String text = this.inputMessage.getText();
-        MessageData m = API.imp.sendMessage(friend.id, user.id, text);
-        messages.getItems().add(m);
+        try {
+            MessageData m = API.imp.sendMessage(friend.id, user.id, text);
+            messages.getItems().add(m);
+        } catch (APIException e) {
+            PopupUtils.showPopup(e);
+        }
     }
 }

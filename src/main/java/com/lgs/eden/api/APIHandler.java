@@ -177,22 +177,22 @@ public abstract class APIHandler implements API {
     // conv
 
     @Override
-    public FriendConversationView getMessageWithFriend(String friendID, String currentUserID) {
+    public FriendConversationView getMessageWithFriend(String friendID, String currentUserID) throws APIException {
         return this.profile.getMessageWithFriend(friendID, currentUserID);
     }
 
     @Override
-    public boolean newConversation(String friendID, String currentUserID) {
+    public boolean newConversation(String friendID, String currentUserID) throws APIException {
         return this.profile.newConversation(friendID, currentUserID);
     }
 
     @Override
-    public boolean closeConversation(String friendID, String currentUserID) {
+    public boolean closeConversation(String friendID, String currentUserID) throws APIException {
         return this.profile.closeConversation(friendID, currentUserID);
     }
 
     @Override
-    public MessageData sendMessage(String to, String from, String message) {
+    public MessageData sendMessage(String to, String from, String message) throws APIException {
         return this.profile.sendMessage(to, from, message);
     }
 }
