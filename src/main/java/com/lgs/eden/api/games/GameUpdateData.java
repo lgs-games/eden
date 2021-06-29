@@ -1,7 +1,5 @@
 package com.lgs.eden.api.games;
 
-import com.lgs.eden.utils.config.OperatingSystem;
-
 /**
  * Class when API return some informations
  * like the version of the game and
@@ -9,9 +7,9 @@ import com.lgs.eden.utils.config.OperatingSystem;
  */
 public class GameUpdateData {
 
-    private final String downloadURL;
-    private final String runnable;
-    private final String uninstall;
+    public final String downloadURL;
+    public final String runnable;
+    public final String uninstall;
 
     public final String version;
     public final double size;
@@ -24,17 +22,4 @@ public class GameUpdateData {
         this.size = size;
     }
 
-    // todo: should return the right ... according to the OS
-
-    public String getURL(OperatingSystem os) {
-        return downloadURL;
-    }
-
-    public String getRunnable(OperatingSystem os) {
-        return runnable;
-    }
-
-    public String getUninstall(OperatingSystem os) {
-        return uninstall;
-    }
 }
