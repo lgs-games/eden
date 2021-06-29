@@ -289,9 +289,9 @@ public class GameList {
                 ShortGameViewData view = API.imp.getGameDateUpdate(AppWindowHandler.currentUserID(), this.gameData.id);
                 // changes values
                 Platform.runLater(() -> {
-                    this.achievementCount.setText("" + view.playerAchievements);
-                    this.friendsPlaying.setText("" + view.friendsPlaying);
-                    this.timePlayed.setText("" + view.timePlayed);
+                    this.achievementCount.setText("" + view.playerAchievements());
+                    this.friendsPlaying.setText("" + view.friendsPlaying());
+                    this.timePlayed.setText("" + view.timePlayed());
                     // done
                     this.calledUpdate = false;
                     image.setRotate(0); // reset
