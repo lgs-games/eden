@@ -22,8 +22,9 @@ And finally, we have a [Trello](https://trello.com/b/mc5OKuQH/eden) to stay orga
 
 ### Installation
 
-...
+You may use ``gradle build`` to build the project, then
+``gradle run``.
 
 ### Licence
 
-This project is licensed under the Apache-2.0 License.
+Licensed under Apache-2.0.
