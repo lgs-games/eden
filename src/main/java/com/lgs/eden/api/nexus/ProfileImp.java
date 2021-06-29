@@ -30,7 +30,7 @@ public class ProfileImp extends ImpSocket implements ProfileAPI {
                 o.getString("name"),
                 o.getBoolean("online"),
                 o.getString("user_id"),
-                FriendShipStatus.parse(o.getInt("avatar"))
+                FriendShipStatus.parse(o.getInt("status"))
         ), query, args);
     }
 
