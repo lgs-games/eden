@@ -119,9 +119,9 @@ public class DownloadManager extends Thread implements ReadableByteChannel {
     /**
      * cancel download
      **/
-    public boolean cancel() {
+    public void cancel() {
         try {
-            if (this.fileOutput == null) return true;
+            if (this.fileOutput == null) return;
             this.fileOutput.close();
             // delete remnant
             boolean delete = new File(this.fileName).delete();
@@ -129,16 +129,13 @@ public class DownloadManager extends Thread implements ReadableByteChannel {
                 throw new IOException();
             }
             this.fileName = null;
-            return true;
-        } catch (IOException e) {
-            return true;
-        }
+        } catch (IOException ignored) {}
     }
 
     // ------------------------------ CHANNELS ----------------------------- \\
 
     public int read(ByteBuffer bb) throws IOException {
-        long downloaded, speed = this.event.speed, timeRemaining;
+        long downloaded, speed = this.event.speed(), timeRemaining;
         int n;
         // first call
         if (this.last == null) {
@@ -147,14 +144,14 @@ public class DownloadManager extends Thread implements ReadableByteChannel {
         }
 
         if (System.currentTimeMillis() - this.timeElapsed > 1000L) {//= 1s
-            speed = this.event.downloaded - this.last.downloaded;
+            speed = this.event.downloaded() - this.last.downloaded();
             //reset
             this.last = this.event;
             this.timeElapsed = System.currentTimeMillis();
         }
 
         if ((n = this.readChannel.read(bb)) > 0) {
-            downloaded = n + this.event.downloaded;
+            downloaded = n + this.event.downloaded();
             if (speed < 0) speed = 0;
             if (speed != 0) {
                 timeRemaining = (this.size - downloaded) / speed;
