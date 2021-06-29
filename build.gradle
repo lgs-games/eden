@@ -36,8 +36,8 @@ version = '1.0'
 description = 'Legendary Games Studio launcher'
 
 application {
-    mainModule.set('eden')
-    mainClassName = "com.lgs.eden.Main"
+    getMainModule().set('eden')
+    getMainClass().set("com.lgs.eden.Main")
 }
 
 /////////////////////////////
@@ -59,10 +59,14 @@ idea {
 tasks.withType(JavaCompile) {
     options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
     options.encoding = "UTF-8"
-//    sourceCompatibility = 1.16
-//    targetCompatibility = 1.16
-    // sourceCompatibility = 11
-    // targetCompatibility = 11
+    sourceCompatibility = JavaVersion.VERSION_16
+    targetCompatibility = JavaVersion.VERSION_16
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(16)
+    }
 }
 
 // tests
