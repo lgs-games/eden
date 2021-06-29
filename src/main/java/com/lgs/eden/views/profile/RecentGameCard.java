@@ -33,8 +33,8 @@ public class RecentGameCard {
      * Init the recent games view
      */
     public void init(RecentGameData data) {
-        this.gameName.setText(data.gameName);
-        this.game_icon.setImage(data.gameIcon);
+        this.gameName.setText(data.gameName());
+        this.game_icon.setImage(data.gameIcon());
         if (data.isPlaying()) {
             // hide last played
             this.lastPlayedLabel.setText(Translate.getTranslation("in_game"));
@@ -49,8 +49,8 @@ public class RecentGameCard {
             this.lastPlayed.setVisible(true);
             this.lastPlayedUnit.setVisible(true);
             this.lastPlayedAgo.setVisible(true);
-            this.lastPlayed.setText(data.lastPlayed + "");
+            this.lastPlayed.setText(data.lastPlayed() + "");
         }
-        this.time_played.setText(data.timePlayed + "");
+        this.time_played.setText(data.timePlayed() + "");
     }
 }

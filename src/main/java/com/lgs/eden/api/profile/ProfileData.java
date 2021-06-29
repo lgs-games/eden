@@ -88,10 +88,7 @@ public class ProfileData {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof ProfileData)) return false;
-
-        ProfileData that = (ProfileData) o;
-
+        if (!(o instanceof ProfileData that)) return false;
         return userID.equals(that.userID);
     }
 

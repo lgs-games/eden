@@ -76,7 +76,7 @@ class ProfileHandler implements ProfileAPI {
         RecentGameData[] recentGames = userProfile.recentGames;
 
         int time = 0;
-        if (recentGames.length > 0) time = recentGames[0].timePlayed;
+        if (recentGames.length > 0) time = recentGames[0].timePlayed();
 
         recentGames = new RecentGameData[]{
                 makeEden(time + checkTime(), !gameID.equals("-1") ? -1 : 0)
@@ -400,7 +400,7 @@ class ProfileHandler implements ProfileAPI {
 
         ProfileData raphik = createFriend("Raphik", "23", 9999,
                 "2020-12-03T10:15:30.00Z", 4,
-                "Raphiki is a great programmer at ENSIIE engineering school.",
+                "Raphik is a great programmer at ENSIIE engineering school.",
                 getFriendShipStatus("23", currentUserID),
                 ReputationScore.NONE, new RecentGameData[]{
                         makeEden(0, 1),
@@ -414,12 +414,12 @@ class ProfileHandler implements ProfileAPI {
                 ReputationScore.NONE, null, raphik, false
         );
 
-        ProfileData calistral = createFriend("Calistral", "25", -1, "2020-12-03T10:15:30.00Z", 1,
+        ProfileData Calistral = createFriend("Calistral", "25", -1, "2020-12-03T10:15:30.00Z", 1,
                 "No description yet.", getFriendShipStatus("25", currentUserID),
                 ReputationScore.DECREASED, null, raphik, false
         );
 
-        ProfileData caliki = createFriend("Caliki", "26", 0,
+        ProfileData Caliki = createFriend("Caliki", "26", 0,
                 "2020-12-03T10:15:30.00Z", 1,
                 "This is a really" + "This is a really" + "This is a really" + "This is a really" + "This is a really"
                         + "This is a really" + "This is a really" + "This is a really" + "This is a really" + "This is a really"
@@ -430,16 +430,16 @@ class ProfileHandler implements ProfileAPI {
                 getFriendShipStatus("26", currentUserID), ReputationScore.NONE, null, raphik, false
         );
 
-        ProfileData raphistro = createFriend("Raphistro", "27", 17570, "2020-03-09T10:15:30.00Z", 1,
+        ProfileData Raphistro = createFriend("Raphistro", "27", 17570, "2020-03-09T10:15:30.00Z", 1,
                 "No description yet.", getFriendShipStatus("27", currentUserID), ReputationScore.INCREASED,
                 null, raphik, false
         );
 
         users.add(raphik);
         users.add(raphik2);
-        users.add(calistral);
-        users.add(caliki);
-        users.add(raphistro);
+        users.add(Calistral);
+        users.add(Caliki);
+        users.add(Raphistro);
 
         ProfileData xxx = createFriend("XXX", "28", 0,
                 "2020-03-09T10:15:30.00Z", 1,
@@ -458,9 +458,9 @@ class ProfileHandler implements ProfileAPI {
         ));
 
         raphik.friends.add(friendFromProfil(raphik2, FriendShipStatus.FRIENDS));
-        raphik.friends.add(friendFromProfil(calistral, FriendShipStatus.FRIENDS));
-        raphik.friends.add(friendFromProfil(caliki, FriendShipStatus.FRIENDS));
-        raphik.friends.add(friendFromProfil(raphistro, FriendShipStatus.FRIENDS));
+        raphik.friends.add(friendFromProfil(Calistral, FriendShipStatus.FRIENDS));
+        raphik.friends.add(friendFromProfil(Caliki, FriendShipStatus.FRIENDS));
+        raphik.friends.add(friendFromProfil(Raphistro, FriendShipStatus.FRIENDS));
     }
 
     private RecentGameData makeEden(int timePlayed, int lastPlayed) {

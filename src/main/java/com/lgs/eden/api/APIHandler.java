@@ -14,6 +14,9 @@ import javafx.collections.ObservableList;
 
 import java.util.ArrayList;
 
+/**
+ * Convenient implementation of the API
+ */
 public abstract class APIHandler implements API {
 
     protected final AuthAPI login;

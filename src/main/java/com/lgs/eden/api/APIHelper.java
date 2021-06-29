@@ -34,6 +34,7 @@ public class APIHelper {
         } catch (InterruptedException ignore) {}
     }
 
+    @SuppressWarnings("unused")
     public static void makeHTTPSRequest() throws APIException {
         try {
             HttpsURLConnection.setFollowRedirects(false);
