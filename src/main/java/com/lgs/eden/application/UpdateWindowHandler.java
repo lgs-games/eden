@@ -167,7 +167,7 @@ public class UpdateWindowHandler {
 
                     // start download thread
                     d.onUpdateProgress((e) -> Platform.runLater(
-                            () -> controller.percent.setText(Math.round((float) e.downloaded / e.expectedSize * 100) + "%")
+                            () -> controller.percent.setText(Math.round((float) e.downloaded() / e.expectedSize() * 100) + "%")
                     ));
 
                     // move to install
@@ -176,7 +176,7 @@ public class UpdateWindowHandler {
                                         controller.percent.setVisible(false);
                                         controller.setState(State.STARTING_INSTALLATION);
                                         // launch install process
-                                        InstallUtils.installEden(e.fileName);
+                                        InstallUtils.installEden(e.fileName());
                                     }
                             ));
 
