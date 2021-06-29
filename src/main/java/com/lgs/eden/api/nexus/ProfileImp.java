@@ -1,7 +1,6 @@
 package com.lgs.eden.api.nexus;
 
 import com.lgs.eden.api.APIException;
-import com.lgs.eden.api.APIResponseCode;
 import com.lgs.eden.api.games.AchievementData;
 import com.lgs.eden.api.nexus.helpers.ImpSocket;
 import com.lgs.eden.api.nexus.helpers.RequestArray;
@@ -142,8 +141,8 @@ public class ProfileImp extends ImpSocket implements ProfileAPI {
     @Override
     public FriendConversationView getMessageWithFriend(String friendID, String currentUserID) throws APIException {
         return RequestObject.requestObject(this, (o) -> new FriendConversationView(
-                parseFriendData(o.getJSONObject("user")),
                 parseFriendData(o.getJSONObject("friend")),
+                parseFriendData(o.getJSONObject("user")),
                 FXCollections.observableArrayList(NexusHandler.toArrayList(
                         o.getJSONArray("messages"),
                         (m) -> new MessageData(

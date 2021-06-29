@@ -33,15 +33,13 @@ public class FriendData {
         this(null, null, false, id, null);
     }
 
+    @SuppressWarnings("unused")
     public String getAvatarPath() { return path; }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof FriendData)) return false;
-
-        FriendData that = (FriendData) o;
-
+        if (!(o instanceof FriendData that)) return false;
         return id.equals(that.id);
     }
 
