@@ -125,12 +125,12 @@ public class FriendCellController implements CellHandler<FriendData> {
                 boolean cancelFR = false;
 
                 // show add / remove friend
-                switch (current.data.friendShipStatus){
-                    case FRIENDS: add = true; friend = false; break;
-                    case NONE: add = false; friend = true; break;
-                    case USER: add = true; friend = true; break;
-                    case REQUESTED: acceptFR = true; refuseFR = true; break;
-                    case GOT_REQUESTED: cancelFR = true; break;
+                switch (current.data.friendShipStatus) {
+                    case FRIENDS -> { add = true; friend = false; }
+                    case NONE -> friend = true;
+                    case USER -> { add = true; friend = true; }
+                    case REQUESTED -> { acceptFR = true; refuseFR = true; }
+                    case GOT_REQUESTED -> cancelFR = true;
                 }
 
                 // disabled if not available

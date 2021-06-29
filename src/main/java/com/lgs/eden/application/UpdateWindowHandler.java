@@ -3,7 +3,6 @@ package com.lgs.eden.application;
 import com.goxr3plus.fxborderlessscene.borderless.BorderlessScene;
 import com.lgs.eden.api.API;
 import com.lgs.eden.api.APIException;
-import com.lgs.eden.api.auth.LoginResponseData;
 import com.lgs.eden.api.games.EdenVersionData;
 import com.lgs.eden.utils.Translate;
 import com.lgs.eden.utils.Utility;
@@ -11,8 +10,6 @@ import com.lgs.eden.utils.ViewsPath;
 import com.lgs.eden.utils.config.Config;
 import com.lgs.eden.utils.config.InstallUtils;
 import com.lgs.eden.utils.download.DownloadManager;
-import com.lgs.eden.views.achievements.Achievements;
-import com.lgs.eden.views.gameslist.GameList;
 import com.lgs.eden.views.login.Login;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -33,8 +30,7 @@ import java.util.TimerTask;
  */
 public class UpdateWindowHandler {
 
-    // todo: temporary bypass
-    private static final boolean CHECK_UPDATES = false;
+    private static final boolean CHECK_UPDATES = true;
 
     // state of our installer
     enum State {
@@ -77,7 +73,6 @@ public class UpdateWindowHandler {
             // we need that to close 3 dots thread
             primaryStage.setOnCloseRequest(event -> {
                 new ApplicationCloseHandler().handle(event);
-                // todo: move to close handler
                 oldStage = null;
             });
         }
@@ -147,12 +142,12 @@ public class UpdateWindowHandler {
             if (CHECK_UPDATES) {
                 System.out.println("Checking client version...");
                 try {
-                    edenVersion = API.imp.getEdenVersion();
+                    edenVersion = API.imp.getEdenVersion(Config.getCode(), Config.getOS());
                 } catch (APIException e) {
                     PopupUtils.showPopup(e, true);
                     return;
                 }
-                needUpdate = !Config.VERSION.equals(edenVersion.version);
+                needUpdate = !Config.VERSION.equals(edenVersion.version());
             }
             System.out.println(needUpdate ? "Client needs an update" : "Client is up to date");
 
@@ -161,7 +156,7 @@ public class UpdateWindowHandler {
                     controller.setState(State.DOWNLOAD_UPDATE);
 
                     // get the update information
-                    DownloadManager d = new DownloadManager(edenVersion.getURL(Utility.getUserOS()), Config.getDownloadRepository());
+                    DownloadManager d = new DownloadManager(edenVersion.downloadURL(), Config.getDownloadRepository());
 
                     // init
                     d.onInitCalled((e) -> Platform.runLater(() -> {
@@ -172,7 +167,7 @@ public class UpdateWindowHandler {
 
                     // start download thread
                     d.onUpdateProgress((e) -> Platform.runLater(
-                            () -> controller.percent.setText(Math.round((float) e.downloaded / e.expectedSize * 100) + "%")
+                            () -> controller.percent.setText(Math.round((float) e.downloaded() / e.expectedSize() * 100) + "%")
                     ));
 
                     // move to install
@@ -181,7 +176,7 @@ public class UpdateWindowHandler {
                                         controller.percent.setVisible(false);
                                         controller.setState(State.STARTING_INSTALLATION);
                                         // launch install process
-                                        InstallUtils.installEden(e.fileName);
+                                        InstallUtils.installEden(e.fileName());
                                     }
                             ));
 

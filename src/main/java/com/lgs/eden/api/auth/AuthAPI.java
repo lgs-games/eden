@@ -9,6 +9,7 @@ import com.lgs.eden.api.APIResponseCode;
 public interface AuthAPI {
 
     /**
+     * Process login
      * @see APIResponseCode#LOGIN_OK
      * @see APIResponseCode#LOGIN_BANNED
      * @see APIResponseCode#LOGIN_INVALID
@@ -17,11 +18,12 @@ public interface AuthAPI {
     LoginResponseData login(String username, String pwd) throws APIException;
 
     /**
-     *
+     * Process logout
      */
-    void logout(int currentUserID);
+    void logout(String userID) throws APIException;
 
     /**
+     * Process register
      * @see APIResponseCode#REGISTER_OK
      * @see APIResponseCode#REGISTER_FAILED
      * @see APIResponseCode#REGISTER_FAILED_LOGIN
@@ -32,9 +34,15 @@ public interface AuthAPI {
 
     /**
      * Returns the link to the password forget page
+     *
+     * Implemented by the APIHandler so that's not required
+     * by the API since the handler may never call it.
+     *
      * @param languageCode "en" or "fr", ... We will try to return
      *                     a page in this language.
      */
-    String getPasswordForgotLink(String languageCode);
+    default String getPasswordForgotLink(String languageCode) {
+        throw new UnsupportedOperationException("not implemented");
+    }
 
 }

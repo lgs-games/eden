@@ -1,6 +1,7 @@
 package com.lgs.eden.views.gameslist;
 
 import com.lgs.eden.api.API;
+import com.lgs.eden.api.APIException;
 import com.lgs.eden.api.games.GameViewData;
 import com.lgs.eden.application.AppWindowHandler;
 import com.lgs.eden.application.PopupUtils;
@@ -54,8 +55,13 @@ public class GameSettings {
         }
         if (remove) {
             // remove from library
-            if (!API.imp.removeFromLibrary(AppWindowHandler.currentUserID(), game)) {
-                PopupUtils.showPopup(Translate.getTranslation("remove_from_library_failed"));
+            try {
+                if (!API.imp.removeFromLibrary(AppWindowHandler.currentUserID(), game)) {
+                    PopupUtils.showPopup(Translate.getTranslation("remove_from_library_failed"));
+                    return;
+                }
+            } catch (APIException e) {
+                PopupUtils.showPopup(e);
                 return;
             }
         }

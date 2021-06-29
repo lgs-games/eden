@@ -1,7 +1,5 @@
 package com.lgs.eden.api.local;
 
-import com.lgs.eden.api.API;
-import com.lgs.eden.api.APIHelper;
 import com.lgs.eden.api.APIResponseCode;
 import com.lgs.eden.api.auth.AuthAPI;
 import com.lgs.eden.api.auth.LoginResponseData;
@@ -25,12 +23,12 @@ class AuthHandler implements AuthAPI {
 
         if (username.equals("Raphik") && pwd.equals("tester")) {
             // okay
-            return new LoginResponseData(10, 23, username, "/avatars/23.png");
+            return new LoginResponseData(10, "23", username, "/avatars/23.png");
         }
 
         if (username.equals("Raphik2") && pwd.equals("tester")) {
             // okay
-            return new LoginResponseData(10, 24, username, "/avatars/24.png");
+            return new LoginResponseData(10, "24", username, "/avatars/24.png");
         }
 
         // invalid
@@ -38,7 +36,7 @@ class AuthHandler implements AuthAPI {
     }
 
     @Override
-    public void logout(int currentUserID) {
+    public void logout(String userID) {
     }
 
     @Override
@@ -56,13 +54,6 @@ class AuthHandler implements AuthAPI {
         }
 
         return APIResponseCode.REGISTER_FAILED;
-    }
-
-    @Override
-    public String getPasswordForgotLink(String languageCode) {
-        // website only supports en or fr
-        languageCode = APIHelper.formatCode(languageCode);
-        return API.WEBSITE_URL + languageCode + "/password_forgot";
     }
 
 }

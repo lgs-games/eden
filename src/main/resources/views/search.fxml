@@ -6,7 +6,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.*?>
 <?import java.lang.String?>
-<BorderPane fx:id="container" prefHeight="500.0" prefWidth="300.0" styleClass="app-background"
+<BorderPane prefHeight="500.0" prefWidth="300.0" styleClass="app-background"
             stylesheets="@../style/style.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.lgs.eden.utils.helper.SearchPane">
     <top>

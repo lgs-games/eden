@@ -34,6 +34,8 @@ public class Config {
      */
     public static Image appIcon() {return Utility.loadImage("/icon64.png");}
 
+    public static String getOS() { return Utility.getUserOS().toString(); }
+
     // ------------------------------ LANGUAGE RELATED ----------------------------- \\
 
     // return locale
@@ -115,7 +117,7 @@ public class Config {
         return downloadRepository;
     }
 
-    public static boolean isGameInstalled(int gameID) {
+    public static boolean isGameInstalled(String gameID) {
         String gameFolder = getGameFolder() + gameID;
         File folder = new File(gameFolder);
         return folder.exists() && folder.isDirectory();

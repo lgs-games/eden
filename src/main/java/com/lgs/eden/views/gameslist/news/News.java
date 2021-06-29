@@ -66,7 +66,10 @@ public class News {
                 .build();
 
         WebEngine engine = this.newsContent.getEngine();
-        engine.loadContent("<html>" +
+        engine.loadContent("<html lang='fr'>" +
+                "<head>" +
+                "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" />" +
+                "<meta charset='UTF-8'>" +
                 "<style>" +
                 "body {\n" +
                 "    font-family: Segoe UI,Helvetica,Arial,sans-serif;\n" +
@@ -84,10 +87,11 @@ public class News {
                 "    color: #FFCC33;\n" +
                 "}" +
                 "</style>" +
+                "</head>"+
                 "<body>"
                 + renderer.render(document)
                 + "</body>"
-        );
+                + "</html>");
 
         // disabled right-click
         newsContent.setContextMenuEnabled(false);
@@ -103,10 +107,7 @@ public class News {
     /**
      * Should open links in user browser.
      */
-    private static class LinkExternalBrowserListener implements ChangeListener<State> {
-        private final WebEngine engine;
-
-        private LinkExternalBrowserListener(WebEngine engine) { this.engine = engine; }
+    private record LinkExternalBrowserListener(WebEngine engine) implements ChangeListener<State> {
 
         @Override
         public void changed(ObservableValue<? extends State> o, State oldState,
@@ -133,60 +134,62 @@ public class News {
 
     // ------------------------------ TEST ----------------------------- \\
 
-    private static final String MARKDOWN_TEST = "Legendary Games Studio is honoured to present our new application : Tyrn.\n" +
-            "\n" +
-            "The software is open-source (meaning you can read/edit the source code)\n" +
-            "and allow you to create and manage a set of data.\n" +
-            "\n" +
-            "For instance, in an RPG, you can manage all your data related to\n" +
-            "SKILLS, PLAYERS AND MONSTERS, OBJECTS, QUEST etc... et easily\n" +
-            "edit any data.\n" +
-            "\n" +
-            "Take note that the library don't include any assets and only\n" +
-            "process you already created content in a single file, sorted\n" +
-            "in categories.\n" +
-            "You can find some royalties free assets at itch.io, we recommends\n" +
-            "[pvgames.itch.io](https://pvgames.itch.io).\n" +
-            "\n" +
-            "---\n" +
-            "\n" +
-            "### Fonctionnalités de la V1\n" +
-            "\n" +
-            "- You can create categories, and add attributes (properties\n" +
-            "  such as a name for a person). The list of types (text, number, ...)\n" +
-            "  for an attribute is limited.\n" +
-            "- You can pack files (images, musics, atlas, etc...)\n" +
-            "- The software is available in english and in french\n" +
-            "\n" +
-            "\n" +
-            "### En phase de tests\n" +
-            "\n" +
-            "We are currently testing this project, so don't hesitate\n" +
-            "to share any bugs/problems you might found at\n" +
-            "[tyrn@lgs-games.com](mailto:tyrn@lgs-games.com) and/or\n" +
-            "any suggestions/improvement you want us to make.\n" +
-            "\n" +
-            "We will make a patch in the next weeks.\n" +
-            "\n" +
-            "### Documentation\n" +
-            "\n" +
-            "Documentation will be available around the 20th of September at\n" +
-            "[https://github.com/lgs-games/tyrn/wiki](https://github.com/lgs-games/tyrn/wiki).\n" +
-            "\n" +
-            "| Colonne | Colonne |\n" +
-            "| ------ | ------ |\n" +
-            "| tab[0][0] | tab[0][1] |\n" +
-            "| tab[1][0] | tab[1][1] |\n" +
-            "| tab[2][0] | tab[2][1] |\n" +
-            "| tab[3][0] | tab[3][1] |\n" +
-            "| tab[4][0] | tab[4][1] |\n" +
-            "| tab[5][0] | tab[5][1] |\n" +
-            "\n" +
-            "### Crédits\n" +
-            "\n" +
-            "* Legendary Games Studio\n" +
-            "* Quentin Ramsamy (dev)\n" +
-            "* Thibault Meynier (dev)\n" +
-            "* Pierre Ribollet (tester)\n" +
-            "* FontAwesome (icons)";
+    @SuppressWarnings({"unused", "SpellCheckingInspection"})
+    private static final String MARKDOWN_TEST = """
+            Legendary Games Studio is honoured to present our new application : Tyrn.
+
+            The software is open-source (meaning you can read/edit the source code)
+            and allow you to create and manage a set of data.
+
+            For instance, in an RPG, you can manage all your data related to
+            SKILLS, PLAYERS AND MONSTERS, OBJECTS, QUEST etc... et easily
+            edit any data.
+
+            Take note that the library don't include any assets and only
+            process you already created content in a single file, sorted
+            in categories.
+            You can find some royalties free assets at itch.io, we recommends
+            [pvgames.itch.io](https://pvgames.itch.io).
+
+            ---
+
+            ### Fonctionnalités de la V1
+
+            - You can create categories, and add attributes (properties
+              such as a name for a person). The list of types (text, number, ...)
+              for an attribute is limited.
+            - You can pack files (images, musics, atlas, etc...)
+            - The software is available in english and in french
+
+
+            ### En phase de tests
+
+            We are currently testing this project, so don't hesitate
+            to share any bugs/problems you might found at
+            [tyrn@lgs-games.com](mailto:tyrn@lgs-games.com) and/or
+            any suggestions/improvement you want us to make.
+
+            We will make a patch in the next weeks.
+
+            ### Documentation
+
+            Documentation will be available around the 20th of September at
+            [https://github.com/lgs-games/tyrn/wiki](https://github.com/lgs-games/tyrn/wiki).
+
+            | Colonne | Colonne |
+            | ------ | ------ |
+            | tab[0][0] | tab[0][1] |
+            | tab[1][0] | tab[1][1] |
+            | tab[2][0] | tab[2][1] |
+            | tab[3][0] | tab[3][1] |
+            | tab[4][0] | tab[4][1] |
+            | tab[5][0] | tab[5][1] |
+
+            ### Crédits
+
+            * Legendary Games Studio
+            * Quentin Ramsamy (dev)
+            * Thibault Meynier (dev)
+            * Pierre Ribollet (tester)
+            * FontAwesome (icons)""";
 }

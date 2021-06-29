@@ -10,7 +10,7 @@ public class ConversationData extends FriendData {
 
     public int unreadMessagesCount;
 
-    public ConversationData(String avatar, String name, boolean online, int id, int unreadMessagesCount) {
+    public ConversationData(String avatar, String name, boolean online, String id, int unreadMessagesCount) {
         super(avatar, name, online, id, FriendShipStatus.NONE);
         this.unreadMessagesCount = unreadMessagesCount;
     }
@@ -18,11 +18,8 @@ public class ConversationData extends FriendData {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof ConversationData)) return false;
+        if (!(o instanceof ConversationData that)) return false;
         if (!super.equals(o)) return false;
-
-        ConversationData that = (ConversationData) o;
-
         return unreadMessagesCount == that.unreadMessagesCount;
     }
 

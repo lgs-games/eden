@@ -34,6 +34,7 @@ public class APIHelper {
         } catch (InterruptedException ignore) {}
     }
 
+    @SuppressWarnings("unused")
     public static void makeHTTPSRequest() throws APIException {
         try {
             HttpsURLConnection.setFollowRedirects(false);
@@ -41,7 +42,7 @@ public class APIHelper {
             InputStream inputStream = connection.getInputStream();
             inputStream.close();
         } catch (IOException e) {
-            throw new APIException(APIResponseCode.CONNECTION_FAILED, e);
+            throw new APIException(APIResponseCode.SERVER_UNREACHABLE, e);
         }
     }
 }

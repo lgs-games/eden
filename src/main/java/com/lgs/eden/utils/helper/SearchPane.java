@@ -13,7 +13,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.BorderPane;
 
 import java.util.ArrayList;
 
@@ -40,8 +39,6 @@ public class SearchPane {
     private TextField search;
     @FXML
     private ListView<FriendData> users;
-    @FXML
-    private BorderPane container;
 
     private FilterCallback handler;
 
@@ -59,18 +56,8 @@ public class SearchPane {
     public void onSearch() {
         String text = this.search.getText().trim().toLowerCase();
         Platform.runLater(() -> {
-            users = new ListView<>();
-            users.getStyleClass().add("app-background");
             ArrayList<FriendData> filter = this.handler.filter(text);
             users.setItems(FXCollections.observableArrayList(filter));
-            users.setCellFactory(friendDataListView -> new CustomCells<>(FriendCellController.load(this::onSearch)));
-            container.setCenter(users);
-
-            // fixme: this is a patch of
-            //  that didn't show the right results and some cached ones
-            // this.userListObservable.clear();
-            // ArrayList<FriendData> filter = this.handler.filter(text);
-            // this.userListObservable.addAll(filter);
         });
     }
 

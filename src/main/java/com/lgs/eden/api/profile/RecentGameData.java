@@ -1,5 +1,6 @@
 package com.lgs.eden.api.profile;
 
+import com.lgs.eden.utils.Utility;
 import javafx.scene.image.Image;
 
 /**
@@ -18,8 +19,8 @@ public final class RecentGameData {
     /** last played, in days **/
     public final int lastPlayed;
 
-    public RecentGameData(Image gameIcon, String gameName, int timePlayed, int lastPlayed) {
-        this.gameIcon = gameIcon;
+    public RecentGameData(String gameIcon, String gameName, int timePlayed, int lastPlayed) {
+        this.gameIcon = gameIcon == null ? null : Utility.loadImage(gameIcon);
         this.gameName = gameName;
         this.timePlayed = timePlayed;
         this.lastPlayed = lastPlayed;

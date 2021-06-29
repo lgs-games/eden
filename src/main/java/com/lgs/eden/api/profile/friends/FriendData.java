@@ -15,12 +15,12 @@ public class FriendData {
     public final Image avatar;
     public final String name;
     public final boolean online;
-    public final int id;
+    public final String id;
     public final FriendShipStatus friendShipStatus;
 
     private final String path;
 
-    public FriendData(String avatar, String name, boolean online, int id, FriendShipStatus friendShipStatus) {
+    public FriendData(String avatar, String name, boolean online, String id, FriendShipStatus friendShipStatus) {
         this.avatar = avatar == null ? null : Utility.loadImage(avatar);
         this.path = avatar;
         this.name = name;
@@ -29,24 +29,22 @@ public class FriendData {
         this.friendShipStatus = friendShipStatus;
     }
 
-    public FriendData(int id) {
+    public FriendData(String id) {
         this(null, null, false, id, null);
     }
 
+    @SuppressWarnings("unused")
     public String getAvatarPath() { return path; }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof FriendData)) return false;
-
-        FriendData that = (FriendData) o;
-
-        return id == that.id;
+        if (!(o instanceof FriendData that)) return false;
+        return id.equals(that.id);
     }
 
     @Override
-    public int hashCode() { return id; }
+    public int hashCode() { return id != null ? id.hashCode() : 0; }
 
     @Override
     public String toString() {

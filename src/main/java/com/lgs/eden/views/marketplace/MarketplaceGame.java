@@ -1,6 +1,7 @@
 package com.lgs.eden.views.marketplace;
 
 import com.lgs.eden.api.API;
+import com.lgs.eden.api.APIException;
 import com.lgs.eden.api.games.BasicGameData;
 import com.lgs.eden.api.games.MarketplaceGameData;
 import com.lgs.eden.application.AppWindowHandler;
@@ -85,8 +86,13 @@ public class MarketplaceGame {
         BasicGameData newGame = new BasicGameData(this.data.id, this.data.name, this.data.getIconPath());
         // add to library
         if (!this.data.inLibrary) {
-            if (!API.imp.addToLibrary(AppWindowHandler.currentUserID(), newGame)) {
-                PopupUtils.showPopup(Translate.getTranslation("add_library_failed"));
+            try {
+                if (!API.imp.addToLibrary(AppWindowHandler.currentUserID(), newGame)){
+                    PopupUtils.showPopup(Translate.getTranslation("add_library_failed"));
+                    return;
+                }
+            } catch (APIException e) {
+                PopupUtils.showPopup(e);
                 return;
             }
         }

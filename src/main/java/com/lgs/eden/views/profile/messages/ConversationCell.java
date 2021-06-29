@@ -1,8 +1,10 @@
 package com.lgs.eden.views.profile.messages;
 
 import com.lgs.eden.api.API;
+import com.lgs.eden.api.APIException;
 import com.lgs.eden.api.profile.friends.conversation.ConversationData;
 import com.lgs.eden.application.AppWindowHandler;
+import com.lgs.eden.application.PopupUtils;
 import com.lgs.eden.utils.Translate;
 import com.lgs.eden.utils.ViewsPath;
 import com.lgs.eden.utils.cell.CellHandler;
@@ -74,11 +76,14 @@ public class ConversationCell implements CellHandler<ConversationData> {
 
     @FXML
     private void onCloseRequest() {
-        if (API.imp.closeConversation(this.item.id, AppWindowHandler.currentUserID())) {
-            AppWindowHandler.setScreen(Messages.getScreen(), ViewsPath.PROFILE);
-        } else {
-            // todo: show error
-            System.out.println("Can't close conv");
+        try {
+            if (API.imp.closeConversation(this.item.id, AppWindowHandler.currentUserID())) {
+                AppWindowHandler.setScreen(Messages.getScreen(), ViewsPath.PROFILE);
+            } else {
+                PopupUtils.showPopup(Translate.getTranslation("op_failed"));
+            }
+        } catch (APIException e) {
+            PopupUtils.showPopup(e);
         }
     }
 

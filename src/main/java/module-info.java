@@ -9,11 +9,16 @@ module eden {
     requires javafx.graphics;
     requires javafx.base;
     requires javafx.web;
+    requires socket.io.client;
+    requires org.junit.jupiter.engine;
+    requires org.junit.jupiter.api;
 
     requires java.desktop;
     requires jdk.crypto.cryptoki;
     requires org.commonmark;
     requires org.commonmark.ext.gfm.tables;
+    requires engine.io.client;
+    requires json;
 
     // our main module
     exports com.lgs.eden;

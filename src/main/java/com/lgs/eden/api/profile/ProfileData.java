@@ -20,9 +20,7 @@ public class ProfileData {
     // recent games, can be empty (size = 0), size <= 3
     public RecentGameData[] recentGames;
     // id user
-    public final int userID;
-    // real number of friends, not necessarily the size of
-    public final int friendNumber;
+    public final String userID;
     // reputation
     public final int reputation;
     // biography
@@ -40,8 +38,8 @@ public class ProfileData {
     public final FriendShipStatus statusWithLogged;
     public final ReputationScore score;
 
-    public ProfileData(String username, int userID, String avatar,
-                       int friendNumber, int reputation, String biography, Date lastSeen,
+    public ProfileData(String username, String userID, String avatar,
+                       int reputation, String biography, Date lastSeen,
                        Date memberSinceDate,
                        ObservableList<FriendData> friends, RecentGameData[] recentGames,
                        boolean online,
@@ -52,7 +50,6 @@ public class ProfileData {
         this.friends = friends;
         this.recentGames = recentGames;
         this.userID = userID;
-        this.friendNumber = friendNumber;
         this.reputation = reputation;
         this.biography = biography;
         this.lastSeen = lastSeen;
@@ -66,38 +63,35 @@ public class ProfileData {
      * Make a new one while changing two fields
      */
     public ProfileData(ProfileData data, int reputation, ReputationScore score) {
-        this(data.username, data.userID, data.avatarPath, data.friendNumber, reputation, data.biography,
+        this(data.username, data.userID, data.avatarPath, reputation, data.biography,
                 data.lastSeen, data.memberSinceDate, data.friends, data.recentGames, data.online, data.statusWithLogged, score);
     }
 
     public ProfileData(ProfileData data, FriendShipStatus status) {
-        this(data.username, data.userID, data.avatarPath, data.friends.size(), data.reputation, data.biography,
+        this(data.username, data.userID, data.avatarPath, data.reputation, data.biography,
                 data.lastSeen, data.memberSinceDate, data.friends, data.recentGames, data.online, status, data.score);
     }
 
-    public ProfileData(int userID) {
-        this(null, userID, null, 0, 0, null, null,
+    public ProfileData(String userID) {
+        this(null, userID, null, 0, null, null,
                 null, null, null, false, null, null);
     }
 
     public ProfileData(ProfileData data, ObservableList<FriendData> friendList) {
-        this(data.username, data.userID, data.avatarPath, friendList.size(), data.reputation, data.biography,
+        this(data.username, data.userID, data.avatarPath, data.reputation, data.biography,
                 data.lastSeen, data.memberSinceDate, friendList, data.recentGames, data.online, data.statusWithLogged, data.score);
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof ProfileData)) return false;
-
-        ProfileData that = (ProfileData) o;
-
-        return userID == that.userID;
+        if (!(o instanceof ProfileData that)) return false;
+        return userID.equals(that.userID);
     }
 
     @Override
     public int hashCode() {
-        return userID;
+        return userID != null ? userID.hashCode() : 0;
     }
 
     @Override
@@ -107,7 +101,6 @@ public class ProfileData {
                 ", friends=" + friends +
                 ", recentGames=" + Arrays.toString(recentGames) +
                 ", userID=" + userID +
-                ", friendNumber=" + friendNumber +
                 ", reputation=" + reputation +
                 ", biography='" + biography + '\'' +
                 ", lastSeen=" + lastSeen +
@@ -117,5 +110,9 @@ public class ProfileData {
                 ", score=" + score +
                 ", online=" + online +
                 '}';
+    }
+
+    public ProfileData change(ReputationChangeData r) {
+        return new ProfileData(this, r.rep(), r.score());
     }
 }

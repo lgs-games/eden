@@ -21,7 +21,7 @@ public class MarketplaceGameData extends BasicGameData {
 
     public final boolean inLibrary;
 
-    public MarketplaceGameData(int id, String name, String version, String size,
+    public MarketplaceGameData(String id, String name, String version, String size,
                                String desc, String icon, String image, ArrayList<String> tags,
                                ArrayList<String> languages, boolean inLibrary) {
         super(id, name, icon);

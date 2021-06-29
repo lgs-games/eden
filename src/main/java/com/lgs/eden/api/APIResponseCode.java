@@ -1,13 +1,17 @@
 package com.lgs.eden.api;
 
+import java.util.HashMap;
 import java.util.NoSuchElementException;
 
 /**
  * List of all codes returned by the API
  */
 public enum APIResponseCode {
-    CONNECTION_FAILED(0),
+    SERVER_UNREACHABLE(0),
     TOO_MANY_REQUESTS(1),
+    INVALID_API_USAGE(5),
+    JOB_DONE(7),
+    JOB_NOT_DONE(8),
 
     LOGIN_OK(10),
     LOGIN_INVALID(11),
@@ -16,8 +20,8 @@ public enum APIResponseCode {
 
     REGISTER_OK(20),
     REGISTER_FAILED(21),
-    REGISTER_FAILED_EMAIL(22),
-    REGISTER_FAILED_LOGIN(23),
+    REGISTER_FAILED_LOGIN(22),
+    REGISTER_FAILED_EMAIL(23),
     REGISTER_FAILED_SIZE(24),
 
     CHANGE_REPUTATION_OK(272),
@@ -34,12 +38,23 @@ public enum APIResponseCode {
         this.code = code;
     }
 
+    // ------------------------------ fromCode ----------------------------- \\
+
+    // use a HashMap to make things faster
+    private static final HashMap<Integer, APIResponseCode> map;
+
+    // init
+    static {
+        map = new HashMap<>();
+        for (APIResponseCode r : APIResponseCode.values()) {
+            map.put(r.code, r);
+        }
+    }
+
     /** returns APIResponseCode from code  **/
     public static APIResponseCode fromCode(int code) {
-        for (APIResponseCode r : APIResponseCode.values()) {
-            if (r.code == code) return r;
-        }
-        throw new NoSuchElementException("No APIResponseCode for code '" + code + "'.");
+        if (!map.containsKey(code)) throw new NoSuchElementException("No APIResponseCode for code '" + code + "'.");
+        return map.get(code);
     }
 
 }

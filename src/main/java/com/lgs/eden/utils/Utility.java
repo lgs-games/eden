@@ -48,6 +48,7 @@ public final class Utility {
     /**
      * Return file URL path
      */
+    @SuppressWarnings("unused")
     public static String getURL(String path) {
         return Objects.requireNonNull(Utility.class.getResource(path)).getPath();
     }
@@ -136,7 +137,9 @@ public final class Utility {
                 HttpsURLConnection.setFollowRedirects(false);
                 HttpsURLConnection connection = (HttpsURLConnection) new URL(source).openConnection();
                 // open
-                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                BufferedReader bufferedReader = new BufferedReader(
+                        new InputStreamReader(connection.getInputStream(), StandardCharsets.UTF_8)
+                );
                 // read
                 StringBuilder buffer = new StringBuilder();
                 String line;

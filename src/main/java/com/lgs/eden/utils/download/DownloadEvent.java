@@ -10,21 +10,7 @@ package com.lgs.eden.utils.download;
  * @see DownloadEvent#timeRemaining estimated remaining time based on speed and remaining size, in s
  * @see DownloadEvent#fileName file name
  */
-public class DownloadEvent {
-
-    public final long downloaded;
-    public final long expectedSize;
-    public final long speed;
-    public final long timeRemaining;
-    public final String fileName;
-
-    public DownloadEvent(long downloaded, long expectedSize, long speed, long timeRemaining,
-                         String fileName) {
-        this.downloaded = downloaded;
-        this.expectedSize = expectedSize;
-        this.speed = speed;
-        this.timeRemaining = timeRemaining;
-        this.fileName = fileName;
-    }
+public record DownloadEvent(long downloaded, long expectedSize, long speed, long timeRemaining,
+                            String fileName) {
 
 }

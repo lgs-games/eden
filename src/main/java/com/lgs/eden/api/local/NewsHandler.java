@@ -2,7 +2,6 @@ package com.lgs.eden.api.local;
 
 import com.lgs.eden.api.news.BasicNewsData;
 import com.lgs.eden.api.news.NewsAPI;
-import com.lgs.eden.utils.config.Language;
 
 import java.time.Instant;
 import java.util.ArrayList;
@@ -14,7 +13,19 @@ import java.util.Date;
 public class NewsHandler implements NewsAPI {
 
     @Override
-    public ArrayList<BasicNewsData> getAllNews(int begin, int count, String code, int gameID, Language language) {
+    public BasicNewsData getNews(String id) {
+        return new BasicNewsData(
+                "Version 3.1.0 released",
+                "/news/news1.png",
+                "We patched a lot of things and tried to improve" +
+                        "the game to make it less easy and more fun to play.",
+                "https://lgs-games.com/api/news/test.md",
+                Date.from(Instant.now())
+        );
+    }
+
+    @Override
+    public ArrayList<BasicNewsData> getAllNews(int begin, int count, String gameID, String lang, String os) {
         ArrayList<BasicNewsData> news = new ArrayList<>();
         BasicNewsData prim = new BasicNewsData(
                 "Version 3.1.0 released",
@@ -22,8 +33,7 @@ public class NewsHandler implements NewsAPI {
                 "We patched a lot of things and tried to improve" +
                         "the game to make it less easy and more fun to play.",
                 "https://lgs-games.com/api/news/test.md",
-                Date.from(Instant.now()),
-                0
+                Date.from(Instant.now())
         );
         BasicNewsData.newsCount = 1;
         news.add(prim);

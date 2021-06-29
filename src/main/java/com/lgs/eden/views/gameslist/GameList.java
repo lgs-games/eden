@@ -1,6 +1,7 @@
 package com.lgs.eden.views.gameslist;
 
 import com.lgs.eden.api.API;
+import com.lgs.eden.api.APIException;
 import com.lgs.eden.api.games.BasicGameData;
 import com.lgs.eden.api.games.GameViewData;
 import com.lgs.eden.api.games.ShortGameViewData;
@@ -10,6 +11,7 @@ import com.lgs.eden.application.PopupUtils;
 import com.lgs.eden.utils.Translate;
 import com.lgs.eden.utils.Utility;
 import com.lgs.eden.utils.ViewsPath;
+import com.lgs.eden.utils.cell.CustomCells;
 import com.lgs.eden.utils.config.Config;
 import com.lgs.eden.utils.config.InstallUtils;
 import com.lgs.eden.views.achievements.Achievements;
@@ -20,7 +22,6 @@ import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -54,15 +55,21 @@ public class GameList {
     }
 
     public static Parent getScreen(BasicGameData data) {
-        ObservableList<BasicGameData> userGames = API.imp.getUserGames(AppWindowHandler.currentUserID());
-        if (userGames.isEmpty()) {
+        ObservableList<BasicGameData> userGames;
+        try {
+            userGames = API.imp.getUserGames(AppWindowHandler.currentUserID());
+            if (userGames.isEmpty()) {
+                return EmptyGameList.getScreen();
+            } else {
+                FXMLLoader loader = Utility.loadView(ViewsPath.GAMES_LIST.path);
+                Parent parent = Utility.loadViewPane(loader);
+                controller = loader.getController();
+                controller.init(userGames, data);
+                return parent;
+            }
+        } catch (APIException e) {
+            PopupUtils.showPopup(e);
             return EmptyGameList.getScreen();
-        } else {
-            FXMLLoader loader = Utility.loadView(ViewsPath.GAMES_LIST.path);
-            Parent parent = Utility.loadViewPane(loader);
-            controller = loader.getController();
-            controller.init(userGames, data);
-            return parent;
         }
     }
 
@@ -125,15 +132,20 @@ public class GameList {
         this.myGames = myGames;
         this.data = data = data == null ? myGames.get(0) : data;
         // set items
+        this.games.setCellFactory(item -> new CustomCells<>(GameListCell.load()));
         this.games.setItems(FXCollections.observableArrayList());
         this.games.getItems().addAll(this.myGames);
 
-        // change renderer
-        this.games.setCellFactory(item -> new GameListCell());
-
         // ------------------------------ GAME VIEW ----------------------------- \\
-        // fetch game data
-        this.gameData = API.imp.getGameData(AppWindowHandler.currentUserID(), data.id);
+        try {
+            // fetch game data
+            this.gameData = API.imp.getGameData(AppWindowHandler.currentUserID(), data.id,
+                    Config.getCode(),
+                    Config.getOS());
+        } catch (APIException e) {
+            PopupUtils.showPopup(e);
+            return;
+        }
 
         // set view texts
         this.gameName.setText(this.gameData.name);
@@ -153,8 +165,13 @@ public class GameList {
         // ------------------------------ DOWNLOAD ----------------------------- \\
 
         if (Config.isGameInstalled(gameData.id)) {
-            this.download.setText(Translate.getTranslation("play"));
-            this.download.setOnAction((e) -> launchGame());
+            if (gameData.update.version().equals(gameData.version)){
+                this.download.setText(Translate.getTranslation("play"));
+                this.download.setOnAction((e) -> launchGame());
+            } else {
+                this.download.setText(Translate.getTranslation("update"));
+                this.download.setOnAction((e) -> downloadGame());
+            }
         } else {
             this.download.setOnAction((e) -> downloadGame());
         }
@@ -194,23 +211,10 @@ public class GameList {
         if (text.isEmpty()) {
             this.games.getItems().clear();
             this.games.getItems().addAll(this.myGames);
-            fillWithBlanksSinceBug(myGames.size());
         } else {
             this.games.getItems().clear();
             FilteredList<BasicGameData> filtered = this.myGames.filtered((e) -> e.name.toLowerCase().contains(text));
             this.games.getItems().addAll(filtered);
-            fillWithBlanksSinceBug(filtered.size());
-        }
-    }
-
-    //todo: first JavaFX bug :(
-    // the list seems to show old rendering when the size
-    // just to two from one or go back to two.
-    private void fillWithBlanksSinceBug(int size) {
-        if (size == 1) size = 18;
-        else if (size == 2) size = 15;
-        for (int i = 0; i < size; i++) {
-            this.games.getItems().add(null);
         }
     }
 
@@ -272,18 +276,22 @@ public class GameList {
         Timer timer = new Timer();
         timer.scheduleAtFixedRate(new RotateUpdate(image), 0, 150);
         ApplicationCloseHandler.startUpdateThread(timer, () -> {
-            ShortGameViewData view = API.imp.getGameDateUpdate(AppWindowHandler.currentUserID(), this.gameData.id);
-            // changes values
-            Platform.runLater(() -> {
-                this.achievementCount.setText("" + view.playerAchievements);
-                this.friendsPlaying.setText("" + view.friendsPlaying);
-                this.timePlayed.setText("" + view.timePlayed);
-                // done
-                this.calledUpdate = false;
-                image.setRotate(0); // reset
-                // close
-                ApplicationCloseHandler.closeUpdateThread();
-            });
+            try {
+                ShortGameViewData view = API.imp.getGameDateUpdate(AppWindowHandler.currentUserID(), this.gameData.id);
+                // changes values
+                Platform.runLater(() -> {
+                    this.achievementCount.setText("" + view.playerAchievements());
+                    this.friendsPlaying.setText("" + view.friendsPlaying());
+                    this.timePlayed.setText("" + view.timePlayed());
+                    // done
+                    this.calledUpdate = false;
+                    image.setRotate(0); // reset
+                    // close
+                    ApplicationCloseHandler.closeUpdateThread();
+                });
+            } catch (APIException e) {
+                PopupUtils.showPopup(e);
+            }
         });
     }
 
@@ -310,7 +318,7 @@ public class GameList {
             } else {
                 InstallUtils.runGame(gameData, () -> {
                     gameRunning = false;
-                    API.imp.setPlaying(AppWindowHandler.currentUserID(), -1);
+                    API.imp.setPlaying(AppWindowHandler.currentUserID(), "-1");
                 });
                 gameRunning = true;
                 API.imp.setPlaying(AppWindowHandler.currentUserID(), this.gameData.id);

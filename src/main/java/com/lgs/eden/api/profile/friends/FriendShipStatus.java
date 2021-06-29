@@ -5,9 +5,20 @@ package com.lgs.eden.api.profile.friends;
  * two users.
  */
 public enum FriendShipStatus {
-    REQUESTED,
-    GOT_REQUESTED,
-    FRIENDS,
-    NONE,
-    USER // if user request with himself
+    REQUESTED(0),
+    GOT_REQUESTED(1),
+    FRIENDS(2),
+    NONE(3),
+    USER(4) // if user request with himself
+    ;
+
+    private final int value;
+    FriendShipStatus(int value) { this.value = value; }
+
+    public static FriendShipStatus parse(int value) {
+        for (FriendShipStatus s: values()) {
+            if (s.value == value) return s;
+        }
+        throw new IllegalArgumentException("no such value");
+    }
 }

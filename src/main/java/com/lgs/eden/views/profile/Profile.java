@@ -1,14 +1,18 @@
 package com.lgs.eden.views.profile;
 
 import com.lgs.eden.api.API;
+import com.lgs.eden.api.APIException;
 import com.lgs.eden.api.profile.ProfileData;
+import com.lgs.eden.api.profile.ReputationChangeData;
 import com.lgs.eden.api.profile.friends.FriendData;
 import com.lgs.eden.application.AppWindowHandler;
+import com.lgs.eden.application.PopupUtils;
 import com.lgs.eden.utils.Translate;
 import com.lgs.eden.utils.Utility;
 import com.lgs.eden.utils.ViewsPath;
 import com.lgs.eden.utils.cell.CustomCells;
 import com.lgs.eden.views.friends.AllFriends;
+import com.lgs.eden.views.gameslist.GameList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
@@ -39,7 +43,7 @@ public class Profile {
      * @return reloaded profile screen with profile data for userID
      * Should only be called if user is not currentUserID
      */
-    public static Parent reloadWith(int userID) {
+    public static Parent reloadWith(String userID) {
         FXMLLoader loader = Utility.loadView(ViewsPath.PROFILE.path);
         Parent parent = Utility.loadViewPane(loader);
         controller = loader.getController();
@@ -56,8 +60,6 @@ public class Profile {
 
     @FXML // profile info
     private Label bio;
-    @FXML
-    private Label userID;
     @FXML
     private Label since;
     @FXML
@@ -95,12 +97,17 @@ public class Profile {
     private ProfileData data;
 
     /** set up profile view **/
-    private void init(int userID) {
-        this.data = API.imp.getProfileData(userID, AppWindowHandler.currentUserID());
+    private void init(String userID) {
+        try {
+            this.data = API.imp.getProfileData(userID, AppWindowHandler.currentUserID());
+        } catch (APIException e) {
+            PopupUtils.showPopup(e);
+            AppWindowHandler.setScreen(GameList.getScreen(), ViewsPath.GAMES);
+            return;
+        }
 
         // ------------------------------ FILL ATTRIBUTES ----------------------------- \\
-        this.username.setText(this.data.username); // ex: Raphiki
-        this.userID.setText(String.format("%06d", this.data.userID)); // ex: 000006
+        this.username.setText(this.data.username); // ex: Raphik
         this.bio.setText(this.data.biography + ""); // bio
         this.lastLogin.setText(Translate.getDate(this.data.lastSeen)); // getDate format
         this.since.setText(Translate.getDate(this.data.memberSinceDate)); // getDate format
@@ -158,7 +165,7 @@ public class Profile {
         // ------------------------------ FILL FRIEND LIST ----------------------------- \\
 
         // add friends in the list
-        if (this.data.friendNumber > 0) {
+        if (this.data.friends.size() > 0) {
             this.friendDataListView.setItems(this.data.friends);
             this.friendDataListView.setCellFactory(friendDataListView -> new CustomCells<>(FriendCellController.load()));
         } else {
@@ -180,9 +187,13 @@ public class Profile {
     private void onAddFriend() {
         onAddFriend(this.data.userID);
     }
-    public void onAddFriend(int friendID) {
-        API.imp.addFriend(friendID, AppWindowHandler.currentUserID());
-        reload(friendID);
+    public void onAddFriend(String friendID) {
+        try {
+            API.imp.addFriend(friendID, AppWindowHandler.currentUserID());
+            reload(friendID);
+        } catch (APIException e) {
+            PopupUtils.showPopup(e);
+        }
     }
 
     /** Listener of the remove friend button **/
@@ -190,28 +201,38 @@ public class Profile {
     private void onRemoveFriend() {
         onRemoveFriend(this.data.userID);
     }
-    public void onRemoveFriend(int friendID) {
-        API.imp.removeFriend(friendID, AppWindowHandler.currentUserID());
-        reload(friendID);
+    public void onRemoveFriend(String friendID) {
+        try {
+            API.imp.removeFriend(friendID, AppWindowHandler.currentUserID());
+            reload(friendID);
+        } catch (APIException e) {
+            PopupUtils.showPopup(e);
+        }
     }
 
     /** Listener of the +1 rep label **/
     @FXML
     private void onPlusOneRep() {
-        // api won't allow it
-        if (AppWindowHandler.currentUserID() == data.userID) return;
-        ProfileData r = API.imp.changeReputation(data.userID, AppWindowHandler.currentUserID(), true);
-        if (r != null) this.setReputation(this.data = r);
+        changeReputation(true);
     }
 
     /** Listener of the -1 rep label **/
     @FXML
     private void onMinusOneRep() {
-        // api won't allow it
-        if (AppWindowHandler.currentUserID() == data.userID) return;
+        changeReputation(false);
+    }
 
-        ProfileData r = API.imp.changeReputation(data.userID, AppWindowHandler.currentUserID(), false);
-        if (r != null) this.setReputation(this.data = r);
+    private void changeReputation(boolean increase) {
+        // api won't allow it
+        if (AppWindowHandler.currentUserID().equals(data.userID)) return;
+        try {
+            ReputationChangeData r = API.imp.changeReputation(data.userID, AppWindowHandler.currentUserID(), increase);
+            if (r != null) {
+                this.setReputation(this.data = this.data.change(r));
+            }
+        } catch (APIException e) {
+            PopupUtils.showPopup(e);
+        }
     }
 
     private void setReputation(ProfileData data) {
@@ -223,23 +244,23 @@ public class Profile {
         this.reputation.getStyleClass().set(0, repStyle);
 
         // disable +1 and -1 visually
-        if (AppWindowHandler.currentUserID() == this.data.userID) {
+        if (AppWindowHandler.currentUserID().equals(this.data.userID)) {
             this.addOne.setDisable(true);
             this.removeOne.setDisable(true);
         } else {
             switch (data.score) {
-                case NONE:
+                case NONE -> {
                     this.addOne.setDisable(false);
                     this.removeOne.setDisable(false);
-                    break;
-                case INCREASED:
+                }
+                case INCREASED -> {
                     this.addOne.setDisable(true);
                     this.removeOne.setDisable(false);
-                    break;
-                case DECREASED:
+                }
+                case DECREASED -> {
                     this.addOne.setDisable(false);
                     this.removeOne.setDisable(true);
-                    break;
+                }
             }
         }
     }
@@ -249,9 +270,13 @@ public class Profile {
     private void onAcceptFriend() {
         onAcceptFriend(this.data.userID);
     }
-    public void onAcceptFriend(int friendID) {
-        API.imp.acceptFriend(friendID, AppWindowHandler.currentUserID());
-        reload(friendID);
+    public void onAcceptFriend(String friendID) {
+        try {
+            API.imp.acceptFriend(friendID, AppWindowHandler.currentUserID());
+            reload(friendID);
+        } catch (APIException e) {
+            PopupUtils.showPopup(e);
+        }
     }
 
     /** Listener of the accept friend button **/
@@ -259,15 +284,19 @@ public class Profile {
     private void onRefuseFriend() {
         onRefuseFriend(this.data.userID);
     }
-    public void onRefuseFriend(int friendID) {
-        API.imp.refuseFriend(friendID, AppWindowHandler.currentUserID());
-        reload(friendID);
+    public void onRefuseFriend(String friendID) {
+        try {
+            API.imp.refuseFriend(friendID, AppWindowHandler.currentUserID());
+            reload(friendID);
+        } catch (APIException e) {
+            PopupUtils.showPopup(e);
+        }
     }
 
     // ------------------------------ UTILS ----------------------------- \\
 
     /** reload view **/
-    public void reload(int friendID) {
+    public void reload(String friendID) {
         AppWindowHandler.setScreen(Profile.reloadWith(friendID), ViewsPath.PROFILE);
     }
 

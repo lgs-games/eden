@@ -12,13 +12,13 @@ public class LoginResponseData {
     /** @see APIResponseCode **/
     public final APIResponseCode code;
     /** logged userID username if logged successful **/
-    public final int userID;
+    public final String userID;
     /** logged username if logged successful **/
     public final String username;
     /** logged avatar if logged successful **/
     public final Image avatar;
 
-    public LoginResponseData(int code, int userID, String username, String avatar) {
+    public LoginResponseData(int code, String userID, String username, String avatar) {
         this.code = APIResponseCode.fromCode(code);
         this.userID = userID;
         this.username = username;
@@ -28,8 +28,18 @@ public class LoginResponseData {
     /** Set code and everything else at null/-1/"" */
     public LoginResponseData(int code) {
         this.code = APIResponseCode.fromCode(code);
-        this.userID = -1;
+        this.userID = "-1";
         this.username = "";
         this.avatar = null;
+    }
+
+    @Override
+    public String toString() {
+        return "LoginResponseData{" +
+                "code=" + code +
+                ", userID=" + userID +
+                ", username='" + username + '\'' +
+                ", avatar=" + avatar +
+                '}';
     }
 }

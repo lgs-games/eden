@@ -1,6 +1,7 @@
 package com.lgs.eden.application;
 
 import com.lgs.eden.api.API;
+import com.lgs.eden.api.APIException;
 import com.lgs.eden.api.APIResponseCode;
 import com.lgs.eden.api.auth.LoginResponseData;
 import com.lgs.eden.api.callback.NotificationsCallBack;
@@ -73,7 +74,7 @@ public class AppWindowHandler {
     }
 
     /** convenience method, return userID **/
-    public static int currentUserID() { return loggedUser.userID; }
+    public static String currentUserID() { return loggedUser.userID; }
 
     // ------------------------------ INSTANCE ----------------------------- \\
 
@@ -95,7 +96,9 @@ public class AppWindowHandler {
         box.setTooltip(new Tooltip("no_activity"));
         box.setOnAction((e) -> PopupUtils.showPopup("no_activity"));
 
+        //noinspection CodeBlock2Expr
         NotificationsCallBack callback = (notifications) -> {
+            //noinspection CodeBlock2Expr
             ApplicationCloseHandler.starNotificationsThread(
                     () -> {
                         Platform.runLater(() -> {
@@ -153,9 +156,15 @@ public class AppWindowHandler {
 
     @FXML
     public void logout() {
-        API.imp.logout(AppWindowHandler.currentUserID());
-        ApplicationCloseHandler.setLogged(false);
-        Platform.runLater(AppWindowHandler::goBackToMainApp);
+        try {
+            API.imp.logout(AppWindowHandler.currentUserID());
+        } catch (APIException e) {
+            PopupUtils.showPopup(e);
+        } finally {
+            // still logout
+            ApplicationCloseHandler.setLogged(false);
+            Platform.runLater(AppWindowHandler::goBackToMainApp);
+        }
     }
 
     @FXML

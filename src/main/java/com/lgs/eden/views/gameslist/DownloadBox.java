@@ -45,22 +45,22 @@ public class DownloadBox {
         this.onCancel = onCancel;
 
         // get the update information
-        String url = data.update.getURL(Utility.getUserOS());
+        String url = data.update.downloadURL();
 
         d = new DownloadManager(url, Config.getDownloadRepository());
 
         DownloadListener l = (e) -> Platform.runLater(() -> {
             // init and show show
-            this.size.setText(String.format("%.2f", (e.expectedSize / 1000000f)));
-            this.speed.setText(String.format("%.2f", (e.speed / 1000000f)));
-            this.downloaded.setText(String.format("%.2f", (e.downloaded / 1000000f)));
+            this.size.setText(String.format("%.2f", (e.expectedSize() / 1000000f)));
+            this.speed.setText(String.format("%.2f", (e.speed() / 1000000f)));
+            this.downloaded.setText(String.format("%.2f", (e.downloaded() / 1000000f)));
         });
 
         d.onInitCalled(l);
         d.onUpdateProgress(l);
         // move to install
         d.onDownloadEnd((e) -> {
-            if (InstallUtils.installGame(e.fileName, data.id)) {
+            if (InstallUtils.installGame(e.fileName(), data.id)) {
                 onInstalled.run();
             }
         });
