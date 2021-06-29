@@ -60,8 +60,6 @@ public class Profile {
     @FXML // profile info
     private Label bio;
     @FXML
-    private Label userID;
-    @FXML
     private Label since;
     @FXML
     private Label username;
@@ -109,7 +107,6 @@ public class Profile {
 
         // ------------------------------ FILL ATTRIBUTES ----------------------------- \\
         this.username.setText(this.data.username); // ex: Raphik
-        this.userID.setText(String.format("%.6s", this.data.userID)); // ex: 000006
         this.bio.setText(this.data.biography + ""); // bio
         this.lastLogin.setText(Translate.getDate(this.data.lastSeen)); // getDate format
         this.since.setText(Translate.getDate(this.data.memberSinceDate)); // getDate format
