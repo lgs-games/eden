@@ -28,10 +28,7 @@ public class BasicGameData {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof BasicGameData)) return false;
-
-        BasicGameData that = (BasicGameData) o;
-
+        if (!(o instanceof BasicGameData that)) return false;
         if (!this.id.equals(that.id)) return false;
         return this.name.equals(that.name);
     }
