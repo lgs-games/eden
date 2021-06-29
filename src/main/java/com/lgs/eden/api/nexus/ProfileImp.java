@@ -189,7 +189,7 @@ public class ProfileImp extends ImpSocket implements ProfileAPI {
             ), "conv-read", friendID);
         } catch (APIException ignore) {}
 
-        if (r != null){
+        if (r != null) {
             ((NexusHandler)parent).getConvCallBack().onCall(r);
         }
     }

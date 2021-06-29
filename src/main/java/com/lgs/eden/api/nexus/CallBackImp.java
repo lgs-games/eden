@@ -50,8 +50,13 @@ public class CallBackImp extends ImpSocket implements CallBackAPI {
                     } catch (NoSuchElementException ignore){}
                 }
             }
+
             // fire callback
-            callBack.onCall(list);
+            if (list.contains(APIResponseCode.NO_NOTIFICATIONS)){
+                callBack.onCall(null);
+            } else {
+                callBack.onCall(list);
+            }
         });
 
         lookForNotifications(currentUserID);
