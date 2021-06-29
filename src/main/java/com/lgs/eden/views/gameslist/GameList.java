@@ -165,8 +165,13 @@ public class GameList {
         // ------------------------------ DOWNLOAD ----------------------------- \\
 
         if (Config.isGameInstalled(gameData.id)) {
-            this.download.setText(Translate.getTranslation("play"));
-            this.download.setOnAction((e) -> launchGame());
+            if (gameData.update.version().equals(gameData.version)){
+                this.download.setText(Translate.getTranslation("play"));
+                this.download.setOnAction((e) -> launchGame());
+            } else {
+                this.download.setText(Translate.getTranslation("update"));
+                this.download.setOnAction((e) -> downloadGame());
+            }
         } else {
             this.download.setOnAction((e) -> downloadGame());
         }
