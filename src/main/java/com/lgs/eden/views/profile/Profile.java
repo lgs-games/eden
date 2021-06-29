@@ -99,7 +99,7 @@ public class Profile {
         this.data = API.imp.getProfileData(userID, AppWindowHandler.currentUserID());
 
         // ------------------------------ FILL ATTRIBUTES ----------------------------- \\
-        this.username.setText(this.data.username); // ex: Raphiki
+        this.username.setText(this.data.username); // ex: Raphik
         this.userID.setText(String.format("%.6s", this.data.userID)); // ex: 000006
         this.bio.setText(this.data.biography + ""); // bio
         this.lastLogin.setText(Translate.getDate(this.data.lastSeen)); // getDate format
@@ -228,18 +228,18 @@ public class Profile {
             this.removeOne.setDisable(true);
         } else {
             switch (data.score) {
-                case NONE:
+                case NONE -> {
                     this.addOne.setDisable(false);
                     this.removeOne.setDisable(false);
-                    break;
-                case INCREASED:
+                }
+                case INCREASED -> {
                     this.addOne.setDisable(true);
                     this.removeOne.setDisable(false);
-                    break;
-                case DECREASED:
+                }
+                case DECREASED -> {
                     this.addOne.setDisable(false);
                     this.removeOne.setDisable(true);
-                    break;
+                }
             }
         }
     }

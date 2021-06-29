@@ -50,7 +50,7 @@ public class AllNews {
     private void init(String gameID) {
         this.pagination.setPageFactory(pageIndex -> {
             // get the news for our page
-            ArrayList<BasicNewsData> allNews = null;
+            ArrayList<BasicNewsData> allNews;
             try {
                 allNews = API.imp.getAllNews(pageIndex, COUNT_PER_PAGE, gameID, Config.getCode(), Config.getOS());
             } catch (APIException e) {
