@@ -30,7 +30,6 @@ import java.util.TimerTask;
  */
 public class UpdateWindowHandler {
 
-    // todo: temporary bypass
     private static final boolean CHECK_UPDATES = true;
 
     // state of our installer
@@ -74,7 +73,6 @@ public class UpdateWindowHandler {
             // we need that to close 3 dots thread
             primaryStage.setOnCloseRequest(event -> {
                 new ApplicationCloseHandler().handle(event);
-                // todo: move to close handler
                 oldStage = null;
             });
         }

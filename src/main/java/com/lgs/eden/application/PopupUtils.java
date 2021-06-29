@@ -12,8 +12,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-import java.util.Arrays;
-
 /**
  * Utilities to create popups
  */

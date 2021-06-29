@@ -96,7 +96,9 @@ public class AppWindowHandler {
         box.setTooltip(new Tooltip("no_activity"));
         box.setOnAction((e) -> PopupUtils.showPopup("no_activity"));
 
+        //noinspection CodeBlock2Expr
         NotificationsCallBack callback = (notifications) -> {
+            //noinspection CodeBlock2Expr
             ApplicationCloseHandler.starNotificationsThread(
                     () -> {
                         Platform.runLater(() -> {
