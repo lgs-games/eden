@@ -1,9 +1,7 @@
 package com.lgs.eden.api.nexus.helpers;
 
 import com.lgs.eden.api.APIException;
-import com.lgs.eden.api.games.MarketplaceGameData;
 import com.lgs.eden.api.nexus.NexusHandler;
-import io.socket.client.Ack;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;

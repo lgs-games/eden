@@ -8,7 +8,6 @@ import com.lgs.eden.api.callback.NotificationsCallBack;
 import com.lgs.eden.api.nexus.helpers.ImpSocket;
 import com.lgs.eden.api.profile.friends.FriendConversationView;
 import io.socket.client.Socket;
-import io.socket.emitter.Emitter;
 
 import java.util.ArrayList;
 import java.util.NoSuchElementException;

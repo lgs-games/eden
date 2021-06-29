@@ -38,7 +38,7 @@ public class NexusHandler extends APIHandler {
                     .setForceNew(false)
                     .setTimeout(-1)
                     // todo: we may add that
-                    // .setReconnectionDelayMax(xxxx)
+                    // .setReconnectionDelayMax(xxx)
                     .build();
 
             Socket socket = IO.socket(uri, options);

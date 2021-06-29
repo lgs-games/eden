@@ -17,17 +17,10 @@ import java.util.concurrent.atomic.AtomicReference;
  * stop the response wait.
  *
  * @param <T> returned by response, also the type of
- *           set so that's basically the data that you are
- *           waiting for.
+ *            set so that's basically the data that you are
+ *            waiting for.
  */
-public class MonitorIO<T> {
-    public final CountDownLatch latch;
-    public final AtomicReference<T> ref;
-
-    private MonitorIO(CountDownLatch latch, AtomicReference<T> ref) {
-        this.latch = latch;
-        this.ref = ref;
-    }
+public record MonitorIO<T>(CountDownLatch latch, AtomicReference<T> ref) {
 
     /**
      * Wait and return the reference value of raise exception if we
@@ -41,7 +34,7 @@ public class MonitorIO<T> {
         }
 
         T rep = this.ref.get();
-        if (rep == null){
+        if (rep == null) {
             throw new APIException(APIResponseCode.SERVER_UNREACHABLE);
         }
         return rep;
@@ -50,7 +43,7 @@ public class MonitorIO<T> {
     /**
      * Set the value we were waiting and resume execution
      */
-    public void set(T value){
+    public void set(T value) {
         this.ref.set(value);
         this.latch.countDown();
     }
