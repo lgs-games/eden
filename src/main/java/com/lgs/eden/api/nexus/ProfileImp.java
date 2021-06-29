@@ -177,6 +177,24 @@ public class ProfileImp extends ImpSocket implements ProfileAPI {
     }
 
     @Override
+    public void setConversationRead(String friendID, String currentUserID) {
+        ConversationData r = null;
+        try {
+            r = RequestObject.requestObject(this, (o) -> new ConversationData(
+                    o.getString("avatar"),
+                    o.getString("name"),
+                    o.getBoolean("online"),
+                    o.getString("user_id"),
+                    o.getInt("unread")
+            ), "conv-read", friendID);
+        } catch (APIException ignore) {}
+
+        if (r != null){
+            ((NexusHandler)parent).getConvCallBack().onCall(r);
+        }
+    }
+
+    @Override
     public MessageData sendMessage(String to, String from, String message) throws APIException {
         return RequestObject.requestObject(this,
                 (m) -> new MessageData(

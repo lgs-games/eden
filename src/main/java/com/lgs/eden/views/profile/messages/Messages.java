@@ -147,7 +147,15 @@ public class Messages {
                     items.add(i, c);
 
                     // set again as current
-                    if (c.id.equals(friend.id)) setSelected();
+                    if (c.id.equals(friend.id)) {
+                        setSelected();
+                        // set current read
+                        try {
+                            if (c.unreadMessagesCount != 0) {
+                                API.imp.setConversationRead(this.friend.id, AppWindowHandler.currentUserID());
+                            }
+                        } catch (APIException ignore) {}
+                    }
                 });
             }, conv);
         }

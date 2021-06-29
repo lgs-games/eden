@@ -2,6 +2,7 @@ package com.lgs.eden.api;
 
 import com.lgs.eden.api.auth.AuthAPI;
 import com.lgs.eden.api.auth.LoginResponseData;
+import com.lgs.eden.api.callback.ConversationsCallback;
 import com.lgs.eden.api.games.*;
 import com.lgs.eden.api.news.BasicNewsData;
 import com.lgs.eden.api.news.NewsAPI;

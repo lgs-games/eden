@@ -1,8 +1,6 @@
 package com.lgs.eden.api.profile;
 
-import com.lgs.eden.api.API;
 import com.lgs.eden.api.APIException;
-import com.lgs.eden.api.APIResponseCode;
 import com.lgs.eden.api.games.AchievementData;
 import com.lgs.eden.api.profile.friends.FriendConversationView;
 import com.lgs.eden.api.profile.friends.FriendData;
@@ -77,6 +75,11 @@ public interface ProfileAPI {
      * Create a new conversation in the list of conversation of this user.
      */
     boolean newConversation(String friendID, String currentUserID) throws APIException;
+
+    /**
+     * Set conversation as read
+     */
+    default void setConversationRead(String friendID, String currentUserID) throws APIException {}
 
     /**
      * Close (don't delete message but don't show again) a conversation

@@ -59,6 +59,7 @@ public class CallBackImp extends ImpSocket implements CallBackAPI {
 
     @Override
     public void setMessagesCallBack(MessagesCallBack mCallBack, ConversationsCallback convCallBack, FriendConversationView ignored) {
+        ((NexusHandler)parent).saveConversationCallback(convCallBack);
         socket.on("message-received", args -> {
             if (mCallBack == null) return;
             if (convCallBack == null) return;

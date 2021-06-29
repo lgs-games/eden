@@ -32,6 +32,7 @@ public class NexusHandler extends APIHandler {
 
     private static final AtomicReference<String> oldID = new AtomicReference<>();
     private static APIHandler instance;
+    private ConversationsCallback convCallBack;
 
     public static APIHandler getInstance() {
         if (instance == null) {
@@ -72,7 +73,9 @@ public class NexusHandler extends APIHandler {
         this.callback = new CallBackImp(socket);
 
         // set parent
+        ((ImpSocket)this.callback).setParent(this);
         ((ImpSocket)this.games).setParent(this);
+        ((ImpSocket)this.profile).setParent(this);
     }
 
     @Override
@@ -104,6 +107,17 @@ public class NexusHandler extends APIHandler {
     @Override
     public void setMessagesCallBack(MessagesCallBack callBack, ConversationsCallback c, FriendConversationView conv) {
         this.callback.setMessagesCallBack(callBack, c, conv);
+    }
+
+    void saveConversationCallback(ConversationsCallback convCallBack) {
+        this.convCallBack = convCallBack;
+    }
+
+    ConversationsCallback getConvCallBack() { return convCallBack; }
+
+    @Override
+    public void setConversationRead(String friendID, String currentUserID) {
+        ((ProfileImp)this.profile).setConversationRead(friendID, currentUserID);
     }
 
     // ------------------------------ HELP ----------------------------- \\
