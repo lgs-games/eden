@@ -38,7 +38,8 @@ public final class Utility {
     public static Image loadImage(String path) throws NullPointerException {
         if (images.containsKey(path)) return images.get(path);
         try {
-            images.put(path, new Image(Objects.requireNonNull(Utility.class.getResourceAsStream(path))));
+            if (path.startsWith("/")) images.put(path, new Image(Objects.requireNonNull(Utility.class.getResourceAsStream(path))));
+            else images.put(path, new Image(path));
             return images.get(path);
         } catch (Exception e) {
             throw new IllegalArgumentException("Image not found " + path);
