@@ -83,12 +83,12 @@ public class GameImp extends ImpSocket implements GameAPI {
 
     @Override
     public boolean addToLibrary(String userID, BasicGameData game) throws APIException {
-        return RequestObject.requestObject(this, NexusHandler::isJobDone, "library-add");
+        return RequestObject.requestObject(this, NexusHandler::isJobDone, "library-add", game.id);
     }
 
     @Override
     public boolean removeFromLibrary(String userID, BasicGameData game) throws APIException {
-        return RequestObject.requestObject(this, NexusHandler::isJobDone, "library-remove");
+        return RequestObject.requestObject(this, NexusHandler::isJobDone, "library-remove", game.id);
     }
 
     @Override
