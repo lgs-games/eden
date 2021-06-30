@@ -78,7 +78,6 @@ class GamesHandler implements GameAPI {
                     "/games/prim-bg.png",
                     0, 7, 0, 54,
                     new GameUpdateData(
-                            "3.1.1",
                             "https://lgs-games.com/assets/exe/prim-setup-3.1.1.exe",
                             "prim.exe",
                             "unins000.exe",

@@ -5,4 +5,4 @@ package com.lgs.eden.api.games;
  * like the version of the game and
  * how we can download the new version (links).
  */
-public record GameUpdateData (String version, String downloadURL, String runnableURL, String uninstallURL, double size) {}
+public record GameUpdateData (String downloadURL, String runnableURL, String uninstallURL, double size) {}

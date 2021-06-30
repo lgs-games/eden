@@ -33,7 +33,7 @@ public class GameImp extends ImpSocket implements GameAPI {
     @Override
     public GameViewData getGameData(String userID, String gameID, String lang, String os) throws APIException {
         return RequestObject.requestObject(this, o -> new GameViewData(
-                o.getString("game_id"),
+                o.get("game_id")+"",
                 o.getString("name"),
                 o.getString("icon"),
                 o.getString("version"),
@@ -44,7 +44,6 @@ public class GameImp extends ImpSocket implements GameAPI {
                 o.getInt("friends_playing"),
                 o.getInt("time_played"),
                 new GameUpdateData(
-                        o.getString("latest"),
                         o.getString("new_version_url"),
                         o.getString("game_run"),
                         o.getString("game_uninstall"),
