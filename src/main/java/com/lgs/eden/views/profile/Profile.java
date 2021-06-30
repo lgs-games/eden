@@ -109,7 +109,11 @@ public class Profile {
         // ------------------------------ FILL ATTRIBUTES ----------------------------- \\
         this.username.setText(this.data.username); // ex: Raphik
         this.bio.setText(this.data.biography + ""); // bio
-        this.lastLogin.setText(Translate.getDate(this.data.lastSeen)); // getDate format
+        this.lastLogin.setText(
+                this.data.lastSeen == null ?
+                        Translate.getTranslation("online") :
+                        Translate.getDate(this.data.lastSeen)
+        ); // getDate format
         this.since.setText(Translate.getDate(this.data.memberSinceDate)); // getDate format
         this.avatar.setImage(this.data.avatar); // set avatar
 

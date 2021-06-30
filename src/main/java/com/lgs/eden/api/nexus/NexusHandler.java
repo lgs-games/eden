@@ -144,7 +144,13 @@ public class NexusHandler extends APIHandler {
      * Parse yyyy-mm-dd date to Java Date object
      */
     public static Date parseSQLDate(String date) throws ParseException {
-        return new SimpleDateFormat("yyyy-MM-dd").parse(date);
+        if (date == null) return null;
+        try {
+            return new SimpleDateFormat("yyyy-MM-dd").parse(date);
+        } catch (ParseException e) {
+            System.out.println(date);
+            return null;
+        }
     }
 
     /**
