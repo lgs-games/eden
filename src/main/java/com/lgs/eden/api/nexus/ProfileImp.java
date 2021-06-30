@@ -63,7 +63,7 @@ public class ProfileImp extends ImpSocket implements ProfileAPI {
     public ProfileData getProfileData(String userID, String currentUserID) throws APIException {
         return RequestObject.requestObject(this, (o) -> {
             // recent games
-            JSONArray a = o.getJSONArray("recent-games");
+            JSONArray a = o.getJSONArray("recent_games");
             RecentGameData[] recent = new RecentGameData[a.length()];
             for (int i = 0; i < a.length() && i < 3; i++) {
                 JSONObject g = (JSONObject) a.get(i);
@@ -94,7 +94,7 @@ public class ProfileImp extends ImpSocket implements ProfileAPI {
                     recent,
                     o.getBoolean("online"),
                     FriendShipStatus.parse(o.getInt("status")),
-                    ReputationScore.parse(o.getInt("reputation-score"))
+                    ReputationScore.parse(o.getInt("reputation_score"))
             );
         }, "get-profile", userID);
     }
@@ -102,7 +102,7 @@ public class ProfileImp extends ImpSocket implements ProfileAPI {
     @Override
     public ReputationChangeData changeReputation(String userID, String currentUserID, boolean increase) throws APIException {
         return RequestObject.requestObject(this,
-                (o) -> new ReputationChangeData(o.getInt("reputation"), ReputationScore.parse(o.getInt("reputation-score"))),
+                (o) -> new ReputationChangeData(o.getInt("reputation"), ReputationScore.parse(o.getInt("reputation_score"))),
                 "reputation-set", userID, increase);
     }
 
