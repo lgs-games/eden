@@ -78,7 +78,9 @@ public class Settings implements ChangeListener<Language> {
     public Settings() {
         // create list of languages
         this.languageList = FXCollections.observableArrayList();
-        this.languageList.addAll(Language.values());
+        // todo: english only
+        // this.languageList.addAll(Language.values());
+        this.languageList.add(Language.EN);
     }
 
     /**
