@@ -15,20 +15,20 @@ public class GameViewData extends BasicGameData {
     public final Image background;
     public final int playerAchievements;
     public final int numberOfAchievements;
-    public final int friendsPlaying;
+    public final int playing;
     public final int timePlayed;
     public final GameUpdateData update;
 
     public GameViewData(String id, String name, String icon,
                         String version, BasicNewsData lastNews, String background, int playerAchievements,
-                        int numberOfAchievements, int friendsPlaying, int timePlayed, GameUpdateData update) {
+                        int numberOfAchievements, int playing, int timePlayed, GameUpdateData update) {
         super(id, name, icon);
         this.version = version;
         this.lastNews = lastNews;
         this.background = Utility.loadImage(background);
         this.playerAchievements = playerAchievements;
         this.numberOfAchievements = numberOfAchievements;
-        this.friendsPlaying = friendsPlaying;
+        this.playing = playing;
         this.timePlayed = timePlayed;
         this.update = update;
     }

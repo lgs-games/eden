@@ -41,7 +41,7 @@ public class GameImp extends ImpSocket implements GameAPI {
                 o.getString("background"),
                 o.getInt("player_achievements"),
                 o.getInt("number_of_achievements"),
-                o.getInt("friends_playing"),
+                o.getInt("playing"),
                 o.getInt("time_played"),
                 new GameUpdateData(
                         o.getString("new_version_url"),
@@ -94,7 +94,7 @@ public class GameImp extends ImpSocket implements GameAPI {
     public ShortGameViewData getGameDateUpdate(String userID, String gameID) throws APIException {
         return RequestObject.requestObject(this, o -> new ShortGameViewData(
                 o.getInt("player_achievements"),
-                o.getInt("friends_playing"),
+                o.getInt("playing"),
                 o.getInt("time_played")
         ), "update-data", gameID);
     }

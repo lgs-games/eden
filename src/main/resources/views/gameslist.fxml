@@ -257,7 +257,7 @@
                                                 </HBox>
                                                 <TextFlow>
                                                     <children>
-                                                        <Label text="%friends_playing">
+                                                        <Label text="%playing">
                                                             <font>
                                                                 <Font size="14.0" />
                                                             </font>
