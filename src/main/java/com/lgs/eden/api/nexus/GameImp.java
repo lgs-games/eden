@@ -42,7 +42,7 @@ public class GameImp extends ImpSocket implements GameAPI {
                 o.getInt("player_achievements"),
                 o.getInt("number_of_achievements"),
                 o.getInt("playing"),
-                o.getInt("time_played"),
+                o.getInt("time_played") / 3600,
                 new GameUpdateData(
                         o.getString("new_version_url"),
                         o.getString("game_run"),
@@ -95,7 +95,7 @@ public class GameImp extends ImpSocket implements GameAPI {
         return RequestObject.requestObject(this, o -> new ShortGameViewData(
                 o.getInt("player_achievements"),
                 o.getInt("playing"),
-                o.getInt("time_played")
+                o.getInt("time_played") / 3600
         ), "update-data", gameID);
     }
 }
