@@ -158,8 +158,8 @@ public class AppWindowHandler {
     public void logout() {
         try {
             API.imp.logout(AppWindowHandler.currentUserID());
-        } catch (APIException e) {
-            PopupUtils.showPopup(e);
+        } catch (APIException ignore) {
+            System.err.println("logout failed");
         } finally {
             // still logout
             ApplicationCloseHandler.setLogged(false);

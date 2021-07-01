@@ -67,6 +67,10 @@ public class ProfileImp extends ImpSocket implements ProfileAPI {
     @Override
     public ProfileData getProfileData(String userID, String currentUserID) throws APIException {
         return RequestObject.requestObject(this, (o) -> {
+            if (o.has("code")){
+                System.out.println(o.getString("message"));
+                throw new JSONException("not valid");
+            }
             // recent games
             JSONArray a = o.getJSONArray("recent_games");
             RecentGameData[] recent = new RecentGameData[a.length()];
@@ -113,22 +117,22 @@ public class ProfileImp extends ImpSocket implements ProfileAPI {
 
     @Override
     public void addFriend(String friendID, String currentUserID) throws APIException {
-        RequestObject.requestObject(this, NexusHandler::isJobDone, "add-friend");
+        RequestObject.requestObject(this, NexusHandler::isJobDone, "add-friend", friendID);
     }
 
     @Override
     public void removeFriend(String friendID, String currentUserID) throws APIException {
-        RequestObject.requestObject(this, NexusHandler::isJobDone, "remove-friend");
+        RequestObject.requestObject(this, NexusHandler::isJobDone, "remove-friend", friendID);
     }
 
     @Override
     public void acceptFriend(String friendID, String currentUserID) throws APIException {
-        RequestObject.requestObject(this, NexusHandler::isJobDone, "accept-friend");
+        RequestObject.requestObject(this, NexusHandler::isJobDone, "accept-friend", friendID);
     }
 
     @Override
     public void refuseFriend(String friendID, String currentUserID) throws APIException {
-        RequestObject.requestObject(this, NexusHandler::isJobDone, "refuse-friend");
+        RequestObject.requestObject(this, NexusHandler::isJobDone, "refuse-friend", friendID);
     }
 
     @Override
