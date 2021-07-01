@@ -159,13 +159,13 @@ public class GameList {
         this.achievementCount.setText("" + this.gameData.playerAchievements);
         this.achievementMax.setText("" + this.gameData.numberOfAchievements);
         // others
-        this.friendsPlaying.setText("" + this.gameData.friendsPlaying);
+        this.friendsPlaying.setText("" + this.gameData.playing);
         this.timePlayed.setText("" + this.gameData.timePlayed);
 
         // ------------------------------ DOWNLOAD ----------------------------- \\
 
         if (Config.isGameInstalled(gameData.id)) {
-            if (gameData.update.version().equals(gameData.version)){
+            if (true /* todo */){
                 this.download.setText(Translate.getTranslation("play"));
                 this.download.setOnAction((e) -> launchGame());
             } else {
