@@ -76,7 +76,7 @@ public class ProfileImp extends ImpSocket implements ProfileAPI {
                         g.getString("icon"),
                         g.getString("name"),
                         g.getInt("time_played") / 3600,
-                        g.getInt("last_played")
+                        g.getLong("last_played")
                 );
             }
 

@@ -7,6 +7,10 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.TimeZone;
+
 /**
  * Controller for card.fxml
  */
@@ -49,7 +53,12 @@ public class RecentGameCard {
             this.lastPlayed.setVisible(true);
             this.lastPlayedUnit.setVisible(true);
             this.lastPlayedAgo.setVisible(true);
-            this.lastPlayed.setText(data.lastPlayed + "");
+
+            // last played in days
+            GregorianCalendar c = new GregorianCalendar();
+            c.setTimeZone(TimeZone.getTimeZone("Europe/Paris"));
+            Date now = c.getTime();
+            this.lastPlayed.setText((int)( (now.getTime() - data.lastPlayed) / (1000 * 60 * 60 * 24)) + "");
         }
         this.time_played.setText(data.timePlayed + "");
     }

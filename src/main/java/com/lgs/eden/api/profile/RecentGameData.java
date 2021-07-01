@@ -17,9 +17,9 @@ public final class RecentGameData {
     /** time played, in hours **/
     public final int timePlayed;
     /** last played, in days **/
-    public final int lastPlayed;
+    public final long lastPlayed;
 
-    public RecentGameData(String gameIcon, String gameName, int timePlayed, int lastPlayed) {
+    public RecentGameData(String gameIcon, String gameName, int timePlayed, long lastPlayed) {
         this.gameIcon = gameIcon == null ? null : Utility.loadImage(gameIcon);
         this.gameName = gameName;
         this.timePlayed = timePlayed;
