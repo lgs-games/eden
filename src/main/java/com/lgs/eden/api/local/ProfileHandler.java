@@ -1,5 +1,6 @@
 package com.lgs.eden.api.local;
 
+import com.lgs.eden.api.APIException;
 import com.lgs.eden.api.APIResponseCode;
 import com.lgs.eden.api.games.AchievementData;
 import com.lgs.eden.api.profile.*;
@@ -118,14 +119,26 @@ class ProfileHandler implements ProfileAPI {
     }
 
     @Override
-    public ArrayList<FriendData> getRequests(String userID, int count) {
+    public ArrayList<FriendData> getRequested(String userID, int count) {
         if (this.users.isEmpty()) init(userID);
         if (count == -1) count = Integer.MAX_VALUE;
         ArrayList<FriendData> copy = new ArrayList<>();
         for (int i = 0; i < count && i < users.size(); i++) {
             ProfileData d = users.get(i);
-            if (d.statusWithLogged.equals(FriendShipStatus.REQUESTED) ||
-                    d.statusWithLogged.equals(FriendShipStatus.GOT_REQUESTED))
+            if (d.statusWithLogged.equals(FriendShipStatus.REQUESTED))
+                copy.add(friendFromProfil(d));
+        }
+        return copy;
+    }
+
+    @Override
+    public ArrayList<FriendData> getGotRequested(String userID, int count) {
+        if (this.users.isEmpty()) init(userID);
+        if (count == -1) count = Integer.MAX_VALUE;
+        ArrayList<FriendData> copy = new ArrayList<>();
+        for (int i = 0; i < count && i < users.size(); i++) {
+            ProfileData d = users.get(i);
+            if (d.statusWithLogged.equals(FriendShipStatus.GOT_REQUESTED))
                 copy.add(friendFromProfil(d));
         }
         return copy;

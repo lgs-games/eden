@@ -3,7 +3,6 @@ package com.lgs.eden.views.friends;
 import com.lgs.eden.api.API;
 import com.lgs.eden.api.APIException;
 import com.lgs.eden.api.profile.friends.FriendData;
-import com.lgs.eden.api.profile.friends.FriendShipStatus;
 import com.lgs.eden.application.AppWindowHandler;
 import com.lgs.eden.application.PopupUtils;
 import com.lgs.eden.utils.Translate;
@@ -66,14 +65,18 @@ public class AllFriends {
         make(friendList, (f) -> !f.online, this.offline, DivName.OFFLINE);
 
         // get requests
+        ArrayList<FriendData> requestedList;
+        ArrayList<FriendData> gotRequestedList;
         try {
-            friendList = API.imp.getRequests(userID, -1);
+            requestedList = API.imp.getRequested(userID, -1);
+            gotRequestedList = API.imp.getGotRequested(userID, -1);
         } catch (APIException e) {
             PopupUtils.showPopup(e);
-            friendList = new ArrayList<>();
+            requestedList = new ArrayList<>();
+            gotRequestedList = new ArrayList<>();
         }
-        make(friendList, (f) -> f.friendShipStatus.equals(FriendShipStatus.REQUESTED), this.request, DivName.REQUEST_DIV);
-        make(friendList, (f) -> f.friendShipStatus.equals(FriendShipStatus.GOT_REQUESTED), this.gotRequested, DivName.GOT_REQUESTED_DIV);
+        make(requestedList, (f) -> true, this.request, DivName.REQUEST_DIV);
+        make(gotRequestedList, (f) -> true, this.gotRequested, DivName.GOT_REQUESTED_DIV);
     }
 
     /**

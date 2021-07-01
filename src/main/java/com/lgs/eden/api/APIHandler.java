@@ -129,8 +129,13 @@ public abstract class APIHandler implements API {
     }
 
     @Override
-    public ArrayList<FriendData> getRequests(String userID, int count) throws APIException {
-        return this.profile.getRequests(userID, count);
+    public ArrayList<FriendData> getGotRequested(String userID, int count) throws APIException {
+        return this.profile.getGotRequested(userID, count);
+    }
+
+    @Override
+    public ArrayList<FriendData> getRequested(String userID, int count) throws APIException {
+        return this.profile.getRequested(userID, count);
     }
 
     @Override

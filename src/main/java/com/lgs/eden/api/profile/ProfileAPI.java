@@ -22,7 +22,8 @@ public interface ProfileAPI {
     ArrayList<FriendData> getFriendList(String userID, int count) throws APIException;
 
     /** friend request received or sent **/
-    ArrayList<FriendData> getRequests(String userID, int count) throws APIException;
+    ArrayList<FriendData> getRequested(String userID, int count) throws APIException;
+    ArrayList<FriendData> getGotRequested(String userID, int count) throws APIException;
 
     /**
      * Returns profile Data for an user.

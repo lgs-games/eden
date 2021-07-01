@@ -55,8 +55,13 @@ public class ProfileImp extends ImpSocket implements ProfileAPI {
     }
 
     @Override
-    public ArrayList<FriendData> getRequests(String userID, int count) throws APIException {
-        return getList("friend-requests-list", userID, count);
+    public ArrayList<FriendData> getRequested(String userID, int count) throws APIException {
+        return getList("friend-requested-list", userID, count);
+    }
+
+    @Override
+    public ArrayList<FriendData> getGotRequested(String userID, int count) throws APIException {
+        return getList("friend-got-requested-list", userID, count);
     }
 
     @Override
