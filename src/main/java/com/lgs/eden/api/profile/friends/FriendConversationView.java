@@ -14,6 +14,10 @@ public record FriendConversationView(FriendData friend,
                                      ObservableList<MessageData> messages,
                                      ObservableList<ConversationData> conversations) {
 
+    public FriendConversationView() {
+        this(null, null, null, null);
+    }
+
     @Override
     public String toString() {
         return "FriendConversationView{" +

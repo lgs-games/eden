@@ -150,30 +150,36 @@ public class ProfileImp extends ImpSocket implements ProfileAPI {
 
     @Override
     public FriendConversationView getMessageWithFriend(String friendID, String currentUserID) throws APIException {
-        return RequestObject.requestObject(this, (o) -> new FriendConversationView(
-                parseFriendData(o.getJSONObject("friend")),
-                parseFriendData(o.getJSONObject("user")),
-                FXCollections.observableArrayList(NexusHandler.toArrayList(
-                        o.getJSONArray("messages"),
-                        (m) -> new MessageData(
-                                m.getString("sender"),
-                                m.get("message"),
-                                MessageType.parse(m.getInt("type")),
-                                NexusHandler.parseSQLDate(m.getString("date")),
-                                m.getBoolean("read")
-                        )
-                )),
-                FXCollections.observableArrayList(NexusHandler.toArrayList(
-                        o.getJSONArray("conversations"),
-                        (c) -> new ConversationData(
-                                c.getString("avatar"),
-                                c.getString("name"),
-                                c.getBoolean("online"),
-                                c.getString("user_id"),
-                                c.getInt("unread")
-                        )
-                ))
-        ),"messages-with", friendID);
+        FriendConversationView r = RequestObject.requestObject(this, (o) -> {
+            if (o.has("code")) return new FriendConversationView();
+            return new FriendConversationView(
+                    parseFriendData(o.getJSONObject("friend")),
+                    parseFriendData(o.getJSONObject("user")),
+                    FXCollections.observableArrayList(NexusHandler.toArrayList(
+                            o.getJSONArray("messages"),
+                            (m) -> new MessageData(
+                                    m.getString("sender"),
+                                    m.get("message"),
+                                    MessageType.parse(m.getInt("type")),
+                                    NexusHandler.parseSQLDate(m.getString("date")),
+                                    m.getBoolean("read")
+                            )
+                    )),
+                    FXCollections.observableArrayList(NexusHandler.toArrayList(
+                            o.getJSONArray("conversations"),
+                            (c) -> new ConversationData(
+                                    c.getString("avatar"),
+                                    c.getString("name"),
+                                    c.getBoolean("online"),
+                                    c.getString("user_id"),
+                                    c.getInt("unread")
+                            )
+                    ))
+            );
+        },"messages-with", friendID);
+
+        if (r.friend() == null) return null;
+        return r;
     }
 
     @Override
