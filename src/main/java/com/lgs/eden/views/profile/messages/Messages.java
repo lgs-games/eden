@@ -61,8 +61,6 @@ public class Messages {
     @FXML
     private Label userName;
     @FXML
-    private Label userID;
-    @FXML
     private ListView<MessageData> messages;
     @FXML
     private TextArea inputMessage;
@@ -125,7 +123,6 @@ public class Messages {
             // ------------------------------ MAIN DATA ----------------------------- \\
             // set message values
             this.userName.setText(conv.friend().name);
-            this.userID.setText(String.format("%.6s", conv.friend().id));
 
             // ------------------------------ MESSAGES ----------------------------- \\
             this.messages.setItems(conv.messages());

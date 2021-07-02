@@ -49,16 +49,6 @@
                                                 <Font name="System Bold" size="18.0"/>
                                             </font>
                                         </Label>
-                                        <Label layoutX="92.0" layoutY="10.0" text="#">
-                                            <font>
-                                                <Font name="System Bold" size="18.0"/>
-                                            </font>
-                                        </Label>
-                                        <Label fx:id="userID" layoutX="10.0" layoutY="10.0" text="0002">
-                                            <font>
-                                                <Font name="System Bold" size="18.0"/>
-                                            </font>
-                                        </Label>
                                     </children>
                                 </TextFlow>
                             </left>

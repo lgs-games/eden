@@ -121,7 +121,10 @@ public class AllFriends {
     // empty label
     private Node getEmpty(DivName name) {
         // get text
-        String text = Translate.getTranslation("no-friends-here") + " ";
+        String text = "";
+        if (name.equals(DivName.ONLINE) || name.equals(DivName.OFFLINE))
+            text += Translate.getTranslation("no-friends-here") + " ";
+
         text += name.toString();
         // create label
         Label label = new Label(text);
