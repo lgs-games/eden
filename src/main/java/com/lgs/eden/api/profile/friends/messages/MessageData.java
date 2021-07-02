@@ -1,6 +1,5 @@
 package com.lgs.eden.api.profile.friends.messages;
 
-import java.util.Date;
 import java.util.Objects;
 
 /**
@@ -11,10 +10,10 @@ public class MessageData {
     public final String senderID;
     private final Object messageContent;
     public final MessageType type;
-    public final Date date;
+    public final String date;
     public boolean read;
 
-    public MessageData(String senderID, Object messageContent, MessageType type, Date date, boolean read) {
+    public MessageData(String senderID, Object messageContent, MessageType type, String date, boolean read) {
         this.senderID = senderID;
         this.messageContent = messageContent;
         this.type = type;

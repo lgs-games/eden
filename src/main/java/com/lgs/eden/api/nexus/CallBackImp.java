@@ -14,7 +14,6 @@ import io.socket.client.Socket;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
 
@@ -78,7 +77,7 @@ public class CallBackImp extends ImpSocket implements CallBackAPI {
                         m.getString("sender"),
                         m.get("message"),
                         MessageType.parse(m.getInt("type")),
-                        NexusHandler.parseSQLDate(m.getString("date")),
+                        m.getString("date"),
                         m.getBoolean("read")
                 ));
                 convCallBack.onCall(new ConversationData(
@@ -88,7 +87,7 @@ public class CallBackImp extends ImpSocket implements CallBackAPI {
                         conv.getString("user_id"),
                         conv.getInt("unread")
                 ));
-            } catch (JSONException | ParseException e) {
+            } catch (JSONException e) {
                 e.printStackTrace();
             }
         });

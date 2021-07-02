@@ -1,6 +1,5 @@
 package com.lgs.eden.api.local;
 
-import com.lgs.eden.api.APIException;
 import com.lgs.eden.api.APIResponseCode;
 import com.lgs.eden.api.games.AchievementData;
 import com.lgs.eden.api.profile.*;
@@ -323,7 +322,7 @@ class ProfileHandler implements ProfileAPI {
                 from,
                 message,
                 MessageType.TEXT,
-                Date.from(Instant.now()),
+                "2021-07-01",
                 false
         );
         messages.add(r);
@@ -342,7 +341,7 @@ class ProfileHandler implements ProfileAPI {
                 fake,
                 message,
                 MessageType.TEXT,
-                Date.from(Instant.now()),
+                "2021-07-01",
                 false
         );
         messages.add(r);

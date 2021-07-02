@@ -38,7 +38,7 @@ public class MessageCell implements CellHandler<MessageData> {
 
         this.username.setText(sender.name);
         this.avatar.setImage(sender.avatar);
-        this.date.setText(Translate.getDate(item.date, "h:mm - d%% MMM yyyy"));
+        this.date.setText(item.date);
         this.content.setText(item.getMessageAsText());
     }
 
