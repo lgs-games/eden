@@ -17,6 +17,7 @@ public enum APIResponseCode {
     LOGIN_INVALID(11),
     LOGIN_NOT_ACTIVATED(12),
     LOGIN_BANNED(13),
+    LOGIN_ALREADY(14),
 
     REGISTER_OK(20),
     REGISTER_FAILED(21),
