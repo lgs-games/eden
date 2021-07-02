@@ -148,7 +148,6 @@ public class NexusHandler extends APIHandler {
         try {
             return new SimpleDateFormat("yyyy-MM-dd").parse(date);
         } catch (ParseException e) {
-            System.out.println(date);
             return null;
         }
     }

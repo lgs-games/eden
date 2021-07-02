@@ -30,6 +30,9 @@ public enum APIResponseCode {
     NO_NOTIFICATIONS(555),
     FRIEND_REQUEST(556),
     MESSAGE_RECEIVED(557),
+    FRIEND_REQUEST_ACCEPTED(558),
+
+    USER_ID_NOT_FOUND(1000),
     ;
 
     public final int code;

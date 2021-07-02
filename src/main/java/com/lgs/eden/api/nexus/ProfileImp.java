@@ -1,6 +1,7 @@
 package com.lgs.eden.api.nexus;
 
 import com.lgs.eden.api.APIException;
+import com.lgs.eden.api.APIResponseCode;
 import com.lgs.eden.api.games.AchievementData;
 import com.lgs.eden.api.nexus.helpers.ImpSocket;
 import com.lgs.eden.api.nexus.helpers.RequestArray;
@@ -66,10 +67,9 @@ public class ProfileImp extends ImpSocket implements ProfileAPI {
 
     @Override
     public ProfileData getProfileData(String userID, String currentUserID) throws APIException {
-        return RequestObject.requestObject(this, (o) -> {
-            if (o.has("code")){
-                System.out.println(o.getString("message"));
-                throw new JSONException("not valid");
+        ProfileData profileData = RequestObject.requestObject(this, (o) -> {
+            if (o.has("code")) {
+                return new ProfileData(null);
             }
             // recent games
             JSONArray a = o.getJSONArray("recent_games");
@@ -106,6 +106,9 @@ public class ProfileImp extends ImpSocket implements ProfileAPI {
                     ReputationScore.parse(o.getInt("reputation_score"))
             );
         }, "get-profile", userID);
+
+        if (profileData.userID == null) throw new APIException(APIResponseCode.USER_ID_NOT_FOUND);
+        return profileData;
     }
 
     @Override
