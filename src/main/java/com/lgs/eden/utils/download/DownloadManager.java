@@ -95,6 +95,7 @@ public class DownloadManager extends Thread implements ReadableByteChannel {
                 this.fileOutput.getChannel().transferFrom(this, 0, Long.MAX_VALUE);
                 this.fileOutput.close();
                 this.fileOutput = null;
+                //lgtm [java/useless-null-check]
                 if (this.fileName != null) {
                     this.endRunnable.downloadCallBack(event);
                 } // else callDownloadCancel();
