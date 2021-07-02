@@ -36,8 +36,8 @@ public class NexusHandler extends APIHandler {
 
     public static APIHandler getInstance() {
         if (instance == null) {
-            URI uri = URI.create("http://localhost:3000");
-            // URI uri = URI.create("https://lgs-games.com:3000/");
+            // URI uri = URI.create("http://localhost:3000");
+            URI uri = URI.create("https://lgs-games.com:3000/");
             IO.Options options = IO.Options.builder()
                     .setForceNew(false)
                     .setTimeout(-1)
