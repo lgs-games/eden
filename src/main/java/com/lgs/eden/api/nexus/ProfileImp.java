@@ -166,7 +166,7 @@ public class ProfileImp extends ImpSocket implements ProfileAPI {
                             o.getJSONArray("messages"),
                             (m) -> new MessageData(
                                     m.getString("sender"),
-                                    m.get("message"),
+                                    m.get("content"),
                                     MessageType.parse(m.getInt("type")),
                                     NexusHandler.parseSQLDate(m.getString("date")),
                                     m.getBoolean("read")
@@ -222,7 +222,7 @@ public class ProfileImp extends ImpSocket implements ProfileAPI {
         return RequestObject.requestObject(this,
                 (m) -> new MessageData(
                         m.getString("sender"),
-                        m.get("message"),
+                        m.get("content"),
                         MessageType.parse(m.getInt("type")),
                         NexusHandler.parseSQLDate(m.getString("date")),
                         m.getBoolean("read")
