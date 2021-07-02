@@ -63,13 +63,34 @@ public class FriendCellController implements CellHandler<FriendData> {
         tchat = new MenuItem(Translate.getTranslation("send_message"));
 
         // listeners
-        profile.setOnAction((e) -> { current.onWantProfile(null); afterEvent.run(); });
-        addFriend.setOnAction((e) -> { current.onAddUser(); afterEvent.run(); });
-        removeFriend.setOnAction((e) -> { current.onRemoveUser(); afterEvent.run(); });
-        acceptFriendRequest.setOnAction((e) -> { current.onAcceptFriend(); afterEvent.run(); });
-        refuseFriendRequest.setOnAction((e) -> { current.onRefuseFriend(); afterEvent.run(); });
-        cancelFriendRequest.setOnAction((e) -> { current.onCancelRequest(); afterEvent.run(); });
-        tchat.setOnAction((e) -> { current.onWantMessage(); afterEvent.run(); });
+        profile.setOnAction((e) -> {
+            current.onWantProfile(null);
+            afterEvent.run();
+        });
+        addFriend.setOnAction((e) -> {
+            current.onAddUser();
+            afterEvent.run();
+        });
+        removeFriend.setOnAction((e) -> {
+            current.onRemoveUser();
+            afterEvent.run();
+        });
+        acceptFriendRequest.setOnAction((e) -> {
+            current.onAcceptFriend();
+            afterEvent.run();
+        });
+        refuseFriendRequest.setOnAction((e) -> {
+            current.onRefuseFriend();
+            afterEvent.run();
+        });
+        cancelFriendRequest.setOnAction((e) -> {
+            current.onCancelRequest();
+            afterEvent.run();
+        });
+        tchat.setOnAction((e) -> {
+            current.onWantMessage();
+            afterEvent.run();
+        });
 
         // add menu items to menu
         contextMenu.getItems().add(profile);
@@ -126,11 +147,21 @@ public class FriendCellController implements CellHandler<FriendData> {
 
                 // show add / remove friend
                 switch (current.data.friendShipStatus) {
-                    case FRIENDS -> { add = true; friend = false; }
+                    case FRIENDS -> {
+                        add = true;
+                        friend = false;
+                    }
                     case NONE -> friend = true;
-                    case USER -> { add = true; friend = true; }
-                    case REQUESTED -> { acceptFR = true; refuseFR = true; }
+                    case USER -> {
+                        add = true;
+                        friend = true;
+                    }
+                    case REQUESTED -> {
+                        acceptFR = true;
+                        refuseFR = true;
+                    }
                     case GOT_REQUESTED -> cancelFR = true;
+                    default -> throw new IllegalStateException("error");
                 }
 
                 // disabled if not available
