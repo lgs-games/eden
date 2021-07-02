@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.Locale;
+import java.util.prefs.Preferences;
 
 /**
  * Locale configuration handler.
@@ -22,6 +23,7 @@ public class Config {
 
     // ------------------------------ CLASS VARIABLES ----------------------------- \\
 
+    private static final Preferences preferences = Preferences.userNodeForPackage(Config.class);
     private static String gameFolder;
     private static String storedUsername;
     private static Locale locale;
@@ -56,7 +58,9 @@ public class Config {
     public static void lastUsername(String username, boolean store) {
         storedUsername = store ? username : "";
         System.out.println((store ? "Storing username: " : "Removing username :") + storedUsername);
-        // todo: store new username
+        // do
+        if (store) preferences.put("username", username);
+        else preferences.put("username", "");
     }
 
     /** return stored username **/
@@ -68,8 +72,8 @@ public class Config {
 
     public static void setGameFolder(String newFolder) {
         gameFolder = newFolder;
-        // todo: store new game folder
-        //  move all games in the old folder to the new one
+        // do
+        preferences.put("game_folder", newFolder);
     }
 
     private static String getDefaultGameFolder() { return Utility.getCurrentDirectory()+"/games/"; }
@@ -77,14 +81,13 @@ public class Config {
     // ------------------------------ LOAD CONFIG ----------------------------- \\
 
     /**
-     * todo: load from file
      * Load language by default from Config file
      * and load stored_username if we got one.
      */
     public static void init() {
-        storedUsername = "Raphik";
+        storedUsername = preferences.get("username", "");
         setLocale(Language.EN);
-        gameFolder = getDefaultGameFolder();
+        gameFolder = preferences.get("game_folder", getDefaultGameFolder());
 
         // ensure that gameFolder is a valid folder
         File f = new File(gameFolder);
@@ -100,6 +103,8 @@ public class Config {
             }
         }
     }
+
+    // ------------------------------ INSTALL / DOWNLOAD ----------------------------- \\
 
     private static String downloadRepository = null;
 
