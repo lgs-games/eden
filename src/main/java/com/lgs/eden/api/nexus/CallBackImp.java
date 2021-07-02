@@ -75,7 +75,7 @@ public class CallBackImp extends ImpSocket implements CallBackAPI {
 
                 mCallBack.onCall(new MessageData(
                         m.getString("sender"),
-                        m.get("message"),
+                        m.get("content"),
                         MessageType.parse(m.getInt("type")),
                         m.getString("date"),
                         m.getBoolean("read")
