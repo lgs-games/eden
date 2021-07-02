@@ -18,7 +18,7 @@ public class InstallUtils {
                 ApplicationCloseHandler.close(false);
 
                 // start exe
-                //noinspection SpellCheckingInspection
+                // lgtm [java/concatenated-command-line]
                 ProcessBuilder process = new ProcessBuilder(installer, "/VERYSILENT", "/MERGETASKS=\"desktopicon,postinstall\"");
                 process.directory(new File(new File(installer).getParent()));
                 process.start();
@@ -43,7 +43,7 @@ public class InstallUtils {
         if (os.equals(OperatingSystem.WINDOWS)) {
             try {
                 // start exe
-                //noinspection SpellCheckingInspection
+                // lgtm [java/concatenated-command-line]
                 ProcessBuilder process = new ProcessBuilder(installer, "/SILENT", "/MERGETASKS=\"desktopicon\"",
                         "/DIR=" + location);
                 process.directory(new File(new File(installer).getParent()));
