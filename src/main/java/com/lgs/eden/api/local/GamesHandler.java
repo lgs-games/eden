@@ -68,7 +68,7 @@ class GamesHandler implements GameAPI {
             BasicNewsData prim = new BasicNewsData(
                     "Version 3.1.0 released",
                     "/news/news1.png",
-                    "We patched a lot of things and tried to improve" +
+                    "We patched a lot of things and tried to improve " +
                             "the game to make it less easy and more fun to play.",
                     "https://lgs-games.com/api/news/test.md",
                     Date.from(Instant.now())
