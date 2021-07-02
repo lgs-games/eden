@@ -128,10 +128,21 @@ public class Profile {
 
         switch (this.data.statusWithLogged) {
             case USER: break;
-            case REQUESTED: refuseFriend = true; break;
-            case GOT_REQUESTED: acceptFriend = true; refuseFriend = true; break;
-            case FRIENDS: remove = true; /* can remove */ break;
-            case NONE: add = true; /* can add */ break;
+            case REQUESTED:
+                refuseFriend = true;
+                break;
+            case GOT_REQUESTED:
+                acceptFriend = true;
+                refuseFriend = true;
+                break;
+            case FRIENDS:
+                remove = true; /* can remove */
+                break;
+            case NONE:
+                add = true; /* can add */
+                break;
+            default:
+                throw new IllegalStateException("error");
         }
 
         this.addFriend.setVisible(add);
