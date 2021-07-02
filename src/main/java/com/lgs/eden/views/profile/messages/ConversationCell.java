@@ -48,8 +48,14 @@ public class ConversationCell implements CellHandler<ConversationData> {
         this.friendStatus.getStyleClass().set(0, item.online ? "green-text" : "red-text");
         // unread messages
         if (item.unreadMessagesCount > 0) {
-            this.newMessages.setText("" + item.unreadMessagesCount);
-            this.newMessages.setVisible(true);
+            // set current read
+            try {
+               API.imp.setConversationRead(item.id, AppWindowHandler.currentUserID());
+               this.newMessages.setVisible(false);
+            } catch (APIException ignore) {
+                this.newMessages.setText("" + item.unreadMessagesCount);
+                this.newMessages.setVisible(true);
+            }
         } else {
             this.newMessages.setVisible(false);
         }
