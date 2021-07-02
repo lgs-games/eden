@@ -47,7 +47,7 @@ public class Login extends LoginRegisterForm {
         String stored_username = Config.getStoredUsername();
         this.login.setText(stored_username);
         this.rememberMe.setSelected(!stored_username.isEmpty());
-        this.password.setText("tester"); //todo: test
+        this.password.setText("");
     }
 
     // ------------------------------ METHODS ----------------------------- \\
