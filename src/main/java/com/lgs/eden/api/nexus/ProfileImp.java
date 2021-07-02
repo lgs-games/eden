@@ -196,7 +196,7 @@ public class ProfileImp extends ImpSocket implements ProfileAPI {
 
     @Override
     public boolean closeConversation(String friendID, String currentUserID) throws APIException {
-        return RequestObject.requestObject(this, NexusHandler::isJobDone, "conv-open", friendID);
+        return RequestObject.requestObject(this, NexusHandler::isJobDone, "conv-close", friendID);
     }
 
     @Override

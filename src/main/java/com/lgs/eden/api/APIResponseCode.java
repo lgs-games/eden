@@ -33,6 +33,7 @@ public enum APIResponseCode {
     FRIEND_REQUEST_ACCEPTED(558),
 
     USER_ID_NOT_FOUND(1000),
+    UNABLE_TO_OPEN_CONV(1001),
     ;
 
     public final int code;

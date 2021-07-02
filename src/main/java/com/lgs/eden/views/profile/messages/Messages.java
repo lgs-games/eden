@@ -2,6 +2,7 @@ package com.lgs.eden.views.profile.messages;
 
 import com.lgs.eden.api.API;
 import com.lgs.eden.api.APIException;
+import com.lgs.eden.api.APIResponseCode;
 import com.lgs.eden.api.profile.friends.FriendConversationView;
 import com.lgs.eden.api.profile.friends.FriendData;
 import com.lgs.eden.api.profile.friends.conversation.ConversationData;
@@ -85,6 +86,15 @@ public class Messages {
         FriendConversationView conv;
         try {
             conv = API.imp.getMessageWithFriend(friendID, AppWindowHandler.currentUserID());
+            if (conv == null && !friendID.equals("-1")){
+                // try to open the conv
+                boolean b = API.imp.newConversation(friendID, AppWindowHandler.currentUserID());
+                if (b) {
+                    conv = API.imp.getMessageWithFriend(friendID, AppWindowHandler.currentUserID());
+                } else {
+                    throw new APIException(APIResponseCode.UNABLE_TO_OPEN_CONV);
+                }
+            }
         } catch (APIException e) {
             PopupUtils.showPopup(e);
             conv = null;
