@@ -88,7 +88,7 @@ public class NexusHandler extends APIHandler {
 
     // ------------------------------ UTILS ----------------------------- \\
 
-    BasicNewsData parseNews(JSONObject news) throws JSONException, ParseException {
+    BasicNewsData parseNews(JSONObject news) throws JSONException {
         return ((NewsImp)this.news).parseNews(news);
     }
 
@@ -143,7 +143,7 @@ public class NexusHandler extends APIHandler {
     /**
      * Parse yyyy-mm-dd date to Java Date object
      */
-    public static Date parseSQLDate(String date) throws ParseException {
+    public static Date parseSQLDate(String date) {
         if (date == null) return null;
         try {
             return new SimpleDateFormat("yyyy-MM-dd").parse(date);

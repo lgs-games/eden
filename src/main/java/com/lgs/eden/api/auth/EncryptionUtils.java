@@ -30,7 +30,7 @@ public class EncryptionUtils {
             "EPsGvPnPLAkjU7nYjVWIvnH30JI03zXm2/6I95SXSFDrB6XZEoKnifW6lfU1egqB" +
             "xq8Nz4fzf81tu6YVDTC4vusCAwEAAQ==";
 
-    private static PublicKey getPublicKey(){ ;
+    private static PublicKey getPublicKey(){
         try{
             X509EncodedKeySpec spec = new X509EncodedKeySpec(Base64.getDecoder().decode(EncryptionUtils.RSA_PUBLIC_KEY.getBytes()));
             KeyFactory rsa = KeyFactory.getInstance("RSA");
