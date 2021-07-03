@@ -31,5 +31,5 @@ public interface API extends AuthAPI, GameAPI, ProfileAPI, NewsAPI, CallBackAPI 
     int LOGIN_MIN_LENGTH = 4;
     int PASSWORD_MAX_LENGTH = 64;
     int PASSWORD_MIN_LENGTH = 6;
-
+    long MAX_AVATAR_SIZE = 1000000;
 }

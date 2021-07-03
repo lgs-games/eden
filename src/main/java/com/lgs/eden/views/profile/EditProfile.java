@@ -7,6 +7,7 @@ import com.lgs.eden.api.profile.ProfileData;
 import com.lgs.eden.application.AppWindowHandler;
 import com.lgs.eden.application.PopupUtils;
 import com.lgs.eden.application.WindowController;
+import com.lgs.eden.utils.Translate;
 import com.lgs.eden.utils.Utility;
 import com.lgs.eden.utils.ViewsPath;
 import javafx.fxml.FXML;
@@ -64,7 +65,7 @@ public class EditProfile {
         this.avatarButton.setOnAction(event -> {
             // open file chooser
             FileChooser chooser = new FileChooser();
-            chooser.setTitle("select your new avatar (PNG / 1Mb)");
+            chooser.setTitle(Translate.getTranslation("select_avatar_title"));
             chooser.setInitialDirectory(new File(System.getProperty("user.home")));
             chooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("PNG", "*.png"));
             File file = chooser.showOpenDialog(WindowController.getStage());
@@ -76,12 +77,12 @@ public class EditProfile {
                     boolean valid = f.exists() && f.isFile();
                     if (valid) {
                         Path path = Paths.get(newAvatarPath);
-                        valid = Files.size(path) <= 1000000;
+                        valid = Files.size(path) <= API.MAX_AVATAR_SIZE;
                     }
                     if (valid) {
                         avatarImage.setImage(new Image(new FileInputStream(f)));
                     } else {
-                        PopupUtils.showPopup("Image is a PNG, size must be less than 1Mb.");
+                        PopupUtils.showPopup(Translate.getTranslation("select_avatar_error"));
                     }
                 } catch (IOException e) { // FileNotFoundException too
                     avatarImage.setImage(user.avatar);
