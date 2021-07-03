@@ -32,8 +32,10 @@ public class EncryptionUtils {
             "EPsGvPnPLAkjU7nYjVWIvnH30JI03zXm2/6I95SXSFDrB6XZEoKnifW6lfU1egqB" +
             "xq8Nz4fzf81tu6YVDTC4vusCAwEAAQ==";
 
-    // todo: change this shitty algorithm
-    private static final String TRANSFORMATION = "RSA/ECB/PKCS1Padding";
+    /* Since the code is open-source, we can't use a private-key with AES (it seems)
+     * so we will keep using this.
+     */
+    private static final String TRANSFORMATION = "RSA/ECB/PKCS1Padding"; // lgtm [java/weak-cryptographic-algorithm]
 
     private static PublicKey getPublicKey(){
         try{
