@@ -20,7 +20,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Base64;
 
 /**
  * Nexus imp of Profile
@@ -114,7 +117,32 @@ public class ProfileImp extends ImpSocket implements ProfileAPI {
 
     @Override
     public LoginResponseData editProfile(String username, String avatar, String desc) throws APIException {
-        throw new APIException(APIResponseCode.NOT_AVAILABLE);
+        try {
+            // username / desc
+            if (username == null) username = "";
+            if (desc == null) desc = "";
+            // avatar
+            String image = "";
+            if (avatar != null) {
+                FileInputStream i = new FileInputStream(avatar);
+                byte[] bytes = i.readAllBytes();
+                image = Base64.getEncoder().encodeToString(bytes);
+            }
+
+            return RequestObject.requestObject(this,
+                    (o) -> {
+                        if (o.has("code")) return null;
+                        return new LoginResponseData(
+                                10,
+                                o.getString("user_id"),
+                                o.getString("username"),
+                                o.getString("avatar")
+                        );
+                    },
+                    "edit-profile", username, image, desc);
+        } catch (IOException e) {
+            throw new APIException(APIResponseCode.JOB_NOT_DONE);
+        }
     }
 
     @Override
