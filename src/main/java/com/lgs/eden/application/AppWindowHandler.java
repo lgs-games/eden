@@ -76,6 +76,15 @@ public class AppWindowHandler {
     /** convenience method, return userID **/
     public static String currentUserID() { return loggedUser.userID; }
 
+    /**
+     * Update username / avatar is changed
+     */
+    public static void updateLoginResponse(LoginResponseData responseData) {
+        loggedUser = responseData;
+        controller.username.setText("      " + loggedUser.username);
+        controller.userAvatar.setImage(loggedUser.avatar);
+    }
+
     // ------------------------------ INSTANCE ----------------------------- \\
 
     @FXML
