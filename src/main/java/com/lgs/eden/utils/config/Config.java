@@ -4,9 +4,11 @@ import com.lgs.eden.utils.Utility;
 import javafx.scene.image.Image;
 
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.Locale;
+import java.util.Properties;
 import java.util.prefs.Preferences;
 
 /**
@@ -126,5 +128,22 @@ public class Config {
         String gameFolder = getGameFolder() + gameID;
         File folder = new File(gameFolder);
         return folder.exists() && folder.isDirectory();
+    }
+
+    public static String getGameVersion(String gameID) {
+        String versionFile = getGameFolder() + gameID + "/game.properties";
+        File file = new File(versionFile);
+        if (file.exists() && file.isFile()) {
+            try {
+                Properties p = new Properties();
+                p.load(new FileReader(file));
+                return p.getProperty("version", null);
+            } catch (IOException e) {
+                System.err.println("could not read version");
+                return null;
+            }
+        } else {
+            return null;
+        }
     }
 }

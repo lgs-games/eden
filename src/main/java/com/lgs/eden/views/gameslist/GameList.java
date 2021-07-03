@@ -165,7 +165,9 @@ public class GameList {
         // ------------------------------ DOWNLOAD ----------------------------- \\
 
         if (Config.isGameInstalled(gameData.id)) {
-            if (true /* todo */){
+            String version = Config.getGameVersion(gameData.id);
+            // equals
+            if (version != null && version.equals(gameData.version)){
                 this.download.setText(Translate.getTranslation("play"));
                 this.download.setOnAction((e) -> launchGame());
             } else {
