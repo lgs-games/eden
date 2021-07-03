@@ -25,6 +25,7 @@ import org.json.JSONObject;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Base64;
 import java.util.concurrent.CountDownLatch;
 
@@ -133,8 +134,9 @@ public class ProfileImp extends ImpSocket implements ProfileAPI {
 
                 FileInputStream i = new FileInputStream(avatar);
                 byte[] bytes = i.readAllBytes();
-                String image = Base64.getEncoder().encodeToString(bytes);
-                int length = image.length();
+                i.close();
+
+                int length = bytes.length;
                 CountDownLatch latch = new CountDownLatch((int) Math.ceil(length / (float) UNIT));
 
                 // disconnect ?
@@ -145,7 +147,8 @@ public class ProfileImp extends ImpSocket implements ProfileAPI {
                 // job
                 for (int j = 0, k = 0; j < length; j+= UNIT, k++) {
                     int upperBound = Math.min(j + UNIT, length);
-                    socket.emit("load-avatar", k, image.substring(j, upperBound), (Ack) args -> latch.countDown());
+                    byte[] b = Arrays.copyOfRange(bytes, j, upperBound);
+                    socket.emit("load-avatar", k, b, (Ack) args -> latch.countDown());
                 }
                 // wait
                 latch.await();
