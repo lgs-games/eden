@@ -9,6 +9,7 @@ import java.util.NoSuchElementException;
 public enum APIResponseCode {
     SERVER_UNREACHABLE(0),
     TOO_MANY_REQUESTS(1),
+    NOT_AVAILABLE(2),
     INVALID_API_USAGE(5),
     JOB_DONE(7),
     JOB_NOT_DONE(8),

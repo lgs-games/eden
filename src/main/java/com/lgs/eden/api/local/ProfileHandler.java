@@ -1,6 +1,8 @@
 package com.lgs.eden.api.local;
 
+import com.lgs.eden.api.APIException;
 import com.lgs.eden.api.APIResponseCode;
+import com.lgs.eden.api.auth.LoginResponseData;
 import com.lgs.eden.api.games.AchievementData;
 import com.lgs.eden.api.profile.*;
 import com.lgs.eden.api.profile.friends.FriendConversationView;
@@ -148,6 +150,11 @@ class ProfileHandler implements ProfileAPI {
         init(currentUserID);
         ProfileData userProfile = getUserProfile(userID);
         return new ProfileData(userProfile, FXCollections.observableArrayList(getFriendList(userID, 6)));
+    }
+
+    @Override
+    public LoginResponseData editProfile(String username, String avatar, String desc) throws APIException {
+        throw new APIException(APIResponseCode.NOT_AVAILABLE);
     }
 
     @Override

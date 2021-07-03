@@ -144,6 +144,11 @@ public abstract class APIHandler implements API {
     }
 
     @Override
+    public LoginResponseData editProfile(String username, String avatar, String desc) throws APIException {
+        return this.profile.editProfile(username, avatar, desc);
+    }
+
+    @Override
     public ReputationChangeData changeReputation(String userID, String currentUserID, boolean increase) throws APIException {
         return this.profile.changeReputation(userID, currentUserID, increase);
     }

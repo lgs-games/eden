@@ -2,6 +2,7 @@ package com.lgs.eden.api.nexus;
 
 import com.lgs.eden.api.APIException;
 import com.lgs.eden.api.APIResponseCode;
+import com.lgs.eden.api.auth.LoginResponseData;
 import com.lgs.eden.api.games.AchievementData;
 import com.lgs.eden.api.nexus.helpers.ImpSocket;
 import com.lgs.eden.api.nexus.helpers.RequestArray;
@@ -109,6 +110,11 @@ public class ProfileImp extends ImpSocket implements ProfileAPI {
 
         if (profileData.userID == null) throw new APIException(APIResponseCode.USER_ID_NOT_FOUND);
         return profileData;
+    }
+
+    @Override
+    public LoginResponseData editProfile(String username, String avatar, String desc) throws APIException {
+        throw new APIException(APIResponseCode.NOT_AVAILABLE);
     }
 
     @Override
