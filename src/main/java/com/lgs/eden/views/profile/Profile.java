@@ -82,6 +82,9 @@ public class Profile {
     private Label removeOne;
 
     @FXML
+    private Button editProfile;
+
+    @FXML
     private GridPane recentGames;
     @FXML
     private ListView<FriendData> friendDataListView;
@@ -188,6 +191,11 @@ public class Profile {
             p.getChildren().add(new Label(Translate.getTranslation("no_friends_yet")));
             friendsPane.setCenter(p);
         }
+
+        // if current user, enable edit
+        if (AppWindowHandler.currentUserID().equals(this.data.userID)) {
+            this.editProfile.setDisable(false);
+        }
     }
 
     /** Listener of the see all friends label **/
@@ -195,6 +203,13 @@ public class Profile {
     private void onSeeAllFriends() {
         AppWindowHandler.setScreen(AllFriends.getScreen(this.data.userID), ViewsPath.PROFILE);
     }
+
+    @FXML
+    private void onEditProfileRequest() {
+        AppWindowHandler.setScreen(EditProfile.getScreen(this.data.userID), ViewsPath.PROFILE);
+    }
+
+
 
     /** Listener of the add friend button **/
     @FXML
