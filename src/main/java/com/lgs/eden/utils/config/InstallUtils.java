@@ -18,7 +18,7 @@ public class InstallUtils {
                 ApplicationCloseHandler.close(false);
 
                 // start exe
-                // lgtm [java/concatenated-command-line]
+                //noinspection SpellCheckingInspection
                 ProcessBuilder process = new ProcessBuilder(installer, "/VERYSILENT", "/MERGETASKS=\"desktopicon,postinstall\"");
                 process.directory(new File(new File(installer).getParent()));
                 process.start();
@@ -43,7 +43,7 @@ public class InstallUtils {
         if (os.equals(OperatingSystem.WINDOWS)) {
             try {
                 // start exe
-                // lgtm [java/concatenated-command-line]
+                //noinspection SpellCheckingInspection
                 ProcessBuilder process = new ProcessBuilder(installer, "/SILENT", "/MERGETASKS=\"desktopicon\"",
                         "/DIR=" + location);
                 process.directory(new File(new File(installer).getParent()));
@@ -72,7 +72,7 @@ public class InstallUtils {
         ApplicationCloseHandler.startGameThread(() -> {
             try {
                 // start exe
-                ProcessBuilder process = new ProcessBuilder(location);
+                ProcessBuilder process = new ProcessBuilder(location); //lgtm [java/concatenated-command-line]
                 process.directory(new File(file.getParent()));
                 Process start = process.start();
                 start.waitFor();
@@ -91,7 +91,7 @@ public class InstallUtils {
             File file = new File(location);
             if (!file.exists()) { throw new IOException(); }
 
-            ProcessBuilder process = new ProcessBuilder(location);
+            ProcessBuilder process = new ProcessBuilder(location); //lgtm [java/concatenated-command-line]
             process.directory(new File(file.getParent()));
             Process start = process.start();
             return start.waitFor() == 0;
