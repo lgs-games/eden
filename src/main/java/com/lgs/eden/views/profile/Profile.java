@@ -206,7 +206,7 @@ public class Profile {
 
     @FXML
     private void onEditProfileRequest() {
-        AppWindowHandler.setScreen(EditProfile.getScreen(this.data.userID), ViewsPath.PROFILE);
+        AppWindowHandler.setScreen(EditProfile.getScreen(this.data), ViewsPath.PROFILE);
     }
 
 
