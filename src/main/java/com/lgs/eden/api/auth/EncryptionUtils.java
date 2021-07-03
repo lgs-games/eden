@@ -4,6 +4,7 @@ import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
+import java.nio.charset.StandardCharsets;
 import java.security.InvalidKeyException;
 import java.security.KeyFactory;
 import java.security.NoSuchAlgorithmException;
@@ -17,6 +18,7 @@ import java.util.Base64;
  */
 public class EncryptionUtils {
 
+    @SuppressWarnings("SpellCheckingInspection")
     private static final String RSA_PUBLIC_KEY = "MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAxfSmrQE1ROvH9LnnOnB/" +
             "CR0Ivz1kpOYsfhXfopyqfLwOpup2oinLCTXGNncRuWnihI7d2LGpkwcmr6w1+WnQ" +
             "94HmPAzbZ5re+6/VqE2b0HqwjfYz9X52DsU6OXChTjdy/oHHUZM69Pix7pmLIYnj" +
@@ -30,10 +32,13 @@ public class EncryptionUtils {
             "EPsGvPnPLAkjU7nYjVWIvnH30JI03zXm2/6I95SXSFDrB6XZEoKnifW6lfU1egqB" +
             "xq8Nz4fzf81tu6YVDTC4vusCAwEAAQ==";
 
+    // todo: change this shitty algorithm
+    private static final String TRANSFORMATION = "RSA/ECB/PKCS1Padding";
+
     private static PublicKey getPublicKey(){
         try{
             X509EncodedKeySpec spec = new X509EncodedKeySpec(Base64.getDecoder().decode(EncryptionUtils.RSA_PUBLIC_KEY.getBytes()));
-            KeyFactory rsa = KeyFactory.getInstance("RSA");
+            KeyFactory rsa = KeyFactory.getInstance(TRANSFORMATION);
             return rsa.generatePublic(spec);
         } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
             return null;
@@ -43,9 +48,9 @@ public class EncryptionUtils {
     private static byte[] encrypt(String data) throws IllegalStateException {
         try {
             // return encrypted
-            Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
+            Cipher cipher = Cipher.getInstance(TRANSFORMATION);
             cipher.init(Cipher.ENCRYPT_MODE, getPublicKey());
-            return cipher.doFinal(data.getBytes());
+            return cipher.doFinal(data.getBytes(StandardCharsets.UTF_8));
         } catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException |
                 IllegalBlockSizeException | BadPaddingException e) {
             throw new IllegalStateException("can't generates key");
