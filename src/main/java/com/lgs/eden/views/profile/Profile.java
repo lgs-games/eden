@@ -12,7 +12,7 @@ import com.lgs.eden.utils.Utility;
 import com.lgs.eden.utils.ViewsPath;
 import com.lgs.eden.utils.cell.CustomCells;
 import com.lgs.eden.views.friends.AllFriends;
-import com.lgs.eden.views.gameslist.GameList;
+import com.lgs.eden.views.gameslist.EmptyGameList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
@@ -47,7 +47,12 @@ public class Profile {
         FXMLLoader loader = Utility.loadView(ViewsPath.PROFILE.path);
         Parent parent = Utility.loadViewPane(loader);
         controller = loader.getController();
-        controller.init(userID);
+        try {
+            controller.init(userID);
+        } catch (APIException e) {
+            PopupUtils.showPopup(e);
+            return EmptyGameList.getScreen();
+        }
         return parent;
     }
 
@@ -97,14 +102,8 @@ public class Profile {
     private ProfileData data;
 
     /** set up profile view **/
-    private void init(String userID) {
-        try {
-            this.data = API.imp.getProfileData(userID, AppWindowHandler.currentUserID());
-        } catch (APIException e) {
-            PopupUtils.showPopup(e);
-            AppWindowHandler.setScreen(GameList.getScreen(), ViewsPath.GAMES);
-            return;
-        }
+    private void init(String userID) throws APIException {
+        this.data = API.imp.getProfileData(userID, AppWindowHandler.currentUserID());
 
         // ------------------------------ FILL ATTRIBUTES ----------------------------- \\
         this.username.setText(this.data.username); // ex: Raphik
