@@ -14,7 +14,9 @@ import com.lgs.eden.api.profile.friends.FriendShipStatus;
 import com.lgs.eden.api.profile.friends.conversation.ConversationData;
 import com.lgs.eden.api.profile.friends.messages.MessageData;
 import com.lgs.eden.api.profile.friends.messages.MessageType;
+import io.socket.client.Ack;
 import io.socket.client.Socket;
+import io.socket.emitter.Emitter;
 import javafx.collections.FXCollections;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -24,6 +26,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Base64;
+import java.util.concurrent.CountDownLatch;
 
 /**
  * Nexus imp of Profile
@@ -117,16 +120,35 @@ public class ProfileImp extends ImpSocket implements ProfileAPI {
 
     @Override
     public LoginResponseData editProfile(String username, String avatar, String desc) throws APIException {
+        // no connection
+        NexusHandler.checkNetwork(this);
+
         try {
             // username / desc
             if (username == null) username = "";
             if (desc == null) desc = "";
             // avatar
-            String image = "";
             if (avatar != null) {
+                final int UNIT = 10000;
+
                 FileInputStream i = new FileInputStream(avatar);
                 byte[] bytes = i.readAllBytes();
-                image = Base64.getEncoder().encodeToString(bytes);
+                String image = Base64.getEncoder().encodeToString(bytes);
+                int length = image.length();
+                CountDownLatch latch = new CountDownLatch((int) Math.ceil(length / (float) UNIT));
+
+                // disconnect ?
+                Emitter.Listener listener = args -> { while (latch.getCount() > 0) latch.countDown(); };
+                this.socket.once(Socket.EVENT_CONNECT_ERROR, listener);
+                this.socket.once(Socket.EVENT_DISCONNECT, listener);
+
+                // job
+                for (int j = 0, k = 0; j < length; j+= UNIT, k++) {
+                    int upperBound = Math.min(j + UNIT, length);
+                    socket.emit("load-avatar", k, image.substring(j, upperBound), (Ack) args -> latch.countDown());
+                }
+                // wait
+                latch.await();
             }
 
             return RequestObject.requestObject(this,
@@ -139,8 +161,8 @@ public class ProfileImp extends ImpSocket implements ProfileAPI {
                                 o.getString("avatar")
                         );
                     },
-                    "edit-profile", username, image, desc);
-        } catch (IOException e) {
+                    "edit-profile", username, avatar, desc);
+        } catch (IOException | InterruptedException e) {
             throw new APIException(APIResponseCode.JOB_NOT_DONE);
         }
     }
