@@ -41,8 +41,6 @@ public class NexusHandler extends APIHandler {
             IO.Options options = IO.Options.builder()
                     .setForceNew(false)
                     .setTimeout(-1)
-                    // todo: we may add that
-                    // .setReconnectionDelayMax(xxx)
                     .build();
 
             Socket socket = IO.socket(uri, options);
