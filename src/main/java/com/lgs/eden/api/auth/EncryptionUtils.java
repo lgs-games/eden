@@ -35,7 +35,7 @@ public class EncryptionUtils {
     /* Since the code is open-source, we can't use a private-key with AES (it seems)
      * so we will keep using this.
      */
-    private static final String TRANSFORMATION = "RSA/ECB/PKCS1Padding"; // lgtm [java/weak-cryptographic-algorithm]
+    private static final String TRANSFORMATION = "RSA/ECB/PKCS1Padding"; //lgtm [java/weak-cryptographic-algorithm]
 
     private static PublicKey getPublicKey(){
         try{
