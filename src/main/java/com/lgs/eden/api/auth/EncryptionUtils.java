@@ -36,11 +36,12 @@ public class EncryptionUtils {
      * so we will keep using this.
      */
     private static final String TRANSFORMATION = "RSA/ECB/PKCS1Padding"; //lgtm [java/weak-cryptographic-algorithm]
+    private static final String ALGORITHM = "RSA";
 
     private static PublicKey getPublicKey(){
         try{
             X509EncodedKeySpec spec = new X509EncodedKeySpec(Base64.getDecoder().decode(EncryptionUtils.RSA_PUBLIC_KEY.getBytes()));
-            KeyFactory rsa = KeyFactory.getInstance(TRANSFORMATION);
+            KeyFactory rsa = KeyFactory.getInstance(ALGORITHM);
             return rsa.generatePublic(spec);
         } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
             return null;
