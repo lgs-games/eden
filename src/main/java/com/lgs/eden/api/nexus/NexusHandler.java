@@ -34,10 +34,12 @@ public class NexusHandler extends APIHandler {
     private static APIHandler instance;
     private ConversationsCallback convCallBack;
 
+    // change to switch server from localhost to lgs-games.com
+    private static final boolean useLOCALHOST = true;
+
     public static APIHandler getInstance() {
         if (instance == null) {
-            // URI uri = URI.create("http://localhost:3000");
-            URI uri = URI.create("https://lgs-games.com:3000/");
+            URI uri = URI.create(useLOCALHOST ? "http://localhost:3000" : "https://lgs-games.com:3000/");
             IO.Options options = IO.Options.builder()
                     .setForceNew(false)
                     .setTimeout(-1)
