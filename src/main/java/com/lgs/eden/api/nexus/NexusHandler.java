@@ -42,7 +42,7 @@ public class NexusHandler extends APIHandler {
             URI uri = URI.create(useLOCALHOST ? "http://localhost:3000" : "https://lgs-games.com:3000/");
             IO.Options options = IO.Options.builder()
                     .setForceNew(false)
-                    .setTimeout(-1)
+                    .setTimeout(10000)
                     .build();
 
             Socket socket = IO.socket(uri, options);
