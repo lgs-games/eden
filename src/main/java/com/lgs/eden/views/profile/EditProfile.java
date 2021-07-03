@@ -21,7 +21,10 @@ import javafx.stage.FileChooser;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 /**
  * Edit profile view
@@ -62,13 +65,25 @@ public class EditProfile {
             // open file chooser
             FileChooser chooser = new FileChooser();
             chooser.setTitle("select your new avatar (PNG / 1Mb)");
+            chooser.setInitialDirectory(new File(System.getProperty("user.home")));
+            chooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("PNG", "*.png"));
             File file = chooser.showOpenDialog(WindowController.getStage());
             // save file chosen
             if (file != null) {
                 newAvatarPath = file.getPath();
                 try {
-                    avatarImage.setImage(new Image(new FileInputStream(newAvatarPath)));
-                } catch (FileNotFoundException e) {
+                    File f = new File(newAvatarPath);
+                    boolean valid = f.exists() && f.isFile();
+                    if (valid) {
+                        Path path = Paths.get(newAvatarPath);
+                        valid = Files.size(path) <= 1000000;
+                    }
+                    if (valid) {
+                        avatarImage.setImage(new Image(new FileInputStream(f)));
+                    } else {
+                        PopupUtils.showPopup("Image is a PNG, size must be less than 1Mb.");
+                    }
+                } catch (IOException e) { // FileNotFoundException too
                     avatarImage.setImage(user.avatar);
                 }
             } else{
