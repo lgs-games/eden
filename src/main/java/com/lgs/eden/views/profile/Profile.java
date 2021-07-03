@@ -276,6 +276,8 @@ public class Profile {
                     this.addOne.setDisable(false);
                     this.removeOne.setDisable(true);
                 }
+                // nothing
+                default -> {}
             }
         }
     }

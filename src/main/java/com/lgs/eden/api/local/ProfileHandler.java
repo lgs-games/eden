@@ -180,6 +180,7 @@ class ProfileHandler implements ProfileAPI {
                     newRep++;
                 }
                 break;
+            default: return null; // not possible
         }
 
         ProfileData newProfileData = new ProfileData(p, newRep, newScore);
