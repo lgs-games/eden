@@ -124,8 +124,8 @@ public class Config {
         return downloadRepository;
     }
 
-    public static boolean isGameInstalled(String gameID) {
-        String gameFolder = getGameFolder() + gameID;
+    public static boolean isGameInstalled(String gameID, String runnable) {
+        String gameFolder = getGameFolder() + gameID + "/" + runnable;
         File folder = new File(gameFolder);
         return folder.exists() && folder.isDirectory();
     }
