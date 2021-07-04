@@ -104,9 +104,14 @@ public class Profile {
     // current profile data, can be used in listeners
     private ProfileData data;
 
+    @FXML // show a button in Eden if this dev worked on eden
+    private Button devButton;
+
     /** set up profile view **/
     private void init(String userID) throws APIException {
         this.data = API.imp.getProfileData(userID, AppWindowHandler.currentUserID());
+
+        if (this.data.isDev) this.devButton.setVisible(true);
 
         // ------------------------------ FILL ATTRIBUTES ----------------------------- \\
         this.username.setText(this.data.username); // ex: Raphik
@@ -129,7 +134,6 @@ public class Profile {
         boolean refuseFriend = false;
 
         switch (this.data.statusWithLogged) {
-            case USER: break;
             case REQUESTED:
                 refuseFriend = true;
                 break;
@@ -143,8 +147,9 @@ public class Profile {
             case NONE:
                 add = true; /* can add */
                 break;
+            case USER:
             default:
-                throw new IllegalStateException("error");
+                break;
         }
 
         this.addFriend.setVisible(add);

@@ -30,8 +30,8 @@
                     <children>
                         <BorderPane minWidth="300.0" prefHeight="150.0" prefWidth="300.0">
                             <top>
-                                <Pane BorderPane.alignment="CENTER">
-                                    <children>
+                        <HBox BorderPane.alignment="CENTER">
+                           <children>
                                         <Label alignment="BASELINE_LEFT" text="%reputation_level">
                                             <font>
                                                 <Font name="System Bold" size="24.0" />
@@ -40,8 +40,16 @@
                                                 <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                             </padding>
                                         </Label>
-                                    </children>
-                                </Pane>
+                              <Button fx:id="devButton" mnemonicParsing="false" styleClass="eden-button" text="%developer" visible="false">
+                                 <HBox.margin>
+                                    <Insets top="15.0" />
+                                 </HBox.margin>
+                                 <tooltip>
+                                    <Tooltip text="%developer_desc" />
+                                 </tooltip>
+                              </Button>
+                           </children>
+                        </HBox>
                             </top>
                             <center>
                                 <GridPane BorderPane.alignment="CENTER">
