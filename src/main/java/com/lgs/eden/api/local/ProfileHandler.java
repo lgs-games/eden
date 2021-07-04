@@ -395,7 +395,8 @@ class ProfileHandler implements ProfileAPI {
                 games,
                 online,
                 fs,
-                status
+                status,
+                id.equals("23")
         );
     }
 

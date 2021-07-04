@@ -110,7 +110,9 @@ public class ProfileImp extends ImpSocket implements ProfileAPI {
                     recent,
                     o.getBoolean("online"),
                     FriendShipStatus.parse(o.getInt("status")),
-                    ReputationScore.parse(o.getInt("reputation_score"))
+                    ReputationScore.parse(o.getInt("reputation_score")),
+                    // todo: isDev
+                    o.has("dev") && o.getBoolean("dev")
             );
         }, "get-profile", userID);
 
