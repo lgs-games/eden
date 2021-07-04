@@ -136,7 +136,9 @@ public class Config {
         if (file.exists() && file.isFile()) {
             try {
                 Properties p = new Properties();
-                p.load(new FileReader(file));
+                FileReader reader = new FileReader(file);
+                p.load(reader); // put values into the map
+                reader.close(); // close after reading
                 return p.getProperty("version", null);
             } catch (IOException e) {
                 System.err.println("could not read version");
