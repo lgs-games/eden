@@ -18,8 +18,12 @@ public class RecentGameCard {
 
     @FXML
     private VBox root;
+
     @FXML
     private Label gameName; // game name: Enigma
+    @FXML
+    private ImageView game_icon; // game icon
+
     @FXML
     private Label lastPlayed; // ex: 5 days ago
     @FXML
@@ -28,10 +32,11 @@ public class RecentGameCard {
     private Label lastPlayedUnit; // days
     @FXML
     private Label lastPlayedAgo; // ago
+
     @FXML
-    private Label time_played; // ex: 5 min., 10 hours., ...
+    private Label time_played; // ex: 5 min., 10 hours, ...
     @FXML
-    private ImageView game_icon; // game icon
+    private Label time_played_unit; // min. hours
 
     /**
      * Init the recent games view
@@ -62,9 +67,16 @@ public class RecentGameCard {
             if (res >= 24) this.lastPlayed.setText((res / 24)+ "");
             else {
                 this.lastPlayed.setText(res+ "");
-                this.lastPlayedUnit.setText("hours");
+                this.lastPlayedUnit.setText(Translate.getTranslation("hours"));
             }
         }
-        this.time_played.setText(data.timePlayed + "");
+        if (data.timePlayed / 3600 == 0){
+            // in minutes
+            int minutes = data.timePlayed / 60;
+            this.time_played.setText(minutes + "");
+            this.time_played_unit.setText(Translate.getTranslation("minutes"));
+        } else {
+            this.time_played.setText(data.timePlayed + "");
+        }
     }
 }

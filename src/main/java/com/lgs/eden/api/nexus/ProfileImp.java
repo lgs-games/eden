@@ -86,7 +86,7 @@ public class ProfileImp extends ImpSocket implements ProfileAPI {
                 recent[i] = new RecentGameData(
                         g.getString("icon"),
                         g.getString("name"),
-                        g.getInt("time_played") / 3600,
+                        g.getInt("time_played"),
                         g.getLong("last_played")
                 );
             }

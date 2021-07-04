@@ -51,7 +51,7 @@
                                 <Insets right="5.0"/>
                             </padding>
                         </Label>
-                        <Label layoutX="94.0" layoutY="10.0" text="%hours">
+                        <Label layoutX="94.0" layoutY="10.0" text="%hours" fx:id="time_played_unit">
                             <padding>
                                 <Insets right="5.0"/>
                             </padding>
