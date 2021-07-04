@@ -58,7 +58,12 @@ public class RecentGameCard {
             GregorianCalendar c = new GregorianCalendar();
             c.setTimeZone(TimeZone.getTimeZone("Europe/Paris"));
             Date now = c.getTime();
-            this.lastPlayed.setText((int)( (now.getTime() - data.lastPlayed) / (1000 * 60 * 60 * 24)) + "");
+            int res = (int) ((now.getTime() - data.lastPlayed) / (1000 * 60 * 60));
+            if (res >= 24) this.lastPlayed.setText((res / 24)+ "");
+            else {
+                this.lastPlayed.setText(res+ "");
+                this.lastPlayedUnit.setText("hours");
+            }
         }
         this.time_played.setText(data.timePlayed + "");
     }
