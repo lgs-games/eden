@@ -80,7 +80,9 @@ public class EditProfile {
                         valid = Files.size(path) <= API.MAX_AVATAR_SIZE;
                     }
                     if (valid) {
-                        avatarImage.setImage(new Image(new FileInputStream(f)));
+                        FileInputStream stream = new FileInputStream(f);
+                        avatarImage.setImage(new Image(stream));
+                        stream.close(); // close
                     } else {
                         PopupUtils.showPopup(Translate.getTranslation("select_avatar_error"));
                     }
