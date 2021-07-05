@@ -132,26 +132,26 @@ public class ProfileImp extends ImpSocket implements ProfileAPI {
             if (avatar != null) {
                 final int UNIT = 10000;
 
-                FileInputStream i = new FileInputStream(avatar);
-                byte[] bytes = i.readAllBytes();
-                i.close();
+                try (FileInputStream i = new FileInputStream(avatar)) {
+                    byte[] bytes = i.readAllBytes();
 
-                int length = bytes.length;
-                CountDownLatch latch = new CountDownLatch((int) Math.ceil(length / (float) UNIT));
+                    int length = bytes.length;
+                    CountDownLatch latch = new CountDownLatch((int) Math.ceil(length / (float) UNIT));
 
-                // disconnect ?
-                Emitter.Listener listener = args -> { while (latch.getCount() > 0) latch.countDown(); };
-                this.socket.once(Socket.EVENT_CONNECT_ERROR, listener);
-                this.socket.once(Socket.EVENT_DISCONNECT, listener);
+                    // disconnect ?
+                    Emitter.Listener listener = args -> { while (latch.getCount() > 0) latch.countDown(); };
+                    this.socket.once(Socket.EVENT_CONNECT_ERROR, listener);
+                    this.socket.once(Socket.EVENT_DISCONNECT, listener);
 
-                // job
-                for (int j = 0, k = 0; j < length; j+= UNIT, k++) {
-                    int upperBound = Math.min(j + UNIT, length);
-                    byte[] b = Arrays.copyOfRange(bytes, j, upperBound);
-                    socket.emit("load-avatar", k, b, (Ack) args -> latch.countDown());
+                    // job
+                    for (int j = 0, k = 0; j < length; j+= UNIT, k++) {
+                        int upperBound = Math.min(j + UNIT, length);
+                        byte[] b = Arrays.copyOfRange(bytes, j, upperBound);
+                        socket.emit("load-avatar", k, b, (Ack) args -> latch.countDown());
+                    }
+                    // wait
+                    latch.await();
                 }
-                // wait
-                latch.await();
             }
 
             return RequestObject.requestObject(this,
