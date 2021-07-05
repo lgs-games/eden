@@ -11,6 +11,7 @@ import com.lgs.eden.api.news.BasicNewsData;
 import com.lgs.eden.api.nexus.helpers.ImpSocket;
 import com.lgs.eden.api.nexus.helpers.RequestObject;
 import com.lgs.eden.api.profile.friends.FriendConversationView;
+import com.lgs.eden.utils.config.Config;
 import io.socket.client.Ack;
 import io.socket.client.IO;
 import io.socket.client.Socket;
@@ -164,7 +165,9 @@ public class NexusHandler extends APIHandler {
                 try {
                     Thread.sleep(100);
                     cumule += 100;
-                } catch (InterruptedException ignored){}
+                } catch (InterruptedException e){
+                    if (Config.logAll()) System.out.println(e.getMessage());
+                }
 
                 try {
                     // check again

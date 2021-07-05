@@ -1,5 +1,6 @@
 package com.lgs.eden.api;
 
+import com.lgs.eden.utils.config.Config;
 import com.lgs.eden.utils.config.Language;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -31,7 +32,10 @@ public class APIHelper {
         // fake some delay
         try {
             Thread.sleep(ms);
-        } catch (InterruptedException ignore) {}
+        } catch (InterruptedException e) {
+            if (Config.logAll())
+                System.out.println(e.getMessage());
+        }
     }
 
     @SuppressWarnings("unused")
