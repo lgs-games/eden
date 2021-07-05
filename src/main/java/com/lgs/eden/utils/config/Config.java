@@ -134,11 +134,9 @@ public class Config {
         String versionFile = getGameFolder() + gameID + "/game.properties";
         File file = new File(versionFile);
         if (file.exists() && file.isFile()) {
-            try {
+            try (FileReader reader = new FileReader(file)) {
                 Properties p = new Properties();
-                FileReader reader = new FileReader(file);
                 p.load(reader); // put values into the map
-                reader.close(); // close after reading
                 return p.getProperty("version", null);
             } catch (IOException e) {
                 System.err.println("could not read version");
