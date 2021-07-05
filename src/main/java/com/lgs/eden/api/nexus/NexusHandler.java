@@ -165,9 +165,7 @@ public class NexusHandler extends APIHandler {
                 try {
                     Thread.sleep(100);
                     cumule += 100;
-                } catch (InterruptedException e){
-                    if (Config.logAll()) System.out.println(e.getMessage());
-                }
+                } catch (InterruptedException ignore){}
 
                 try {
                     // check again

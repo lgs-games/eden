@@ -149,9 +149,4 @@ public class Config {
         }
     }
 
-    // ------------------------------ LOGS ----------------------------- \\
-
-    // no created yet
-
-    public static boolean logAll() { return false; }
 }

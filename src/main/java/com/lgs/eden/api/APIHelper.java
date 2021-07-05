@@ -32,10 +32,7 @@ public class APIHelper {
         // fake some delay
         try {
             Thread.sleep(ms);
-        } catch (InterruptedException e) {
-            if (Config.logAll())
-                System.out.println(e.getMessage());
-        }
+        } catch (InterruptedException ignore) {}
     }
 
     @SuppressWarnings("unused")
