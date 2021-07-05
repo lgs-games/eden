@@ -26,13 +26,27 @@ jobs:
         java-version: '16'
         distribution: 'adopt'
 
+    - name: Cache SonarCloud packages
+      uses: actions/cache@v1
+      with:
+        path: ~/.sonar/cache
+        key: ${{ runner.os }}-sonar
+        restore-keys: ${{ runner.os }}-sonar
+
+    - name: Cache Gradle packages
+      uses: actions/cache@v1
+      with:
+        path: ~/.gradle/caches
+        key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
+        restore-keys: ${{ runner.os }}-gradle
+
     # gradle build
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
 
     - name: Build with Gradle
       run: ./gradlew build
-    
+
     # CodeQL
     - name: Initialize CodeQL
       uses: github/codeql-action/init@v1
@@ -45,3 +59,9 @@ jobs:
 
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v1
+
+    - name: Build and analyze
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      run: ./gradlew build sonarqube --info
