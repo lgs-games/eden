@@ -38,7 +38,7 @@ public class NewsImp extends ImpSocket implements NewsAPI {
                 JSONObject o = (JSONObject) a.get(i);
                 rep.add(parseNews(o));
             }
-            BasicNewsData.newsCount = pack.getInt("total");
+            BasicNewsData.setNewsCount(pack.getInt("total"));
             return rep;
         }, "all-news", begin, count, gameID, lang, os);
     }

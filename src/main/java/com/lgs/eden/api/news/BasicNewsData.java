@@ -26,4 +26,8 @@ public class BasicNewsData {
         this.date = date;
     }
 
+    public synchronized static void setNewsCount(int newsCount){
+        BasicNewsData.newsCount = newsCount;
+    }
+
 }
