@@ -11,7 +11,7 @@ import com.lgs.eden.api.news.BasicNewsData;
 import com.lgs.eden.api.nexus.helpers.ImpSocket;
 import com.lgs.eden.api.nexus.helpers.RequestObject;
 import com.lgs.eden.api.profile.friends.FriendConversationView;
-import com.lgs.eden.utils.config.Config;
+import com.lgs.eden.application.AppWindowHandler;
 import io.socket.client.Ack;
 import io.socket.client.IO;
 import io.socket.client.Socket;
@@ -36,7 +36,7 @@ public class NexusHandler extends APIHandler {
     private ConversationsCallback convCallBack;
 
     // change to switch server from localhost to lgs-games.com
-    private static final boolean useLOCALHOST = false;
+    private static final boolean useLOCALHOST = true;
 
     public static APIHandler getInstance() {
         if (instance == null) {
@@ -48,11 +48,19 @@ public class NexusHandler extends APIHandler {
 
             Socket socket = IO.socket(uri, options);
             socket.open();
-             socket.on(Socket.EVENT_CONNECT, args -> {
+            socket.on(Socket.EVENT_CONNECT, args -> {
                 synchronized (oldID){
                     String id = oldID.get();
                     if (id != null){ // first
-                        socket.emit("resume", id, (Ack) args1 -> oldID.set(socket.id()+""));
+                        socket.emit("resume", id, (Ack) args1 -> {
+                            // ok
+                            if (args.length == 1 && args[0] instanceof Boolean b && b){
+                                oldID.set(socket.id()+"");
+                            } else {
+                                // todo: should not be here
+                                AppWindowHandler.callLogout();
+                            }
+                        });
                     } else {
                         oldID.set(socket.id()+"");
                     }

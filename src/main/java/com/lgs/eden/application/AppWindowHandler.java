@@ -91,6 +91,10 @@ public class AppWindowHandler {
         controller.userAvatar.setImage(loggedUser.avatar);
     }
 
+    public static void callLogout(){
+        controller.logout();
+    }
+
     // ------------------------------ INSTANCE ----------------------------- \\
 
     @FXML
