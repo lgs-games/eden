@@ -80,7 +80,12 @@ public class AppWindowHandler {
      * Update username / avatar is changed
      */
     public static void updateLoginResponse(LoginResponseData responseData) {
-        loggedUser = responseData;
+        loggedUser = new LoginResponseData(
+                10,
+                responseData.userID,
+                responseData.username == null ? loggedUser.username : responseData.username,
+                responseData.avatar == null ? loggedUser.avatarPath : responseData.avatarPath
+        );
         controller.username.setText("      " + loggedUser.username);
         controller.userAvatar.setImage(loggedUser.avatar);
     }
