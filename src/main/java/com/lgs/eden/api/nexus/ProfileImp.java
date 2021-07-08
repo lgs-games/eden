@@ -152,7 +152,7 @@ public class ProfileImp extends ImpSocket implements ProfileAPI {
                     // wait
                     latch.await();
                 }
-            }
+            } else avatar = "";
 
             return RequestObject.requestObject(this,
                     (o) -> {
