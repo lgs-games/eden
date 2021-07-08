@@ -92,7 +92,7 @@ public class AppWindowHandler {
     }
 
     public static void callLogout(){
-        controller.logout();
+        if (controller != null) controller.logout();
     }
 
     // ------------------------------ INSTANCE ----------------------------- \\

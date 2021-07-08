@@ -57,8 +57,7 @@ public class NexusHandler extends APIHandler {
                             if (args.length == 1 && args[0] instanceof Boolean b && b){
                                 oldID.set(socket.id()+"");
                             } else {
-                                // todo: should not be here
-                                AppWindowHandler.callLogout();
+                                new Thread(AppWindowHandler::callLogout).start();
                             }
                         });
                     } else {
