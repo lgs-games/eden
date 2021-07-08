@@ -125,7 +125,7 @@ public class FriendCellController implements CellHandler<FriendData> {
         this.friendName.setText(d.name);
 
         // avatar
-        Circle circle = new Circle(24, 24, 24, Color.BLACK);
+        Circle circle = new Circle(24, 24, 32, Color.BLACK);
         this.friendAvatar.setClip(circle);
         this.friendAvatar.setImage(d.avatar);
 
