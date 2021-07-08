@@ -111,7 +111,7 @@ public class ProfileImp extends ImpSocket implements ProfileAPI {
                     o.getBoolean("online"),
                     FriendShipStatus.parse(o.getInt("status")),
                     ReputationScore.parse(o.getInt("reputation_score")),
-                    o.has("dev")
+                    o.getBoolean("dev")
             );
         }, "get-profile", userID);
 
