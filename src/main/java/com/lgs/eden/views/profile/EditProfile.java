@@ -108,6 +108,8 @@ public class EditProfile {
             try {
                 LoginResponseData d = API.imp.editProfile(newUsername, newAvatar, newDesc);
                 AppWindowHandler.updateLoginResponse(d);
+                // go back
+                AppWindowHandler.setScreen(Profile.getScreen(), ViewsPath.PROFILE);
             } catch (APIException e){
                 PopupUtils.showPopup(e);
             }
