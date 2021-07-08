@@ -83,9 +83,10 @@ public class AppWindowHandler {
         loggedUser = new LoginResponseData(
                 10,
                 responseData.userID,
-                responseData.username == null ? loggedUser.username : responseData.username,
-                responseData.avatar == null ? loggedUser.avatarPath : responseData.avatarPath
+                responseData.username.equals("null") ? loggedUser.username : responseData.username,
+                responseData.avatarPath.equals("null") ? loggedUser.avatarPath : responseData.avatarPath
         );
+        System.out.println(loggedUser);
         controller.username.setText("      " + loggedUser.username);
         controller.userAvatar.setImage(loggedUser.avatar);
     }
