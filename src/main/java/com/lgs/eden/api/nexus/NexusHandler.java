@@ -36,7 +36,7 @@ public class NexusHandler extends APIHandler {
     private ConversationsCallback convCallBack;
 
     // change to switch server from localhost to lgs-games.com
-    private static final boolean useLOCALHOST = true;
+    private static final boolean useLOCALHOST = false;
 
     public static APIHandler getInstance() {
         if (instance == null) {
