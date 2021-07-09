@@ -22,7 +22,7 @@ class GamesHandler implements GameAPI {
     public EdenVersionData getEdenVersion(String code, String os) {
         APIHelper.fakeDelay(1000);
         return new EdenVersionData(
-                "1.0.0",
+                "1.1.1",
                 "https://lgs-games.com/assets/exe/eden-setup-1.0.0.exe",
                 113
         );
