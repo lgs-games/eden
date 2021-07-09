@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Eden"
-#define MyAppVersion "1.0.0.0"
+#define MyAppVersion "1.1.1.0"
 #define MyAppPublisher "Legendary Games Studio"
 #define MyAppURL "https://lgs-games.com/"
 #define MyAppExeName "eden.exe"
@@ -19,14 +19,14 @@ AppPublisherURL={#MyAppURL}
 AppSupportURL={#MyAppURL}
 AppUpdatesURL={#MyAppURL}
 DefaultDirName={autopf}\{#MyAppName}
-VersionInfoVersion=1.0.0.0
+VersionInfoVersion=1.1.1.0
 DisableDirPage=yes
 DisableProgramGroupPage=yes
 ; Uncomment the following line to run in non administrative install mode (install for current user only.)
 ;PrivilegesRequired=lowest
 PrivilegesRequiredOverridesAllowed=commandline
 OutputDir=..\eden\installer
-OutputBaseFilename=eden
+OutputBaseFilename=eden-setup-{#MyAppVersion}
 SetupIconFile=..\eden\exe\eden.ico
 Compression=lzma
 SolidCompression=yes
@@ -38,18 +38,11 @@ Name: "french"; MessagesFile: "compiler:Languages\French.isl"
 
 [Tasks]
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
-Name: "postinstall"; Description: Run;
 
 [Files]
-Source: "..\eden\exe\eden.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\eden\exe\eden.ico"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\eden\exe\app\*"; DestDir: "{app}\app"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "..\eden\exe\runtime\*"; DestDir: "{app}\runtime"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "..\eden\exe\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
 Name: "{autoprograms}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"
 Name: "{autodesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: desktopicon
-
-[Run]
-Filename: {app}\eden.exe; Flags: shellexec nowait; Tasks: postinstall
