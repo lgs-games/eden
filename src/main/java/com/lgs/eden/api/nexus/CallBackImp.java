@@ -88,7 +88,7 @@ public class CallBackImp extends ImpSocket implements CallBackAPI {
                         conv.getInt("unread")
                 ));
             } catch (JSONException e) {
-                e.printStackTrace();
+                System.out.println("setMessagesCallBack failed ("+ e.getMessage()+")");
             }
         });
     }

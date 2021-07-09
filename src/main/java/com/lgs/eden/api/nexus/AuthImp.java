@@ -53,7 +53,7 @@ class AuthImp extends ImpSocket implements AuthAPI {
                         try {
                             logout("-1");
                         } catch (APIException e) {
-                            e.printStackTrace();
+                            System.out.println("Logout failed ("+ e.getMessage()+")");
                         }
                     }).start();
                     return true;
