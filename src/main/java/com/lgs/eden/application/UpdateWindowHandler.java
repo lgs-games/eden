@@ -43,7 +43,7 @@ public class UpdateWindowHandler {
         public String toString() { return name().toLowerCase(); }
     }
 
-    private static volatile Stage oldStage;
+    private static Stage oldStage;
     private static UpdateWindowHandler controller;
 
     /** Show update window */

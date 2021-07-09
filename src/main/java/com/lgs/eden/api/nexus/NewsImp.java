@@ -11,7 +11,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 /**
@@ -39,12 +38,12 @@ public class NewsImp extends ImpSocket implements NewsAPI {
                 JSONObject o = (JSONObject) a.get(i);
                 rep.add(parseNews(o));
             }
-            BasicNewsData.newsCount = pack.getInt("total");
+            BasicNewsData.setNewsCount(pack.getInt("total"));
             return rep;
         }, "all-news", begin, count, gameID, lang, os);
     }
 
-    public BasicNewsData parseNews(JSONObject o) throws JSONException, ParseException {
+    public BasicNewsData parseNews(JSONObject o) throws JSONException {
         return new BasicNewsData(
                 o.getString("title"),
                 o.getString("image"),

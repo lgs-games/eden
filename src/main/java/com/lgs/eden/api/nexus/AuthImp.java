@@ -3,6 +3,7 @@ package com.lgs.eden.api.nexus;
 import com.lgs.eden.api.APIException;
 import com.lgs.eden.api.APIResponseCode;
 import com.lgs.eden.api.auth.AuthAPI;
+import com.lgs.eden.api.auth.EncryptionUtils;
 import com.lgs.eden.api.auth.LoginResponseData;
 import com.lgs.eden.api.nexus.helpers.ImpSocket;
 import com.lgs.eden.api.nexus.helpers.MonitorIO;
@@ -25,6 +26,9 @@ class AuthImp extends ImpSocket implements AuthAPI {
 
     @Override
     public LoginResponseData login(String username, String pwd) throws APIException {
+        // encrypt password
+        pwd = EncryptionUtils.getEncrypted(pwd);
+
         return RequestObject.requestObject(this, new RequestObject<>() {
             @Override
             public LoginResponseData parse(JSONObject o) throws JSONException {
@@ -49,7 +53,7 @@ class AuthImp extends ImpSocket implements AuthAPI {
                         try {
                             logout("-1");
                         } catch (APIException e) {
-                            e.printStackTrace();
+                            System.out.println("Logout failed ("+ e.getMessage()+")");
                         }
                     }).start();
                     return true;
@@ -66,6 +70,9 @@ class AuthImp extends ImpSocket implements AuthAPI {
 
     @Override
     public APIResponseCode register(String username, String pwd, String email) throws APIException {
+        // encrypt password
+        pwd = EncryptionUtils.getEncrypted(pwd);
+
         return RequestObject.requestObject(this, o -> {
             try {
                 int code = o.getInt("code");

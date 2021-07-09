@@ -164,17 +164,7 @@ public class GameList {
 
         // ------------------------------ DOWNLOAD ----------------------------- \\
 
-        if (Config.isGameInstalled(gameData.id)) {
-            if (true /* todo */){
-                this.download.setText(Translate.getTranslation("play"));
-                this.download.setOnAction((e) -> launchGame());
-            } else {
-                this.download.setText(Translate.getTranslation("update"));
-                this.download.setOnAction((e) -> downloadGame());
-            }
-        } else {
-            this.download.setOnAction((e) -> downloadGame());
-        }
+        configureDownload();
     }
 
     public void goToSubMenu(Parent view) {
@@ -234,6 +224,8 @@ public class GameList {
             this.back.setVisible(false);
             //fix bug, do not give focus to another button
             this.back.getParent().requestFocus();
+            // and check download button
+            configureDownload();
         }
     }
 
@@ -311,8 +303,25 @@ public class GameList {
 
     // ------------------------------ DOWNLOAD ----------------------------- \\
 
+    private void configureDownload() {
+        if (Config.isGameInstalled(gameData.id, gameData.update.runnableURL())) {
+            String version = Config.getGameVersion(gameData.id);
+            // equals
+            if (version != null && version.equals(gameData.version)){
+                this.download.setText(Translate.getTranslation("play"));
+                this.download.setOnAction((e) -> launchGame());
+            } else {
+                this.download.setText(Translate.getTranslation("update"));
+                this.download.setOnAction((e) -> downloadGame());
+            }
+        } else {
+            this.download.setText(Translate.getTranslation("download"));
+            this.download.setOnAction((e) -> downloadGame());
+        }
+    }
+
     private void launchGame() {
-        if (Config.isGameInstalled(gameData.id)) {
+        if (Config.isGameInstalled(gameData.id, gameData.update.runnableURL())) {
             if (gameRunning) {
                 PopupUtils.showPopup(Translate.getTranslation("game_running"));
             } else {

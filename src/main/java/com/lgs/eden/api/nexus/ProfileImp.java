@@ -2,6 +2,7 @@ package com.lgs.eden.api.nexus;
 
 import com.lgs.eden.api.APIException;
 import com.lgs.eden.api.APIResponseCode;
+import com.lgs.eden.api.auth.LoginResponseData;
 import com.lgs.eden.api.games.AchievementData;
 import com.lgs.eden.api.nexus.helpers.ImpSocket;
 import com.lgs.eden.api.nexus.helpers.RequestArray;
@@ -13,13 +14,19 @@ import com.lgs.eden.api.profile.friends.FriendShipStatus;
 import com.lgs.eden.api.profile.friends.conversation.ConversationData;
 import com.lgs.eden.api.profile.friends.messages.MessageData;
 import com.lgs.eden.api.profile.friends.messages.MessageType;
+import io.socket.client.Ack;
 import io.socket.client.Socket;
+import io.socket.emitter.Emitter;
 import javafx.collections.FXCollections;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.concurrent.CountDownLatch;
 
 /**
  * Nexus imp of Profile
@@ -79,7 +86,7 @@ public class ProfileImp extends ImpSocket implements ProfileAPI {
                 recent[i] = new RecentGameData(
                         g.getString("icon"),
                         g.getString("name"),
-                        g.getInt("time_played") / 3600,
+                        g.getInt("time_played"),
                         g.getLong("last_played")
                 );
             }
@@ -103,12 +110,64 @@ public class ProfileImp extends ImpSocket implements ProfileAPI {
                     recent,
                     o.getBoolean("online"),
                     FriendShipStatus.parse(o.getInt("status")),
-                    ReputationScore.parse(o.getInt("reputation_score"))
+                    ReputationScore.parse(o.getInt("reputation_score")),
+                    o.getBoolean("dev")
             );
         }, "get-profile", userID);
 
         if (profileData.userID == null) throw new APIException(APIResponseCode.USER_ID_NOT_FOUND);
         return profileData;
+    }
+
+    @Override
+    public LoginResponseData editProfile(String username, String avatar, String desc) throws APIException {
+        // no connection
+        NexusHandler.checkNetwork(this);
+
+        try {
+            // username / desc
+            if (username == null) username = "";
+            if (desc == null) desc = "";
+            // avatar
+            if (avatar != null) {
+                final int UNIT = 10000;
+
+                try (FileInputStream i = new FileInputStream(avatar)) {
+                    byte[] bytes = i.readAllBytes();
+
+                    int length = bytes.length;
+                    CountDownLatch latch = new CountDownLatch((int) Math.ceil(length / (float) UNIT));
+
+                    // disconnect ?
+                    Emitter.Listener listener = args -> { while (latch.getCount() > 0) latch.countDown(); };
+                    this.socket.once(Socket.EVENT_CONNECT_ERROR, listener);
+                    this.socket.once(Socket.EVENT_DISCONNECT, listener);
+
+                    // job
+                    for (int j = 0, k = 0; j < length; j+= UNIT, k++) {
+                        int upperBound = Math.min(j + UNIT, length);
+                        byte[] b = Arrays.copyOfRange(bytes, j, upperBound);
+                        socket.emit("load-avatar", k, b, (Ack) args -> latch.countDown());
+                    }
+                    // wait
+                    latch.await();
+                }
+            } else avatar = "";
+
+            return RequestObject.requestObject(this,
+                    (o) -> {
+                        if (o.has("code")) return null;
+                        return new LoginResponseData(
+                                10,
+                                o.getString("user_id"),
+                                o.getString("username"),
+                                o.getString("avatar")
+                        );
+                    },
+                    "edit-profile", username, avatar, desc);
+        } catch (IOException | InterruptedException e) {
+            throw new APIException(APIResponseCode.JOB_NOT_DONE);
+        }
     }
 
     @Override

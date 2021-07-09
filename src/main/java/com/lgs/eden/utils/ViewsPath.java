@@ -14,6 +14,7 @@ public enum ViewsPath {
     SETTINGS("/views/settings.fxml"),
 
     PROFILE("/views/profile.fxml"), // profile menu
+    PROFILE_EDIT("/views/profile/edit.fxml"),
     FRIEND_CELL("/views/profile/friend_cell.fxml"),
     PROFILE_CARD("/views/profile/card.fxml"),
     FRIENDS_LIST("/views/friends_list.fxml"),

@@ -17,12 +17,15 @@ public class LoginResponseData {
     public final String username;
     /** logged avatar if logged successful **/
     public final Image avatar;
+    // path
+    public final String avatarPath;
 
     public LoginResponseData(int code, String userID, String username, String avatar) {
         this.code = APIResponseCode.fromCode(code);
         this.userID = userID;
         this.username = username;
         this.avatar = Utility.loadImage(avatar);
+        this.avatarPath = avatar;
     }
 
     /** Set code and everything else at null/-1/"" */
@@ -31,6 +34,7 @@ public class LoginResponseData {
         this.userID = "-1";
         this.username = "";
         this.avatar = null;
+        this.avatarPath = null;
     }
 
     @Override

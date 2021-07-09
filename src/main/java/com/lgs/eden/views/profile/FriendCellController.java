@@ -36,7 +36,13 @@ public class FriendCellController implements CellHandler<FriendData> {
         return CellHandler.load(ViewsPath.FRIEND_CELL);
     }
 
+    // current friend for the context menu
     private static FriendCellController current;
+    private static synchronized void setCurrent(FriendCellController c) {
+        current = c;
+    }
+
+    // menus
     private static ContextMenu contextMenu;
     private static MenuItem addFriend;
     private static MenuItem removeFriend;
@@ -63,31 +69,31 @@ public class FriendCellController implements CellHandler<FriendData> {
         tchat = new MenuItem(Translate.getTranslation("send_message"));
 
         // listeners
-        profile.setOnAction((e) -> {
+        profile.setOnAction(e -> {
             current.onWantProfile(null);
             afterEvent.run();
         });
-        addFriend.setOnAction((e) -> {
+        addFriend.setOnAction(e -> {
             current.onAddUser();
             afterEvent.run();
         });
-        removeFriend.setOnAction((e) -> {
+        removeFriend.setOnAction(e -> {
             current.onRemoveUser();
             afterEvent.run();
         });
-        acceptFriendRequest.setOnAction((e) -> {
+        acceptFriendRequest.setOnAction(e -> {
             current.onAcceptFriend();
             afterEvent.run();
         });
-        refuseFriendRequest.setOnAction((e) -> {
+        refuseFriendRequest.setOnAction(e -> {
             current.onRefuseFriend();
             afterEvent.run();
         });
-        cancelFriendRequest.setOnAction((e) -> {
+        cancelFriendRequest.setOnAction(e -> {
             current.onCancelRequest();
             afterEvent.run();
         });
-        tchat.setOnAction((e) -> {
+        tchat.setOnAction(e -> {
             current.onWantMessage();
             afterEvent.run();
         });
@@ -118,6 +124,7 @@ public class FriendCellController implements CellHandler<FriendData> {
 
     private boolean init = false;
 
+    @SuppressWarnings("RedundantLabeledSwitchRuleCodeBlock")
     @FXML
     public void init(FriendData d) {
         if (init) return;
@@ -125,7 +132,7 @@ public class FriendCellController implements CellHandler<FriendData> {
         this.friendName.setText(d.name);
 
         // avatar
-        Circle circle = new Circle(24, 24, 24, Color.BLACK);
+        Circle circle = new Circle(24, 24, 32, Color.BLACK);
         this.friendAvatar.setClip(circle);
         this.friendAvatar.setImage(d.avatar);
 
@@ -134,7 +141,7 @@ public class FriendCellController implements CellHandler<FriendData> {
         this.view.setOnMousePressed(event -> {
             if (event.isSecondaryButtonDown()) {
                 // save
-                current = this;
+                setCurrent(this);
 
                 // init
                 initContextMenu();
@@ -151,7 +158,9 @@ public class FriendCellController implements CellHandler<FriendData> {
                         add = true;
                         friend = false;
                     }
-                    case NONE -> friend = true;
+                    case NONE -> {
+                        friend = true;
+                    }
                     case USER -> {
                         add = true;
                         friend = true;
@@ -160,7 +169,9 @@ public class FriendCellController implements CellHandler<FriendData> {
                         acceptFR = true;
                         refuseFR = true;
                     }
-                    case GOT_REQUESTED -> cancelFR = true;
+                    case GOT_REQUESTED -> {
+                        cancelFR = true;
+                    }
                     default -> throw new IllegalStateException("error");
                 }
 

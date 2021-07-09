@@ -1,5 +1,6 @@
 package com.lgs.eden.api;
 
+import com.lgs.eden.utils.config.Config;
 import com.lgs.eden.utils.config.Language;
 
 import javax.net.ssl.HttpsURLConnection;

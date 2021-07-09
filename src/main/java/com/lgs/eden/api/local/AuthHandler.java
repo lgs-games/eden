@@ -37,6 +37,7 @@ class AuthHandler implements AuthAPI {
 
     @Override
     public void logout(String userID) {
+        // already handler by the caller in the local API
     }
 
     @Override

@@ -25,6 +25,11 @@ public final class Translate {
         }
     }
 
+    /** same but with APIResponseCode **/
+    public static String getTranslation(APIResponseCode rc) {
+        return Translate.getTranslation("code_" + rc.code);
+    }
+
     /** return the date as day (int) month (string) year (ex: 1 June 2021 in english) **/
     public static String getDate(Date date) {
         //noinspection SpellCheckingInspection
@@ -58,7 +63,4 @@ public final class Translate {
         return Translate.getTranslation("date_day_modifier_" + key);
     }
 
-    public static String getTranslation(APIResponseCode rc) {
-        return Translate.getTranslation("code_" + rc.code);
-    }
 }

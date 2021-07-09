@@ -41,17 +41,6 @@ public class BasicGameData {
     }
 
     @Override
-    // can't size Image not clonable it seems
-    @SuppressWarnings("MethodDoesntCallSuperMethod")
-    public BasicGameData clone() {
-        return new BasicGameData(
-                this.id,
-                this.name,
-                this.path
-        );
-    }
-
-    @Override
     public String toString() {
         return "BasicGameData{" +
                 "id=" + id +

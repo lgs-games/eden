@@ -1,6 +1,7 @@
 package com.lgs.eden.api.profile;
 
 import com.lgs.eden.api.APIException;
+import com.lgs.eden.api.auth.LoginResponseData;
 import com.lgs.eden.api.games.AchievementData;
 import com.lgs.eden.api.profile.friends.FriendConversationView;
 import com.lgs.eden.api.profile.friends.FriendData;
@@ -29,6 +30,11 @@ public interface ProfileAPI {
      * Returns profile Data for an user.
      */
     ProfileData getProfileData(String userID, String currentUserID) throws APIException;
+
+    /**
+     * Edit profile
+     */
+    LoginResponseData editProfile(String username, String avatar, String desc) throws APIException;
 
     /**
      * Change reputation value from currentUserID to

@@ -11,6 +11,7 @@ import com.lgs.eden.api.news.BasicNewsData;
 import com.lgs.eden.api.nexus.helpers.ImpSocket;
 import com.lgs.eden.api.nexus.helpers.RequestObject;
 import com.lgs.eden.api.profile.friends.FriendConversationView;
+import com.lgs.eden.application.AppWindowHandler;
 import io.socket.client.Ack;
 import io.socket.client.IO;
 import io.socket.client.Socket;
@@ -34,24 +35,31 @@ public class NexusHandler extends APIHandler {
     private static APIHandler instance;
     private ConversationsCallback convCallBack;
 
+    // change to switch server from localhost to lgs-games.com
+    private static final boolean useLOCALHOST = false;
+
     public static APIHandler getInstance() {
         if (instance == null) {
-            // URI uri = URI.create("http://localhost:3000");
-            URI uri = URI.create("https://lgs-games.com:3000/");
+            URI uri = URI.create(useLOCALHOST ? "http://localhost:3000" : "https://lgs-games.com:3000/");
             IO.Options options = IO.Options.builder()
                     .setForceNew(false)
-                    .setTimeout(-1)
-                    // todo: we may add that
-                    // .setReconnectionDelayMax(xxx)
+                    .setTimeout(10000)
                     .build();
 
             Socket socket = IO.socket(uri, options);
             socket.open();
-             socket.on(Socket.EVENT_CONNECT, args -> {
+            socket.on(Socket.EVENT_CONNECT, args -> {
                 synchronized (oldID){
                     String id = oldID.get();
                     if (id != null){ // first
-                        socket.emit("resume", id, (Ack) args1 -> oldID.set(socket.id()+""));
+                        socket.emit("resume", id, (Ack) args1 -> {
+                            // ok
+                            if (args.length == 1 && args[0] instanceof Boolean b && b){
+                                oldID.set(socket.id()+"");
+                            } else {
+                                new Thread(AppWindowHandler::callLogout).start();
+                            }
+                        });
                     } else {
                         oldID.set(socket.id()+"");
                     }
@@ -88,7 +96,7 @@ public class NexusHandler extends APIHandler {
 
     // ------------------------------ UTILS ----------------------------- \\
 
-    BasicNewsData parseNews(JSONObject news) throws JSONException, ParseException {
+    BasicNewsData parseNews(JSONObject news) throws JSONException {
         return ((NewsImp)this.news).parseNews(news);
     }
 
@@ -143,7 +151,7 @@ public class NexusHandler extends APIHandler {
     /**
      * Parse yyyy-mm-dd date to Java Date object
      */
-    public static Date parseSQLDate(String date) throws ParseException {
+    public static Date parseSQLDate(String date) {
         if (date == null) return null;
         try {
             return new SimpleDateFormat("yyyy-MM-dd").parse(date);
@@ -164,7 +172,7 @@ public class NexusHandler extends APIHandler {
                 try {
                     Thread.sleep(100);
                     cumule += 100;
-                } catch (InterruptedException ignored){}
+                } catch (InterruptedException ignore){}
 
                 try {
                     // check again

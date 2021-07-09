@@ -47,19 +47,20 @@ public class Login extends LoginRegisterForm {
         String stored_username = Config.getStoredUsername();
         this.login.setText(stored_username);
         this.rememberMe.setSelected(!stored_username.isEmpty());
-        this.password.setText("tester"); //todo: test
+        this.password.setText("");
     }
 
     // ------------------------------ METHODS ----------------------------- \\
 
     @FXML
     @Override
-    public void onSubmitWithButton() { // TODO: translate
+    public void onSubmitWithButton() {
         String username = this.login.getText();
         String pwd = this.password.getText();
         StringBuilder error = new StringBuilder(); // for error message
 
         // testing username, password compatibility with the API
+        // todo: translate
         if (checkUsername(username)) error.append("wrong username\n");
         if (checkPassword(pwd)) error.append("wrong password\n");
 

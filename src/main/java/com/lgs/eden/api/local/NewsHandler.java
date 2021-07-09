@@ -35,7 +35,7 @@ public class NewsHandler implements NewsAPI {
                 "https://lgs-games.com/api/news/test.md",
                 Date.from(Instant.now())
         );
-        BasicNewsData.newsCount = 1;
+        BasicNewsData.setNewsCount(1);
         news.add(prim);
         return news;
     }

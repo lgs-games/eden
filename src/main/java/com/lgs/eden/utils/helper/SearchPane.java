@@ -57,7 +57,8 @@ public class SearchPane {
         String text = this.search.getText().trim().toLowerCase();
         Platform.runLater(() -> {
             ArrayList<FriendData> filter = this.handler.filter(text);
-            users.setItems(FXCollections.observableArrayList(filter));
+            users.getItems().clear();
+            users.getItems().addAll(filter);
         });
     }
 

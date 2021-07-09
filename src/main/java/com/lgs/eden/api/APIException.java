@@ -3,7 +3,7 @@ package com.lgs.eden.api;
 /**
  * API exceptions
  */
-public class APIException extends Throwable {
+public class APIException extends Exception {
 
     public final APIResponseCode code;
     public final Throwable e;
@@ -14,7 +14,7 @@ public class APIException extends Throwable {
         this.e = new UnknownError();
     }
 
-    public APIException(APIResponseCode code, Exception e) {
+    public APIException(APIResponseCode code, Throwable e) {
         super(e);
         this.code = code;
         this.e = e;

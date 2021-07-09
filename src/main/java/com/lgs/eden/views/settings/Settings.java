@@ -18,6 +18,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.DirectoryChooser;
 
 import java.io.File;
@@ -85,7 +87,6 @@ public class Settings implements ChangeListener<Language> {
 
     /**
      * Init language list
-     * todo: init game_folder path
      */
     private void initScreen(boolean inLogin) {
         this.inLogin = inLogin;
@@ -111,6 +112,7 @@ public class Settings implements ChangeListener<Language> {
                 Config.setGameFolder(path);
             }
         });
+
     }
 
     @Override
@@ -140,4 +142,9 @@ public class Settings implements ChangeListener<Language> {
         }
     }
 
+    @FXML
+    public void openLink(MouseEvent e) {
+        Label source = (Label) e.getSource();
+        Utility.openInBrowser(source.getText());
+    }
 }

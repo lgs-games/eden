@@ -1,6 +1,8 @@
 package com.lgs.eden.api.local;
 
+import com.lgs.eden.api.APIException;
 import com.lgs.eden.api.APIResponseCode;
+import com.lgs.eden.api.auth.LoginResponseData;
 import com.lgs.eden.api.games.AchievementData;
 import com.lgs.eden.api.profile.*;
 import com.lgs.eden.api.profile.friends.FriendConversationView;
@@ -151,6 +153,11 @@ class ProfileHandler implements ProfileAPI {
     }
 
     @Override
+    public LoginResponseData editProfile(String username, String avatar, String desc) throws APIException {
+        throw new APIException(APIResponseCode.NOT_AVAILABLE);
+    }
+
+    @Override
     public ReputationChangeData changeReputation(String userID, String currentUserID, boolean increase) {
         ProfileData p = getProfileData(userID, currentUserID);
 
@@ -180,6 +187,7 @@ class ProfileHandler implements ProfileAPI {
                     newRep++;
                 }
                 break;
+            default: return null; // not possible
         }
 
         ProfileData newProfileData = new ProfileData(p, newRep, newScore);
@@ -387,7 +395,8 @@ class ProfileHandler implements ProfileAPI {
                 games,
                 online,
                 fs,
-                status
+                status,
+                id.equals("23")
         );
     }
 

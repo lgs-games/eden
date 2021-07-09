@@ -12,7 +12,7 @@ import com.lgs.eden.utils.Utility;
 import com.lgs.eden.utils.ViewsPath;
 import com.lgs.eden.utils.cell.CustomCells;
 import com.lgs.eden.views.friends.AllFriends;
-import com.lgs.eden.views.gameslist.GameList;
+import com.lgs.eden.views.gameslist.EmptyGameList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
@@ -47,7 +47,12 @@ public class Profile {
         FXMLLoader loader = Utility.loadView(ViewsPath.PROFILE.path);
         Parent parent = Utility.loadViewPane(loader);
         controller = loader.getController();
-        controller.init(userID);
+        try {
+            controller.init(userID);
+        } catch (APIException e) {
+            PopupUtils.showPopup(e);
+            return EmptyGameList.getScreen();
+        }
         return parent;
     }
 
@@ -77,6 +82,9 @@ public class Profile {
     private Label removeOne;
 
     @FXML
+    private Button editProfile;
+
+    @FXML
     private GridPane recentGames;
     @FXML
     private ListView<FriendData> friendDataListView;
@@ -96,15 +104,14 @@ public class Profile {
     // current profile data, can be used in listeners
     private ProfileData data;
 
+    @FXML // show a button in Eden if this dev worked on eden
+    private Button devButton;
+
     /** set up profile view **/
-    private void init(String userID) {
-        try {
-            this.data = API.imp.getProfileData(userID, AppWindowHandler.currentUserID());
-        } catch (APIException e) {
-            PopupUtils.showPopup(e);
-            AppWindowHandler.setScreen(GameList.getScreen(), ViewsPath.GAMES);
-            return;
-        }
+    private void init(String userID) throws APIException {
+        this.data = API.imp.getProfileData(userID, AppWindowHandler.currentUserID());
+
+        if (this.data.isDev) this.devButton.setVisible(true);
 
         // ------------------------------ FILL ATTRIBUTES ----------------------------- \\
         this.username.setText(this.data.username); // ex: Raphik
@@ -127,7 +134,6 @@ public class Profile {
         boolean refuseFriend = false;
 
         switch (this.data.statusWithLogged) {
-            case USER: break;
             case REQUESTED:
                 refuseFriend = true;
                 break;
@@ -141,8 +147,9 @@ public class Profile {
             case NONE:
                 add = true; /* can add */
                 break;
+            case USER:
             default:
-                throw new IllegalStateException("error");
+                break;
         }
 
         this.addFriend.setVisible(add);
@@ -189,6 +196,11 @@ public class Profile {
             p.getChildren().add(new Label(Translate.getTranslation("no_friends_yet")));
             friendsPane.setCenter(p);
         }
+
+        // if current user, enable edit
+        if (AppWindowHandler.currentUserID().equals(this.data.userID)) {
+            this.editProfile.setDisable(false);
+        }
     }
 
     /** Listener of the see all friends label **/
@@ -196,6 +208,13 @@ public class Profile {
     private void onSeeAllFriends() {
         AppWindowHandler.setScreen(AllFriends.getScreen(this.data.userID), ViewsPath.PROFILE);
     }
+
+    @FXML
+    private void onEditProfileRequest() {
+        AppWindowHandler.setScreen(EditProfile.getScreen(this.data), ViewsPath.PROFILE);
+    }
+
+
 
     /** Listener of the add friend button **/
     @FXML
@@ -276,6 +295,8 @@ public class Profile {
                     this.addOne.setDisable(false);
                     this.removeOne.setDisable(true);
                 }
+                // nothing
+                default -> {}
             }
         }
     }
