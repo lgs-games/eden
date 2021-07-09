@@ -1,6 +1,7 @@
 package com.lgs.eden.views.register;
 
 import com.lgs.eden.api.API;
+import com.lgs.eden.api.APIConstants;
 import com.lgs.eden.api.APIException;
 import com.lgs.eden.api.APIResponseCode;
 import com.lgs.eden.application.PopupUtils;
@@ -55,8 +56,8 @@ public class Register extends LoginRegisterForm {
         StringBuilder error = new StringBuilder(); // for error message
 
         // testing username, password compatibility with the API
-        if (checkUsername(username)) error.append("Username length must be in ["+API.LOGIN_MIN_LENGTH+","+API.LOGIN_MAX_LENGTH+"]\n");
-        if (checkUsername(pwd)) error.append("Username length must be in ["+API.PASSWORD_MIN_LENGTH+","+API.PASSWORD_MAX_LENGTH+"]\n");
+        if (checkUsername(username)) error.append("Username length must be in ["+ APIConstants.LOGIN_MIN_LENGTH+","+APIConstants.LOGIN_MAX_LENGTH+"]\n");
+        if (checkUsername(pwd)) error.append("Username length must be in ["+APIConstants.PASSWORD_MIN_LENGTH+","+APIConstants.PASSWORD_MAX_LENGTH+"]\n");
 
         // testing email compatibility with the API
         if (!email.contains("@") || !email.contains(".")) {

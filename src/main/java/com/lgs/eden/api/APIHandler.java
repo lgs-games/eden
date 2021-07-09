@@ -59,7 +59,7 @@ public abstract class APIHandler implements API {
     public String getPasswordForgotLink(String languageCode) {
         // website only supports en or fr
         languageCode = APIHelper.formatCode(languageCode);
-        return API.WEBSITE_URL + languageCode + "/password_forgot";
+        return APIConstants.WEBSITE_URL + languageCode + "/password_forgot";
     }
 
     // ------------------------------ GAMES ----------------------------- \\

@@ -1,6 +1,7 @@
 package com.lgs.eden.views.profile;
 
 import com.lgs.eden.api.API;
+import com.lgs.eden.api.APIConstants;
 import com.lgs.eden.api.APIException;
 import com.lgs.eden.api.auth.LoginResponseData;
 import com.lgs.eden.api.profile.ProfileData;
@@ -77,7 +78,7 @@ public class EditProfile {
                     boolean valid = f.exists() && f.isFile();
                     if (valid) {
                         Path path = Paths.get(newAvatarPath);
-                        valid = Files.size(path) <= API.MAX_AVATAR_SIZE;
+                        valid = Files.size(path) <= APIConstants.MAX_AVATAR_SIZE;
                     }
                     if (valid) {
                         FileInputStream stream = new FileInputStream(f);
