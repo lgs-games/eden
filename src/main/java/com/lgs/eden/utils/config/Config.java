@@ -125,9 +125,9 @@ public class Config {
     }
 
     public static boolean isGameInstalled(String gameID, String runnable) {
-        String gameFolder = getGameFolder() + gameID + "/" + runnable;
-        File folder = new File(gameFolder);
-        return folder.exists() && folder.isDirectory();
+        String gameFile = getGameFolder() + gameID + "/" + runnable;
+        File game = new File(gameFile);
+        return game.exists() && game.isFile();
     }
 
     public static String getGameVersion(String gameID) {
