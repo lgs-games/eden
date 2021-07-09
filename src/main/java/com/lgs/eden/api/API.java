@@ -18,18 +18,7 @@ public interface API extends AuthAPI, GameAPI, ProfileAPI, NewsAPI, CallBackAPI 
     // and because we may want some sort of factory pattern.
     //
     // Using that, we can have a local API for tests and our server API.
-    boolean USE_LOCAL = false;
-    APIHandler imp = USE_LOCAL ? LocalHandler.getInstance() : NexusHandler.getInstance();
+    @SuppressWarnings("ConstantConditionalExpression")
+    APIHandler imp = false ? LocalHandler.getInstance() : NexusHandler.getInstance();
 
-    // ------------------------------ CONSTANTS ----------------------------- \\
-
-    // urls
-    String WEBSITE_URL = "https://lgs-games.com/";
-
-    // lengths
-    int LOGIN_MAX_LENGTH = 64;
-    int LOGIN_MIN_LENGTH = 4;
-    int PASSWORD_MAX_LENGTH = 64;
-    int PASSWORD_MIN_LENGTH = 6;
-    long MAX_AVATAR_SIZE = 1000000;
 }

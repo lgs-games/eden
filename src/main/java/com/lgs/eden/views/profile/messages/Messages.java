@@ -81,6 +81,75 @@ public class Messages {
     private void init(String friendID) {
         // you cannot tchat with yourself
         if (friendID.equals(AppWindowHandler.currentUserID())) friendID = "-1";
+        FriendConversationView conv = getConv(friendID);
+
+        // friends for new conversations search
+        try {
+            this.friendList = API.imp.getFriendList(AppWindowHandler.currentUserID(), -1);
+        } catch (APIException e) {
+            PopupUtils.showPopup(e);
+            this.friendList = new ArrayList<>();
+        }
+        if (conv == null) {
+            // set labels / disabled all buttons
+            this.friendNameTag.getChildren().clear();
+            this.friendNameTag.getChildren().add(new Label(Translate.getTranslation("no_conv")));
+            // disable all
+            this.sendMessage.setDisable(true);
+            this.inputMessage.setDisable(true);
+            this.profileButton.setDisable(true);
+        } else {
+            // show conv
+            showConv(conv);
+        }
+    }
+
+    // ------------------------------ UTILS ----------------------------- \\
+
+    /**
+     * Load conversations (left list view)
+     * and load messages (right panel)
+     *
+     * Then add a callback waiting for messages (and conversations too if the conversation was closed)
+     */
+    private void showConv(FriendConversationView conv) {
+        this.friend = conv.friend();
+        this.user = conv.user();
+
+        // ------------------------------ CONVERSATIONS ----------------------------- \\
+        this.userList.setItems(conv.conversations());
+        this.userList.setCellFactory(cellView -> new CustomCells<>(ConversationCell.load()));
+        setSelected();
+
+        // ------------------------------ MAIN DATA ----------------------------- \\
+        // set message values
+        this.userName.setText(conv.friend().name);
+
+        // ------------------------------ MESSAGES ----------------------------- \\
+        this.messages.setItems(conv.messages());
+        this.messages.setCellFactory(cellView -> new CustomCells<>(MessageCell.load()));
+
+        if (conv.messages().size() > 0) this.messages.scrollTo(conv.messages().size() - 1);
+
+        // adding callback
+        API.imp.setMessagesCallBack((m) -> {
+            if (this.messages == null) return;
+            Platform.runLater(() -> {
+                this.messages.getItems().add(m);
+                this.messages.scrollTo(this.messages.getItems().size() - 1);
+            });
+        }, (c) -> {
+            if (this.userList == null) return;
+            Platform.runLater(() -> this.updateConversations(c));
+        }, conv);
+    }
+
+    /**
+     * Look for this view data,
+     * raise exception if we can't fetch any conversations or open
+     * a new open if requested
+     */
+    private FriendConversationView getConv(String friendID) {
         FriendConversationView conv;
         try {
             conv = API.imp.getMessageWithFriend(friendID, AppWindowHandler.currentUserID());
@@ -97,76 +166,41 @@ public class Messages {
             PopupUtils.showPopup(e);
             conv = null;
         }
-        // friends for new conversations search
-        try {
-            this.friendList = API.imp.getFriendList(AppWindowHandler.currentUserID(), -1);
-        } catch (APIException e) {
-            PopupUtils.showPopup(e);
-            this.friendList = new ArrayList<>();
+        return conv;
+    }
+
+    /**
+     * Update (and add if needed) a conversation in the list
+     * view. The number of unread messages could have changed for
+     * example.
+     */
+    private void updateConversations(ConversationData c) {
+        int i = 0;
+        ObservableList<ConversationData> items = this.userList.getItems();
+
+        for (ConversationData d : items) {
+            // change this item
+            if (d.id.equals(c.id)) break;
+            i++;
         }
-        if (conv == null) {
-            this.friendNameTag.getChildren().clear();
-            this.friendNameTag.getChildren().add(new Label(Translate.getTranslation("no_conv")));
-            // disable all
-            this.sendMessage.setDisable(true);
-            this.inputMessage.setDisable(true);
-            this.profileButton.setDisable(true);
-        } else {
-            this.friend = conv.friend();
-            this.user = conv.user();
+        if (i != items.size()) {
+            items.remove(i);
+        }
+        items.add(i, c);
 
-            // ------------------------------ CONVERSATIONS ----------------------------- \\
-            this.userList.setItems(conv.conversations());
-            this.userList.setCellFactory(cellView -> new CustomCells<>(ConversationCell.load()));
+        // set again as current
+        if (c.id.equals(friend.id)) {
             setSelected();
-
-            // ------------------------------ MAIN DATA ----------------------------- \\
-            // set message values
-            this.userName.setText(conv.friend().name);
-
-            // ------------------------------ MESSAGES ----------------------------- \\
-            this.messages.setItems(conv.messages());
-            this.messages.setCellFactory(cellView -> new CustomCells<>(MessageCell.load()));
-
-            if (conv.messages().size() > 0) this.messages.scrollTo(conv.messages().size() - 1);
-
-            // adding callback
-            API.imp.setMessagesCallBack((m) -> {
-                if (this.messages == null) return;
-                Platform.runLater(() -> {
-                    this.messages.getItems().add(m);
-                    this.messages.scrollTo(this.messages.getItems().size() - 1);
-                });
-            }, (c) -> {
-                if (this.userList == null) return;
-                Platform.runLater(() -> {
-                    int i = 0;
-                    ObservableList<ConversationData> items = this.userList.getItems();
-
-                    for (ConversationData d : items) {
-                        // change this item
-                        if (d.id.equals(c.id)) break;
-                        i++;
-                    }
-                    if (i != items.size()) {
-                        items.remove(i);
-                    }
-                    items.add(i, c);
-
-                    // set again as current
-                    if (c.id.equals(friend.id)) {
-                        setSelected();
-                        // set current read
-                        try {
-                            if (c.unreadMessagesCount != 0) {
-                                API.imp.setConversationRead(this.friend.id, AppWindowHandler.currentUserID());
-                            }
-                        } catch (APIException ignore) {}
-                    }
-                });
-            }, conv);
+            // set current read
+            try {
+                if (c.unreadMessagesCount != 0) {
+                    API.imp.setConversationRead(this.friend.id, AppWindowHandler.currentUserID());
+                }
+            } catch (APIException ignore) {}
         }
     }
+
+    // ------------------------------ EVENTS ----------------------------- \\
 
     private void setSelected() {
         for (ConversationData d : this.userList.getItems()) {
@@ -206,4 +240,5 @@ public class Messages {
             PopupUtils.showPopup(e);
         }
     }
+
 }

@@ -1,6 +1,6 @@
 package com.lgs.eden.utils.helper;
 
-import com.lgs.eden.api.API;
+import com.lgs.eden.api.APIConstants;
 import com.lgs.eden.utils.Utility;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -62,12 +62,12 @@ public abstract class LoginRegisterForm {
 
     protected boolean checkUsername(String username) {
         int length = username.length();
-        return length < API.LOGIN_MIN_LENGTH || length > API.LOGIN_MAX_LENGTH;
+        return length < APIConstants.LOGIN_MIN_LENGTH || length > APIConstants.LOGIN_MAX_LENGTH;
     }
 
     protected boolean checkPassword(String pwd) {
         int length = pwd.length();
-        return length < API.PASSWORD_MIN_LENGTH || length > API.PASSWORD_MAX_LENGTH;
+        return length < APIConstants.PASSWORD_MIN_LENGTH || length > APIConstants.PASSWORD_MAX_LENGTH;
     }
 
 }

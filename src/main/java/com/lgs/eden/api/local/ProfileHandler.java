@@ -425,28 +425,29 @@ class ProfileHandler implements ProfileAPI {
         );
 
         ProfileData raphik2 = createFriend("Raphik2", "24", 0, "2021-03-18T10:15:30.00Z",
-                "No description yet.", getFriendShipStatus("24", currentUserID),
+                "No description yet (1).", getFriendShipStatus("24", currentUserID),
                 ReputationScore.NONE, null, raphik, false
         );
 
-        ProfileData Calistral = createFriend("Calistral", "25", -1, "2020-12-03T10:15:30.00Z",
-                "No description yet.", getFriendShipStatus("25", currentUserID),
+        ProfileData Calistral = createFriend("Calistral", "25", -1, "2020-12-03T10:15:32.00Z",
+                "No description yet (2).", getFriendShipStatus("25", currentUserID),
                 ReputationScore.DECREASED, null, raphik, false
         );
 
         ProfileData Caliki = createFriend("Caliki", "26", 0,
-                "2020-12-03T10:15:30.00Z",
-                "This is a really" + "This is a really" + "This is a really" + "This is a really" + "This is a really"
-                        + "This is a really" + "This is a really" + "This is a really" + "This is a really" + "This is a really"
-                        + "This is a really" + "This is a really" + "This is a really" + "This is a really" + "This is a really"
-                        + "This is a really" + "This is a really" + "This is a really" + "This is a really" + "This is a really"
-                        + "This is a really" + "This is a really" + "This is a really" + "This is a really" + "This is a really"
-                        + "This is a really" + "This is a really" + "This is a really" + "This is a really" + "This is a really",
+                "2020-12-03T10:15:27.00Z",
+                """
+                        This is a really This is a really This is a really This is a really This is a really
+                        This is a really This is a really This is a really This is a really This is a really
+                        This is a really This is a really This is a really This is a really This is a really
+                        This is a really This is a really This is a really This is a really This is a really
+                        This is a really This is a really This is a really This is a really This is a really
+                        This is a really This is a really This is a really This is a really This is a really""",
                 getFriendShipStatus("26", currentUserID), ReputationScore.NONE, null, raphik, false
         );
 
         ProfileData Raphistro = createFriend("Raphistro", "27", 17570, "2020-03-09T10:15:30.00Z",
-                "No description yet.", getFriendShipStatus("27", currentUserID), ReputationScore.INCREASED,
+                "No description yet (3).", getFriendShipStatus("27", currentUserID), ReputationScore.INCREASED,
                 null, raphik, false
         );
 
@@ -457,8 +458,8 @@ class ProfileHandler implements ProfileAPI {
         users.add(Raphistro);
 
         ProfileData xxx = createFriend("XXX", "28", 0,
-                "2020-03-09T10:15:30.00Z",
-                "No description yet.",
+                "2020-03-09T10:15:40.00Z",
+                "No description yet (4).",
                 getFriendShipStatus("28", currentUserID),
                 ReputationScore.NONE, null, null, false
         );
@@ -466,8 +467,8 @@ class ProfileHandler implements ProfileAPI {
 
         users.add(xxx);
         users.add(createFriend("YYY", "29", 0,
-                "2020-03-09T10:15:30.00Z",
-                "No description yet.",
+                "2020-03-09T10:15:45.00Z",
+                "No description yet (5).",
                 FriendShipStatus.NONE,
                 ReputationScore.NONE, null, null, false
         ));
