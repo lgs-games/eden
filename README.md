@@ -39,8 +39,8 @@ We are using Gradle to build the project and manage our dependencies.
 
 We are using our API **Nexus** to interact with the server.
 
-* You can download the latest version of Eden [here](https://lgs-games.com/en/eden). \
-* The git repository is available [there](https://github.com/lgs-games/eden). \
+* You can download the latest version of Eden [here](https://lgs-games.com/en/eden).
+* The git repository is available [there](https://github.com/lgs-games/eden).
 * finally, we have a [Trello](https://trello.com/b/mc5OKuQH/eden) to stay organized.
 
 ## Installation
