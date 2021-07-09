@@ -5,6 +5,8 @@ package com.lgs.eden.api;
  */
 public final class APIConstants {
 
+    private APIConstants(){}
+
     // urls
     public static final String WEBSITE_URL = "https://lgs-games.com/";
 
