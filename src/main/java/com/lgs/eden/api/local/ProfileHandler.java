@@ -436,12 +436,13 @@ class ProfileHandler implements ProfileAPI {
 
         ProfileData Caliki = createFriend("Caliki", "26", 0,
                 "2020-12-03T10:15:30.00Z",
-                "This is a really" + "This is a really" + "This is a really" + "This is a really" + "This is a really"
-                        + "This is a really" + "This is a really" + "This is a really" + "This is a really" + "This is a really"
-                        + "This is a really" + "This is a really" + "This is a really" + "This is a really" + "This is a really"
-                        + "This is a really" + "This is a really" + "This is a really" + "This is a really" + "This is a really"
-                        + "This is a really" + "This is a really" + "This is a really" + "This is a really" + "This is a really"
-                        + "This is a really" + "This is a really" + "This is a really" + "This is a really" + "This is a really",
+                """
+                        This is a really This is a really This is a really This is a really This is a really
+                        This is a really This is a really This is a really This is a really This is a really
+                        This is a really This is a really This is a really This is a really This is a really
+                        This is a really This is a really This is a really This is a really This is a really
+                        This is a really This is a really This is a really This is a really This is a really
+                        This is a really This is a really This is a really This is a really This is a really""",
                 getFriendShipStatus("26", currentUserID), ReputationScore.NONE, null, raphik, false
         );
 
