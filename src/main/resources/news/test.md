@@ -1,50 +1,55 @@
-Legendary Games Studio is honoured to present our new application : Tyrn.
+We are proud of version 3.1.0 of Prim.
+The main idea with this update is to make the game less easy to play,
+and more fun since you might lose any time!
 
-The software is open-source (meaning you can read/edit the source code)
-and allow you to create and manage a set of data.
+Still, a lot to do like improving the graphics or the game
+feel on top of adding achievements. Still, we hope that you
+will enjoy the game even more.
 
-For instance, in an RPG, you can manage all your data related to SKILLS, PLAYERS AND MONSTERS, OBJECTS, QUEST etc... et
-easily edit any data.
+## Gate
 
-Take note that the library don't include any assets and only process you already created content in a single file,
-sorted in categories. You can find some royalties free assets at itch.io, we recommends
-[pvgames.itch.io](https://pvgames.itch.io).
+The gate will now randomly generate garbage,
+and we are using a portal image now!
 
----
+The score function also got changed to make it
+quite harder to score a lot.
 
-### Fonctionnalités de la V1
+## Costs
 
-- You can create categories, and add attributes (properties such as a name for a person). The list of types (text,
-  number, ...)
-  for an attribute is limited.
-- You can pack files (images, musics, atlas, etc...)
-- The software is available in english and in french
+Collector upgrade price got increased since most people only
+bought one collector. Now it might give some people the thought
+of buying more collectors.
 
-### En phase de tests
+The sources now produce more resources, and the goal
+is now **5000** (was 10000). The reason is that after building
+all of our production chains, then you should be around 4000,
+so it won't take long finishing.
 
-We are currently testing this project, so don't hesitate to share any bugs/problems you might found at
-[tyrn@lgs-games.com](mailto:tyrn@lgs-games.com) and/or any suggestions/improvement you want us to make.
+You are now starting with 500 E and 500 DD and with 10
+FISE and 10 FISA.
 
-We will make a patch in the next weeks.
+The recycling centers got nerfed, they will once produce one
+resource (per 10 garbage) per turn.
 
-### Documentation
+## Interface
 
-Documentation will be available around the 20th of September at
-[https://github.com/lgs-games/tyrn/wiki](https://github.com/lgs-games/tyrn/wiki).
+We added a menu with the list of machines, so you can get
+information about a machine before buying it.
 
-| Colonne | Colonne |
-| ------ | ------ |
-| tab[0][0] | tab[0][1] |
-| tab[1][0] | tab[1][1] |
-| tab[2][0] | tab[2][1] |
-| tab[3][0] | tab[3][1] |
-| tab[4][0] | tab[4][1] |
-| tab[5][0] | tab[5][1] |
+We are updating in real-time the machine price in-game
+if you have some bonuses. We are planning to do the same
+for the staff.
 
-### Crédits
+## Functionalities
 
-* Legendary Games Studio
-* Quentin Ramsamy (dev)
-* Thibault Meynier (dev)
-* Pierre Ribollet (tester)
-* FontAwesome (icons)
+Using your left-click, you can hire FISE/FISA or skip a lot of
+turns in one go.
+
+You can see the shortcuts in settings (but you can't change them).
+
+## Other
+
+We finished translating the game, it's now
+available in English and French.
+
+The background won't change each time you skip a turn.
