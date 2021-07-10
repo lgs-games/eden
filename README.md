@@ -51,3 +51,14 @@ You may use ``gradle build`` to build the project, then
 ## Licence
 
 Licensed under Apache-2.0.
+
+## Screenshots
+
+![login](.screenshots/login.png)
+![register](.screenshots/register.png)
+![settings](.screenshots/settings.png)
+![MyGames](.screenshots/MyGames.png)
+![marketplace](.screenshots/marketplace.png)
+![news](.screenshots/news.png)
+![profile](.screenshots/profile.png)
+![messages](.screenshots/messages.png)
