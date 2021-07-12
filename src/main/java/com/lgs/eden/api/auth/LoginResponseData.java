@@ -43,7 +43,7 @@ public class LoginResponseData {
                 "code=" + code +
                 ", userID=" + userID +
                 ", username='" + username + '\'' +
-                ", avatar=" + avatar +
+                ", avatar=" + avatarPath +
                 '}';
     }
 }

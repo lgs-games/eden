@@ -110,7 +110,7 @@ public class EditProfile {
             try {
                 LoginResponseData d = API.imp.editProfile(newUsername, newAvatar, newDesc);
                 // clear cache
-                if(Objects.equals(d.avatarPath, "null")) {
+                if(!Objects.equals(d.avatarPath, "null")) {
                     Utility.reloadImage(d.avatarPath);
                 }
                 AppWindowHandler.updateLoginResponse(d);
