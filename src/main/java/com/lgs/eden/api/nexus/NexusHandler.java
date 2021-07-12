@@ -12,6 +12,7 @@ import com.lgs.eden.api.nexus.helpers.ImpSocket;
 import com.lgs.eden.api.nexus.helpers.RequestObject;
 import com.lgs.eden.api.profile.friends.FriendConversationView;
 import com.lgs.eden.application.AppWindowHandler;
+import com.lgs.eden.utils.Utility;
 import io.socket.client.Ack;
 import io.socket.client.IO;
 import io.socket.client.Socket;
@@ -84,6 +85,12 @@ public class NexusHandler extends APIHandler {
         ((ImpSocket)this.callback).setParent(this);
         ((ImpSocket)this.games).setParent(this);
         ((ImpSocket)this.profile).setParent(this);
+
+        socket.on("avatar-changed", args -> {
+            if (args.length == 1 && args[0] instanceof String avatarPath){
+                Utility.reloadImage(avatarPath);
+            }
+        });
     }
 
     @Override
