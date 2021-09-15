@@ -37,6 +37,10 @@ public final class Utility {
      */
     public static Image loadImage(String path) throws NullPointerException {
         if (images.containsKey(path)) return images.get(path);
+        return reloadImage(path);
+    }
+
+    public static Image reloadImage(String path) {
         try {
             if (path.startsWith("/")) images.put(path, new Image(Objects.requireNonNull(Utility.class.getResourceAsStream(path))));
             else images.put(path, new Image(path));

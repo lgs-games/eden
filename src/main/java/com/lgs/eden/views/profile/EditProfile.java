@@ -27,6 +27,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Objects;
 
 /**
  * Edit profile view
@@ -108,6 +109,10 @@ public class EditProfile {
         } else {
             try {
                 LoginResponseData d = API.imp.editProfile(newUsername, newAvatar, newDesc);
+                // clear cache
+                if(!Objects.equals(d.avatarPath, "null")) {
+                    Utility.reloadImage(d.avatarPath);
+                }
                 AppWindowHandler.updateLoginResponse(d);
                 // go back
                 AppWindowHandler.setScreen(Profile.getScreen(), ViewsPath.PROFILE);
